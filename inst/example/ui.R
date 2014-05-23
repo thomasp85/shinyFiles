@@ -14,7 +14,7 @@ shinyUI(pageWithSidebar(
         tags$p('Notice that, as the file selection box gets summoned multiple
                times, the browsing history and view type are remembered. This
                functionality is not shared between multiple instances of
-               shinyFiles buttons.')
+               shinyFiles buttons.'),
         shinyFilesButton('file', 'File select', 'Please select a file', FALSE)
         ),
     mainPanel(
