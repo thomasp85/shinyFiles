@@ -284,6 +284,8 @@ parseFilePaths <- function(root, files) {
 #' 
 #' @family shinyFiles
 #' 
+#' @importFrom shiny runApp
+#' 
 #' @export
 #' 
 shinyFilesExample <- function() {
