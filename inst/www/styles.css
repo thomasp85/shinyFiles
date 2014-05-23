@@ -1,0 +1,147 @@
+.sF-navigation {
+	margin-bottom: 10px;
+}
+.sF-fileWindow {
+	height: 200px;
+	border: 1px solid grey;
+	border-radius: 5px;
+	overflow: auto;
+}
+
+.sF-fileList div {
+	cursor: default;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.sF-breadcrumps {
+	width: calc(100% - 220px);
+	margin-left: auto
+}
+
+.sF-fileList>div.selected .sF-file-name {
+	background: steelblue;
+	border-radius: 5px;
+}
+.sF-fileList>div.selected .sF-file-name {
+	color: white;
+}
+
+/*
+	Icons
+*/
+.sF-directory .sF-file-icon {
+	content: url(icons/Icons16x16/folder.png);
+}
+.sF-file .sF-file-icon {
+	content: url(icons/Icons16x16/page_white.png);
+}
+.sF-fileList.sF-icons .sF-directory .sF-file-icon {
+	content: url(icons/Icons32x32/folder.png);
+}
+.sF-fileList.sF-icons .sF-file .sF-file-icon {
+	content: url(icons/Icons32x32/page_white.png);
+}
+
+/*
+	Detail view
+*/
+.sF-fileList.sF-detail {
+	display: table;
+	width: auto;
+}
+.sF-fileList.sF-detail>div {
+	display: table-row;
+	width: auto
+}
+.sF-fileList.sF-detail>div>div {
+	display: table-cell;
+	width: auto;
+	font-size: small;
+	white-space: nowrap;
+	padding: 1px 3px;
+	vertical-align: middle;
+}
+
+/*
+	Big icons view
+*/
+.sF-fileList.sF-icons {
+	text-align: justify;
+}
+.sF-fileList.sF-icons:after {
+	content: ' ';
+	width: 100%;
+	display: inline-block;
+}
+.sF-fileList.sF-icons>div {
+	position: relative;
+	display: inline-block;
+	width: 100px;
+	vertical-align: top;
+	margin: 5px 3px;
+}
+.sF-fileList.sF-icons .sF-file-icon {
+	margin: 0 auto;
+}
+.sF-fileList.sF-icons .sF-file-name {
+	font-size: small;
+	width: inherit;
+	padding: 0 1px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.sF-fileList.sF-icons>div:hover .sF-file-name {
+	position: absolute;
+	width: inherit;
+	white-space: normal;
+	z-index: 2;
+	background: white;
+	word-wrap: break-word;
+}
+.sF-fileList.sF-icons>div.selected:hover .sF-file-name {
+	background: steelblue;
+}
+.sF-fileList.sF-icons .sF-file-size,
+.sF-fileList.sF-icons .sF-file-mTime,
+.sF-fileList.sF-icons .sF-file-cTime,
+.sF-fileList.sF-icons .sF-file-aTime {
+	display: none;
+}
+
+/*
+	List view
+*/
+.sF-fileList.sF-list {
+	-webkit-column-width: 150px;
+	height: inherit;
+}
+.sF-fileList.sF-list>div {
+	width: auto;
+	white-space: nowrap;
+}
+.sF-fileList.sF-list>div>div {
+	width: auto;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: small;
+	white-space: nowrap;
+	padding: 1px 3px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.sF-fileList.sF-list .sF-file-name {
+	max-width: calc(100% - 16px);
+}
+.sF-fileList.sF-list .sF-file-size,
+.sF-fileList.sF-list .sF-file-mTime,
+.sF-fileList.sF-list .sF-file-cTime,
+.sF-fileList.sF-list .sF-file-aTime {
+	display: none;
+}
