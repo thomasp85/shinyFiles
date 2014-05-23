@@ -1,1225 +1,1225 @@
-.sF-file .sF-file-icon.sF-filetype-3gp {
+.sF-filetype-3gp::after {
     content: url(icons/Icons16x16/file_extension_3gp.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-3gp {
+.sF-icons .sF-filetype-3gp::after {
     content: url(icons/Icons32x32/file_extension_3gp.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-7z {
+.sF-filetype-7z::after {
     content: url(icons/Icons16x16/file_extension_7z.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-7z {
+.sF-icons .sF-filetype-7z::after {
     content: url(icons/Icons32x32/file_extension_7z.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ace {
+.sF-filetype-ace::after {
     content: url(icons/Icons16x16/file_extension_ace.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ace {
+.sF-icons .sF-filetype-ace::after {
     content: url(icons/Icons32x32/file_extension_ace.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ai {
+.sF-filetype-ai::after {
     content: url(icons/Icons16x16/file_extension_ai.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ai {
+.sF-icons .sF-filetype-ai::after {
     content: url(icons/Icons32x32/file_extension_ai.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-aif {
+.sF-filetype-aif::after {
     content: url(icons/Icons16x16/file_extension_aif.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-aif {
+.sF-icons .sF-filetype-aif::after {
     content: url(icons/Icons32x32/file_extension_aif.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-aiff {
+.sF-filetype-aiff::after {
     content: url(icons/Icons16x16/file_extension_aiff.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-aiff {
+.sF-icons .sF-filetype-aiff::after {
     content: url(icons/Icons32x32/file_extension_aiff.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-amr {
+.sF-filetype-amr::after {
     content: url(icons/Icons16x16/file_extension_amr.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-amr {
+.sF-icons .sF-filetype-amr::after {
     content: url(icons/Icons32x32/file_extension_amr.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-asf {
+.sF-filetype-asf::after {
     content: url(icons/Icons16x16/file_extension_asf.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-asf {
+.sF-icons .sF-filetype-asf::after {
     content: url(icons/Icons32x32/file_extension_asf.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-asx {
+.sF-filetype-asx::after {
     content: url(icons/Icons16x16/file_extension_asx.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-asx {
+.sF-icons .sF-filetype-asx::after {
     content: url(icons/Icons32x32/file_extension_asx.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-bat {
+.sF-filetype-bat::after {
     content: url(icons/Icons16x16/file_extension_bat.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-bat {
+.sF-icons .sF-filetype-bat::after {
     content: url(icons/Icons32x32/file_extension_bat.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-bin {
+.sF-filetype-bin::after {
     content: url(icons/Icons16x16/file_extension_bin.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-bin {
+.sF-icons .sF-filetype-bin::after {
     content: url(icons/Icons32x32/file_extension_bin.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-bmp {
+.sF-filetype-bmp::after {
     content: url(icons/Icons16x16/file_extension_bmp.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-bmp {
+.sF-icons .sF-filetype-bmp::after {
     content: url(icons/Icons32x32/file_extension_bmp.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-bup {
+.sF-filetype-bup::after {
     content: url(icons/Icons16x16/file_extension_bup.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-bup {
+.sF-icons .sF-filetype-bup::after {
     content: url(icons/Icons32x32/file_extension_bup.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-cab {
+.sF-filetype-cab::after {
     content: url(icons/Icons16x16/file_extension_cab.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cab {
+.sF-icons .sF-filetype-cab::after {
     content: url(icons/Icons32x32/file_extension_cab.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-cbr {
+.sF-filetype-cbr::after {
     content: url(icons/Icons16x16/file_extension_cbr.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cbr {
+.sF-icons .sF-filetype-cbr::after {
     content: url(icons/Icons32x32/file_extension_cbr.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-cda {
+.sF-filetype-cda::after {
     content: url(icons/Icons16x16/file_extension_cda.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cda {
+.sF-icons .sF-filetype-cda::after {
     content: url(icons/Icons32x32/file_extension_cda.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-cdl {
+.sF-filetype-cdl::after {
     content: url(icons/Icons16x16/file_extension_cdl.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cdl {
+.sF-icons .sF-filetype-cdl::after {
     content: url(icons/Icons32x32/file_extension_cdl.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-cdr {
+.sF-filetype-cdr::after {
     content: url(icons/Icons16x16/file_extension_cdr.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cdr {
+.sF-icons .sF-filetype-cdr::after {
     content: url(icons/Icons32x32/file_extension_cdr.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-chm {
+.sF-filetype-chm::after {
     content: url(icons/Icons16x16/file_extension_chm.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-chm {
+.sF-icons .sF-filetype-chm::after {
     content: url(icons/Icons32x32/file_extension_chm.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dat {
+.sF-filetype-dat::after {
     content: url(icons/Icons16x16/file_extension_dat.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dat {
+.sF-icons .sF-filetype-dat::after {
     content: url(icons/Icons32x32/file_extension_dat.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-divx {
+.sF-filetype-divx::after {
     content: url(icons/Icons16x16/file_extension_divx.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-divx {
+.sF-icons .sF-filetype-divx::after {
     content: url(icons/Icons32x32/file_extension_divx.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dll {
+.sF-filetype-dll::after {
     content: url(icons/Icons16x16/file_extension_dll.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dll {
+.sF-icons .sF-filetype-dll::after {
     content: url(icons/Icons32x32/file_extension_dll.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dmg {
+.sF-filetype-dmg::after {
     content: url(icons/Icons16x16/file_extension_dmg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dmg {
+.sF-icons .sF-filetype-dmg::after {
     content: url(icons/Icons32x32/file_extension_dmg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-doc {
+.sF-filetype-doc::after {
     content: url(icons/Icons16x16/file_extension_doc.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-doc {
+.sF-icons .sF-filetype-doc::after {
     content: url(icons/Icons32x32/file_extension_doc.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dss {
+.sF-filetype-dss::after {
     content: url(icons/Icons16x16/file_extension_dss.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dss {
+.sF-icons .sF-filetype-dss::after {
     content: url(icons/Icons32x32/file_extension_dss.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dvf {
+.sF-filetype-dvf::after {
     content: url(icons/Icons16x16/file_extension_dvf.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dvf {
+.sF-icons .sF-filetype-dvf::after {
     content: url(icons/Icons32x32/file_extension_dvf.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dwg {
+.sF-filetype-dwg::after {
     content: url(icons/Icons16x16/file_extension_dwg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dwg {
+.sF-icons .sF-filetype-dwg::after {
     content: url(icons/Icons32x32/file_extension_dwg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-eml {
+.sF-filetype-eml::after {
     content: url(icons/Icons16x16/file_extension_eml.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-eml {
+.sF-icons .sF-filetype-eml::after {
     content: url(icons/Icons32x32/file_extension_eml.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-eps {
+.sF-filetype-eps::after {
     content: url(icons/Icons16x16/file_extension_eps.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-eps {
+.sF-icons .sF-filetype-eps::after {
     content: url(icons/Icons32x32/file_extension_eps.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-exe {
+.sF-filetype-exe::after {
     content: url(icons/Icons16x16/file_extension_exe.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-exe {
+.sF-icons .sF-filetype-exe::after {
     content: url(icons/Icons32x32/file_extension_exe.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-fla {
+.sF-filetype-fla::after {
     content: url(icons/Icons16x16/file_extension_fla.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fla {
+.sF-icons .sF-filetype-fla::after {
     content: url(icons/Icons32x32/file_extension_fla.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-flv {
+.sF-filetype-flv::after {
     content: url(icons/Icons16x16/file_extension_flv.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-flv {
+.sF-icons .sF-filetype-flv::after {
     content: url(icons/Icons32x32/file_extension_flv.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-gif {
+.sF-filetype-gif::after {
     content: url(icons/Icons16x16/file_extension_gif.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-gif {
+.sF-icons .sF-filetype-gif::after {
     content: url(icons/Icons32x32/file_extension_gif.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-gz {
+.sF-filetype-gz::after {
     content: url(icons/Icons16x16/file_extension_gz.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-gz {
+.sF-icons .sF-filetype-gz::after {
     content: url(icons/Icons32x32/file_extension_gz.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-hqx {
+.sF-filetype-hqx::after {
     content: url(icons/Icons16x16/file_extension_hqx.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-hqx {
+.sF-icons .sF-filetype-hqx::after {
     content: url(icons/Icons32x32/file_extension_hqx.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-htm {
+.sF-filetype-htm::after {
     content: url(icons/Icons16x16/file_extension_htm.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-htm {
+.sF-icons .sF-filetype-htm::after {
     content: url(icons/Icons32x32/file_extension_htm.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-html {
+.sF-filetype-html::after {
     content: url(icons/Icons16x16/file_extension_html.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-html {
+.sF-icons .sF-filetype-html::after {
     content: url(icons/Icons32x32/file_extension_html.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ifo {
+.sF-filetype-ifo::after {
     content: url(icons/Icons16x16/file_extension_ifo.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ifo {
+.sF-icons .sF-filetype-ifo::after {
     content: url(icons/Icons32x32/file_extension_ifo.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-indd {
+.sF-filetype-indd::after {
     content: url(icons/Icons16x16/file_extension_indd.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-indd {
+.sF-icons .sF-filetype-indd::after {
     content: url(icons/Icons32x32/file_extension_indd.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-iso {
+.sF-filetype-iso::after {
     content: url(icons/Icons16x16/file_extension_iso.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-iso {
+.sF-icons .sF-filetype-iso::after {
     content: url(icons/Icons32x32/file_extension_iso.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-jar {
+.sF-filetype-jar::after {
     content: url(icons/Icons16x16/file_extension_jar.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jar {
+.sF-icons .sF-filetype-jar::after {
     content: url(icons/Icons32x32/file_extension_jar.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-jpeg {
+.sF-filetype-jpeg::after {
     content: url(icons/Icons16x16/file_extension_jpeg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jpeg {
+.sF-icons .sF-filetype-jpeg::after {
     content: url(icons/Icons32x32/file_extension_jpeg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-jpg {
+.sF-filetype-jpg::after {
     content: url(icons/Icons16x16/file_extension_jpg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jpg {
+.sF-icons .sF-filetype-jpg::after {
     content: url(icons/Icons32x32/file_extension_jpg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-lnk {
+.sF-filetype-lnk::after {
     content: url(icons/Icons16x16/file_extension_lnk.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-lnk {
+.sF-icons .sF-filetype-lnk::after {
     content: url(icons/Icons32x32/file_extension_lnk.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-log {
+.sF-filetype-log::after {
     content: url(icons/Icons16x16/file_extension_log.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-log {
+.sF-icons .sF-filetype-log::after {
     content: url(icons/Icons32x32/file_extension_log.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-m4a {
+.sF-filetype-m4a::after {
     content: url(icons/Icons16x16/file_extension_m4a.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-m4a {
+.sF-icons .sF-filetype-m4a::after {
     content: url(icons/Icons32x32/file_extension_m4a.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-m4b {
+.sF-filetype-m4b::after {
     content: url(icons/Icons16x16/file_extension_m4b.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-m4b {
+.sF-icons .sF-filetype-m4b::after {
     content: url(icons/Icons32x32/file_extension_m4b.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-m4p {
+.sF-filetype-m4p::after {
     content: url(icons/Icons16x16/file_extension_m4p.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-m4p {
+.sF-icons .sF-filetype-m4p::after {
     content: url(icons/Icons32x32/file_extension_m4p.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-m4v {
+.sF-filetype-m4v::after {
     content: url(icons/Icons16x16/file_extension_m4v.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-m4v {
+.sF-icons .sF-filetype-m4v::after {
     content: url(icons/Icons32x32/file_extension_m4v.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mcd {
+.sF-filetype-mcd::after {
     content: url(icons/Icons16x16/file_extension_mcd.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mcd {
+.sF-icons .sF-filetype-mcd::after {
     content: url(icons/Icons32x32/file_extension_mcd.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mdb {
+.sF-filetype-mdb::after {
     content: url(icons/Icons16x16/file_extension_mdb.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mdb {
+.sF-icons .sF-filetype-mdb::after {
     content: url(icons/Icons32x32/file_extension_mdb.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mid {
+.sF-filetype-mid::after {
     content: url(icons/Icons16x16/file_extension_mid.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mid {
+.sF-icons .sF-filetype-mid::after {
     content: url(icons/Icons32x32/file_extension_mid.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mov {
+.sF-filetype-mov::after {
     content: url(icons/Icons16x16/file_extension_mov.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mov {
+.sF-icons .sF-filetype-mov::after {
     content: url(icons/Icons32x32/file_extension_mov.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mp2 {
+.sF-filetype-mp2::after {
     content: url(icons/Icons16x16/file_extension_mp2.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mp2 {
+.sF-icons .sF-filetype-mp2::after {
     content: url(icons/Icons32x32/file_extension_mp2.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mp4 {
+.sF-filetype-mp4::after {
     content: url(icons/Icons16x16/file_extension_mp4.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mp4 {
+.sF-icons .sF-filetype-mp4::after {
     content: url(icons/Icons32x32/file_extension_mp4.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mpeg {
+.sF-filetype-mpeg::after {
     content: url(icons/Icons16x16/file_extension_mpeg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mpeg {
+.sF-icons .sF-filetype-mpeg::after {
     content: url(icons/Icons32x32/file_extension_mpeg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mpg {
+.sF-filetype-mpg::after {
     content: url(icons/Icons16x16/file_extension_mpg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mpg {
+.sF-icons .sF-filetype-mpg::after {
     content: url(icons/Icons32x32/file_extension_mpg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-msi {
+.sF-filetype-msi::after {
     content: url(icons/Icons16x16/file_extension_msi.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-msi {
+.sF-icons .sF-filetype-msi::after {
     content: url(icons/Icons32x32/file_extension_msi.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-mswmm {
+.sF-filetype-mswmm::after {
     content: url(icons/Icons16x16/file_extension_mswmm.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mswmm {
+.sF-icons .sF-filetype-mswmm::after {
     content: url(icons/Icons32x32/file_extension_mswmm.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ogg {
+.sF-filetype-ogg::after {
     content: url(icons/Icons16x16/file_extension_ogg.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ogg {
+.sF-icons .sF-filetype-ogg::after {
     content: url(icons/Icons32x32/file_extension_ogg.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-pdf {
+.sF-filetype-pdf::after {
     content: url(icons/Icons16x16/file_extension_pdf.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pdf {
+.sF-icons .sF-filetype-pdf::after {
     content: url(icons/Icons32x32/file_extension_pdf.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-png {
+.sF-filetype-png::after {
     content: url(icons/Icons16x16/file_extension_png.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-png {
+.sF-icons .sF-filetype-png::after {
     content: url(icons/Icons32x32/file_extension_png.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-pps {
+.sF-filetype-pps::after {
     content: url(icons/Icons16x16/file_extension_pps.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pps {
+.sF-icons .sF-filetype-pps::after {
     content: url(icons/Icons32x32/file_extension_pps.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ps {
+.sF-filetype-ps::after {
     content: url(icons/Icons16x16/file_extension_ps.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ps {
+.sF-icons .sF-filetype-ps::after {
     content: url(icons/Icons32x32/file_extension_ps.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-psd {
+.sF-filetype-psd::after {
     content: url(icons/Icons16x16/file_extension_psd.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-psd {
+.sF-icons .sF-filetype-psd::after {
     content: url(icons/Icons32x32/file_extension_psd.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-pst {
+.sF-filetype-pst::after {
     content: url(icons/Icons16x16/file_extension_pst.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pst {
+.sF-icons .sF-filetype-pst::after {
     content: url(icons/Icons32x32/file_extension_pst.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ptb {
+.sF-filetype-ptb::after {
     content: url(icons/Icons16x16/file_extension_ptb.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ptb {
+.sF-icons .sF-filetype-ptb::after {
     content: url(icons/Icons32x32/file_extension_ptb.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-pub {
+.sF-filetype-pub::after {
     content: url(icons/Icons16x16/file_extension_pub.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pub {
+.sF-icons .sF-filetype-pub::after {
     content: url(icons/Icons32x32/file_extension_pub.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-qbb {
+.sF-filetype-qbb::after {
     content: url(icons/Icons16x16/file_extension_qbb.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-qbb {
+.sF-icons .sF-filetype-qbb::after {
     content: url(icons/Icons32x32/file_extension_qbb.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-qbw {
+.sF-filetype-qbw::after {
     content: url(icons/Icons16x16/file_extension_qbw.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-qbw {
+.sF-icons .sF-filetype-qbw::after {
     content: url(icons/Icons32x32/file_extension_qbw.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-qxd {
+.sF-filetype-qxd::after {
     content: url(icons/Icons16x16/file_extension_qxd.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-qxd {
+.sF-icons .sF-filetype-qxd::after {
     content: url(icons/Icons32x32/file_extension_qxd.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ram {
+.sF-filetype-ram::after {
     content: url(icons/Icons16x16/file_extension_ram.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ram {
+.sF-icons .sF-filetype-ram::after {
     content: url(icons/Icons32x32/file_extension_ram.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-rar {
+.sF-filetype-rar::after {
     content: url(icons/Icons16x16/file_extension_rar.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rar {
+.sF-icons .sF-filetype-rar::after {
     content: url(icons/Icons32x32/file_extension_rar.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-rm {
+.sF-filetype-rm::after {
     content: url(icons/Icons16x16/file_extension_rm.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rm {
+.sF-icons .sF-filetype-rm::after {
     content: url(icons/Icons32x32/file_extension_rm.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-rmvb {
+.sF-filetype-rmvb::after {
     content: url(icons/Icons16x16/file_extension_rmvb.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rmvb {
+.sF-icons .sF-filetype-rmvb::after {
     content: url(icons/Icons32x32/file_extension_rmvb.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-rtf {
+.sF-filetype-rtf::after {
     content: url(icons/Icons16x16/file_extension_rtf.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rtf {
+.sF-icons .sF-filetype-rtf::after {
     content: url(icons/Icons32x32/file_extension_rtf.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-sea {
+.sF-filetype-sea::after {
     content: url(icons/Icons16x16/file_extension_sea.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sea {
+.sF-icons .sF-filetype-sea::after {
     content: url(icons/Icons32x32/file_extension_sea.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ses {
+.sF-filetype-ses::after {
     content: url(icons/Icons16x16/file_extension_ses.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ses {
+.sF-icons .sF-filetype-ses::after {
     content: url(icons/Icons32x32/file_extension_ses.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-sit {
+.sF-filetype-sit::after {
     content: url(icons/Icons16x16/file_extension_sit.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sit {
+.sF-icons .sF-filetype-sit::after {
     content: url(icons/Icons32x32/file_extension_sit.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-sitx {
+.sF-filetype-sitx::after {
     content: url(icons/Icons16x16/file_extension_sitx.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sitx {
+.sF-icons .sF-filetype-sitx::after {
     content: url(icons/Icons32x32/file_extension_sitx.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ss {
+.sF-filetype-ss::after {
     content: url(icons/Icons16x16/file_extension_ss.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ss {
+.sF-icons .sF-filetype-ss::after {
     content: url(icons/Icons32x32/file_extension_ss.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-swf {
+.sF-filetype-swf::after {
     content: url(icons/Icons16x16/file_extension_swf.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-swf {
+.sF-icons .sF-filetype-swf::after {
     content: url(icons/Icons32x32/file_extension_swf.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-tgz {
+.sF-filetype-tgz::after {
     content: url(icons/Icons16x16/file_extension_tgz.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-tgz {
+.sF-icons .sF-filetype-tgz::after {
     content: url(icons/Icons32x32/file_extension_tgz.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-thm {
+.sF-filetype-thm::after {
     content: url(icons/Icons16x16/file_extension_thm.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-thm {
+.sF-icons .sF-filetype-thm::after {
     content: url(icons/Icons32x32/file_extension_thm.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-tif {
+.sF-filetype-tif::after {
     content: url(icons/Icons16x16/file_extension_tif.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-tif {
+.sF-icons .sF-filetype-tif::after {
     content: url(icons/Icons32x32/file_extension_tif.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-tmp {
+.sF-filetype-tmp::after {
     content: url(icons/Icons16x16/file_extension_tmp.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-tmp {
+.sF-icons .sF-filetype-tmp::after {
     content: url(icons/Icons32x32/file_extension_tmp.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-torrent {
+.sF-filetype-torrent::after {
     content: url(icons/Icons16x16/file_extension_torrent.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-torrent {
+.sF-icons .sF-filetype-torrent::after {
     content: url(icons/Icons32x32/file_extension_torrent.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ttf {
+.sF-filetype-ttf::after {
     content: url(icons/Icons16x16/file_extension_ttf.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ttf {
+.sF-icons .sF-filetype-ttf::after {
     content: url(icons/Icons32x32/file_extension_ttf.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-txt {
+.sF-filetype-txt::after {
     content: url(icons/Icons16x16/file_extension_txt.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-txt {
+.sF-icons .sF-filetype-txt::after {
     content: url(icons/Icons32x32/file_extension_txt.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-vcd {
+.sF-filetype-vcd::after {
     content: url(icons/Icons16x16/file_extension_vcd.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-vcd {
+.sF-icons .sF-filetype-vcd::after {
     content: url(icons/Icons32x32/file_extension_vcd.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-vob {
+.sF-filetype-vob::after {
     content: url(icons/Icons16x16/file_extension_vob.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-vob {
+.sF-icons .sF-filetype-vob::after {
     content: url(icons/Icons32x32/file_extension_vob.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-wav {
+.sF-filetype-wav::after {
     content: url(icons/Icons16x16/file_extension_wav.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wav {
+.sF-icons .sF-filetype-wav::after {
     content: url(icons/Icons32x32/file_extension_wav.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-wma {
+.sF-filetype-wma::after {
     content: url(icons/Icons16x16/file_extension_wma.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wma {
+.sF-icons .sF-filetype-wma::after {
     content: url(icons/Icons32x32/file_extension_wma.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-wmv {
+.sF-filetype-wmv::after {
     content: url(icons/Icons16x16/file_extension_wmv.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wmv {
+.sF-icons .sF-filetype-wmv::after {
     content: url(icons/Icons32x32/file_extension_wmv.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-wps {
+.sF-filetype-wps::after {
     content: url(icons/Icons16x16/file_extension_wps.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wps {
+.sF-icons .sF-filetype-wps::after {
     content: url(icons/Icons32x32/file_extension_wps.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-xls {
+.sF-filetype-xls::after {
     content: url(icons/Icons16x16/file_extension_xls.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xls {
+.sF-icons .sF-filetype-xls::after {
     content: url(icons/Icons32x32/file_extension_xls.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-xpi {
+.sF-filetype-xpi::after {
     content: url(icons/Icons16x16/file_extension_xpi.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xpi {
+.sF-icons .sF-filetype-xpi::after {
     content: url(icons/Icons32x32/file_extension_xpi.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-zip {
+.sF-filetype-zip::after {
     content: url(icons/Icons16x16/file_extension_zip.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-zip {
+.sF-icons .sF-filetype-zip::after {
     content: url(icons/Icons32x32/file_extension_zip.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-as {
+.sF-filetype-as::after {
     content: url(icons/Icons16x16/page_white_actionscript.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-as {
+.sF-icons .sF-filetype-as::after {
     content: url(icons/Icons32x32/page_white_actionscript.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-c {
+.sF-filetype-c::after {
     content: url(icons/Icons16x16/page_white_c.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-c {
+.sF-icons .sF-filetype-c::after {
     content: url(icons/Icons32x32/page_white_c.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-r,
-.sF-file .sF-file-icon.sF-filetype-R,
-.sF-file .sF-file-icon.sF-filetype-lua,
-.sF-file .sF-file-icon.sF-filetype-m,
-.sF-file .sF-file-icon.sF-filetype-pl,
-.sF-file .sF-file-icon.sF-filetype-py,
-.sF-file .sF-file-icon.sF-filetype-sh,
-.sF-file .sF-file-icon.sF-filetype-js,
-.sF-file .sF-file-icon.sF-filetype-css,
-.sF-file .sF-file-icon.sF-filetype-fs,
-.sF-file .sF-file-icon.sF-filetype-fsx,
-.sF-file .sF-file-icon.sF-filetype-el,
-.sF-file .sF-file-icon.sF-filetype-lisp,
-.sF-file .sF-file-icon.sF-filetype-cl,
-.sF-file .sF-file-icon.sF-filetype-lsp,
-.sF-file .sF-file-icon.sF-filetype-pas,
-.sF-file .sF-file-icon.sF-filetype-s,
-.sF-file .sF-file-icon.sF-filetype-m,
-.sF-file .sF-file-icon.sF-filetype-f,
-.sF-file .sF-file-icon.sF-filetype-for,
-.sF-file .sF-file-icon.sF-filetype-f90 {
+.sF-filetype-r::after,
+.sF-filetype-R::after,
+.sF-filetype-lua::after,
+.sF-filetype-m::after,
+.sF-filetype-pl::after,
+.sF-filetype-py::after,
+.sF-filetype-sh::after,
+.sF-filetype-js::after,
+.sF-filetype-css::after,
+.sF-filetype-fs::after,
+.sF-filetype-fsx::after,
+.sF-filetype-el::after,
+.sF-filetype-lisp::after,
+.sF-filetype-cl::after,
+.sF-filetype-lsp::after,
+.sF-filetype-pas::after,
+.sF-filetype-s::after,
+.sF-filetype-m::after,
+.sF-filetype-f::after,
+.sF-filetype-for::after,
+.sF-filetype-f90::after {
     content: url(icons/Icons16x16/page_white_code.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-r,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-R,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-lua,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-m,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pl,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-py,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sh,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-js,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-css,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fs,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fsx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-el,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-lisp,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cl,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-lsp,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pas,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-s,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-m,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-f,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-for,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-f90 {
+.sF-icons .sF-filetype-r::after,
+.sF-icons .sF-filetype-R::after,
+.sF-icons .sF-filetype-lua::after,
+.sF-icons .sF-filetype-m::after,
+.sF-icons .sF-filetype-pl::after,
+.sF-icons .sF-filetype-py::after,
+.sF-icons .sF-filetype-sh::after,
+.sF-icons .sF-filetype-js::after,
+.sF-icons .sF-filetype-css::after,
+.sF-icons .sF-filetype-fs::after,
+.sF-icons .sF-filetype-fsx::after,
+.sF-icons .sF-filetype-el::after,
+.sF-icons .sF-filetype-lisp::after,
+.sF-icons .sF-filetype-cl::after,
+.sF-icons .sF-filetype-lsp::after,
+.sF-icons .sF-filetype-pas::after,
+.sF-icons .sF-filetype-s::after,
+.sF-icons .sF-filetype-m::after,
+.sF-icons .sF-filetype-f::after,
+.sF-icons .sF-filetype-for::after,
+.sF-icons .sF-filetype-f90::after {
     content: url(icons/Icons32x32/page_white_code.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-C,
-.sF-file .sF-file-icon.sF-filetype-cc,
-.sF-file .sF-file-icon.sF-filetype-cpp,
-.sF-file .sF-file-icon.sF-filetype-CPP,
-.sF-file .sF-file-icon.sF-filetype-c++,
-.sF-file .sF-file-icon.sF-filetype-cp,
-.sF-file .sF-file-icon.sF-filetype-cxx {
+.sF-filetype-C::after,
+.sF-filetype-cc::after,
+.sF-filetype-cpp::after,
+.sF-filetype-CPP::after,
+.sF-filetype-c++::after,
+.sF-filetype-cp::after,
+.sF-filetype-cxx::after {
     content: url(icons/Icons16x16/page_white_cplusplus.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-C,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cc,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cpp,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-CPP,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-c++,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cp,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cxx {
+.sF-icons .sF-filetype-C::after,
+.sF-icons .sF-filetype-cc::after,
+.sF-icons .sF-filetype-cpp::after,
+.sF-icons .sF-filetype-CPP::after,
+.sF-icons .sF-filetype-c++::after,
+.sF-icons .sF-filetype-cp::after,
+.sF-icons .sF-filetype-cxx::after {
     content: url(icons/Icons32x32/page_white_cplusplus.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-cs {
+.sF-filetype-cs::after {
     content: url(icons/Icons16x16/page_white_csharp.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cs {
+.sF-icons .sF-filetype-cs::after {
     content: url(icons/Icons32x32/page_white_csharp.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-java,
-.sF-file .sF-file-icon.sF-filetype-class {
+.sF-filetype-java::after,
+.sF-filetype-class::after {
     content: url(icons/Icons16x16/page_white_cup.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-java,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-class {
+.sF-icons .sF-filetype-java::after,
+.sF-icons .sF-filetype-class::after {
     content: url(icons/Icons32x32/page_white_cup.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-4db,
-.sF-file .sF-file-icon.sF-filetype-4dd,
-.sF-file .sF-file-icon.sF-filetype-4dindx,
-.sF-file .sF-file-icon.sF-filetype-4dindy,
-.sF-file .sF-file-icon.sF-filetype-4dr,
-.sF-file .sF-file-icon.sF-filetype-adt,
-.sF-file .sF-file-icon.sF-filetype-apr,
-.sF-file .sF-file-icon.sF-filetype-box,
-.sF-file .sF-file-icon.sF-filetype-chml,
-.sF-file .sF-file-icon.sF-filetype-daf,
-.sF-file .sF-file-icon.sF-filetype-db,
-.sF-file .sF-file-icon.sF-filetype-dbf,
-.sF-file .sF-file-icon.sF-filetype-eap,
-.sF-file .sF-file-icon.sF-filetype-egt,
-.sF-file .sF-file-icon.sF-filetype-ess,
-.sF-file .sF-file-icon.sF-filetype-fdb,
-.sF-file .sF-file-icon.sF-filetype-fp,
-.sF-file .sF-file-icon.sF-filetype-fp3,
-.sF-file .sF-file-icon.sF-filetype-fp5,
-.sF-file .sF-file-icon.sF-filetype-fp7,
-.sF-file .sF-file-icon.sF-filetype-frm,
-.sF-file .sF-file-icon.sF-filetype-gdb,
-.sF-file .sF-file-icon.sF-filetype-gtable,
-.sF-file .sF-file-icon.sF-filetype-kexi,
-.sF-file .sF-file-icon.sF-filetype-kexic,
-.sF-file .sF-file-icon.sF-filetype-myd,
-.sF-file .sF-file-icon.sF-filetype-myi,
-.sF-file .sF-file-icon.sF-filetype-ncf,
-.sF-file .sF-file-icon.sF-filetype-nsf,
-.sF-file .sF-file-icon.sF-filetype-ntf,
-.sF-file .sF-file-icon.sF-filetype-nv2,
-.sF-file .sF-file-icon.sF-filetype-odb,
-.sF-file .sF-file-icon.sF-filetype-ora,
-.sF-file .sF-file-icon.sF-filetype-pdb,
-.sF-file .sF-file-icon.sF-filetype-pdi,
-.sF-file .sF-file-icon.sF-filetype-pdx,
-.sF-file .sF-file-icon.sF-filetype-prc,
-.sF-file .sF-file-icon.sF-filetype-rec,
-.sF-file .sF-file-icon.sF-filetype-rel,
-.sF-file .sF-file-icon.sF-filetype-rin,
-.sF-file .sF-file-icon.sF-filetype-sdb,
-.sF-file .sF-file-icon.sF-filetype-sdf,
-.sF-file .sF-file-icon.sF-filetype-sql,
-.sF-file .sF-file-icon.sF-filetype-udl,
-.sF-file .sF-file-icon.sF-filetype-wadata,
-.sF-file .sF-file-icon.sF-filetype-waindx,
-.sF-file .sF-file-icon.sF-filetype-wajournal,
-.sF-file .sF-file-icon.sF-filetype-wamodel,
-.sF-file .sF-file-icon.sF-filetype-wdb,
-.sF-file .sF-file-icon.sF-filetype-wmdb,
-.sF-file .sF-file-icon.sF-filetype-4DB,
-.sF-file .sF-file-icon.sF-filetype-4DD,
-.sF-file .sF-file-icon.sF-filetype-4DIndy,
-.sF-file .sF-file-icon.sF-filetype-4DIndx,
-.sF-file .sF-file-icon.sF-filetype-4DR,
-.sF-file .sF-file-icon.sF-filetype-ADT,
-.sF-file .sF-file-icon.sF-filetype-APR,
-.sF-file .sF-file-icon.sF-filetype-BOX,
-.sF-file .sF-file-icon.sF-filetype-CHML,
-.sF-file .sF-file-icon.sF-filetype-DAF,
-.sF-file .sF-file-icon.sF-filetype-DAT,
-.sF-file .sF-file-icon.sF-filetype-DB,
-.sF-file .sF-file-icon.sF-filetype-DBF,
-.sF-file .sF-file-icon.sF-filetype-EGT,
-.sF-file .sF-file-icon.sF-filetype-ESS,
-.sF-file .sF-file-icon.sF-filetype-EAP,
-.sF-file .sF-file-icon.sF-filetype-FDB,
-.sF-file .sF-file-icon.sF-filetype-FP,
-.sF-file .sF-file-icon.sF-filetype-FP3,
-.sF-file .sF-file-icon.sF-filetype-FP5,
-.sF-file .sF-file-icon.sF-filetype-FP7,
-.sF-file .sF-file-icon.sF-filetype-FRM,
-.sF-file .sF-file-icon.sF-filetype-GDB,
-.sF-file .sF-file-icon.sF-filetype-GTABLE,
-.sF-file .sF-file-icon.sF-filetype-KEXI,
-.sF-file .sF-file-icon.sF-filetype-KEXIC,
-.sF-file .sF-file-icon.sF-filetype-MYD,
-.sF-file .sF-file-icon.sF-filetype-MYI,
-.sF-file .sF-file-icon.sF-filetype-NCF,
-.sF-file .sF-file-icon.sF-filetype-NSF,
-.sF-file .sF-file-icon.sF-filetype-NTF,
-.sF-file .sF-file-icon.sF-filetype-NV2,
-.sF-file .sF-file-icon.sF-filetype-ODB,
-.sF-file .sF-file-icon.sF-filetype-ORA,
-.sF-file .sF-file-icon.sF-filetype-PDB,
-.sF-file .sF-file-icon.sF-filetype-PDI,
-.sF-file .sF-file-icon.sF-filetype-PDX,
-.sF-file .sF-file-icon.sF-filetype-PRC,
-.sF-file .sF-file-icon.sF-filetype-SQL,
-.sF-file .sF-file-icon.sF-filetype-REC,
-.sF-file .sF-file-icon.sF-filetype-REL,
-.sF-file .sF-file-icon.sF-filetype-RIN,
-.sF-file .sF-file-icon.sF-filetype-SDB,
-.sF-file .sF-file-icon.sF-filetype-SDF,
-.sF-file .sF-file-icon.sF-filetype-UDL,
-.sF-file .sF-file-icon.sF-filetype-waData,
-.sF-file .sF-file-icon.sF-filetype-waIndx,
-.sF-file .sF-file-icon.sF-filetype-waModel,
-.sF-file .sF-file-icon.sF-filetype-waJournal,
-.sF-file .sF-file-icon.sF-filetype-WDB,
-.sF-file .sF-file-icon.sF-filetype-WMDB,
-.sF-file .sF-file-icon.sF-filetype-Rdata,
-.sF-file .sF-file-icon.sF-filetype-rdata,
-.sF-file .sF-file-icon.sF-filetype-RDS {
+.sF-filetype-4db::after,
+.sF-filetype-4dd::after,
+.sF-filetype-4dindx::after,
+.sF-filetype-4dindy::after,
+.sF-filetype-4dr::after,
+.sF-filetype-adt::after,
+.sF-filetype-apr::after,
+.sF-filetype-box::after,
+.sF-filetype-chml::after,
+.sF-filetype-daf::after,
+.sF-filetype-db::after,
+.sF-filetype-dbf::after,
+.sF-filetype-eap::after,
+.sF-filetype-egt::after,
+.sF-filetype-ess::after,
+.sF-filetype-fdb::after,
+.sF-filetype-fp::after,
+.sF-filetype-fp3::after,
+.sF-filetype-fp5::after,
+.sF-filetype-fp7::after,
+.sF-filetype-frm::after,
+.sF-filetype-gdb::after,
+.sF-filetype-gtable::after,
+.sF-filetype-kexi::after,
+.sF-filetype-kexic::after,
+.sF-filetype-myd::after,
+.sF-filetype-myi::after,
+.sF-filetype-ncf::after,
+.sF-filetype-nsf::after,
+.sF-filetype-ntf::after,
+.sF-filetype-nv2::after,
+.sF-filetype-odb::after,
+.sF-filetype-ora::after,
+.sF-filetype-pdb::after,
+.sF-filetype-pdi::after,
+.sF-filetype-pdx::after,
+.sF-filetype-prc::after,
+.sF-filetype-rec::after,
+.sF-filetype-rel::after,
+.sF-filetype-rin::after,
+.sF-filetype-sdb::after,
+.sF-filetype-sdf::after,
+.sF-filetype-sql::after,
+.sF-filetype-udl::after,
+.sF-filetype-wadata::after,
+.sF-filetype-waindx::after,
+.sF-filetype-wajournal::after,
+.sF-filetype-wamodel::after,
+.sF-filetype-wdb::after,
+.sF-filetype-wmdb::after,
+.sF-filetype-4DB::after,
+.sF-filetype-4DD::after,
+.sF-filetype-4DIndy::after,
+.sF-filetype-4DIndx::after,
+.sF-filetype-4DR::after,
+.sF-filetype-ADT::after,
+.sF-filetype-APR::after,
+.sF-filetype-BOX::after,
+.sF-filetype-CHML::after,
+.sF-filetype-DAF::after,
+.sF-filetype-DAT::after,
+.sF-filetype-DB::after,
+.sF-filetype-DBF::after,
+.sF-filetype-EGT::after,
+.sF-filetype-ESS::after,
+.sF-filetype-EAP::after,
+.sF-filetype-FDB::after,
+.sF-filetype-FP::after,
+.sF-filetype-FP3::after,
+.sF-filetype-FP5::after,
+.sF-filetype-FP7::after,
+.sF-filetype-FRM::after,
+.sF-filetype-GDB::after,
+.sF-filetype-GTABLE::after,
+.sF-filetype-KEXI::after,
+.sF-filetype-KEXIC::after,
+.sF-filetype-MYD::after,
+.sF-filetype-MYI::after,
+.sF-filetype-NCF::after,
+.sF-filetype-NSF::after,
+.sF-filetype-NTF::after,
+.sF-filetype-NV2::after,
+.sF-filetype-ODB::after,
+.sF-filetype-ORA::after,
+.sF-filetype-PDB::after,
+.sF-filetype-PDI::after,
+.sF-filetype-PDX::after,
+.sF-filetype-PRC::after,
+.sF-filetype-SQL::after,
+.sF-filetype-REC::after,
+.sF-filetype-REL::after,
+.sF-filetype-RIN::after,
+.sF-filetype-SDB::after,
+.sF-filetype-SDF::after,
+.sF-filetype-UDL::after,
+.sF-filetype-waData::after,
+.sF-filetype-waIndx::after,
+.sF-filetype-waModel::after,
+.sF-filetype-waJournal::after,
+.sF-filetype-WDB::after,
+.sF-filetype-WMDB::after,
+.sF-filetype-Rdata::after,
+.sF-filetype-rdata::after,
+.sF-filetype-RDS::after {
     content: url(icons/Icons16x16/page_white_database.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4db,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4dd,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4dindx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4dindy,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4dr,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-adt,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-apr,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-box,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-chml,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-daf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-db,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dbf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-eap,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-egt,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ess,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fp,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fp3,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fp5,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fp7,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-frm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-gdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-gtable,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-kexi,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-kexic,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-myd,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-myi,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ncf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-nsf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ntf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-nv2,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-odb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ora,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pdi,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pdx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-prc,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rec,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rel,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rin,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sdf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sql,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-udl,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wadata,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-waindx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wajournal,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wamodel,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-wmdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4DB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4DD,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4DIndy,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4DIndx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-4DR,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ADT,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-APR,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-BOX,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-CHML,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-DAF,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-DAT,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-DB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-DBF,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-EGT,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ESS,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-EAP,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-FDB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-FP,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-FP3,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-FP5,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-FP7,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-FRM,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-GDB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-GTABLE,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-KEXI,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-KEXIC,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-MYD,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-MYI,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-NCF,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-NSF,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-NTF,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-NV2,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ODB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ORA,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-PDB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-PDI,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-PDX,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-PRC,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-SQL,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-REC,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-REL,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-RIN,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-SDB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-SDF,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-UDL,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-waData,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-waIndx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-waModel,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-waJournal,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-WDB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-WMDB,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-Rdata,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rdata,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-RDS {
+.sF-icons .sF-filetype-4db::after,
+.sF-icons .sF-filetype-4dd::after,
+.sF-icons .sF-filetype-4dindx::after,
+.sF-icons .sF-filetype-4dindy::after,
+.sF-icons .sF-filetype-4dr::after,
+.sF-icons .sF-filetype-adt::after,
+.sF-icons .sF-filetype-apr::after,
+.sF-icons .sF-filetype-box::after,
+.sF-icons .sF-filetype-chml::after,
+.sF-icons .sF-filetype-daf::after,
+.sF-icons .sF-filetype-db::after,
+.sF-icons .sF-filetype-dbf::after,
+.sF-icons .sF-filetype-eap::after,
+.sF-icons .sF-filetype-egt::after,
+.sF-icons .sF-filetype-ess::after,
+.sF-icons .sF-filetype-fdb::after,
+.sF-icons .sF-filetype-fp::after,
+.sF-icons .sF-filetype-fp3::after,
+.sF-icons .sF-filetype-fp5::after,
+.sF-icons .sF-filetype-fp7::after,
+.sF-icons .sF-filetype-frm::after,
+.sF-icons .sF-filetype-gdb::after,
+.sF-icons .sF-filetype-gtable::after,
+.sF-icons .sF-filetype-kexi::after,
+.sF-icons .sF-filetype-kexic::after,
+.sF-icons .sF-filetype-myd::after,
+.sF-icons .sF-filetype-myi::after,
+.sF-icons .sF-filetype-ncf::after,
+.sF-icons .sF-filetype-nsf::after,
+.sF-icons .sF-filetype-ntf::after,
+.sF-icons .sF-filetype-nv2::after,
+.sF-icons .sF-filetype-odb::after,
+.sF-icons .sF-filetype-ora::after,
+.sF-icons .sF-filetype-pdb::after,
+.sF-icons .sF-filetype-pdi::after,
+.sF-icons .sF-filetype-pdx::after,
+.sF-icons .sF-filetype-prc::after,
+.sF-icons .sF-filetype-rec::after,
+.sF-icons .sF-filetype-rel::after,
+.sF-icons .sF-filetype-rin::after,
+.sF-icons .sF-filetype-sdb::after,
+.sF-icons .sF-filetype-sdf::after,
+.sF-icons .sF-filetype-sql::after,
+.sF-icons .sF-filetype-udl::after,
+.sF-icons .sF-filetype-wadata::after,
+.sF-icons .sF-filetype-waindx::after,
+.sF-icons .sF-filetype-wajournal::after,
+.sF-icons .sF-filetype-wamodel::after,
+.sF-icons .sF-filetype-wdb::after,
+.sF-icons .sF-filetype-wmdb::after,
+.sF-icons .sF-filetype-4DB::after,
+.sF-icons .sF-filetype-4DD::after,
+.sF-icons .sF-filetype-4DIndy::after,
+.sF-icons .sF-filetype-4DIndx::after,
+.sF-icons .sF-filetype-4DR::after,
+.sF-icons .sF-filetype-ADT::after,
+.sF-icons .sF-filetype-APR::after,
+.sF-icons .sF-filetype-BOX::after,
+.sF-icons .sF-filetype-CHML::after,
+.sF-icons .sF-filetype-DAF::after,
+.sF-icons .sF-filetype-DAT::after,
+.sF-icons .sF-filetype-DB::after,
+.sF-icons .sF-filetype-DBF::after,
+.sF-icons .sF-filetype-EGT::after,
+.sF-icons .sF-filetype-ESS::after,
+.sF-icons .sF-filetype-EAP::after,
+.sF-icons .sF-filetype-FDB::after,
+.sF-icons .sF-filetype-FP::after,
+.sF-icons .sF-filetype-FP3::after,
+.sF-icons .sF-filetype-FP5::after,
+.sF-icons .sF-filetype-FP7::after,
+.sF-icons .sF-filetype-FRM::after,
+.sF-icons .sF-filetype-GDB::after,
+.sF-icons .sF-filetype-GTABLE::after,
+.sF-icons .sF-filetype-KEXI::after,
+.sF-icons .sF-filetype-KEXIC::after,
+.sF-icons .sF-filetype-MYD::after,
+.sF-icons .sF-filetype-MYI::after,
+.sF-icons .sF-filetype-NCF::after,
+.sF-icons .sF-filetype-NSF::after,
+.sF-icons .sF-filetype-NTF::after,
+.sF-icons .sF-filetype-NV2::after,
+.sF-icons .sF-filetype-ODB::after,
+.sF-icons .sF-filetype-ORA::after,
+.sF-icons .sF-filetype-PDB::after,
+.sF-icons .sF-filetype-PDI::after,
+.sF-icons .sF-filetype-PDX::after,
+.sF-icons .sF-filetype-PRC::after,
+.sF-icons .sF-filetype-SQL::after,
+.sF-icons .sF-filetype-REC::after,
+.sF-icons .sF-filetype-REL::after,
+.sF-icons .sF-filetype-RIN::after,
+.sF-icons .sF-filetype-SDB::after,
+.sF-icons .sF-filetype-SDF::after,
+.sF-icons .sF-filetype-UDL::after,
+.sF-icons .sF-filetype-waData::after,
+.sF-icons .sF-filetype-waIndx::after,
+.sF-icons .sF-filetype-waModel::after,
+.sF-icons .sF-filetype-waJournal::after,
+.sF-icons .sF-filetype-WDB::after,
+.sF-icons .sF-filetype-WMDB::after,
+.sF-icons .sF-filetype-Rdata::after,
+.sF-icons .sF-filetype-rdata::after,
+.sF-icons .sF-filetype-RDS::after {
     content: url(icons/Icons32x32/page_white_database.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-xlm,
-.sF-file .sF-file-icon.sF-filetype-xlt,
-.sF-file .sF-file-icon.sF-filetype-xlsx,
-.sF-file .sF-file-icon.sF-filetype-xlsm,
-.sF-file .sF-file-icon.sF-filetype-xltx,
-.sF-file .sF-file-icon.sF-filetype-xltm,
-.sF-file .sF-file-icon.sF-filetype-xlsb,
-.sF-file .sF-file-icon.sF-filetype-xla,
-.sF-file .sF-file-icon.sF-filetype-xlam,
-.sF-file .sF-file-icon.sF-filetype-xll,
-.sF-file .sF-file-icon.sF-filetype-xlw {
+.sF-filetype-xlm::after,
+.sF-filetype-xlt::after,
+.sF-filetype-xlsx::after,
+.sF-filetype-xlsm::after,
+.sF-filetype-xltx::after,
+.sF-filetype-xltm::after,
+.sF-filetype-xlsb::after,
+.sF-filetype-xla::after,
+.sF-filetype-xlam::after,
+.sF-filetype-xll::after,
+.sF-filetype-xlw::after {
     content: url(icons/Icons16x16/page_white_excel.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlt,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlsx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlsm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xltx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xltm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlsb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xla,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlam,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xll,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-xlw {
+.sF-icons .sF-filetype-xlm::after,
+.sF-icons .sF-filetype-xlt::after,
+.sF-icons .sF-filetype-xlsx::after,
+.sF-icons .sF-filetype-xlsm::after,
+.sF-icons .sF-filetype-xltx::after,
+.sF-icons .sF-filetype-xltm::after,
+.sF-icons .sF-filetype-xlsb::after,
+.sF-icons .sF-filetype-xla::after,
+.sF-icons .sF-filetype-xlam::after,
+.sF-icons .sF-filetype-xll::after,
+.sF-icons .sF-filetype-xlw::after {
     content: url(icons/Icons32x32/page_white_excel.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-h {
+.sF-filetype-h::after {
     content: url(icons/Icons16x16/page_white_h.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-h {
+.sF-icons .sF-filetype-h::after {
     content: url(icons/Icons32x32/page_white_h.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-ade,
-.sF-file .sF-file-icon.sF-filetype-adp,
-.sF-file .sF-file-icon.sF-filetype-adn,
-.sF-file .sF-file-icon.sF-filetype-accdb,
-.sF-file .sF-file-icon.sF-filetype-accdr,
-.sF-file .sF-file-icon.sF-filetype-accdt,
-.sF-file .sF-file-icon.sF-filetype-cdb,
-.sF-file .sF-file-icon.sF-filetype-mda,
-.sF-file .sF-file-icon.sF-filetype-mdn,
-.sF-file .sF-file-icon.sF-filetype-mdt,
-.sF-file .sF-file-icon.sF-filetype-mdw,
-.sF-file .sF-file-icon.sF-filetype-mdf,
-.sF-file .sF-file-icon.sF-filetype-mde,
-.sF-file .sF-file-icon.sF-filetype-accde,
-.sF-file .sF-file-icon.sF-filetype-mam,
-.sF-file .sF-file-icon.sF-filetype-maq,
-.sF-file .sF-file-icon.sF-filetype-mar,
-.sF-file .sF-file-icon.sF-filetype-mat,
-.sF-file .sF-file-icon.sF-filetype-maf,
-.sF-file .sF-file-icon.sF-filetype-ldb,
-.sF-file .sF-file-icon.sF-filetype-laccdb {
+.sF-filetype-ade::after,
+.sF-filetype-adp::after,
+.sF-filetype-adn::after,
+.sF-filetype-accdb::after,
+.sF-filetype-accdr::after,
+.sF-filetype-accdt::after,
+.sF-filetype-cdb::after,
+.sF-filetype-mda::after,
+.sF-filetype-mdn::after,
+.sF-filetype-mdt::after,
+.sF-filetype-mdw::after,
+.sF-filetype-mdf::after,
+.sF-filetype-mde::after,
+.sF-filetype-accde::after,
+.sF-filetype-mam::after,
+.sF-filetype-maq::after,
+.sF-filetype-mar::after,
+.sF-filetype-mat::after,
+.sF-filetype-maf::after,
+.sF-filetype-ldb::after,
+.sF-filetype-laccdb::after {
     content: url(icons/Icons16x16/page_white_office.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ade,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-adp,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-adn,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-accdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-accdr,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-accdt,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-cdb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mda,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mdn,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mdt,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mdw,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mdf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mde,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-accde,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mam,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-maq,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mar,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mat,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-maf,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ldb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-laccdb {
+.sF-icons .sF-filetype-ade::after,
+.sF-icons .sF-filetype-adp::after,
+.sF-icons .sF-filetype-adn::after,
+.sF-icons .sF-filetype-accdb::after,
+.sF-icons .sF-filetype-accdr::after,
+.sF-icons .sF-filetype-accdt::after,
+.sF-icons .sF-filetype-cdb::after,
+.sF-icons .sF-filetype-mda::after,
+.sF-icons .sF-filetype-mdn::after,
+.sF-icons .sF-filetype-mdt::after,
+.sF-icons .sF-filetype-mdw::after,
+.sF-icons .sF-filetype-mdf::after,
+.sF-icons .sF-filetype-mde::after,
+.sF-icons .sF-filetype-accde::after,
+.sF-icons .sF-filetype-mam::after,
+.sF-icons .sF-filetype-maq::after,
+.sF-icons .sF-filetype-mar::after,
+.sF-icons .sF-filetype-mat::after,
+.sF-icons .sF-filetype-maf::after,
+.sF-icons .sF-filetype-ldb::after,
+.sF-icons .sF-filetype-laccdb::after {
     content: url(icons/Icons32x32/page_white_office.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-PHP,
-.sF-file .sF-file-icon.sF-filetype-php,
-.sF-file .sF-file-icon.sF-filetype-phtml,
-.sF-file .sF-file-icon.sF-filetype-php4,
-.sF-file .sF-file-icon.sF-filetype-php3,
-.sF-file .sF-file-icon.sF-filetype-php5,
-.sF-file .sF-file-icon.sF-filetype-phps {
+.sF-filetype-PHP::after,
+.sF-filetype-php::after,
+.sF-filetype-phtml::after,
+.sF-filetype-php4::after,
+.sF-filetype-php3::after,
+.sF-filetype-php5::after,
+.sF-filetype-phps::after {
     content: url(icons/Icons16x16/page_white_php.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-PHP,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-php,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-phtml,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-php4,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-php3,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-php5,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-phps {
+.sF-icons .sF-filetype-PHP::after,
+.sF-icons .sF-filetype-php::after,
+.sF-icons .sF-filetype-phtml::after,
+.sF-icons .sF-filetype-php4::after,
+.sF-icons .sF-filetype-php3::after,
+.sF-icons .sF-filetype-php5::after,
+.sF-icons .sF-filetype-phps::after {
     content: url(icons/Icons32x32/page_white_php.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-tiff,
-.sF-file .sF-file-icon.sF-filetype-jif,
-.sF-file .sF-file-icon.sF-filetype-jfif,
-.sF-file .sF-file-icon.sF-filetype-jp2,
-.sF-file .sF-file-icon.sF-filetype-jpx,
-.sF-file .sF-file-icon.sF-filetype-j2k,
-.sF-file .sF-file-icon.sF-filetype-j2c,
-.sF-file .sF-file-icon.sF-filetype-fpx,
-.sF-file .sF-file-icon.sF-filetype-pcd {
+.sF-filetype-tiff::after,
+.sF-filetype-jif::after,
+.sF-filetype-jfif::after,
+.sF-filetype-jp2::after,
+.sF-filetype-jpx::after,
+.sF-filetype-j2k::after,
+.sF-filetype-j2c::after,
+.sF-filetype-fpx::after,
+.sF-filetype-pcd::after {
     content: url(icons/Icons16x16/page_white_picture.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-tiff,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jif,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jfif,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jp2,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-jpx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-j2k,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-j2c,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-fpx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pcd {
+.sF-icons .sF-filetype-tiff::after,
+.sF-icons .sF-filetype-jif::after,
+.sF-icons .sF-filetype-jfif::after,
+.sF-icons .sF-filetype-jp2::after,
+.sF-icons .sF-filetype-jpx::after,
+.sF-icons .sF-filetype-j2k::after,
+.sF-icons .sF-filetype-j2c::after,
+.sF-icons .sF-filetype-fpx::after,
+.sF-icons .sF-filetype-pcd::after {
     content: url(icons/Icons32x32/page_white_picture.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-pot,
-.sF-file .sF-file-icon.sF-filetype-pptx,
-.sF-file .sF-file-icon.sF-filetype-pptm,
-.sF-file .sF-file-icon.sF-filetype-potx,
-.sF-file .sF-file-icon.sF-filetype-potm,
-.sF-file .sF-file-icon.sF-filetype-ppam,
-.sF-file .sF-file-icon.sF-filetype-ppsx,
-.sF-file .sF-file-icon.sF-filetype-ppsm,
-.sF-file .sF-file-icon.sF-filetype-sldx,
-.sF-file .sF-file-icon.sF-filetype-sldm {
+.sF-filetype-pot::after,
+.sF-filetype-pptx::after,
+.sF-filetype-pptm::after,
+.sF-filetype-potx::after,
+.sF-filetype-potm::after,
+.sF-filetype-ppam::after,
+.sF-filetype-ppsx::after,
+.sF-filetype-ppsm::after,
+.sF-filetype-sldx::after,
+.sF-filetype-sldm::after {
     content: url(icons/Icons16x16/page_white_powerpoint.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pot,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pptx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pptm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-potx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-potm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ppam,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ppsx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ppsm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sldx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-sldm {
+.sF-icons .sF-filetype-pot::after,
+.sF-icons .sF-filetype-pptx::after,
+.sF-icons .sF-filetype-pptm::after,
+.sF-icons .sF-filetype-potx::after,
+.sF-icons .sF-filetype-potm::after,
+.sF-icons .sF-filetype-ppam::after,
+.sF-icons .sF-filetype-ppsx::after,
+.sF-icons .sF-filetype-ppsm::after,
+.sF-icons .sF-filetype-sldx::after,
+.sF-icons .sF-filetype-sldm::after {
     content: url(icons/Icons32x32/page_white_powerpoint.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-rb,
-.sF-file .sF-file-icon.sF-filetype-rbw {
+.sF-filetype-rb::after,
+.sF-filetype-rbw::after {
     content: url(icons/Icons16x16/page_white_ruby.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rbw {
+.sF-icons .sF-filetype-rb::after,
+.sF-icons .sF-filetype-rbw::after {
     content: url(icons/Icons32x32/page_white_ruby.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-svg,
-.sF-file .sF-file-icon.sF-filetype-drw {
+.sF-filetype-svg::after,
+.sF-filetype-drw::after {
     content: url(icons/Icons16x16/page_white_vector.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-svg,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-drw {
+.sF-icons .sF-filetype-svg::after,
+.sF-icons .sF-filetype-drw::after {
     content: url(icons/Icons32x32/page_white_vector.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-dot,
-.sF-file .sF-file-icon.sF-filetype-docx,
-.sF-file .sF-file-icon.sF-filetype-docm,
-.sF-file .sF-file-icon.sF-filetype-dotx,
-.sF-file .sF-file-icon.sF-filetype-dotm {
+.sF-filetype-dot::after,
+.sF-filetype-docx::after,
+.sF-filetype-docm::after,
+.sF-filetype-dotx::after,
+.sF-filetype-dotm::after {
     content: url(icons/Icons16x16/page_white_word.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dot,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-docx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-docm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dotx,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-dotm {
+.sF-icons .sF-filetype-dot::after,
+.sF-icons .sF-filetype-docx::after,
+.sF-icons .sF-filetype-docm::after,
+.sF-icons .sF-filetype-dotx::after,
+.sF-icons .sF-filetype-dotm::after {
     content: url(icons/Icons32x32/page_white_word.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-deb,
-.sF-file .sF-file-icon.sF-filetype-pkg,
-.sF-file .sF-file-icon.sF-filetype-rpm,
-.sF-file .sF-file-icon.sF-filetype-tar,
-.sF-file .sF-file-icon.sF-filetype-zipx {
+.sF-filetype-deb::after,
+.sF-filetype-pkg::after,
+.sF-filetype-rpm::after,
+.sF-filetype-tar::after,
+.sF-filetype-zipx::after {
     content: url(icons/Icons16x16/page_white_zip.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-deb,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-pkg,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-rpm,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-tar,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-zipx {
+.sF-icons .sF-filetype-deb::after,
+.sF-icons .sF-filetype-pkg::after,
+.sF-icons .sF-filetype-rpm::after,
+.sF-icons .sF-filetype-tar::after,
+.sF-icons .sF-filetype-zipx::after {
     content: url(icons/Icons32x32/page_white_zip.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-amv,
-.sF-file .sF-file-icon.sF-filetype-avi,
-.sF-file .sF-file-icon.sF-filetype-moov,
-.sF-file .sF-file-icon.sF-filetype-qt {
+.sF-filetype-amv::after,
+.sF-filetype-avi::after,
+.sF-filetype-moov::after,
+.sF-filetype-qt::after {
     content: url(icons/Icons16x16/film.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-amv,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-avi,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-moov,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-qt {
+.sF-icons .sF-filetype-amv::after,
+.sF-icons .sF-filetype-avi::after,
+.sF-icons .sF-filetype-moov::after,
+.sF-icons .sF-filetype-qt::after {
     content: url(icons/Icons32x32/film.png);
 }
 
-.sF-file .sF-file-icon.sF-filetype-iff,
-.sF-file .sF-file-icon.sF-filetype-mp3,
-.sF-file .sF-file-icon.sF-filetype-mpa,
-.sF-file .sF-file-icon.sF-filetype-ra,
-.sF-file .sF-file-icon.sF-filetype-flac,
-.sF-file .sF-file-icon.sF-filetype-act,
-.sF-file .sF-file-icon.sF-filetype-aac,
-.sF-file .sF-file-icon.sF-filetype-mmf {
+.sF-filetype-iff::after,
+.sF-filetype-mp3::after,
+.sF-filetype-mpa::after,
+.sF-filetype-ra::after,
+.sF-filetype-flac::after,
+.sF-filetype-act::after,
+.sF-filetype-aac::after,
+.sF-filetype-mmf::after {
     content: url(icons/Icons16x16/music.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-iff,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mp3,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mpa,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-ra,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-flac,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-act,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-aac,
-.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-mmf {
+.sF-icons .sF-filetype-iff::after,
+.sF-icons .sF-filetype-mp3::after,
+.sF-icons .sF-filetype-mpa::after,
+.sF-icons .sF-filetype-ra::after,
+.sF-icons .sF-filetype-flac::after,
+.sF-icons .sF-filetype-act::after,
+.sF-icons .sF-filetype-aac::after,
+.sF-icons .sF-filetype-mmf::after {
     content: url(icons/Icons32x32/music.png);
 }
 

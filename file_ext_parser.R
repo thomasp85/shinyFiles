@@ -3,10 +3,10 @@ fileext <- sub('file_extension_', '', fileext)
 fileext <- sub('.png', '', fileext, fixed=T)
 
 for(i in fileext) {
-    write(paste0('.sF-file .sF-file-icon.sF-filetype-', i, ' {'), 'fileIcons.css', append=T)
+    write(paste0('.sF-filetype-', i, '::after {'), 'fileIcons.css', append=T)
     write(paste0('    content: url(icons/Icons16x16/file_extension_', i, '.png);'), 'fileIcons.css', append=T)
     write('}', 'fileIcons.css', append=T)
-    write(paste0('.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-', i, ' {'), 'fileIcons.css', append=T)
+    write(paste0('.sF-icons .sF-filetype-', i, '::after {'), 'fileIcons.css', append=T)
     write(paste0('    content: url(icons/Icons32x32/file_extension_', i, '.png);'), 'fileIcons.css', append=T)
     write('}\n', 'fileIcons.css', append=T)
 }
@@ -53,12 +53,12 @@ for(i in 1:length(other)) {
     extensions <- extensions[!extensions %in% fileext]
     
     for(j in 1:length(extensions)) {
-        write(paste0('.sF-file .sF-file-icon.sF-filetype-', extensions[j], ifelse(j == length(extensions), ' {', ',')), 'fileIcons.css', append=T)
+        write(paste0('.sF-filetype-', extensions[j], ifelse(j == length(extensions), '::after {', '::after,')), 'fileIcons.css', append=T)
     }
     write(paste0('    content: url(icons/Icons16x16/', filename, ');'), 'fileIcons.css', append=T)
     write('}', 'fileIcons.css', append=T)
     for(j in 1:length(extensions)) {
-        write(paste0('.sF-fileList.sF-icons .sF-file .sF-file-icon.sF-filetype-', extensions[j], ifelse(j == length(extensions), ' {', ',')), 'fileIcons.css', append=T)
+        write(paste0('.sF-icons .sF-filetype-', extensions[j], ifelse(j == length(extensions), '::after {', '::after,')), 'fileIcons.css', append=T)
     }
     write(paste0('    content: url(icons/Icons32x32/', filename, ');'), 'fileIcons.css', append=T)
     write('}\n', 'fileIcons.css', append=T)

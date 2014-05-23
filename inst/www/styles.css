@@ -22,28 +22,28 @@
 	width: calc(100% - 220px);
 	margin-left: auto
 }
-
-.sF-fileList>div.selected .sF-file-name {
+.sF-file-name span {
+	padding: 1px;
+}
+.sF-fileList>div.selected .sF-file-name span {
 	background: steelblue;
 	border-radius: 5px;
-}
-.sF-fileList>div.selected .sF-file-name {
 	color: white;
 }
 
 /*
 	Icons
 */
-.sF-directory .sF-file-icon {
+.sF-directory .sF-file-icon::after {
 	content: url(icons/Icons16x16/folder.png);
 }
-.sF-file .sF-file-icon {
+.sF-file-icon::after {
 	content: url(icons/Icons16x16/page_white.png);
 }
-.sF-fileList.sF-icons .sF-directory .sF-file-icon {
+.sF-icons .sF-directory .sF-file-icon::after {
 	content: url(icons/Icons32x32/folder.png);
 }
-.sF-fileList.sF-icons .sF-file .sF-file-icon {
+.sF-icons .sF-file-icon::after {
 	content: url(icons/Icons32x32/page_white.png);
 }
 
@@ -86,7 +86,7 @@
 	margin: 5px 3px;
 }
 .sF-fileList.sF-icons .sF-file-icon {
-	margin: 0 auto;
+	text-align: center;
 }
 .sF-fileList.sF-icons .sF-file-name {
 	font-size: small;
@@ -107,6 +107,8 @@
 }
 .sF-fileList.sF-icons>div.selected:hover .sF-file-name {
 	background: steelblue;
+	border-radius: 5px;
+	color: white;
 }
 .sF-fileList.sF-icons .sF-file-size,
 .sF-fileList.sF-icons .sF-file-mTime,

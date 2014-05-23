@@ -363,7 +363,9 @@ var shinyFiles = (function() {
 				$('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
 					$('<div>').addClass('sF-file-icon').addClass('sF-filetype-'+d.extension)
 				).append(
-					$('<div>', {text: d.name}).addClass('sF-file-name')
+					$('<div>').addClass('sF-file-name').append(
+						$('<span>',  {text: d.name})
+					)
 				).append(
 					$('<div>', {text: d.isDir ? '' : formatSize(d.size, true)}).addClass('sF-file-size')
 				).append(
