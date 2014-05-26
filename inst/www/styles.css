@@ -22,13 +22,11 @@
 	width: calc(100% - 220px);
 	margin-left: auto
 }
-.sF-file-name span {
-	padding: 1px;
-}
-.sF-fileList>div.selected .sF-file-name span {
+
+.sF-fileList>div.selected .sF-file-name div {
+	color: white;
 	background: steelblue;
 	border-radius: 5px;
-	color: white;
 }
 
 /*
@@ -53,6 +51,8 @@
 .sF-fileList.sF-detail {
 	display: table;
 	width: auto;
+	min-width: 100%;
+	position: relative;
 }
 .sF-fileList.sF-detail>div {
 	display: table-row;
@@ -64,7 +64,94 @@
 	font-size: small;
 	white-space: nowrap;
 	padding: 1px 3px;
-	vertical-align: middle;
+	vertical-align: top;
+}
+.sF-fileList.sF-detail .sF-file-name div{
+	float: left;
+	padding: 0 2px;
+}
+.sF-fileList.sF-detail .sF-file-header {
+	display: table-header-group;
+	background: whitesmoke;
+}
+.sF-fileList.sF-detail .sF-file-header>div {
+	display: table-row;
+	padding: 1px 0;
+}
+.sF-fileList.sF-detail .sF-file-header>div>div {
+	display: table-cell;
+	padding: 0 3px;
+}
+.sF-fileList.sF-detail .sF-file-header>div>div+div::before {
+	content: '';
+	background-image: -webkit-linear-gradient(whitesmoke, lightgrey);
+	background-image: -moz-linear-gradient(whitesmoke, lightgrey);
+	background-image: -o-linear-gradient(whitesmoke, lightgrey);
+	background-image: linear-gradient(whitesmoke, lightgrey);
+	padding-left: 1px;
+	padding-bottom: 3px;
+	left: -3px;
+	position: relative;
+}
+.sF-fileList.sF-detail .sF-file-header>div>div+div.ascending::after {
+	content: '\25bc';
+	position: relative;
+	float: right;
+	font-size: xx-small;
+}
+.sF-fileList.sF-detail .sF-file-header>div>div+div.descending::after {
+	content: '\25b2';
+	position: relative;
+	float: right;
+	font-size: xx-small;
+}
+.sF-fileList.sF-detail .sF-file-header>div>div.sF-file-icon {
+	opacity: 0;
+}
+.sF-fileList.sF-detail .sF-file-aTime,
+.sF-fileList.sF-detail .sF-file-header>div>div.sF-file-aTime {
+	display: none;
+}
+/*
+	List view
+*/
+.sF-fileList.sF-list {
+	-webkit-column-width: 150px;
+	-moz-column-width: 150px;
+	column-width: 150px;
+	height: inherit;
+}
+.sF-fileList.sF-list>div {
+	width: auto;
+	white-space: nowrap;
+	display: table-row;
+}
+.sF-fileList.sF-list>div>div {
+	width: auto;
+	position: relative;
+	display: table-cell;
+	vertical-align: top;
+	font-size: small;
+	padding: 1px 3px;
+}
+.sF-fileList.sF-list .sF-file-name div{
+	float: left;
+	position: relative;
+	max-width: calc(150px - 16px);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding: 0 2px;
+}
+.sF-fileList.sF-list .sF-file-name div::after {
+	clear: both;
+}
+.sF-fileList.sF-list .sF-file-header,
+.sF-fileList.sF-list .sF-file-size,
+.sF-fileList.sF-list .sF-file-mTime,
+.sF-fileList.sF-list .sF-file-cTime,
+.sF-fileList.sF-list .sF-file-aTime {
+	display: none;
 }
 
 /*
@@ -89,61 +176,43 @@
 	text-align: center;
 }
 .sF-fileList.sF-icons .sF-file-name {
+	position: relative;
+}
+.sF-fileList.sF-icons .sF-file-name div{
+	float: left;
+	position: relative;
+	left: 50%;
+	-webkit-transform: translate(-50%);
+	-moz-transform: translate(-50%);
+	-ms-transform: translate(-50%);
+	-o-transform: translate(-50%);
+	transform: translate(-50%);
+	max-width: 100%;
 	font-size: small;
-	width: inherit;
-	padding: 0 1px;
 	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding: 0 2px;
 }
-.sF-fileList.sF-icons>div:hover .sF-file-name {
+.sF-fileList.sF-icons .sF-file-name div::after{
+	content: '';
+	clear: both;
+}
+.sF-fileList.sF-icons>div:hover .sF-file-name div{
 	position: absolute;
-	width: inherit;
 	white-space: normal;
 	z-index: 2;
 	background: white;
 	word-wrap: break-word;
 }
-.sF-fileList.sF-icons>div.selected:hover .sF-file-name {
+.sF-fileList.sF-icons>div.selected:hover .sF-file-name div{
 	background: steelblue;
-	border-radius: 5px;
-	color: white;
 }
+.sF-fileList.sF-icons .sF-file-header,
 .sF-fileList.sF-icons .sF-file-size,
 .sF-fileList.sF-icons .sF-file-mTime,
 .sF-fileList.sF-icons .sF-file-cTime,
 .sF-fileList.sF-icons .sF-file-aTime {
-	display: none;
-}
-
-/*
-	List view
-*/
-.sF-fileList.sF-list {
-	-webkit-column-width: 150px;
-	height: inherit;
-}
-.sF-fileList.sF-list>div {
-	width: auto;
-	white-space: nowrap;
-}
-.sF-fileList.sF-list>div>div {
-	width: auto;
-	display: inline-block;
-	vertical-align: middle;
-	font-size: small;
-	white-space: nowrap;
-	padding: 1px 3px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.sF-fileList.sF-list .sF-file-name {
-	max-width: calc(100% - 16px);
-}
-.sF-fileList.sF-list .sF-file-size,
-.sF-fileList.sF-list .sF-file-mTime,
-.sF-fileList.sF-list .sF-file-cTime,
-.sF-fileList.sF-list .sF-file-aTime {
 	display: none;
 }
