@@ -1020,6 +1020,35 @@
     content: url(icons/Icons32x32/page_white_excel.png);
 }
 
+.sF-filetype-conf::after,
+.sF-filetype-sys::after,
+.sF-filetype-ini::after,
+.sF-filetype-cnf::after,
+.sF-filetype-config::after,
+.sF-filetype-cfg::after,
+.sF-filetype-cf::after,
+.sF-filetype-ch::after,
+.sF-filetype-ini2::after,
+.sF-filetype-opt::after,
+.sF-filetype-par::after,
+.sF-filetype-set::after {
+    content: url(icons/Icons16x16/page_white_gear.png);
+}
+.sF-icons .sF-filetype-conf::after,
+.sF-icons .sF-filetype-sys::after,
+.sF-icons .sF-filetype-ini::after,
+.sF-icons .sF-filetype-cnf::after,
+.sF-icons .sF-filetype-config::after,
+.sF-icons .sF-filetype-cfg::after,
+.sF-icons .sF-filetype-cf::after,
+.sF-icons .sF-filetype-ch::after,
+.sF-icons .sF-filetype-ini2::after,
+.sF-icons .sF-filetype-opt::after,
+.sF-icons .sF-filetype-par::after,
+.sF-icons .sF-filetype-set::after {
+    content: url(icons/Icons32x32/page_white_gear.png);
+}
+
 .sF-filetype-h::after {
     content: url(icons/Icons16x16/page_white_h.png);
 }
