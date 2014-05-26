@@ -36,8 +36,13 @@ fileGetter <- function(root, restrictions, filetypes, hidden=FALSE) {
         fulldir <- file.path(root, dir)
         files <- list.files(fulldir, all.files=hidden, full.names=TRUE, no..=TRUE)
         files <- gsub(pattern='//*', '/', files, perl=TRUE)
-        if (!is.null(restrictions)) {
-            files <- files[!apply(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}), 1, any)]
+        if (!is.null(restrictions) && length(files) != 0) {
+            if (length(files) == 1) {
+                keep <- !any(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}))
+            } else {
+                keep <- !apply(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}), 1, any)
+            }
+            files <- files[keep]
         }
         fileInfo <- file.info(files)
         fileInfo$filename <- basename(files)
