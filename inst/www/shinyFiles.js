@@ -356,6 +356,25 @@ var shinyFiles = (function() {
 		modal.find('.sF-breadcrumps').prop('selectedIndex', data.location.length-1)
 		
 		modal.find('.sF-fileList').children().remove();
+		
+		modal.find('.sF-fileList').append(
+			$('<div>').addClass('sF-file-header').append(
+				$('<div>').append(
+					$('<div>').addClass('sF-file-icon')
+				).append(
+					$('<div>', {text: 'name'}).addClass('sF-file-name')
+				).append(
+					$('<div>', {text: 'size'}).addClass('sF-file-size')
+				).append(
+					$('<div>', {text: 'modified'}).addClass('sF-file-mTime')
+				).append(
+					$('<div>', {text: 'created'}).addClass('sF-file-cTime')
+				).append(
+					$('<div>', {text: 'accessed'}).addClass('sF-file-aTime')
+				)
+			)
+		);
+		
 		for (i in data.files) {
 			var d = data.files[i];
 			
