@@ -18,6 +18,12 @@ shinyUI(pageWithSidebar(
         shinyFilesButton('file', 'File select', 'Please select a file', FALSE)
         ),
     mainPanel(
+        tags$h4('The output of a file choice'),
+        tags$p('When one or several files are chosen the result is made 
+               available to the shinyServer instance. In order for it to get the
+               formatting expected of a filepath it must first be fed into
+               parseFilePaths after which the output matches the formatting of
+               that returned by shinys own fileInput widget.'),
         verbatimTextOutput('filepaths')
         )
 ))
