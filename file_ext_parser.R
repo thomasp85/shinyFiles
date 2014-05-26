@@ -33,7 +33,7 @@ other <- list(
     ),
     "page_white_excel.png"=c('xlm', 'xlt', 'xlsx', 'xlsm', 'xltx', 'xltm', 'xlsb', 'xla', 'xlam', 'xll', 'xlw'),
 #    "page_white_flash.png"=c('swf', 'flv', 'fla'),
-#    "page_white_gear.png"=c(),
+    "page_white_gear.png"=c('conf', 'sys', 'bat', 'ini', 'cnf', 'config', 'cfg', 'cf', 'ch', 'ini2', 'opt', 'par', 'set'),
     "page_white_h.png"=c('h'),
     "page_white_office.png"=c('ade', 'adp', 'adn', 'accdb', 'accdr', 'accdt', 'mdb', 'cdb', 'mda', 'mdn', 'mdt', 'mdw', 'mdf', 'mde', 'accde', 'mam', 'maq', 'mar', 'mat', 'maf', 'ldb', 'laccdb'),
     "page_white_php.png"=c('PHP', 'php', 'phtml', 'php4', 'php3', 'php5', 'phps'),
