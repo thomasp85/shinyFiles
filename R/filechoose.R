@@ -11,7 +11,9 @@ NULL
 #' certain filetypes using the filter parameter and hidden files can be toggled
 #' with the hidden parameter.
 #' 
-#' @param root An absolute filepath giving the root of the returned function
+#' @param roots A named vector of absolute filepaths or a function returning a 
+#' named vector of absolute filepaths (the latter is useful if the volumes
+#' should adapt to changes in the filesystem).
 #' 
 #' @param restrictions A vector of directories within the root that should be
 #' filtered out of the results
@@ -28,12 +30,17 @@ NULL
 #' 
 #' @importFrom tools file_ext
 #' 
-fileGetter <- function(root, restrictions, filetypes, hidden=FALSE) {
+fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
     if (missing(filetypes)) filetypes <- NULL
     if (missing(restrictions)) restrictions <- NULL
     
-    function(dir) {
-        fulldir <- file.path(root, dir)
+    function(dir, root) {
+        currentRoots <- if(class(roots) == 'function') roots() else roots
+        
+        if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
+        if (missing(root)) root <- names(currentRoots)[1]
+        
+        fulldir <- file.path(currentRoots[root], dir)
         files <- list.files(fulldir, all.files=hidden, full.names=TRUE, no..=TRUE)
         files <- gsub(pattern='//*', '/', files, perl=TRUE)
         if (!is.null(restrictions) && length(files) != 0) {
@@ -57,7 +64,9 @@ fileGetter <- function(root, restrictions, filetypes, hidden=FALSE) {
         breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
         list(
             files=fileInfo[, c('filename', 'extension', 'isdir', 'size', 'mtime', 'ctime', 'atime')],
-            breadcrumps=I(c('', breadcrumps[breadcrumps != '']))
+            breadcrumps=I(c('', breadcrumps[breadcrumps != ''])),
+            roots=names(currentRoots),
+            root=root
             )
     }
 }
@@ -86,7 +95,9 @@ fileGetter <- function(root, restrictions, filetypes, hidden=FALSE) {
 #' \code{shinyFilesButton} or as the id attribute of the button, in case of a
 #' manually defined html.
 #' 
-#' @param root An absolute filepath giving the root of the returned function
+#' @param roots A named vector of absolute filepaths or a function returning a 
+#' named vector of absolute filepaths (the latter is useful if the volumes
+#' should adapt to changes in the filesystem).
 #' 
 #' @param restrictions A vector of directories within the root that should be
 #' filtered out of the results
@@ -108,7 +119,7 @@ fileGetter <- function(root, restrictions, filetypes, hidden=FALSE) {
 #'     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 #' ))
 #' server <- shinyServer(function(input, output) {
-#'     output$files <- shinyFileChoose(input, 'files', root='.', filetypes=c('', '.txt'))
+#'     output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
 #' })
 #' 
 #' runApp(list(
@@ -128,9 +139,14 @@ shinyFileChoose <- function(input, inputId, ...) {
     
     return(reactive({
         dir <- input[[paste0(inputId, '-modal')]]
-        if(is.null(dir) || is.na(dir)) dir <- ''
-        dir <- do.call(file.path, as.list(dir))
-        fileGet(dir)
+        if(is.null(dir) || is.na(dir)) {
+            dir <- list(dir='')
+        } else {
+            dir <- list(dir=dir$path, root=dir$root)
+        }
+        dir$dir <- do.call(file.path, as.list(dir$dir))
+        invalidateLater(2000, NULL)
+        do.call('fileGet', dir)
     }))
 }
 
@@ -256,7 +272,7 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
 #'     verbatimTextOutput('filepaths')
 #' ))
 #' server <- shinyServer(function(input, output) {
-#'     output$files <- shinyFileChoose(input, 'files', root='.', filetypes=c('', '.txt'))
+#'     output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
 #'     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 #' })
 #' 
@@ -270,9 +286,9 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
 #' 
 #' @export
 #' 
-parseFilePaths <- function(root, files) {
+parseFilePaths <- function(roots, files) {
     if (is.null(files) || is.na(files)) return(data.frame(name=character(0), size=numeric(0), type=character(0), datapath=character(0)))
-    files <- sapply(files, function(x) {file.path(root, do.call('file.path', x))})
+    files <- sapply(files$files, function(x) {file.path(roots[files$root], do.call('file.path', x))})
     files <- gsub(pattern='//*', '/', files, perl=TRUE)
     
     data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files)
