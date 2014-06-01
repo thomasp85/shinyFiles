@@ -13,7 +13,9 @@ shinyFileChoose(input, inputId, ...)
 \code{shinyFilesButton} or as the id attribute of the button, in case of a
 manually defined html.}
 
-\item{root}{An absolute filepath giving the root of the returned function}
+\item{roots}{A named vector of absolute filepaths or a function returning a
+named vector of absolute filepaths (the latter is useful if the volumes
+should adapt to changes in the filesystem).}
 
 \item{restrictions}{A vector of directories within the root that should be
 filtered out of the results}
@@ -53,7 +55,7 @@ ui <- shinyUI(bootstrapPage(
     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 ))
 server <- shinyServer(function(input, output) {
-    output$files <- shinyFileChoose(input, 'files', root='.', filetypes=c('', '.txt'))
+    output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
 })
 
 runApp(list(

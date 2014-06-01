@@ -3,7 +3,7 @@
 \alias{parseFilePaths}
 \title{Convert the output of a file choice to a data frame}
 \usage{
-parseFilePaths(root, files)
+parseFilePaths(roots, files)
 }
 \arguments{
 \item{root}{The path to the root as specified in the \code{shinyFileChoose()}
@@ -32,7 +32,7 @@ ui <- shinyUI(bootstrapPage(
     verbatimTextOutput('filepaths')
 ))
 server <- shinyServer(function(input, output) {
-    output$files <- shinyFileChoose(input, 'files', root='.', filetypes=c('', '.txt'))
+    output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 })
 

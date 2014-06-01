@@ -3,10 +3,12 @@
 \alias{fileGetter}
 \title{Create a function that returns fileinfo according to the given restrictions}
 \usage{
-fileGetter(root, restrictions, filetypes, hidden = FALSE)
+fileGetter(roots, restrictions, filetypes, hidden = FALSE)
 }
 \arguments{
-\item{root}{An absolute filepath giving the root of the returned function}
+\item{roots}{A named vector of absolute filepaths or a function returning a
+named vector of absolute filepaths (the latter is useful if the volumes
+should adapt to changes in the filesystem).}
 
 \item{restrictions}{A vector of directories within the root that should be
 filtered out of the results}
