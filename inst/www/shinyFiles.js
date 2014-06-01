@@ -39,6 +39,42 @@ var shinyFiles = (function() {
 	        }
 	    }
 	};
+	
+	// Modified from Tomáš Zatos answer at http://stackoverflow.com/questions/7837456/comparing-two-arrays-in-javascript
+	var compareArrays = function (arrayA, arrayB) {
+	    // if the other array is a falsy value, return
+	    if (!arrayA || !arrayB)
+	        return false;
+	
+	    // compare lengths - can save a lot of time
+	    if (arrayA.length != arrayB.length)
+	        return false;
+	
+	    for (var i = 0, l=arrayA.length; i < l; i++) {
+	        // Check if we have nested arrays
+	        if (arrayA[i] instanceof Array && arrayB[i] instanceof Array) {
+	            // recurse into the nested arrays
+	            if (!compareArrays(arrayA[i], arrayB[i]))
+	                return false;
+	        }
+	        else if (arrayA[i] != arrayB[i]) {
+	            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+	            return false;
+	        }
+	    }
+	    return true;
+	};
+	
+	// From http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array answer by James Coglan
+	var objSize = function(obj) {
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
+
+	
 	var parseDir = function(data) {
 		var parsedFiles = {};
 		data.files.filename.forEach(function(d, i) {
@@ -58,7 +94,9 @@ var shinyFiles = (function() {
 		
 		return {
 			files: parsedFiles,
-			location: data.breadcrumps
+			location: data.breadcrumps,
+			rootNames: data.roots,
+			selectedRoot: data.root
 		};
 	};
 	var formatDate = function(date) {
@@ -98,12 +136,20 @@ var shinyFiles = (function() {
 	var setDisabledButtons = function(button, modal) {
 		var back = $(button).data('back').length == 0;
 		var forward = $(button).data('forward').length == 0;
-		var up = $(modal).find('.sF-breadcrumps option').length == 1;
+		var up = $(modal).find('.sF-breadcrumps>option').length == 1;
 		
 		$(modal).find('#sF-btn-back').prop('disabled', back);
 		$(modal).find('#sF-btn-forward').prop('disabled', forward);
 		$(modal).find('#sF-btn-up').prop('disabled', up);
-	}
+	};
+	
+	var filesSelected = function(modal) {
+		return modal.find('.sF-fileList').children().filter('.selected').length > 0;
+	};
+	
+	var toggleSelectButton = function(modal) {
+		modal.find('#sF-selectButton').prop('disabled', !filesSelected(modal));
+	};
 	
 	var createFileChooser = function(button, title) {
 		Shiny.unbindAll();
@@ -173,6 +219,7 @@ var shinyFiles = (function() {
 					$('<div>').addClass('sF-fileList')
 				).on('click', function() {
 					modal.find('.sF-fileList .selected').toggleClass('selected');
+					toggleSelectButton(modal);
 				})
 			)
 		).append(
@@ -182,7 +229,7 @@ var shinyFiles = (function() {
 						dismissFileChooser(button, modal);
 					})
 			).append(
-				$('<button>', {text: 'Select', type: 'button'}).addClass('btn btn-primary')
+				$('<button>', {text: 'Select', type: 'button', id: 'sF-selectButton'}).addClass('btn btn-primary')
 					.on('click', function() {
 						selectFiles(button, modal);
 					})
@@ -281,6 +328,7 @@ var shinyFiles = (function() {
 							$('<div>').addClass('sF-fileList')
 						).on('click', function() {
 							modal.find('.sF-fileList .selected').toggleClass('selected');
+							toggleSelectButton(modal);
 						})
 					)
 				).append(
@@ -290,7 +338,7 @@ var shinyFiles = (function() {
 								dismissFileChooser(button, modal);
 							})
 					).append(
-						$('<button>', {text: 'Select', type: 'button'}).addClass('btn btn-primary')
+						$('<button>', {text: 'Select', type: 'button'}).addClass('btn btn-primary').prop('disabled', true)
 							.on('click', function() {
 								selectFiles(button, modal);
 							})
@@ -345,84 +393,156 @@ var shinyFiles = (function() {
 		
 		if(!modal) return;
 		
+		var currentData = modal.data('currentData');
+		
 		var single = $(element).data('selecttype') == 'single';
-		modal.find('.sF-breadcrumps').find('option').remove();
 		
-		data.location.forEach(function(d, i) {
-			modal.find('.sF-breadcrumps').append(
-				$('<option>', {html: '&#127968; ' + data.location.slice(0, i+1).join(' > '), value: d}).data('location', data.location.slice(0, i+1))
-			);
-		});
-		modal.find('.sF-breadcrumps').prop('selectedIndex', data.location.length-1)
+		var newLocation = currentData ? !(compareArrays(currentData.location, data.location) && currentData.selectedRoot == data.selectedRoot) : true;
+		var newVolumes = currentData ? !compareArrays(currentData.rootNames, data.rootNames) : true;
+		var newFiles = {};
+		if (currentData) {
+			for (i in data.files) {
+				if (!currentData.files[i]) newFiles[i] = data.files[i];
+			}
+		};
+		var oldFiles = {};
+		if (currentData) {
+			for (i in currentData.files) {
+				if (!data.files[i]) oldFiles[i] = currentData.files[i];
+			}
+		};
 		
-		modal.find('.sF-fileList').children().remove();
 		
-		modal.find('.sF-fileList').append(
-			$('<div>').addClass('sF-file-header').append(
-				$('<div>').append(
-					$('<div>').addClass('sF-file-icon')
-				).append(
-					$('<div>', {text: 'name'}).addClass('sF-file-name')
-				).append(
-					$('<div>', {text: 'size'}).addClass('sF-file-size')
-				).append(
-					$('<div>', {text: 'modified'}).addClass('sF-file-mTime')
-				).append(
-					$('<div>', {text: 'created'}).addClass('sF-file-cTime')
-				).append(
-					$('<div>', {text: 'accessed'}).addClass('sF-file-aTime')
+		if (newLocation || newVolumes) {
+			modal.find('.sF-breadcrumps').find('option, optgroup').remove();
+			
+			data.location.forEach(function(d, i) {
+				modal.find('.sF-breadcrumps').append(
+					$('<option>', {html: data.selectedRoot + ' ' + data.location.slice(0, i+1).join(' > '), value: d}).data('location', data.location.slice(0, i+1))
+				);
+			});
+			modal.find('.sF-breadcrumps').prop('selectedIndex', data.location.length-1).data('selectedRoot', data.selectedRoot);
+			
+			var rootList = $('<optgroup>', {label: 'Volumes'}).appendTo(modal.find('.sF-breadcrumps'));
+			data.rootNames.forEach(function(d) {
+				rootList.append(
+					$('<option>', {html: (d == data.selectedRoot ? '&#9679; ': '&#9675; ') + d, value: d})
 				)
-			)
-		);
+			})
+		};
 		
-		for (i in data.files) {
-			var d = data.files[i];
+		if (newLocation) {
+			modal.find('.sF-fileList').children().remove();
 			
 			modal.find('.sF-fileList').append(
-				$('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
-					$('<div>').addClass('sF-file-icon').addClass('sF-filetype-'+d.extension)
-				).append(
-					$('<div>').addClass('sF-file-name').append(
-						$('<div>',  {text: d.name})
+				$('<div>').addClass('sF-file-header').append(
+					$('<div>').append(
+						$('<div>').addClass('sF-file-icon')
+					).append(
+						$('<div>', {text: 'name'}).addClass('sF-file-name')
+					).append(
+						$('<div>', {text: 'size'}).addClass('sF-file-size')
+					).append(
+						$('<div>', {text: 'modified'}).addClass('sF-file-mTime')
+					).append(
+						$('<div>', {text: 'created'}).addClass('sF-file-cTime')
+					).append(
+						$('<div>', {text: 'accessed'}).addClass('sF-file-aTime')
 					)
-				).append(
-					$('<div>', {text: d.isDir ? '' : formatSize(d.size, true)}).addClass('sF-file-size')
-				).append(
-					$('<div>', {text: formatDate(d.mTime)}).addClass('sF-file-mTime')
-				).append(
-					$('<div>', {text: formatDate(d.cTime)}).addClass('sF-file-cTime')
-				).append(
-					$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
-				).data('sF-file', d).on('click', function() {
-					elementSelector(this, single, false)
-					return false;
-				})
-			).append('<i> </i>');
+				)
+			);
+			
+			for (i in data.files) {
+				var d = data.files[i];
+				
+				modal.find('.sF-fileList').append(
+					$('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
+						$('<div>').addClass('sF-file-icon').addClass('sF-filetype-'+d.extension)
+					).append(
+						$('<div>').addClass('sF-file-name').append(
+							$('<div>',  {text: d.name})
+						)
+					).append(
+						$('<div>', {text: d.isDir ? '' : formatSize(d.size, true)}).addClass('sF-file-size')
+					).append(
+						$('<div>', {text: formatDate(d.mTime)}).addClass('sF-file-mTime')
+					).append(
+						$('<div>', {text: formatDate(d.cTime)}).addClass('sF-file-cTime')
+					).append(
+						$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
+					).data('sF-file', d).on('click', function() {
+						elementSelector(this, single, false);
+						toggleSelectButton(modal);
+						return false;
+					})
+				).append('<i> </i>');
+			};
+			modal.find('.sF-directory').on('dblclick', function() {
+				$(this).toggleClass('selected', true);
+				openDir($(element), modal, this);
+			});
+		} else {
+			if (objSize(oldFiles) > 0) {
+				modal.find('.sF-fileList').children().filter(function() {
+					return oldFiles[$(this).find('.sF-file-name div').text()]
+				}).remove();
+			};
+			if (objSize(newFiles) > 0) {
+				for (i in newFiles) {
+					var d = newFiles[i];
+					
+					modal.find('.sF-fileList').append(
+						$('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
+							$('<div>').addClass('sF-file-icon').addClass('sF-filetype-'+d.extension)
+						).append(
+							$('<div>').addClass('sF-file-name').append(
+								$('<div>',  {text: d.name})
+							)
+						).append(
+							$('<div>', {text: d.isDir ? '' : formatSize(d.size, true)}).addClass('sF-file-size')
+						).append(
+							$('<div>', {text: formatDate(d.mTime)}).addClass('sF-file-mTime')
+						).append(
+							$('<div>', {text: formatDate(d.cTime)}).addClass('sF-file-cTime')
+						).append(
+							$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
+						).data('sF-file', d).on('click', function() {
+							elementSelector(this, single, false);
+							toggleSelectButton(modal);
+							return false;
+						})
+					).append('<i> </i>');
+				};
+			};
 		};
-		modal.find('.sF-directory').on('dblclick', function() {
-			$(this).toggleClass('selected', true);
-			openDir($(element), modal, this);
-		});
 		
 		setDisabledButtons($(element), modal);
+		toggleSelectButton(modal);
 		
+		modal.data('currentData', data);
 		$(modal).trigger('change');
 	};
 	
 	var getSelectedFiles = function(modal) {
 		var directory = getCurrentDirectory(modal);
 		
-		return modal.find('.sF-fileList').find('.selected .sF-file-name').map(function() {
-			var dirCopy = directory.slice();
-			dirCopy.push($(this).text());
-			return dirCopy;
-		});
+		return {
+			files: modal.find('.sF-fileList').find('.selected .sF-file-name').map(function() {
+				var dirCopy = directory.path.slice();
+				dirCopy.push($(this).text());
+				return dirCopy;
+			}),
+			root: directory.root
+		};
 	};
 	
 	var getCurrentDirectory = function(modal) {
-		return modal.find('.sF-breadcrumps').find('option').map(function() {
-			return $(this).val();
-		});
+		return {
+			path: modal.find('.sF-breadcrumps>option').map(function() {
+				return $(this).val();
+			}),
+			root: modal.find('.sF-breadcrumps').data('selectedRoot')
+		};
 	};
 	
 	var selectFiles = function(button, modal) {
@@ -462,7 +582,7 @@ var shinyFiles = (function() {
 	}
 	
 	var changeDirectory = function(button, modal, directory) {
-		if (directory instanceof jQuery) directory = directory.toArray();
+		if (directory.path instanceof jQuery) directory.path = directory.path.toArray();
 		
 		$(button).data('path', directory);
 		$(modal).trigger('navigate');
@@ -492,7 +612,10 @@ var shinyFiles = (function() {
 		$('.sF-btn-up').prop('disabled', true);
 		
 		var currentDir = getCurrentDirectory(modal);
-		var newDir = currentDir.slice(0, -1);
+		var newDir = {
+			path: currentDir.path.slice(0, -1),
+			root: currentDir.root
+		};
 		
 		changeDirectory(button, modal, newDir);
 		$(button).data('back').push(currentDir);
@@ -501,7 +624,16 @@ var shinyFiles = (function() {
 	
 	var moveToDir = function(button, modal, select) {
 		var currentDir = getCurrentDirectory(modal);
-		var newDir = $($(select).find('option')[$(select).prop('selectedIndex')]).data('location')
+		var newDir = {}
+		var selection = $(select).find(':selected');
+		
+		if (selection.parent().is('optgroup')) {
+			newDir.path = '';
+			newDir.root = selection.val();
+		} else {
+			newDir.path = selection.data('location');
+			newDir.root = $(select).data('selectedRoot')
+		}
 		
 		changeDirectory(button, modal, newDir);
 		$(button).data('back').push(currentDir);
@@ -510,8 +642,11 @@ var shinyFiles = (function() {
 	
 	var openDir = function(button, modal, dir) {
 		var currentDir = getCurrentDirectory(modal);
-		var newDir = currentDir.slice();
-		newDir.push($(dir).find('.sF-file-name').text());
+		var newDir = {
+			path: currentDir.path.slice(),
+			root: currentDir.root
+		}
+		newDir.path.push($(dir).find('.sF-file-name').text());
 		
 		changeDirectory(button, modal, newDir);
 		$(button).data('back').push(currentDir);
@@ -571,9 +706,14 @@ $.extend(filechoose, {
 		return $(scope).find(".shinyFiles");
 	},
 	getValue: function(el) {
-		return $(el).data('files') ? $.extend({}, $(el).data('files').toArray().map(function(d) {
-			return d.toArray();
-		})) : null;
+		var data = $(el).data('files');
+		
+		return data ? {
+			files: $.extend({}, data.files.toArray().map(function(d) {
+				return d.toArray();
+			})),
+			root: data.root
+		} : null;
 	},
 	setValue: function(el, value) {
 		$(el).data('files', value);
