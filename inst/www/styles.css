@@ -29,6 +29,23 @@
 	border-radius: 5px;
 }
 
+.sF-sort .dropdown-menu li .icon-ok {
+	padding-right: 5px;
+	visibility: hidden;
+}
+.sF-sort .dropdown-menu li.selected .icon-ok {
+	visibility: visible;
+}
+.sF-sort .dropdown-menu a.ascending .icon-arrow-down,
+.sF-sort .dropdown-menu a.descending .icon-arrow-up {
+	padding-right: 5px;
+}
+.sF-sort .dropdown-menu a.ascending .icon-arrow-up,
+.sF-sort .dropdown-menu a.descending .icon-arrow-down {
+	display: none;
+}
+
+
 /*
 	Icons
 */

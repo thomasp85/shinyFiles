@@ -73,7 +73,72 @@ var shinyFiles = (function() {
 	    }
 	    return size;
 	};
-
+	
+	// Adapted from https://gist.github.com/rodneyrehm/2818576
+	$.fn.sortChildren = function(map, reverse) {
+		var sortChildren = {
+		    // default comparison function using String.localeCompare if possible
+		    compare: function(a, b) {
+		        if ($.isArray(a.value)) {
+		            return sortChildren.compareList(a.value, b.value);
+		        }
+		        return sortChildren.compareValues(a.value, b.value);
+		    },
+		    
+		    compareValues: function(a, b) {
+		        if (typeof a === "string" && "".localeCompare) {
+		            return a.localeCompare(b);
+		        }
+		 
+		        return a === b ? 0 : a > b ? 1 : -1;
+		    },
+		 
+		    // default comparison function for DESC
+		    reverse: function(a, b) {
+		        return -1 * sortChildren.compare(a, b);
+		    },
+		 
+		    // default mapping function returning the elements' lower-cased innerTEXT
+		    map: function(elem) {
+		        return $(elem).text().toLowerCase();
+		    },
+		 
+		    // default comparison function for lists (e.g. table columns)
+		    compareList: function(a, b) {
+		        var i = 1,
+		            length = a.length,
+		            res = sortChildren.compareValues(a[0], b[0]);
+		 
+		        while (res === 0 && i < length) {
+		            res = sortChildren.compareValues(a[i], b[i]);
+		            i++;
+		        }
+		 
+		        return res;
+		    }
+		};
+		
+	    return this.each(function() {
+	        var $this = $(this),
+	            $children = $this.children(),
+	            _map = [],
+	            length = $children.length,
+	            i;
+	    
+	        for (i = 0; i < length ; i++) {
+	            _map.push({
+	                index: i, 
+	                value: (map || sortChildren.map)($children[i])
+	            });
+	        }
+	                
+	        _map.sort(reverse ? sortChildren.reverse : sortChildren.compare);
+	 
+	        for (i = 0; i < length ; i++) {
+	            this.appendChild($children[_map[i].index]);
+	        }
+	    });
+	};
 	
 	var parseDir = function(data) {
 		var parsedFiles = {};
@@ -127,10 +192,14 @@ var shinyFiles = (function() {
 		var back = $(button).data('back') || [];
 		var forward = $(button).data('forward') || [];
 		var view = $(button).data('view') || '';
+		var sort = $(button).data('sort') || 'Name';
+		var sortDir = $(button).data('sortDir') || 'ascending';
 		
 		$(button).data('back', back)
 			.data('forward', forward)
-			.data('view', view);
+			.data('view', view)
+			.data('sort', sort)
+			.data('sortDir', sortDir);
 	};
 	
 	var setDisabledButtons = function(button, modal) {
@@ -144,12 +213,45 @@ var shinyFiles = (function() {
 	};
 	
 	var filesSelected = function(modal) {
-		return modal.find('.sF-fileList').children().filter('.selected').length > 0;
+		return modal.find('.sF-fileList').children().filter('.sF-file.selected').length > 0;
 	};
 	
 	var toggleSelectButton = function(modal) {
 		modal.find('#sF-selectButton').prop('disabled', !filesSelected(modal));
 	};
+	
+	var sortFiles = function(modal, attribute, direction) {
+		var fileList = $(modal).find('.sF-fileList');
+		
+		fileList.sortChildren(function(elem) {
+			return $(elem).data('sF-file') ? $(elem).data('sF-file').name : '';
+		}, direction == 'descending');
+		
+		if (attribute == 'Name') return;
+		
+		switch (attribute) {
+			case 'Type':
+				fileList.sortChildren(function(elem) {
+					return $(elem).data('sF-file') ? $(elem).data('sF-file').isDir ? '000' : $(elem).data('sF-file').extension || '001' : '';
+				}, direction == 'descending');
+				break;
+			case 'Size':
+				fileList.sortChildren(function(elem) {
+					return $(elem).data('sF-file') ? $(elem).data('sF-file').isDir ? -1 : $(elem).data('sF-file').size : 0;
+				}, direction == 'descending');
+				break;
+			case 'Created':
+				fileList.sortChildren(function(elem) {
+					return $(elem).data('sF-file') ? $(elem).data('sF-file').cTime : new Date();
+				}, direction == 'descending');
+				break;
+			case 'Modified':
+				fileList.sortChildren(function(elem) {
+					return $(elem).data('sF-file') ? $(elem).data('sF-file').mTime : new Date();
+				}, direction == 'descending');
+				break;
+		}
+	}
 	
 	var createFileChooser = function(button, title) {
 		Shiny.unbindAll();
@@ -206,10 +308,57 @@ var shinyFiles = (function() {
 						changeView(button, modal, $(this));
 					})
 				).append(
+					$('<div>').addClass('sF-sort dropdown btn-group btn-group-sm').append(
+						$('<button>', {id: 'sF-btn-sort'}).addClass('btn btn-default').css({
+							'padding-left': '3px',
+							'padding-right': '7px',
+							'border-radius': '4px'
+						}).append(
+							$('<i>').addClass('icon-resize-vertical')
+						).append(
+							$('<i>').addClass('icon-signal').css({
+								'-webkit-transform': 'rotate(90deg)',
+							    '-moz-transform': 'rotate(90deg)',
+							    '-ms-transform': 'rotate(90deg)',
+							    '-o-transform': 'rotate(90deg)',
+							    'transform': 'rotate(90deg)'
+							})
+						)
+					).append(
+						$('<ul>').addClass('dropdown-menu').append(
+							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Name'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Name' ? 'selected' : '')
+						).append(
+							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Type'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Type' ? 'selected' : '')
+						).append(
+							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Size'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Size' ? 'selected' : '')
+						).append(
+							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Created'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Created' ? 'selected' : '')
+						).append(
+							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Modified'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Modified' ? 'selected' : '')
+						).append(
+							$('<li>').addClass('divider')
+						).append(
+							$('<li>').addClass('sortDir').append($('<a>', {href: '#', text: 'Sort direction'}).addClass($(button).data('sortDir')).prepend($('<i>').addClass('icon-arrow-down')).prepend($('<i>').addClass('icon-arrow-up')))
+						).on('click', 'li.sortAttr',  function() {
+							$(this).siblings('.sortAttr').removeClass('selected');
+							$(this).toggleClass('selected', true);
+							
+							$(modal).trigger('fileSort', [$(this).find('a').text(), $(this).siblings('.sortDir').find('a').attr('class')])
+						}).on('click', 'li.sortDir', function() {
+							$(this).find('a').toggleClass('ascending').toggleClass('descending')
+							
+							$(modal).trigger('fileSort', [$(this).parent().find('.selected a').text(), $(this).find('a').attr('class')])
+						})
+					).on('click', function() {
+						$(this).toggleClass('open')
+							.find('button').toggleClass('active');
+						return false;
+					})
+				).append(
 					$('<select>').addClass('sF-breadcrumps form-control input-sm').on('change', function() {
 							moveToDir(button, modal, this);
 						}).css({
-							'width': 'calc(100% - 250px)',
+							'width': 'calc(100% - 291px)',
 							'margin-bottom': 0,
 							'float': 'right'
 						})
@@ -236,11 +385,6 @@ var shinyFiles = (function() {
 			)
 		).appendTo($('body'));
 		
-
-			
-		
-		
-		
 		var backdrop = $('<div>').addClass('modal-backdrop fade').appendTo($('body'));
 		
 		modal.data('backdrop', backdrop);
@@ -252,6 +396,9 @@ var shinyFiles = (function() {
 		
 		modal.on('change', function() {
 			setDisabledButtons(button, modal);
+		}).on('fileSort', function(elem, attribute, direction) {
+			$(button).data('sort', attribute).data('sortDir', direction);
+			sortFiles(modal, attribute, direction);
 		});
 		
 		setTimeout(function() {
@@ -417,11 +564,11 @@ var shinyFiles = (function() {
 			modal.find('.sF-breadcrumps').find('option, optgroup').remove();
 			
 			data.location.forEach(function(d, i) {
-				modal.find('.sF-breadcrumps').append(
-					$('<option>', {html: data.selectedRoot + ' ' + data.location.slice(0, i+1).join(' > '), value: d}).data('location', data.location.slice(0, i+1))
+				modal.find('.sF-breadcrumps').prepend(
+					$('<option>', {html: '&#128193; ' + (d || data.selectedRoot), value: d}).data('location', data.location.slice(0, i+1))
 				);
 			});
-			modal.find('.sF-breadcrumps').prop('selectedIndex', data.location.length-1).data('selectedRoot', data.selectedRoot);
+			modal.find('.sF-breadcrumps').prop('selectedIndex', 0).data('selectedRoot', data.selectedRoot);
 			
 			var rootList = $('<optgroup>', {label: 'Volumes'}).appendTo(modal.find('.sF-breadcrumps'));
 			data.rootNames.forEach(function(d) {
@@ -475,7 +622,7 @@ var shinyFiles = (function() {
 						toggleSelectButton(modal);
 						return false;
 					})
-				).append('<i> </i>');
+				);
 			};
 			modal.find('.sF-directory').on('dblclick', function() {
 				$(this).toggleClass('selected', true);
@@ -511,7 +658,7 @@ var shinyFiles = (function() {
 							toggleSelectButton(modal);
 							return false;
 						})
-					).append('<i> </i>');
+					);
 				};
 			};
 		};
@@ -540,7 +687,7 @@ var shinyFiles = (function() {
 		return {
 			path: modal.find('.sF-breadcrumps>option').map(function() {
 				return $(this).val();
-			}),
+			}).toArray().reverse(),
 			root: modal.find('.sF-breadcrumps').data('selectedRoot')
 		};
 	};
@@ -658,11 +805,11 @@ var shinyFiles = (function() {
 	sF.init = function() {
 		$(document).on('dirChange', '.shinyFiles', function(e, data) {
 			populateFileChooser($(this), data);
+		}).on('click', '.shinyFiles', function(e) {
+			createFileChooser(this, $(this).data('title'));
+		}).on('click', function(e) {
+			$('.sF-modal .open').removeClass('open').find('button').removeClass('active');
 		});
-		
-		$(document).on('click', '.shinyFiles', function(e) {
-			createFileChooser(this, $(this).data('title'))
-		})
 	};
 	sF.updateFileList = function(element, data) {
 		$(element).trigger('dirChange', [parseDir(data)]);
