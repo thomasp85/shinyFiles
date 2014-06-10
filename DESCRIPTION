@@ -1,7 +1,7 @@
 Package: shinyFiles
 Type: Package
 Title: A server-side file system viewer for shiny
-Version: 0.2.0
+Version: 0.3.0
 Date: 2014-05-23
 Author: Thomas Lin Pedersen
 Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
