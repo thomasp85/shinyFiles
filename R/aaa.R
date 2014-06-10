@@ -2,6 +2,8 @@
 #' 
 #' @importFrom shiny addResourcePath
 #' 
+#' @noRd
+#' 
 .onAttach <- function(...) {
     addResourcePath('sF', system.file('www', package='shinyFiles'))
 }
