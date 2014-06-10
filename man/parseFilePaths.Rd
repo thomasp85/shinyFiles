@@ -6,7 +6,7 @@
 parseFilePaths(roots, files)
 }
 \arguments{
-\item{root}{The path to the root as specified in the \code{shinyFileChoose()}
+\item{roots}{The path to the root as specified in the \code{shinyFileChoose()}
 call in \code{shinyServer()}}
 
 \item{files}{The corresponding input variable to be parsed}
@@ -32,7 +32,8 @@ ui <- shinyUI(bootstrapPage(
     verbatimTextOutput('filepaths')
 ))
 server <- shinyServer(function(input, output) {
-    output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
+    output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'),
+    filetypes=c('', '.txt'))
     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 })
 

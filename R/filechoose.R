@@ -102,19 +102,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' @param session The session object of the shinyServer call (usually 
 #' 'session'). Used to terminate file system lookups when the client leaves.
 #' 
-#' @param roots A named vector of absolute filepaths or a function returning a 
-#' named vector of absolute filepaths (the latter is useful if the volumes
-#' should adapt to changes in the filesystem).
-#' 
-#' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
-#' 
-#' @param filetypes A character vector of file extensions (without dot in front 
-#' i.e. 'txt' not '.txt') to include in the output. Use the empty string to 
-#' include files with no extension. If not set all file types will be included
-#' 
-#' @param hidden A logical value specifying whether hidden files should be 
-#' returned or not
+#' @param ... Arguments to be passed on to \code{\link{fileGetter}}
 #' 
 #' @return A reactive expression that should be assigned to the output object of
 #' the \code{shinyServer()} call. The output name it should be assigned to have
@@ -126,7 +114,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 #' ))
 #' server <- shinyServer(function(input, output, session) {
-#'     output$files <- shinyFileChoose(input, 'files', session=session, roots=c(wd='.'), filetypes=c('', '.txt'))
+#'     output$files <- shinyFileChoose(input, 'files', session=session, 
+#'                                     roots=c(wd='.'), filetypes=c('', '.txt'))
 #' })
 #' 
 #' runApp(list(
@@ -137,7 +126,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @family shinyFiles
 #' 
-#' @importFrom shiny reactive
+#' @importFrom shiny reactive invalidateLater
 #' 
 #' @export
 #' 
@@ -265,7 +254,7 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
 #' shinyFiles in your code as code that relies on the values of a file selection
 #' doesn't have to change.
 #' 
-#' @param root The path to the root as specified in the \code{shinyFileChoose()}
+#' @param roots The path to the root as specified in the \code{shinyFileChoose()}
 #' call in \code{shinyServer()}
 #' 
 #' @param files The corresponding input variable to be parsed
@@ -279,7 +268,8 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
 #'     verbatimTextOutput('filepaths')
 #' ))
 #' server <- shinyServer(function(input, output) {
-#'     output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
+#'     output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), 
+#'                                     filetypes=c('', '.txt'))
 #'     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 #' })
 #' 

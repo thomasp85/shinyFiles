@@ -20,19 +20,7 @@ files or drives)}
 \item{session}{The session object of the shinyServer call (usually
 'session'). Used to terminate file system lookups when the client leaves.}
 
-\item{roots}{A named vector of absolute filepaths or a function returning a
-named vector of absolute filepaths (the latter is useful if the volumes
-should adapt to changes in the filesystem).}
-
-\item{restrictions}{A vector of directories within the root that should be
-filtered out of the results}
-
-\item{filetypes}{A character vector of file extensions (without dot in front
-i.e. 'txt' not '.txt') to include in the output. Use the empty string to
-include files with no extension. If not set all file types will be included}
-
-\item{hidden}{A logical value specifying whether hidden files should be
-returned or not}
+\item{...}{Arguments to be passed on to \code{\link{fileGetter}}}
 }
 \value{
 A reactive expression that should be assigned to the output object of
@@ -62,7 +50,8 @@ ui <- shinyUI(bootstrapPage(
     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 ))
 server <- shinyServer(function(input, output, session) {
-    output$files <- shinyFileChoose(input, 'files', session=session, roots=c(wd='.'), filetypes=c('', '.txt'))
+    output$files <- shinyFileChoose(input, 'files', session=session,
+    roots=c(wd='.'), filetypes=c('', '.txt'))
 })
 
 runApp(list(
