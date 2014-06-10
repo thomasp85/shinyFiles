@@ -674,10 +674,10 @@ var shinyFiles = (function() {
 		var directory = getCurrentDirectory(modal);
 		
 		return {
-			files: modal.find('.sF-fileList').find('.selected .sF-file-name').map(function() {
+			files: modal.find('.sF-fileList').find('.selected .sF-file-name div').map(function() {
 				var dirCopy = directory.path.slice();
 				dirCopy.push($(this).text());
-				return dirCopy;
+				return [dirCopy];
 			}),
 			root: directory.root
 		};
@@ -854,10 +854,9 @@ $.extend(filechoose, {
 	},
 	getValue: function(el) {
 		var data = $(el).data('files');
-		
 		return data ? {
 			files: $.extend({}, data.files.toArray().map(function(d) {
-				return d.toArray();
+				return d;
 			})),
 			root: data.root
 		} : null;
