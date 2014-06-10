@@ -95,6 +95,13 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' \code{shinyFilesButton} or as the id attribute of the button, in case of a
 #' manually defined html.
 #' 
+#' @param updateFreq The time in milliseconds between file system lookups. This
+#' determines the responsiveness to changes in the filesystem (e.g. addition of
+#' files or drives)
+#' 
+#' @param session The session object of the shinyServer call (usually 
+#' 'session'). Used to terminate file system lookups when the client leaves.
+#' 
 #' @param roots A named vector of absolute filepaths or a function returning a 
 #' named vector of absolute filepaths (the latter is useful if the volumes
 #' should adapt to changes in the filesystem).
@@ -118,8 +125,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' ui <- shinyUI(bootstrapPage(
 #'     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 #' ))
-#' server <- shinyServer(function(input, output) {
-#'     output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
+#' server <- shinyServer(function(input, output, session) {
+#'     output$files <- shinyFileChoose(input, 'files', session=session, roots=c(wd='.'), filetypes=c('', '.txt'))
 #' })
 #' 
 #' runApp(list(
@@ -134,7 +141,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, inputId, ...) {
+shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) {
     fileGet <- do.call('fileGetter', list(...))
     
     return(reactive({
@@ -145,7 +152,7 @@ shinyFileChoose <- function(input, inputId, ...) {
             dir <- list(dir=dir$path, root=dir$root)
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
-        invalidateLater(2000, NULL)
+        invalidateLater(updateFreq, session)
         do.call('fileGet', dir)
     }))
 }

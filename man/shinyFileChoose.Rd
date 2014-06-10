@@ -3,7 +3,7 @@
 \alias{shinyFileChoose}
 \title{Creates a reactive expression that updates the filesystem view}
 \usage{
-shinyFileChoose(input, inputId, ...)
+shinyFileChoose(input, inputId, updateFreq = 2000, session = NULL, ...)
 }
 \arguments{
 \item{input}{The input object of the \code{shinyServer()} call (usaully
@@ -12,6 +12,13 @@ shinyFileChoose(input, inputId, ...)
 \item{inputId}{The same ID as used in the matching call to
 \code{shinyFilesButton} or as the id attribute of the button, in case of a
 manually defined html.}
+
+\item{updateFreq}{The time in milliseconds between file system lookups. This
+determines the responsiveness to changes in the filesystem (e.g. addition of
+files or drives)}
+
+\item{session}{The session object of the shinyServer call (usually
+'session'). Used to terminate file system lookups when the client leaves.}
 
 \item{roots}{A named vector of absolute filepaths or a function returning a
 named vector of absolute filepaths (the latter is useful if the volumes
@@ -54,8 +61,8 @@ whether hidden files should be visible or not.
 ui <- shinyUI(bootstrapPage(
     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 ))
-server <- shinyServer(function(input, output) {
-    output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', '.txt'))
+server <- shinyServer(function(input, output, session) {
+    output$files <- shinyFileChoose(input, 'files', session=session, roots=c(wd='.'), filetypes=c('', '.txt'))
 })
 
 runApp(list(
