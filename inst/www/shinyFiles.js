@@ -1,5 +1,5 @@
 var shinyFiles = (function() {
-	var elementSelector = function(element, single, forceSelect) {
+	var elementSelector = function(event, element, single, forceSelect) {
 		var parent = $(element).parent();
 		var lastSelectedElement = parent.data('lastElement');
 	
@@ -24,17 +24,17 @@ var shinyFiles = (function() {
 			parent.children().removeClass('selected');
 		}
 	
-	    if (window.event.button === 0) {
-	        if ((!window.event.metaKey && !window.event.ctrlKey && !window.event.shiftKey) || single) {
+	    if (event.button === 0) {
+	        if ((!event.metaKey && !event.ctrlKey && !event.shiftKey) || single) {
 	        	var selected = $(element).hasClass('selected');
 	        	var nSelected = parent.children('.selected').length;
 	            clearAll();
 	            if ((!selected || nSelected != 1) || forceSelect) {
 	        	    toggleSelection(element);		            
 	            }
-	        } else if ((window.event.metaKey || window.event.ctrlKey) && !single) {
+	        } else if ((event.metaKey || event.ctrlKey) && !single) {
 		        toggleSelection(element);
-		    } else if (window.event.shiftKey && !single) {
+		    } else if (event.shiftKey && !single) {
 	            selectElementsBetweenIndexes([$(lastSelectedElement).index(), $(element).index()])
 	        }
 	    }
@@ -617,8 +617,8 @@ var shinyFiles = (function() {
 						$('<div>', {text: formatDate(d.cTime)}).addClass('sF-file-cTime')
 					).append(
 						$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
-					).data('sF-file', d).on('click', function() {
-						elementSelector(this, single, false);
+					).data('sF-file', d).on('click', function(event) {
+						elementSelector(event, this, single, false);
 						toggleSelectButton(modal);
 						return false;
 					})
@@ -653,8 +653,8 @@ var shinyFiles = (function() {
 							$('<div>', {text: formatDate(d.cTime)}).addClass('sF-file-cTime')
 						).append(
 							$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
-						).data('sF-file', d).on('click', function() {
-							elementSelector(this, single, false);
+						).data('sF-file', d).on('click', function(event) {
+							elementSelector(event, this, single, false);
 							toggleSelectButton(modal);
 							return false;
 						})
