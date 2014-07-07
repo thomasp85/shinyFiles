@@ -3,12 +3,7 @@ shinyFiles
 
 This package extends the functionality of shiny by providing an API for client side access to the server file system. As many shiny apps are run locally this is equivalent to accessing the filesystem of the users own computer, without the overhead of copying files to temporary locations that is tied to the use of fileInput().
 
-The package is intended for CRAN but in the meantime it can be installed using the devtools package:
-```R
-install.package(devtools)
-library(devtools)
-install_github('shinyFiles', 'thomasp85')
-```
+The package can be installed from CRAN using `install.packages('shinyFiles')`.
 
 Usage
 ----------
