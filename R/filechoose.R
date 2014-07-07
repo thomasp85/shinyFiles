@@ -237,7 +237,7 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
             type='button',
             class='shinyFiles btn',
             'data-title'=title,
-            'data-selecttype'=ifelse(multiple, 'mulitple', 'single'),
+            'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
             as.character(label)
             )
         )

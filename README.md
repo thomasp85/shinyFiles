@@ -17,7 +17,7 @@ The pacakge is designed to make it extremely easy to implement. A barebone examp
 In the ui.R file
 ```R
 shinyUI(bootstrapPage(
-    shinyFilesButton('files', label='File select', title='Please select a file', mulitple=FALSE)
+    shinyFilesButton('files', label='File select', title='Please select a file', multiple=FALSE)
 ))
 ```
 In the server.R file
