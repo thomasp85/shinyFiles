@@ -51,7 +51,7 @@ ui <- shinyUI(bootstrapPage(
 ))
 server <- shinyServer(function(input, output, session) {
     output$files <- shinyFileChoose(input, 'files', session=session,
-    roots=c(wd='.'), filetypes=c('', '.txt'))
+                                    roots=c(wd='.'), filetypes=c('', '.txt'))
 })
 
 runApp(list(

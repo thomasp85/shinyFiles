@@ -12,7 +12,8 @@ Description: Provides functionality for client-side navigation of
 License: GPL (>= 2)
 Imports:
     tools,
-    shiny
+    shiny,
+    htmltools
 Collate:
     'aaa.R'
     'filechoose.R'

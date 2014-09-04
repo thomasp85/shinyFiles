@@ -65,7 +65,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         list(
             files=fileInfo[, c('filename', 'extension', 'isdir', 'size', 'mtime', 'ctime', 'atime')],
             breadcrumps=I(c('', breadcrumps[breadcrumps != ''])),
-            roots=names(currentRoots),
+            roots=I(names(currentRoots)),
             root=root
             )
     }
@@ -213,7 +213,7 @@ shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) 
 #' @references The file icons used in the file system navigator is taken from
 #' FatCows Farm-Fresh Web Icons (\url{http://www.fatcow.com/free-icons})
 #' 
-#' @importFrom shiny tagList singleton tags
+#' @importFrom htmltools tagList singleton tags
 #' 
 #' @export
 #' 
