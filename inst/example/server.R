@@ -1,7 +1,7 @@
 library(shiny)
 library(shinyFiles)
 
-shinyServer(function(input, output) {
-    output$file <- shinyFileChoose(input, 'file', roots=getVolumes(), restrictions=system.file(package='base'))
+shinyServer(function(input, output, session) {
+    shinyFileChoose(input, 'file', roots=getVolumes(), session=session, restrictions=system.file(package='base'))
     output$filepaths <- renderPrint({parseFilePaths(getVolumes()(), input$file)})
 })

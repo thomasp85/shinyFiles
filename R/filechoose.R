@@ -130,19 +130,24 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) {
+shinyFileChoose <- function(input, id, updateFreq=2000, session, ...) {
     fileGet <- do.call('fileGetter', list(...))
+    currentDir <- list()
     
-    return(reactive({
-        dir <- input[[paste0(inputId, '-modal')]]
+    return(observe({
+        dir <- input[[paste0(id, '-modal')]]
         if(is.null(dir) || is.na(dir)) {
             dir <- list(dir='')
         } else {
             dir <- list(dir=dir$path, root=dir$root)
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
+        newDir <- do.call('fileGet', dir)
+        if(!identical(currentDir, newDir)) {
+            currentDir <<- newDir
+            session$sendCustomMessage('shinyFiles', list(id=id, dir=newDir))
+        }
         invalidateLater(updateFreq, session)
-        do.call('fileGet', dir)
     }))
 }
 
@@ -217,7 +222,7 @@ shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) 
 #' 
 #' @export
 #' 
-shinyFilesButton <- function(inputId, label, title, multiple) {
+shinyFilesButton <- function(id, label, title, multiple) {
     tagList(
         singleton(tags$head(
                 tags$script(src='sF/shinyFiles.js'),
@@ -233,7 +238,7 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
                 )
             )),
         tags$button(
-            id=inputId,
+            id=id,
             type='button',
             class='shinyFiles btn',
             'data-title'=title,
