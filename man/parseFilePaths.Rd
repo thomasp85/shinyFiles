@@ -32,7 +32,7 @@ ui <- shinyUI(bootstrapPage(
     verbatimTextOutput('filepaths')
 ))
 server <- shinyServer(function(input, output) {
-    output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'),
+    shinyFileChoose(input, 'files', roots=c(wd='.'),
                                     filetypes=c('', '.txt'))
     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 })

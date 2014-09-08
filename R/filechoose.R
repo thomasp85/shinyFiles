@@ -71,7 +71,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
     }
 }
 
-#' Creates a reactive expression that updates the filesystem view
+#' Create a connection to the server side filesystem
 #' 
 #' This function sets up the required connection to the client in order for the 
 #' user to navigate the filesystem. For this to work a matching button should be
@@ -86,27 +86,34 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' navigate into these subdirectories. The \code{filetypes} parameter takes a 
 #' vector of of file extensions to filter the output on, so that the client is 
 #' only presented with these filetypes. The \code{hidden} parameter toggles 
-#' whether hidden files should be visible or not.
+#' whether hidden files should be visible or not. Whenever a file choice is made
+#' the resulting files will be accessible in the input variable with the id 
+#' given in the parameters. This value should probable be run through a call to 
+#' \code{\link{parseFilePaths}} in order to get well formatted paths to work 
+#' with.
 #' 
 #' @param input The input object of the \code{shinyServer()} call (usaully 
 #' \code{input})
 #' 
-#' @param inputId The same ID as used in the matching call to 
+#' @param id The same ID as used in the matching call to 
 #' \code{shinyFilesButton} or as the id attribute of the button, in case of a
-#' manually defined html.
+#' manually defined html. This id will also define the id of the file choice in 
+#' the input variable
 #' 
 #' @param updateFreq The time in milliseconds between file system lookups. This
 #' determines the responsiveness to changes in the filesystem (e.g. addition of
 #' files or drives)
 #' 
 #' @param session The session object of the shinyServer call (usually 
-#' 'session'). Used to terminate file system lookups when the client leaves.
+#' \code{session}).
 #' 
 #' @param ... Arguments to be passed on to \code{\link{fileGetter}}
 #' 
-#' @return A reactive expression that should be assigned to the output object of
-#' the \code{shinyServer()} call. The output name it should be assigned to have
-#' to match the provided \code{inputId}
+#' @return A reactive observer that takes care of the server side logic of the 
+#' filesystem connection. Prior to v0.4.0 the return was a reactive expression
+#' that needed to be assigned to the output variable. As of now this is no longer
+#' allowed and will lead to an error (as reactive observers cannot be assigned
+#' to output)
 #' 
 #' @examples
 #' \dontrun{
@@ -114,8 +121,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 #' ))
 #' server <- shinyServer(function(input, output, session) {
-#'     output$files <- shinyFileChoose(input, 'files', session=session, 
-#'                                     roots=c(wd='.'), filetypes=c('', '.txt'))
+#'     shinyFileChoose(input, 'files', session=session, 
+#'                     roots=c(wd='.'), filetypes=c('', '.txt'))
 #' })
 #' 
 #' runApp(list(
@@ -126,23 +133,28 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @family shinyFiles
 #' 
-#' @importFrom shiny reactive invalidateLater
+#' @importFrom shiny observe invalidateLater
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) {
+shinyFileChoose <- function(input, id, updateFreq=2000, session, ...) {
     fileGet <- do.call('fileGetter', list(...))
+    currentDir <- list()
     
-    return(reactive({
-        dir <- input[[paste0(inputId, '-modal')]]
+    return(observe({
+        dir <- input[[paste0(id, '-modal')]]
         if(is.null(dir) || is.na(dir)) {
             dir <- list(dir='')
         } else {
             dir <- list(dir=dir$path, root=dir$root)
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
+        newDir <- do.call('fileGet', dir)
+        if(!identical(currentDir, newDir)) {
+            currentDir <<- newDir
+            session$sendCustomMessage('shinyFiles', list(id=id, dir=newDir))
+        }
         invalidateLater(updateFreq, session)
-        do.call('fileGet', dir)
     }))
 }
 
@@ -198,7 +210,7 @@ shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) 
 #' 
 #' If no large version is specified the small version gets upscaled.
 #' 
-#' @param inputId Input variable to assign the control's value to
+#' @param id The id matching the \code{\link{shinyFileChoose}}
 #' 
 #' @param label The text that should appear on the button
 #' 
@@ -217,7 +229,7 @@ shinyFileChoose <- function(input, inputId, updateFreq=2000, session=NULL, ...) 
 #' 
 #' @export
 #' 
-shinyFilesButton <- function(inputId, label, title, multiple) {
+shinyFilesButton <- function(id, label, title, multiple) {
     tagList(
         singleton(tags$head(
                 tags$script(src='sF/shinyFiles.js'),
@@ -233,7 +245,7 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
                 )
             )),
         tags$button(
-            id=inputId,
+            id=id,
             type='button',
             class='shinyFiles btn',
             'data-title'=title,
@@ -268,7 +280,7 @@ shinyFilesButton <- function(inputId, label, title, multiple) {
 #'     verbatimTextOutput('filepaths')
 #' ))
 #' server <- shinyServer(function(input, output) {
-#'     output$files <- shinyFileChoose(input, 'files', roots=c(wd='.'), 
+#'     shinyFileChoose(input, 'files', roots=c(wd='.'), 
 #'                                     filetypes=c('', '.txt'))
 #'     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 #' })

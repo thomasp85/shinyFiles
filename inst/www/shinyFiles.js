@@ -407,6 +407,8 @@ var shinyFiles = (function() {
 		}, 1);
 		
 		Shiny.bindAll();
+        
+        populateFileChooser(button, $(button).data('dataCache'));
 	};
 	
 	var createFileChooserBootstrap3 = function(button, title) {
@@ -537,9 +539,11 @@ var shinyFiles = (function() {
 	
 	var populateFileChooser = function(element, data) {
 		var modal = $(element).data('modal');
-		
+        
+        $(element).data('dataCache', data);
+        
 		if(!modal) return;
-		
+        
 		var currentData = modal.data('currentData');
 		
 		var single = $(element).data('selecttype') == 'single';
@@ -696,7 +700,13 @@ var shinyFiles = (function() {
 		var files = getSelectedFiles(modal);
 		
 		$(button).data('files', files);
-		$(button).trigger('fileselect', [files]);
+        
+        Shiny.onInputChange($(button).attr('id'), {
+        	files: $.extend({}, files.files.toArray().map(function(d) {
+				return d;
+			})),
+			root: files.root
+		});
 		
 		removeFileChooser(button, modal);
 	};
@@ -731,8 +741,7 @@ var shinyFiles = (function() {
 	var changeDirectory = function(button, modal, directory) {
 		if (directory.path instanceof jQuery) directory.path = directory.path.toArray();
 		
-		$(button).data('path', directory);
-		$(modal).trigger('navigate');
+        Shiny.onInputChange($(button).attr('id')+'-modal', directory);
 	};
 	
 	var moveBack = function(button, modal) {
@@ -803,90 +812,20 @@ var shinyFiles = (function() {
 	var sF = {};
 	
 	sF.init = function() {
-		$(document).on('dirChange', '.shinyFiles', function(e, data) {
-			populateFileChooser($(this), data);
-		}).on('click', '.shinyFiles', function(e) {
+        Shiny.addCustomMessageHandler('shinyFiles', function(data) {
+            populateFileChooser($('.shinyFiles#'+data.id), parseDir(data.dir));
+        });
+        
+		$(document).on('click', '.shinyFiles', function(e) {
 			createFileChooser(this, $(this).data('title'));
 		}).on('click', function(e) {
 			$('.sF-modal .open').removeClass('open').find('button').removeClass('active');
 		});
 	};
-	sF.updateFileList = function(element, data) {
-		$(element).trigger('dirChange', [parseDir(data)]);
-	};
 	
 	return sF;
-})()
+})();
 
 $(document).ready(function() {
 	shinyFiles.init();
-})
-
-
-var navigate = new Shiny.InputBinding();
-$.extend(navigate, {
-	find: function(scope) {
-		return $(scope).find(".sF-modalContainer");
-	},
-	getValue: function(el) {
-		return $($(el).data('button')).data('path') ? $($(el).data('button')).data('path') : null;
-	},
-	setValue: function(el, value) {
-		$(el).data('path', value);
-	},
-	subscribe: function(el, callback) {
-		$(el).on("navigate.shinyFiles", function(e) {
-			callback();
-		});
-	},
-	unsubscribe: function(el) {
-		$(el).off(".shinyFiles");
-	}
 });
-
-Shiny.inputBindings.register(navigate, 'shinyFiles.navigate');
-
-
-var filechoose = new Shiny.InputBinding();
-$.extend(filechoose, {
-	find: function(scope) {
-		return $(scope).find(".shinyFiles");
-	},
-	getValue: function(el) {
-		var data = $(el).data('files');
-		return data ? {
-			files: $.extend({}, data.files.toArray().map(function(d) {
-				return d;
-			})),
-			root: data.root
-		} : null;
-	},
-	setValue: function(el, value) {
-		$(el).data('files', value);
-	},
-	subscribe: function(el, callback) {
-		$(el).on("fileselect.shinyFiles", function(e) {
-			callback();
-		});
-	},
-	unsubscribe: function(el) {
-		$(el).off(".shinyFiles");
-	}
-});
-
-Shiny.inputBindings.register(filechoose, 'shinyFiles.filechoose');
-
-
-var getFiles = new Shiny.OutputBinding();
-$.extend(getFiles, {
-	find: function(scope) {
-		return $(scope).find(".shinyFiles");
-	},
-	renderValue: function(el, data) {
-		if (data) {
-			shinyFiles.updateFileList(el, data);
-		}
-	}
-});
-
-Shiny.outputBindings.register(getFiles, 'shinyFiles.getFiles');
