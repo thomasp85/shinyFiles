@@ -133,7 +133,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @family shinyFiles
 #' 
-#' @importFrom shiny reactive invalidateLater
+#' @importFrom shiny observe invalidateLater
 #' 
 #' @export
 #' 
