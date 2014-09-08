@@ -12,7 +12,7 @@ Description: Provides functionality for client-side navigation of
 License: GPL (>= 2)
 Imports:
     tools,
-    shiny,
+    shiny (>= 0.10.1),
     htmltools
 Collate:
     'aaa.R'
