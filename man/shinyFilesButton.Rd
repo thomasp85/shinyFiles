@@ -3,10 +3,10 @@
 \alias{shinyFilesButton}
 \title{Create a button to summon the file system navigator}
 \usage{
-shinyFilesButton(inputId, label, title, multiple)
+shinyFilesButton(id, label, title, multiple)
 }
 \arguments{
-\item{inputId}{Input variable to assign the control's value to}
+\item{id}{The id matching the \code{\link{shinyFileChoose}}}
 
 \item{label}{The text that should appear on the button}
 
