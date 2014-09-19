@@ -699,7 +699,8 @@ var shinyFiles = (function() {
 	var selectFiles = function(button, modal) {
 		var files = getSelectedFiles(modal);
 		
-		$(button).data('files', files);
+		$(button).data('files', files)
+            .trigger('fileselect', [files]);
         
         Shiny.onInputChange($(button).attr('id'), {
         	files: $.extend({}, files.files.toArray().map(function(d) {
