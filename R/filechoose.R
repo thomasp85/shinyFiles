@@ -73,6 +73,13 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 
 #' Create a connection to the server side filesystem
 #' 
+#' NOTE: The syntax for this version has changed with version 0.4.0. Prior to
+#' that version the output of \code{shinyFileChoose()} should be assigned to the
+#' output object. This is no longer the case and doind so will result in an 
+#' error. In newer versions the function returns an observer which can be 
+#' ignored for the most part, or assigned to a variable if there needs to be 
+#' interactions with it later on.
+#' 
 #' This function sets up the required connection to the client in order for the 
 #' user to navigate the filesystem. For this to work a matching button should be
 #' present in the html, either by using \code{shinyFilesButton()} or adding it

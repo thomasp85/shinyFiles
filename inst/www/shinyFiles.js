@@ -205,7 +205,7 @@ var shinyFiles = (function() {
 	var setDisabledButtons = function(button, modal) {
 		var back = $(button).data('back').length == 0;
 		var forward = $(button).data('forward').length == 0;
-		var up = $(modal).find('.sF-breadcrumps>option').length == 1;
+		var up = $(modal).find('.sF-breadcrumps>option').length <= 1;
 		
 		$(modal).find('#sF-btn-back').prop('disabled', back);
 		$(modal).find('#sF-btn-forward').prop('disabled', forward);
@@ -253,7 +253,7 @@ var shinyFiles = (function() {
 		}
 	}
 	
-	var createFileChooser = function(button, title) {
+	var createFileChooserBootstrap2 = function(button, title) {
 		Shiny.unbindAll();
 		
 		$(button).prop('disabled', true);
@@ -411,7 +411,7 @@ var shinyFiles = (function() {
         populateFileChooser(button, $(button).data('dataCache'));
 	};
 	
-	var createFileChooserBootstrap3 = function(button, title) {
+	var createFileChooser = function(button, title) {
 		Shiny.unbindAll();
 		
 		$(button).prop('disabled', true);
@@ -487,7 +487,7 @@ var shinyFiles = (function() {
 								dismissFileChooser(button, modal);
 							})
 					).append(
-						$('<button>', {text: 'Select', type: 'button'}).addClass('btn btn-primary').prop('disabled', true)
+						$('<button>', {text: 'Select', type: 'button', id: 'sF-selectButton'}).addClass('btn btn-primary').prop('disabled', true)
 							.on('click', function() {
 								selectFiles(button, modal);
 							})
@@ -495,8 +495,13 @@ var shinyFiles = (function() {
 				)
 			)
 		).appendTo($('body'));
-		
-		var backdrop = $('<div>').addClass('modal-backdrop fade').appendTo($('body'));
+        
+		setDisabledButtons(button, modal);
+        
+		var backdrop = $('<div>')
+            .addClass('modal-backdrop fade')
+            .css('height', '100%')
+            .appendTo($('body'));
 		
 		modal.data('backdrop', backdrop);
 		modal.data('button', button);
@@ -515,6 +520,8 @@ var shinyFiles = (function() {
 		}, 1);
 		
 		Shiny.bindAll();
+        
+        populateFileChooser(button, $(button).data('dataCache'));
 	};
 	
 	var removeFileChooser = function(button, modal) {
