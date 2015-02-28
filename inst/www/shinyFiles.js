@@ -213,11 +213,15 @@ var shinyFiles = (function() {
 	};
 	
 	var filesSelected = function(modal) {
-		return modal.find('.sF-fileList').children().filter('.sF-file.selected').length > 0;
+        return modal.find('.sF-fileList').children().filter('.sF-file.selected').length > 0;
 	};
 	
-	var toggleSelectButton = function(modal) {
-		modal.find('#sF-selectButton').prop('disabled', !filesSelected(modal));
+    var foldersSelected = function(modal) {
+        return modal.find('.sF-fileList').children().filter('.sF-directory.selected').length > 0;
+    }
+    
+	var toggleSelectButton = function(modal, folder_select) {
+		modal.find('#sF-selectButton').prop('disabled', !( filesSelected(modal) || (folder_select && foldersSelected(modal)) ) );
 	};
 	
 	var sortFiles = function(modal, attribute, direction) {
@@ -260,6 +264,8 @@ var shinyFiles = (function() {
 		
 		initializeButton(button);
 		
+        var folder_select = $(button).data('folderselect') == 'allowed';
+         
 		var modal = $('<div>', {id: $(button).attr('id')+'-modal'}).addClass('sF-modal sF-modalContainer modal fade').css('display', 'block').append(
 			$('<div>').addClass('modal-header').append(
 				$('<button>', {html: '&times;', type: 'button'}).addClass('close')
@@ -368,7 +374,7 @@ var shinyFiles = (function() {
 					$('<div>').addClass('sF-fileList')
 				).on('click', function() {
 					modal.find('.sF-fileList .selected').toggleClass('selected');
-					toggleSelectButton(modal);
+					toggleSelectButton(modal, folder_select);
 				})
 			)
 		).append(
@@ -418,6 +424,8 @@ var shinyFiles = (function() {
 		
 		initializeButton(button);
 		
+        var folder_select = $(button).data('folderselect') == 'allowed';
+        
 		var modal = $('<div>', {id: $(button).attr('id')+'-modal'}).addClass('sF-modalContainer modal fade').css('display', 'block').append(
 			$('<div>').addClass('sF-modal modal-dialog').append(
 				$('<div>').addClass('modal-content').append(
@@ -518,7 +526,7 @@ var shinyFiles = (function() {
 							$('<div>').addClass('sF-fileList')
 						).on('click', function() {
 							modal.find('.sF-fileList .selected').toggleClass('selected');
-							toggleSelectButton(modal);
+							toggleSelectButton(modal, folder_select);
 						})
 					)
 				).append(
@@ -599,6 +607,8 @@ var shinyFiles = (function() {
 		
 		var single = $(element).data('selecttype') == 'single';
 		
+        var folder_select = $(element).data('folderselect') == 'allowed';
+        
 		var newLocation = currentData ? !(compareArrays(currentData.location, data.location) && currentData.selectedRoot == data.selectedRoot) : true;
 		var newVolumes = currentData ? !compareArrays(currentData.rootNames, data.rootNames) : true;
 		var newFiles = {};
@@ -674,7 +684,7 @@ var shinyFiles = (function() {
 						$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
 					).data('sF-file', d).on('click', function(event) {
 						elementSelector(event, this, single, false);
-						toggleSelectButton(modal);
+						toggleSelectButton(modal, folder_select);
 						return false;
 					})
 				);
@@ -710,7 +720,7 @@ var shinyFiles = (function() {
 							$('<div>', {text: formatDate(d.aTime)}).addClass('sF-file-aTime')
 						).data('sF-file', d).on('click', function(event) {
 							elementSelector(event, this, single, false);
-							toggleSelectButton(modal);
+							toggleSelectButton(modal, folder_select);
 							return false;
 						})
 					);
@@ -719,7 +729,7 @@ var shinyFiles = (function() {
 		};
 		
 		setDisabledButtons($(element), modal);
-		toggleSelectButton(modal);
+		toggleSelectButton(modal, folder_select);
 		
 		modal.data('currentData', data);
 		$(modal).trigger('change');
