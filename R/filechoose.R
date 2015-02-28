@@ -129,7 +129,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' ))
 #' server <- shinyServer(function(input, output, session) {
 #'     shinyFileChoose(input, 'files', session=session, 
-#'                     roots=c(wd='.'), filetypes=c('', '.txt'))
+#'                     roots=c(wd='.'), filetypes=c('', 'txt'))
 #' })
 #' 
 #' runApp(list(
@@ -189,12 +189,13 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session, ...) {
 #' For users wanting to design their html markup manually it is very easy to add
 #' a shinyFiles button. The only markup required is:
 #' 
-#' \code{<button id="inputId" type="button" class="shinyFiles btn" data-title="title" data-selecttype="single"|"multiple">label</button>}
+#' \code{<button id="inputId" type="button" class="shinyFiles btn" data-title="title" data-selecttype="single"|"multiple" data-folderselect="allowed"|"forbidden">label</button>}
 #' 
 #' where the id tag matches the inputId parameter, the data-title tag matches 
 #' the title parameter, the data-selecttype is either "single" or "multiple" (
-#' the non-logical form of the multiple parameter) and the internal textnode 
-#' mathces the label parameter.
+#' the non-logical form of the multiple parameter), the data-folderselect is 
+#' either "allowed" or "forbidden" (non-logical form of the folder_select
+#' parameter) and the internal textnode matches the label parameter.
 #' 
 #' Apart from this the html document should link to a script with the 
 #' following path 'sF/shinyFiles.js' and a stylesheet with the following path 
@@ -227,6 +228,11 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session, ...) {
 #' @param multiple A logical indicating whether or not it should be possible to 
 #' select multiple files
 #' 
+#' @param folder_select A logical indicating whether it is permissible to choose 
+#' a folder in the file system navigator as the selection (default FALSE). If 
+#' folder_select = TRUE in combination with multiple = TRUE, multiple folders as 
+#' well as a mix of folders and files are permissible selections.
+#' 
 #' @family shinyFiles
 #' 
 #' @references The file icons used in the file system navigator is taken from
@@ -236,7 +242,7 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session, ...) {
 #' 
 #' @export
 #' 
-shinyFilesButton <- function(id, label, title, multiple) {
+shinyFilesButton <- function(id, label, title, multiple, folder_select = FALSE) {
     tagList(
         singleton(tags$head(
                 tags$script(src='sF/shinyFiles.js'),
@@ -257,6 +263,7 @@ shinyFilesButton <- function(id, label, title, multiple) {
             class='shinyFiles btn',
             'data-title'=title,
             'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
+            'data-folderselect'=ifelse(folder_select, 'allowed', 'forbidden'),
             as.character(label)
             )
         )
@@ -288,7 +295,7 @@ shinyFilesButton <- function(id, label, title, multiple) {
 #' ))
 #' server <- shinyServer(function(input, output) {
 #'     shinyFileChoose(input, 'files', roots=c(wd='.'), 
-#'                                     filetypes=c('', '.txt'))
+#'                                     filetypes=c('', 'txt'))
 #'     output$filepaths <- renderText({parseFilePaths('.', input$files)})
 #' })
 #' 
