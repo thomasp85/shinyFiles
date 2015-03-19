@@ -41,6 +41,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         if (missing(root)) root <- names(currentRoots)[1]
         
         fulldir <- file.path(currentRoots[root], dir)
+        writable <- as.logical(file.access(fulldir, 2) == 0)
         files <- list.files(fulldir, all.files=hidden, full.names=TRUE, no..=TRUE)
         files <- gsub(pattern='//*', '/', files, perl=TRUE)
         if (!is.null(restrictions) && length(files) != 0) {
@@ -64,6 +65,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
         list(
             files=fileInfo[, c('filename', 'extension', 'isdir', 'size', 'mtime', 'ctime', 'atime')],
+            writable=writable,
+            exist=file.exists(fulldir),
             breadcrumps=I(c('', breadcrumps[breadcrumps != ''])),
             roots=I(names(currentRoots)),
             root=root
