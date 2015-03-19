@@ -1,7 +1,7 @@
 <img src='inst/example/www/logo.png' width='200' style='float: right'/>
 * * *
 
-This package extends the functionality of shiny by providing an API for client side access to the server file system. As many shiny apps are run locally this is equivalent to accessing the filesystem of the users own computer, without the overhead of copying files to temporary locations that is tied to the use of fileInput().
+This package extends the functionality of shiny by providing an API for client side access to the server file system. As many shiny apps are run locally this is equivalent to accessing the filesystem of the users own computer, without the overhead of copying files to temporary locations that is tied to the use of `fileInput()`.
 
 The package can be installed from CRAN using `install.packages('shinyFiles')`.
 
