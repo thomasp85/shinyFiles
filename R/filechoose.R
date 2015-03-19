@@ -305,12 +305,12 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
 #' 
 #' @export
 #' 
-parseFilePaths <- function(roots, files) {
-    if (is.null(files) || is.na(files)) return(data.frame(name=character(0), size=numeric(0), type=character(0), datapath=character(0)))
-    files <- sapply(files$files, function(x) {file.path(roots[files$root], do.call('file.path', x))})
+parseFilePaths <- function(roots, selection) {
+    roots <- if(class(roots) == 'function') roots() else roots
+    
+    if (is.null(selection) || is.na(selection)) return(data.frame(name=character(0), size=numeric(0), type=character(0), datapath=character(0)))
+    files <- sapply(selection$files, function(x) {file.path(roots[selection$root], do.call('file.path', x))})
     files <- gsub(pattern='//*', '/', files, perl=TRUE)
     
     data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files)
-}
-
 }
