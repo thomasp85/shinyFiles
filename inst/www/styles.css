@@ -1,13 +1,26 @@
+.sF-modalBackdrop {
+    top: 0;
+    bottom: 0;
+    position: fixed;
+}
 .sF-navigation {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 .sF-fileWindow {
+    margin-top: 10px;
 	height: 200px;
 	border: 1px solid grey;
 	border-radius: 5px;
 	overflow: auto;
 }
-
+.sF-permission {
+    float: left;
+    vertical-align: middle;
+    padding: 7px 0;
+}
+.sF-permission span {
+    padding-right: 5px;
+}
 .sF-fileList div {
 	cursor: default;
 	-webkit-touch-callout: none;
@@ -23,7 +36,8 @@
 	margin-left: auto
 }
 
-.sF-fileList>div.selected .sF-file-name div {
+.sF-fileList>div.selected .sF-file-name div,
+.sF-dirList div.selected>.sF-file-name>div {
 	color: white;
 	background: steelblue;
 	border-radius: 5px;
@@ -55,11 +69,17 @@
 .sF-file-icon::after {
 	content: url(icons/Icons16x16/page_white.png);
 }
+.sF-directory.root>.sF-file-icon::after {
+    content: url(icons/Icons16x16/drive.png);
+}
 .sF-icons .sF-directory .sF-file-icon::after {
 	content: url(icons/Icons32x32/folder.png);
 }
 .sF-icons .sF-file-icon::after {
 	content: url(icons/Icons32x32/page_white.png);
+}
+.sF-icons .sF-directory.root>.sF-file-icon::after {
+    content: url(icons/Icons32x32/drive.png);
 }
 
 /*
@@ -73,7 +93,7 @@
 }
 .sF-fileList.sF-detail>div {
 	display: table-row;
-	width: auto
+	width: auto;
 }
 .sF-fileList.sF-detail>div>div {
 	display: table-cell;
@@ -232,4 +252,183 @@
 .sF-fileList.sF-icons .sF-file-cTime,
 .sF-fileList.sF-icons .sF-file-aTime {
 	display: none;
+}
+
+/*
+    Dir chooser
+*/
+.sF-dirWindow {
+	min-height: 223px;
+    cursor: default;
+}
+.sF-dirWindow h6 {
+	margin-top: 0;
+}
+.sF-dirWindow>div {
+	padding: 5px 2.5px 0 2.5px;
+}
+/*
+    List and content
+*/
+.sF-dirInfo>div {
+    height: 200px;
+    border: 1px solid grey;
+	border-radius: 5px;
+	overflow: auto;
+}
+.sF-dirList .sF-directory>.sF-file-icon, 
+.sF-dirContent div>.sF-file-icon{
+	padding: 0 2px;
+}
+/*
+    List only
+*/
+.sF-dirList .sF-directory>div:not(.sF-content) {
+    height: 23px;
+    -webkit-transition: height 2s;
+    transition: height 2s;
+    overflow: hidden;
+}
+.sF-dirList .sF-directory.removing>div:not(.sF-content) {
+    height: 0;
+    -webkit-transition: height 2s;
+    transition: height 2s;
+    overflow: hidden;
+}
+.sF-dirList .sF-directory>div {
+    display: inline-block;
+	width: auto;
+	font-size: small;
+	white-space: nowrap;
+	padding: 1px 0;
+	vertical-align: top;
+}
+.sF-dirList .sF-file-name>div {
+    float: left;
+    padding: 0 4px;
+}
+.sF-dirList .sF-directory>div.sF-content {
+	margin-left: 20px;
+	display: block;
+    padding: 0;
+}
+.sF-dirList .sF-directory>.sF-expander {
+    width: 20px;
+    text-align: center;
+}
+.sF-dirList .sF-directory.closed>.sF-expander {
+    -webkit-transform-origin: 60% 40%;
+    transform-origin: 60% 40%;
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+}
+.sF-dirList .sF-directory.expanded>.sF-expander {
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+    -webkit-transform-origin: 60% 40%;
+    transform-origin: 60% 40%;
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+}
+.sF-dirList .sF-directory.empty .sF-expander {
+    visibility: hidden;
+}
+/*
+    Content only
+*/
+.sF-dirContent {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.sF-dirContent>div {
+    display: table-row;
+}
+.sF-dirContent>div>div {
+    display: table-cell;
+    font-size: small;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.sF-dirContent>div>div:first-child {
+    width: 20px;
+    vertical-align: middle;
+}
+.sF-dirContent>div>div:nth-child(2)>div {
+    width: auto;
+}
+.sF-dirContent>div>div:nth-child(2)>div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+.sF-dirContent>div>div:last-child {
+    text-align: right;
+    padding-right: 2px;
+    white-space: nowrap;
+}
+.sF-dirContent.measuring>div>div {
+    display: inline;
+    visibility: hidden;
+}
+.sF-dirContent.message {
+    display: block;
+}
+.sF-dirContent.message>div {
+    color: grey;
+    font-style: italic;
+    text-align: center;
+    display: block;
+    padding-top: 75px;
+}
+/*
+    Dir creator
+*/
+.sF-newDir .dropdown-menu {
+	padding: 5px;
+}
+.sF-newDir .dropdown-menu::before {
+  position: absolute;
+  top: -7px;
+  left: 9px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+.sF-newDir .dropdown-menu::after {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+/*
+    File saver specifics
+*/
+.sF-filenaming {
+    padding-top: 10px;
+}
+.sF-filenaming .sF-newDir>button#sF-btn-newDir {
+    margin-right: 15px;
+    border-radius: 4px;
+}
+.input-group.sF-filenaming input.sF-filename.form-control {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    text-align: right;
+}
+.input-group.sF-filenaming.has-feedback input.sF-filename.form-control {
+    padding-left: 42.5px;
+}
+span#filenameWarn {
+    padding-top: 8px;
+    left: 149px
 }
