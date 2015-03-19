@@ -1,5 +1,5 @@
-shinyFiles
-==========
+<img src='inst/example/www/logo.png' width='200' style='float: right'/>
+* * *
 
 This package extends the functionality of shiny by providing an API for client side access to the server file system. As many shiny apps are run locally this is equivalent to accessing the filesystem of the users own computer, without the overhead of copying files to temporary locations that is tied to the use of fileInput().
 
@@ -7,7 +7,7 @@ The package can be installed from CRAN using `install.packages('shinyFiles')`.
 
 Usage
 ----------
-The pacakge is designed to make it extremely easy to implement. A barebone example would be:
+The package is designed to make it extremely easy to implement file system access. An example of implementing a file chooser would be:
 
 In the ui.R file
 ```R
@@ -28,6 +28,8 @@ It is equally simple to implement directly in your custom html file as it only r
     File select
 </button>
 ```
+
+For an overview of all the different modules try the `shinyFilesExample()` function in the package. It gives an overview of all the necessary code, along with descriptions and working examples.
 
 Credit
 ----------
