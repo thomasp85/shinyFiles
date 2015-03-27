@@ -739,6 +739,10 @@ var shinyFiles = (function() {
 		modal.find('.sF-fileList').toggleClass('sF-detail', detail)
 			.toggleClass('sF-icons', icons)
 			.toggleClass('sF-list', list);
+        modal.find('.sF-fileWindow')
+            .scrollTop(0)
+            .scrollLeft(0)
+            .toggleClass('sF-wide', list);
 		
 		$(button).data('view', view.attr('id'));
 	}

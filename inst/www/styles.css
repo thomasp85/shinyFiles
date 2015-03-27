@@ -152,29 +152,30 @@
 /*
 	List view
 */
+.sF-fileWindow.sF-wide {
+    overflow-y: hidden;
+}
 .sF-fileList.sF-list {
 	-webkit-column-width: 150px;
 	-moz-column-width: 150px;
 	column-width: 150px;
-	height: inherit;
+	height: calc(100% - 5px);;
+    display: inline-block;
 }
 .sF-fileList.sF-list>div {
 	width: auto;
 	white-space: nowrap;
-	display: table-row;
 }
 .sF-fileList.sF-list>div>div {
 	width: auto;
 	position: relative;
-	display: table-cell;
+	display: inline-block;
 	vertical-align: top;
 	font-size: small;
-	padding: 1px 3px;
+	padding: 2px 1px 1px 3px;
 }
 .sF-fileList.sF-list .sF-file-name div{
-	float: left;
-	position: relative;
-	max-width: calc(150px - 16px);
+	max-width: 165px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
