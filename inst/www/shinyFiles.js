@@ -296,7 +296,7 @@ var shinyFiles = (function() {
 		}
 	}
         
-	var removeFileChooser = function(button, modal) {
+	var removeFileChooser = function(button, modal, data) {
 		Shiny.unbindAll();
 		
 		var modal = $(modal).removeClass('in');
@@ -306,6 +306,9 @@ var shinyFiles = (function() {
 			modal.remove();
 			backdrop.remove();
 			Shiny.bindAll();
+            if(data !== undefined) {
+                Shiny.onInputChange($(button).attr('id'), data);
+            }
 		}, 300);
 		$(button).prop('disabled', false)
 			.data('modal', null);
@@ -322,7 +325,8 @@ var shinyFiles = (function() {
         if(type == 'file') {
             var files = getSelectedFiles(modal);
             $(button).data('files', files)
-                .trigger('selection', [files]);
+                .trigger('selection', [files])
+                .trigger('fileselect', [files]);
             var data = {
                 files: $.extend({}, files.files.toArray().map(function(d) {
         			return d;
@@ -338,10 +342,8 @@ var shinyFiles = (function() {
                 root: $(modal).data('currentData').selectedRoot
             };
         }
-        
-        Shiny.onInputChange($(button).attr('id'), data);
 		
-		removeFileChooser(button, modal);
+		removeFileChooser(button, modal, data);
 	};
     
     var setPermission = function(modal, writable) {
@@ -547,7 +549,6 @@ var shinyFiles = (function() {
 		$(button).data('modal', modal);
 		
         // Setting states
-        setDisabledButtons(button, modal);
 		var view = $(button).data('view') || 'sF-btn-icon';
 		changeView(button, modal, modal.find('#'+view));
 		
@@ -684,7 +685,6 @@ var shinyFiles = (function() {
 			};
 		};
 		
-		setDisabledButtons($(element), modal);
         if($(element).hasClass('shinySave')) {
             setPermission(modal, data.writable);
         }
@@ -1073,7 +1073,6 @@ var shinyFiles = (function() {
 		$(button).data('modal', modal);
 		
         // Setting states
-        setDisabledButtons(button, modal);
 		var view = $(button).data('view') || 'sF-btn-icon';
 		changeView(button, modal, modal.find('#'+view));
         modal.find('.sF-filename').focus();
@@ -1210,9 +1209,9 @@ var shinyFiles = (function() {
         var file = getFilename(modal);
         $.extend(file, dir);
         
-        Shiny.onInputChange($(button).attr('id'), file);
+        $(button).data('file', file);
         
-        removeFileChooser(button, modal);
+        removeFileChooser(button, modal, file);
     }
     // File saver ends
     
@@ -1413,7 +1412,6 @@ var shinyFiles = (function() {
 		$(button).data('modal', modal);
 		
         // Set relevant states
-        setDisabledButtons(button, modal);
 		var view = $(button).data('view') || 'sF-btn-icon';
 		changeView(button, modal, modal.find('#'+view));
         
@@ -1492,7 +1490,6 @@ var shinyFiles = (function() {
         sizeCell.css('width', width+'px');
         dirContent.removeClass('measuring');
         
-		setDisabledButtons($(element), modal);
 		toggleSelectButton(modal);
         setPermission(modal, data.writable);
 		
