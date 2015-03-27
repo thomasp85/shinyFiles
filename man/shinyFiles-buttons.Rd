@@ -2,6 +2,7 @@
 % Please edit documentation in R/dirchoose.R, R/filechoose.R, R/filesave.R
 \name{shinyDirButton}
 \alias{shinyDirButton}
+\alias{shinyFiles-buttons}
 \alias{shinyFilesButton}
 \alias{shinySaveButton}
 \title{Create a button to summon a shinyFiles dialog}
@@ -30,6 +31,14 @@ look. The value will be pasted with 'btn-' and added as class.}
 
 \item{multiple}{A logical indicating whether or not it should be possible to
 select multiple files}
+
+\item{filetype}{A named list of file extensions. The name of each element
+gives the name of the filetype and the content of the element the possible
+extensions e.g. \code{list(picture=c('jpg', 'jpeg'))}. The first extension
+will be used as default if it is not supplied by the user.}
+}
+\value{
+This function is called for its side effects
 }
 \description{
 This function adds the required html markup for the client to access the file
@@ -62,6 +71,15 @@ variable as a list giving the traversal route to the selected folder. To
 properly format it, feed it into \code{\link{parseDirPath}} and a string with
 the full folder path will be returned.
 
+\strong{Creating files (saving)}
+
+When a new filename is created it will become available in the respective
+input variable and can be formatted with \code{\link{parseSavePath}} into a
+data.frame reminiscent that returned by fileInput. There is no size column
+and the type is only present if the filetype argument is used in
+\code{shinySaveButton}. In that case it will be the name of the chosen type
+(not the extension).
+
 \strong{Manual markup}
 
 For users wanting to design their html markup manually it is very easy to add
@@ -75,10 +93,19 @@ a shinyFiles button. The only markup required is:
 
 \code{<button id="inputId" type="button" class="shinyDirectories btn-default" data-title="title">label</button>}
 
+\emph{shinySaveButton}
+
+\code{<button id="inputId" type="button" class="shinySave btn-default" data-title="title" data-filetype="[{name: 'type1', ext: ['txt']}, {name: 'type2', ext: ['exe', 'bat']}]">label</button>}
+
 where the id tag matches the inputId parameter, the data-title tag matches
 the title parameter, the data-selecttype is either "single" or "multiple"
 (the non-logical form of the multiple parameter) and the internal textnode
-mathces the label parameter. In the example above "btn-default" is used as
+mathces the label parameter. The data-filetype tag is a bit more involved as
+it is a json formatted array of objects with the properties 'name' and 'ext'.
+'name' gives the name of the filetype as a string and 'ext' the allowed
+extensions as an array of strings. The non-exported
+\code{\link{formatFiletype}} function can help convert from a named R list
+into the string representation. In the example above "btn-default" is used as
 button styling, but this can be changed to any other Bootstrap style.
 
 Apart from this the html document should link to a script with the
@@ -129,6 +156,9 @@ $(button).data('files')
 
 // For a shinyDirButton
 $(button).data('directory')
+
+// For a shinySaveButton
+$(button).data('file')
 }
 }
 \references{
@@ -138,10 +168,12 @@ FatCows Farm-Fresh Web Icons (\url{http://www.fatcow.com/free-icons})
 \seealso{
 Other shinyFiles: \code{\link{parseDirPath}},
   \code{\link{parseFilePaths}},
-  \code{\link{parseSavePath}};
+  \code{\link{parseSavePath}},
+  \code{\link{shinyFiles-parsers}};
   \code{\link{shinyDirChoose}},
   \code{\link{shinyFileChoose}},
-  \code{\link{shinyFileSave}};
+  \code{\link{shinyFileSave}},
+  \code{\link{shinyFiles-observers}};
   \code{\link{shinyFilesExample}}
 }
 

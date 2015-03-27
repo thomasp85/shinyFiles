@@ -17,12 +17,15 @@ server after parsing with \code{\link{parseFilePaths}}.
 \seealso{
 Other shinyFiles: \code{\link{parseDirPath}},
   \code{\link{parseFilePaths}},
-  \code{\link{parseSavePath}};
+  \code{\link{parseSavePath}},
+  \code{\link{shinyFiles-parsers}};
   \code{\link{shinyDirButton}},
+  \code{\link{shinyFiles-buttons}},
   \code{\link{shinyFilesButton}},
   \code{\link{shinySaveButton}};
   \code{\link{shinyDirChoose}},
   \code{\link{shinyFileChoose}},
-  \code{\link{shinyFileSave}}
+  \code{\link{shinyFileSave}},
+  \code{\link{shinyFiles-observers}}
 }
 

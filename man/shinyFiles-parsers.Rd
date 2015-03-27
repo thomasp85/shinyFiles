@@ -4,6 +4,7 @@
 \alias{parseDirPath}
 \alias{parseFilePaths}
 \alias{parseSavePath}
+\alias{shinyFiles-parsers}
 \title{Convert the output of a selection to platform specific path(s)}
 \usage{
 parseDirPath(roots, selection)
@@ -24,12 +25,14 @@ A data frame mathcing the format of \code{\link[shiny]{fileInput}}
 \description{
 This function takes the value of a shinyFiles button input variable and
 converts it to be easier to work with on the server side. In the case of file
-selections the input variable is converted to a data frame (using
-\code{parseFilePaths()}) of the same format as that provided by
-\code{\link[shiny]{fileInput}}. The only caveat here is that the MIME type
-cannot be inferred so this will always be an empty string. In the case of
-folder selection the input variable is converted to a string (using
-\code{parseDirPath()}) giving the absolute path to the selected folder.
+selections  and saving the input variable is converted to a data frame (using
+\code{parseFilePaths()} or \code{parseSavePath() respectively}) of the same
+format as that provided by \code{\link[shiny]{fileInput}}. The only caveat
+here is that the MIME type cannot be inferred in file selections so this will
+always be an empty string and new files doesn't have a size so this is left
+out with file saving. In the case of folder selection the input variable is
+converted to a string (using \code{parseDirPath()}) giving the absolute path
+to the selected folder.
 }
 \details{
 The use of \code{parseFilePaths} makes it easy to substitute fileInput and
@@ -59,11 +62,13 @@ runApp(list(
 }
 \seealso{
 Other shinyFiles: \code{\link{shinyDirButton}},
+  \code{\link{shinyFiles-buttons}},
   \code{\link{shinyFilesButton}},
   \code{\link{shinySaveButton}};
   \code{\link{shinyDirChoose}},
   \code{\link{shinyFileChoose}},
-  \code{\link{shinyFileSave}};
+  \code{\link{shinyFileSave}},
+  \code{\link{shinyFiles-observers}};
   \code{\link{shinyFilesExample}}
 }
 

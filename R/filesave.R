@@ -6,6 +6,22 @@ NULL
 
 #' @rdname shinyFiles-observers
 #' 
+#' @examples
+#' \dontrun{
+#' # File selections
+#' ui <- shinyUI(bootstrapPage(
+#'     shinySaveButton('save', 'Save', 'Save as...')
+#' ))
+#' server <- shinyServer(function(input, output, session) {
+#'     shinyFileSave(input, 'save', session=session, roots=c(wd='.'))
+#' })
+#' 
+#' runApp(list(
+#'     ui=ui,
+#'     server=server
+#' ))
+#' }
+#' 
 #' @export
 #' 
 #' @importFrom shiny observe invalidateLater
@@ -72,6 +88,16 @@ shinySaveButton <- function(id, label, title, filetype, buttonType='default', cl
         )
     )
 }
+#' Formats the value of the filetype argument
+#' 
+#' This function is intended to format the filetype argument of 
+#' \code{\link{shinySaveButton}} into a json string representation, so that it
+#' can be attached to the button.
+#' 
+#' @param filetype A named list of file extensions or NULL or NA
+#' 
+#' @return A string describing the input value in json format
+#' 
 #' @importFrom RJSONIO toJSON
 #' 
 formatFiletype <- function(filetype) {

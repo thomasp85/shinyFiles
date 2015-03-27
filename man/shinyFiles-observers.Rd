@@ -4,6 +4,7 @@
 \alias{shinyDirChoose}
 \alias{shinyFileChoose}
 \alias{shinyFileSave}
+\alias{shinyFiles-observers}
 \title{Create a connection to the server side filesystem}
 \usage{
 shinyDirChoose(input, id, updateFreq = 2000, session, ...)
@@ -53,9 +54,8 @@ only presented with these filetypes. The \code{hidden} parameter toggles
 whether hidden files should be visible or not. Whenever a file or folder
 choice is made the resulting files/folder will be accessible in the input
 variable with the id given in the parameters. This value should probable be
-run through a call to one of the parser (\code{\link{parseFilePaths}} or
-\code{\link{parseDirPath}}) in order to get well formatted paths to work
-with.
+run through a call to one of the parser (\code{\link{shinyFiles-parsers}}) in
+order to get well formatted paths to work with.
 }
 \note{
 The syntax for this version has changed with version 0.4.0. Prior to
@@ -96,12 +96,28 @@ runApp(list(
     server=server
 ))
 }
+\dontrun{
+# File selections
+ui <- shinyUI(bootstrapPage(
+    shinySaveButton('save', 'Save', 'Save as...')
+))
+server <- shinyServer(function(input, output, session) {
+    shinyFileSave(input, 'save', session=session, roots=c(wd='.'))
+})
+
+runApp(list(
+    ui=ui,
+    server=server
+))
+}
 }
 \seealso{
 Other shinyFiles: \code{\link{parseDirPath}},
   \code{\link{parseFilePaths}},
-  \code{\link{parseSavePath}};
+  \code{\link{parseSavePath}},
+  \code{\link{shinyFiles-parsers}};
   \code{\link{shinyDirButton}},
+  \code{\link{shinyFiles-buttons}},
   \code{\link{shinyFilesButton}},
   \code{\link{shinySaveButton}};
   \code{\link{shinyFilesExample}}
