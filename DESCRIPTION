@@ -1,20 +1,21 @@
 Package: shinyFiles
 Type: Package
-Title: A Server-Side File System Viewer For Shiny
+Title: A Server-Side File System Viewer for Shiny
 Version: 0.6.0
-Date: 2015-03-19
+Date: 2015-03-26
 Author: Thomas Lin Pedersen
 Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
 Description: Provides functionality for client-side navigation of
     the server side file system in shiny apps. In case the app is running
     locally this gives the user direct access to the file system without the
-    need to "download" files to a temporary location. Both file and folder 
+    need to "download" files to a temporary location. Both file and folder
     selection as well as file saving is available.
 License: GPL (>= 2)
 Imports:
     tools,
     shiny (>= 0.11),
-    htmltools
+    htmltools,
+    RJSONIO
 Collate:
     'aaa.R'
     'filechoose.R'
