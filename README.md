@@ -18,7 +18,7 @@ shinyUI(bootstrapPage(
 In the server.R file
 ```R
 shinyServer(function(input, output) {
-    shinyFileChoose(input, 'files', root='.', filetypes=c('', '.txt'))
+    shinyFileChoose(input, 'files', root=c(root='.'), filetypes=c('', '.txt'))
 })
 ```
 
