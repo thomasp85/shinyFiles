@@ -67,15 +67,11 @@ getVolumes <- function(exclude) {
             names(media) <- basename(media)
             volumes <- c(volumes, media)
         } else if (osSystem == 'Windows') {
-            volumes <- system('wmic logicaldisk get Caption', intern=T)
-            volumes <- sub(' *\\r$', '', volumes)
-            keep <- !tolower(volumes) %in% c('caption', '')
+            volumes <- system("wmic logicaldisk get name", intern = T)
+            volumes <- sub(" *\\r$", "", volumes)
+            keep <- !tolower(volumes) %in% c("name", "")
             volumes <- volumes[keep]
-            volNames <- system('wmic logicaldisk get VolumeName', intern=T)
-            volNames <- sub(' *\\r$', '', volNames)
-            volNames <- volNames[keep]
-            volNames <- paste0(volNames, ' (', volumes, ')')
-            names(volumes) <- volNames
+            names(volumes) <- volumes
         } else {
             stop('unsupported OS')
         }
