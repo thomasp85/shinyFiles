@@ -74,7 +74,8 @@ getVolumes <- function(exclude) {
             volNames <- system('wmic logicaldisk get VolumeName', intern=T)
             volNames <- sub(' *\\r$', '', volNames)
             volNames <- volNames[keep]
-            volNames <- paste0(volNames, ' (', volumes, ')')
+            volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
+            volNames <- paste0(volNames, '(', volumes, ')')
             names(volumes) <- volNames
         } else {
             stop('unsupported OS')
