@@ -157,6 +157,7 @@
 }
 .sF-fileList.sF-list {
 	-webkit-column-width: 150px;
+	-ms-column-width: 150px;
 	-moz-column-width: 150px;
 	column-width: 150px;
 	height: calc(100% - 5px);;
@@ -417,7 +418,7 @@
 .sF-filenaming {
     padding-top: 10px;
 }
-.sF-filenaming .sF-newDir>button#sF-btn-newDir {
+.sF-filenaming .sF-newDir>#sF-btn-newDir {
     margin-right: 15px;
     border-radius: 4px;
 }
@@ -429,7 +430,7 @@
 .input-group.sF-filenaming.has-feedback input.sF-filename.form-control {
     padding-left: 42.5px;
 }
-span#filenameWarn {
+#filenameWarn {
     padding-top: 8px;
     left: 149px
 }
