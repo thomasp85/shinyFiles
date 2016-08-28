@@ -266,5 +266,5 @@ parseDirPath <- function(roots, selection) {
     root <- currentRoots[selection$root]
     
     location <- do.call('file.path', as.list(selection$path))
-    file.path(root, location)
+    gsub(pattern='//*', '/', file.path(root, location), perl=TRUE)
 }
