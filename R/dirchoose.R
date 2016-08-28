@@ -167,9 +167,8 @@ dirCreator <- function(roots, ...) {
 #' ui <- shinyUI(bootstrapPage(
 #'     shinyDirButton('folder', 'Folder select', 'Please select a folder', FALSE)
 #' ))
-#' server <- shinyServer(function(input, output, session) {
-#'     shinyDirChoose(input, 'folder', session=session, 
-#'                     roots=c(wd='.'), filetypes=c('', 'txt'))
+#' server <- shinyServer(function(input, output) {
+#'     shinyDirChoose(input, 'folder', roots=c(wd='.'), filetypes=c('', 'txt'))
 #' })
 #' 
 #' runApp(list(

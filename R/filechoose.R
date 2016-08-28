@@ -131,9 +131,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' ui <- shinyUI(bootstrapPage(
 #'     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 #' ))
-#' server <- shinyServer(function(input, output, session) {
-#'     shinyFileChoose(input, 'files', session=session, 
-#'                     roots=c(wd='.'), filetypes=c('', 'txt'))
+#' server <- shinyServer(function(input, output) {
+#'     shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'))
 #' })
 #' 
 #' runApp(list(
@@ -386,10 +385,9 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
 #'     verbatimTextOutput('rawInputValue'),
 #'     verbatimTextOutput('filepaths')
 #' ))
-#' server <- shinyServer(function(input, output, session) {
+#' server <- shinyServer(function(input, output) {
 #'     roots = c(wd='.')
-#'     shinyFileChoose(input, 'files', session=session, roots=roots, 
-#'                                     filetypes=c('', 'txt'))
+#'     shinyFileChoose(input, 'files', roots=roots, filetypes=c('', 'txt'))
 #'     output$rawInputValue <- renderPrint({str(input$files)})
 #'     output$filepaths <- renderPrint({parseFilePaths(roots, input$files)})
 #' })

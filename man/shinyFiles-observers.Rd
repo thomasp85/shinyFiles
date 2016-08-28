@@ -71,9 +71,8 @@ interactions with it later on.
 ui <- shinyUI(bootstrapPage(
     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 ))
-server <- shinyServer(function(input, output, session) {
-    shinyFileChoose(input, 'files', session=session, 
-                    roots=c(wd='.'), filetypes=c('', 'txt'))
+server <- shinyServer(function(input, output) {
+    shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'))
 })
 
 runApp(list(
@@ -87,9 +86,8 @@ runApp(list(
 ui <- shinyUI(bootstrapPage(
     shinyDirButton('folder', 'Folder select', 'Please select a folder', FALSE)
 ))
-server <- shinyServer(function(input, output, session) {
-    shinyDirChoose(input, 'folder', session=session, 
-                    roots=c(wd='.'), filetypes=c('', 'txt'))
+server <- shinyServer(function(input, output) {
+    shinyDirChoose(input, 'folder', roots=c(wd='.'), filetypes=c('', 'txt'))
 })
 
 runApp(list(
@@ -103,8 +101,8 @@ runApp(list(
 ui <- shinyUI(bootstrapPage(
     shinySaveButton('save', 'Save', 'Save as...')
 ))
-server <- shinyServer(function(input, output, session) {
-    shinyFileSave(input, 'save', session=session, roots=c(wd='.'))
+server <- shinyServer(function(input, output) {
+    shinyFileSave(input, 'save', roots=c(wd='.'))
 })
 
 runApp(list(

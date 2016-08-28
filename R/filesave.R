@@ -12,8 +12,8 @@ NULL
 #' ui <- shinyUI(bootstrapPage(
 #'     shinySaveButton('save', 'Save', 'Save as...')
 #' ))
-#' server <- shinyServer(function(input, output, session) {
-#'     shinyFileSave(input, 'save', session=session, roots=c(wd='.'))
+#' server <- shinyServer(function(input, output) {
+#'     shinyFileSave(input, 'save', roots=c(wd='.'))
 #' })
 #' 
 #' runApp(list(
