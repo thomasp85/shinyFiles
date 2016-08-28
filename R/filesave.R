@@ -123,6 +123,7 @@ parseSavePath <- function(roots, selection) {
     
     location <- do.call('file.path', as.list(selection$path))
     savefile <- file.path(root, location, selection$name)
+    savefile <- gsub(pattern='//*', '/', savefile, perl=TRUE)
     
     data.frame(name=selection$name, type=selection$type, datapath=savefile)
 }
