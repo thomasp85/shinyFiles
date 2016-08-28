@@ -59,7 +59,9 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         fileInfo$ctime <- format(fileInfo$ctime, format='%Y-%m-%d-%H-%M')
         fileInfo$atime <- format(fileInfo$atime, format='%Y-%m-%d-%H-%M')
         if (!is.null(filetypes)) {
-            fileInfo <- fileInfo[tolower(fileInfo$extension) %in% tolower(filetypes) | fileInfo$isdir,]
+            matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes)
+            fileInfo$isdir[matchedFiles] <- FALSE
+            fileInfo <- fileInfo[matchedFiles | fileInfo$isdir,]
         }
         rownames(fileInfo) <- NULL
         breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
