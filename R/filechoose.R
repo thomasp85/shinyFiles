@@ -133,7 +133,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' ))
 #' server <- shinyServer(function(input, output, session) {
 #'     shinyFileChoose(input, 'files', session=session, 
-#'                     roots=c(wd='.'), filetypes=c('', '.txt'))
+#'                     roots=c(wd='.'), filetypes=c('', 'txt'))
 #' })
 #' 
 #' runApp(list(
@@ -389,7 +389,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
 #' server <- shinyServer(function(input, output, session) {
 #'     roots = c(wd='.')
 #'     shinyFileChoose(input, 'files', session=session, roots=roots, 
-#'                                     filetypes=c('', '.txt'))
+#'                                     filetypes=c('', 'txt'))
 #'     output$rawInputValue <- renderPrint({str(input$files)})
 #'     output$filepaths <- renderPrint({parseFilePaths(roots, input$files)})
 #' })

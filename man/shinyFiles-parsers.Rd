@@ -49,7 +49,7 @@ ui <- shinyUI(bootstrapPage(
 server <- shinyServer(function(input, output, session) {
     roots = c(wd='.')
     shinyFileChoose(input, 'files', session=session, roots=roots, 
-                                    filetypes=c('', '.txt'))
+                                    filetypes=c('', 'txt'))
     output$rawInputValue <- renderPrint({str(input$files)})
     output$filepaths <- renderPrint({parseFilePaths(roots, input$files)})
 })

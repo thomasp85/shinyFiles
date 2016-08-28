@@ -169,7 +169,7 @@ dirCreator <- function(roots, ...) {
 #' ))
 #' server <- shinyServer(function(input, output, session) {
 #'     shinyDirChoose(input, 'folder', session=session, 
-#'                     roots=c(wd='.'), filetypes=c('', '.txt'))
+#'                     roots=c(wd='.'), filetypes=c('', 'txt'))
 #' })
 #' 
 #' runApp(list(

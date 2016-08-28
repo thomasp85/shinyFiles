@@ -7,11 +7,11 @@
 \alias{shinyFiles-observers}
 \title{Create a connection to the server side filesystem}
 \usage{
-shinyFileChoose(input, id, updateFreq = 2000, session, ...)
+shinyFileChoose(input, id, updateFreq = 2000, session = getSession(), ...)
 
-shinyDirChoose(input, id, updateFreq = 2000, session, ...)
+shinyDirChoose(input, id, updateFreq = 2000, session = getSession(), ...)
 
-shinyFileSave(input, id, updateFreq = 2000, session, ...)
+shinyFileSave(input, id, updateFreq = 2000, session = getSession(), ...)
 }
 \arguments{
 \item{input}{The input object of the \code{shinyServer()} call (usaully 
@@ -73,7 +73,7 @@ ui <- shinyUI(bootstrapPage(
 ))
 server <- shinyServer(function(input, output, session) {
     shinyFileChoose(input, 'files', session=session, 
-                    roots=c(wd='.'), filetypes=c('', '.txt'))
+                    roots=c(wd='.'), filetypes=c('', 'txt'))
 })
 
 runApp(list(
@@ -89,7 +89,7 @@ ui <- shinyUI(bootstrapPage(
 ))
 server <- shinyServer(function(input, output, session) {
     shinyDirChoose(input, 'folder', session=session, 
-                    roots=c(wd='.'), filetypes=c('', '.txt'))
+                    roots=c(wd='.'), filetypes=c('', 'txt'))
 })
 
 runApp(list(
