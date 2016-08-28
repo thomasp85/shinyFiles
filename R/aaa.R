@@ -86,3 +86,16 @@ getVolumes <- function(exclude) {
         volumes
     }
 }
+
+getSession <- function() {
+    session <- shiny::getDefaultReactiveDomain()
+    
+    if (is.null(session)) {
+        errMsg(paste(
+            "could not find the Shiny session object. This usually happens when a",
+            "shinyjs function is called from a context that wasn't set up by a Shiny session."
+        ))
+    }
+    
+    session
+}

@@ -26,7 +26,7 @@ NULL
 #' 
 #' @importFrom shiny observe invalidateLater
 #' 
-shinyFileSave <- function(input, id, updateFreq=2000, session, ...) {
+shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...) {
     fileGet <- do.call('fileGetter', list(...))
     dirCreate <- do.call('dirCreator', list(...))
     currentDir <- list()

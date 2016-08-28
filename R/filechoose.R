@@ -151,7 +151,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, id, updateFreq=2000, session, ...) {
+shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), ...) {
     fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()
     
