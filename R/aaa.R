@@ -4,7 +4,7 @@
 #' 
 #' @noRd
 #' 
-.onAttach <- function(...) {
+.onLoad <- function(...) {
     addResourcePath('sF', system.file('www', package='shinyFiles'))
 }
 
