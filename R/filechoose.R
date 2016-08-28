@@ -59,7 +59,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         fileInfo$ctime <- format(fileInfo$ctime, format='%Y-%m-%d-%H-%M')
         fileInfo$atime <- format(fileInfo$atime, format='%Y-%m-%d-%H-%M')
         if (!is.null(filetypes)) {
-            matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes)
+            matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes) & fileInfo$extension != ''
             fileInfo$isdir[matchedFiles] <- FALSE
             fileInfo <- fileInfo[matchedFiles | fileInfo$isdir,]
         }
