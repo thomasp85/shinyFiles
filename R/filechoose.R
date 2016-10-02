@@ -38,7 +38,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         currentRoots <- if(class(roots) == 'function') roots() else roots
         
         if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
-        if (missing(root)) root <- names(currentRoots)[1]
+        if (is.null(root)) root <- names(currentRoots)[1]
         
         fulldir <- file.path(currentRoots[root], dir)
         writable <- as.logical(file.access(fulldir, 2) == 0)
@@ -112,6 +112,12 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' @param session The session object of the shinyServer call (usually 
 #' \code{session}).
 #' 
+#' @param defaultRoot The default root to use. For instance if 
+#'                    \code{roots = c('wd' = '.', 'home', '/home')} then \code{defaultRoot} 
+#'                    can be either \code{'wd'} or \code{'home'}.
+#' 
+#' @param defaultPath The default relative path specified given the \code{defaultRoot}.
+#' 
 #' @param ... Arguments to be passed on to \code{\link{fileGetter}} or 
 #' \code{\link{dirGetter}}
 #' 
@@ -132,7 +138,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 #' ))
 #' server <- shinyServer(function(input, output) {
-#'     shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'))
+#'     shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'),
+#'                     defaultPath='', defaultRoot='wd')
 #' })
 #' 
 #' runApp(list(
@@ -150,14 +157,15 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), ...) {
+shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
+                            defaultRoot=NULL, defaultPath='', ...) {
     fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()
     
     return(observe({
         dir <- input[[paste0(id, '-modal')]]
         if(is.null(dir) || is.na(dir)) {
-            dir <- list(dir='')
+            dir <- list(dir=defaultPath, root=defaultRoot)
         } else {
             dir <- list(dir=dir$path, root=dir$root)
         }

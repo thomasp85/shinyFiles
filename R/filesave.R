@@ -26,7 +26,8 @@ NULL
 #' 
 #' @importFrom shiny observe invalidateLater
 #' 
-shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...) {
+shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(),
+                          defaultPath='', defaultRoot=NULL, ...) {
     fileGet <- do.call('fileGetter', list(...))
     dirCreate <- do.call('dirCreator', list(...))
     currentDir <- list()
@@ -41,7 +42,7 @@ shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...)
             lastDirCreate <<- createDir
         }
         if(is.null(dir) || is.na(dir)) {
-            dir <- list(dir='')
+            dir <- list(dir=defaultPath, root=defaultRoot)
         } else {
             dir <- list(dir=dir$path, root=dir$root)
         }

@@ -118,7 +118,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         currentRoots <- if(class(roots) == 'function') roots() else roots
         
         if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
-        if (missing(root)) root <- names(currentRoots)[1]
+        if (is.null(root)) root <- names(currentRoots)[1]
         
         tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
         
@@ -181,7 +181,8 @@ dirCreator <- function(roots, ...) {
 #' 
 #' @importFrom shiny observe invalidateLater
 #' 
-shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(), ...) {
+shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(),
+                           defaultPath='', defaultRoot=NULL, ...) {
     dirGet <- do.call('dirGetter', list(...))
     fileGet <- do.call('fileGetter', list(...))
     dirCreate <- do.call('dirCreator', list(...))
@@ -197,7 +198,7 @@ shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(), ...
             lastDirCreate <<- createDir
         }
         if(is.null(tree) || is.na(tree)) {
-            dir <- list(tree=list(name='', expanded=TRUE))
+            dir <- list(tree=list(name=defaultPath, expanded=TRUE), root=defaultRoot)
             files <- list(dir=NA, root=tree$selectedRoot)
         } else {
             dir <- list(tree=tree$tree, root=tree$selectedRoot)
