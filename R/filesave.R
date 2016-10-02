@@ -113,7 +113,8 @@ formatFiletype <- function(filetype) {
 #' @export
 #' 
 parseSavePath <- function(roots, selection) {
-    if(is.null(selection)) return(data.frame(name=character(), type=character(), datapath=character()))
+    if(is.null(selection)) return(data.frame(name=character(), type=character(),
+                                             datapath=character(), stringsAsFactors = FALSE))
     
     currentRoots <- if(class(roots) == 'function') roots() else roots
     
@@ -124,6 +125,9 @@ parseSavePath <- function(roots, selection) {
     location <- do.call('file.path', as.list(selection$path))
     savefile <- file.path(root, location, selection$name)
     savefile <- gsub(pattern='//*', '/', savefile, perl=TRUE)
-    
-    data.frame(name=selection$name, type=selection$type, datapath=savefile)
+    type <- selection$type
+    if (is.null(type)) {
+        type <- ""
+    }
+    data.frame(name=selection$name, type=type, datapath=savefile, stringsAsFactors = FALSE)
 }
