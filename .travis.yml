@@ -1,8 +1,15 @@
 language: r
-sudo: required
-bioc_required: true
-r_check_args: '--as-cran'
+cache: packages
+sudo: false
+
 r_github_packages:
   - jimhester/covr
+
 after_success:
-  - Rscript -e 'library(covr);codecov()'
+  - Rscript -e 'covr::codecov()'
+
+addons:
+  apt:
+    packages:
+      - libicu-dev
+
