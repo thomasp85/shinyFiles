@@ -408,9 +408,11 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
 parseFilePaths <- function(roots, selection) {
     roots <- if(class(roots) == 'function') roots() else roots
     
-    if (is.null(selection) || is.na(selection)) return(data.frame(name=character(0), size=numeric(0), type=character(0), datapath=character(0)))
+    if (is.null(selection) || is.na(selection)) return(data.frame(name=character(0), size=numeric(0),
+                                                                  type=character(0), datapath=character(0),
+                                                                  stringsAsFactors = FALSE))
     files <- sapply(selection$files, function(x) {file.path(roots[selection$root], do.call('file.path', x))})
     files <- gsub(pattern='//*', '/', files, perl=TRUE)
     
-    data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files)
+    data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files, stringsAsFactors = FALSE)
 }
