@@ -328,7 +328,7 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
 #' 
 #' @export
 #' 
-shinyFilesButton <- function(id, label, title, multiple, buttonType='default', class=NULL) {
+shinyFilesButton <- function(id, label, title, multiple, buttonType='default', class=NULL, icon=NULL) {
     tagList(
         singleton(tags$head(
                 tags$script(src='sF/shinyFiles.js'),
@@ -349,7 +349,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
             class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class), collapse=' '),
             'data-title'=title,
             'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
-            as.character(label)
+            list(icon, label)
             )
         )
 }

@@ -60,7 +60,7 @@ shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...)
 #' 
 #' @export
 #' 
-shinySaveButton <- function(id, label, title, filetype, buttonType='default', class=NULL) {
+shinySaveButton <- function(id, label, title, filetype, buttonType='default', class=NULL, icon=NULL) {
     if(missing(filetype)) filetype <- NA
     filetype <- formatFiletype(filetype)
     
@@ -84,7 +84,7 @@ shinySaveButton <- function(id, label, title, filetype, buttonType='default', cl
             class=paste(c('shinySave btn', paste0('btn-', buttonType), class), collapse=' '),
             'data-title'=title,
             'data-filetype'=filetype,
-            as.character(label)
+            list(icon, label)
         )
     )
 }
