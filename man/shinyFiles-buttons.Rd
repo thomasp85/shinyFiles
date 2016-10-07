@@ -8,12 +8,12 @@
 \title{Create a button to summon a shinyFiles dialog}
 \usage{
 shinyFilesButton(id, label, title, multiple, buttonType = "default",
-  class = NULL)
+  class = NULL, icon = NULL)
 
 shinyDirButton(id, label, title, buttonType = "default", class = NULL)
 
 shinySaveButton(id, label, title, filetype, buttonType = "default",
-  class = NULL)
+  class = NULL, icon = NULL)
 }
 \arguments{
 \item{id}{The id matching the \code{\link{shinyFileChoose}}}
@@ -31,6 +31,8 @@ Defaults to 'default' for a neutral appearance but can be changed for another
 look. The value will be pasted with 'btn-' and added as class.}
 
 \item{class}{Additional classes added to the button}
+
+\item{icon}{An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
 
 \item{filetype}{A named list of file extensions. The name of each element 
 gives the name of the filetype and the content of the element the possible
