@@ -31,6 +31,7 @@ shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...)
     dirCreate <- do.call('dirCreator', list(...))
     currentDir <- list()
     lastDirCreate <- NULL
+    clientId = session$ns(id)
     
     return(observe({
         dir <- input[[paste0(id, '-modal')]]
@@ -49,7 +50,7 @@ shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...)
         newDir <- do.call('fileGet', dir)
         if(!identical(currentDir, newDir) && newDir$exist) {
             currentDir <<- newDir
-            session$sendCustomMessage('shinySave', list(id=id, dir=newDir))
+            session$sendCustomMessage('shinySave', list(id=clientId, dir=newDir))
         }
         invalidateLater(updateFreq, session)
     }))

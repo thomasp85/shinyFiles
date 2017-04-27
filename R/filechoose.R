@@ -153,6 +153,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), ...) {
     fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()
+    clientId = session$ns(id)
     
     return(observe({
         dir <- input[[paste0(id, '-modal')]]
@@ -165,7 +166,7 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
         newDir <- do.call('fileGet', dir)
         if(!identical(currentDir, newDir)) {
             currentDir <<- newDir
-            session$sendCustomMessage('shinyFiles', list(id=id, dir=newDir))
+            session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
         }
         invalidateLater(updateFreq, session)
     }))

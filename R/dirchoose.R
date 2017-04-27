@@ -188,6 +188,7 @@ shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(), ...
     currentDir <- list()
     currentFiles <- NULL
     lastDirCreate <- NULL
+    clientId = session$ns(id)
     
     return(observe({
         tree <- input[[paste0(id, '-modal')]]
@@ -217,7 +218,7 @@ shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(), ...
         }
         if(!identical(currentDir, newDir)) {
             currentDir <<- newDir
-            session$sendCustomMessage('shinyDirectories', list(id=id, dir=newDir))
+            session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
         }
         invalidateLater(updateFreq, session)
     }))
