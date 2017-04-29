@@ -99,7 +99,7 @@ shinySaveButton <- function(id, label, title, filetype, buttonType='default', cl
 #' 
 #' @return A string describing the input value in json format
 #' 
-#' @importFrom RJSONIO toJSON
+#' @importFrom jsonlite toJSON
 #' 
 formatFiletype <- function(filetype) {
     if(!is.na(filetype) && !is.null(filetype)) {

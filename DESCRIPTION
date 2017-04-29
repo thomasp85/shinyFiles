@@ -15,7 +15,7 @@ Imports:
     tools,
     shiny (>= 0.11),
     htmltools,
-    RJSONIO
+    jsonlite
 Collate:
     'aaa.R'
     'filechoose.R'
