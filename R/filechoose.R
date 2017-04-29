@@ -310,6 +310,8 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
 #' 
 #' @param class Additional classes added to the button
 #' 
+#' @param icon An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.
+#' 
 #' @param filetype A named list of file extensions. The name of each element 
 #' gives the name of the filetype and the content of the element the possible
 #' extensions e.g. \code{list(picture=c('jpg', 'jpeg'))}. The first extension
@@ -329,7 +331,7 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
 #' 
 #' @export
 #' 
-shinyFilesButton <- function(id, label, title, multiple, buttonType='default', class=NULL) {
+shinyFilesButton <- function(id, label, title, multiple, buttonType='default', class=NULL, icon=NULL) {
     tagList(
         singleton(tags$head(
                 tags$script(src='sF/shinyFiles.js'),
@@ -350,7 +352,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
             class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class), collapse=' '),
             'data-title'=title,
             'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
-            as.character(label)
+            list(icon, label)
             )
         )
 }
