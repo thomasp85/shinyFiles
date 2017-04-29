@@ -26,7 +26,8 @@ NULL
 #' 
 #' @importFrom shiny observe invalidateLater
 #' 
-shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...) {
+shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(),
+                          defaultPath='', defaultRoot=NULL, ...) {
     fileGet <- do.call('fileGetter', list(...))
     dirCreate <- do.call('dirCreator', list(...))
     currentDir <- list()
@@ -42,7 +43,7 @@ shinyFileSave <- function(input, id, updateFreq=2000, session=getSession(), ...)
             lastDirCreate <<- createDir
         }
         if(is.null(dir) || is.na(dir)) {
-            dir <- list(dir='')
+            dir <- list(dir=defaultPath, root=defaultRoot)
         } else {
             dir <- list(dir=dir$path, root=dir$root)
         }
@@ -114,7 +115,8 @@ formatFiletype <- function(filetype) {
 #' @export
 #' 
 parseSavePath <- function(roots, selection) {
-    if(is.null(selection)) return(data.frame(name=character(), type=character(), datapath=character()))
+    if(is.null(selection)) return(data.frame(name=character(), type=character(),
+                                             datapath=character(), stringsAsFactors = FALSE))
     
     currentRoots <- if(class(roots) == 'function') roots() else roots
     
@@ -125,6 +127,9 @@ parseSavePath <- function(roots, selection) {
     location <- do.call('file.path', as.list(selection$path))
     savefile <- file.path(root, location, selection$name)
     savefile <- gsub(pattern='//*', '/', savefile, perl=TRUE)
-    
-    data.frame(name=selection$name, type=selection$type, datapath=savefile)
+    type <- selection$type
+    if (is.null(type)) {
+        type <- ""
+    }
+    data.frame(name=selection$name, type=type, datapath=savefile, stringsAsFactors = FALSE)
 }

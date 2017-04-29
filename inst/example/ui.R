@@ -20,7 +20,8 @@ shinyUI(pageWithSidebar(
         tags$p('The file selection button allows the user to select one or
                several files and get their absolute position communicated back
                to the shiny server. In this example the button has been set to
-               single-file mode.'),
+               single-file mode and the default path has been set to the "library"
+               subdirectory of the "R Installation" path.'),
         tags$hr(),
         shinyDirButton('directory', 'Folder select', 'Please select a folder'),
         tags$p(),

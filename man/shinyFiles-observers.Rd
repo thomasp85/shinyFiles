@@ -7,11 +7,14 @@
 \alias{shinyFiles-observers}
 \title{Create a connection to the server side filesystem}
 \usage{
-shinyFileChoose(input, id, updateFreq = 2000, session = getSession(), ...)
+shinyFileChoose(input, id, updateFreq = 2000, session = getSession(),
+  defaultRoot = NULL, defaultPath = "", ...)
 
-shinyDirChoose(input, id, updateFreq = 2000, session = getSession(), ...)
+shinyDirChoose(input, id, updateFreq = 2000, session = getSession(),
+  defaultPath = "", defaultRoot = NULL, ...)
 
-shinyFileSave(input, id, updateFreq = 2000, session = getSession(), ...)
+shinyFileSave(input, id, updateFreq = 2000, session = getSession(),
+  defaultPath = "", defaultRoot = NULL, ...)
 }
 \arguments{
 \item{input}{The input object of the \code{shinyServer()} call (usaully 
@@ -28,6 +31,12 @@ files or drives)}
 
 \item{session}{The session object of the shinyServer call (usually 
 \code{session}).}
+
+\item{defaultRoot}{The default root to use. For instance if 
+\code{roots = c('wd' = '.', 'home', '/home')} then \code{defaultRoot} 
+can be either \code{'wd'} or \code{'home'}.}
+
+\item{defaultPath}{The default relative path specified given the \code{defaultRoot}.}
 
 \item{...}{Arguments to be passed on to \code{\link{fileGetter}} or 
 \code{\link{dirGetter}}}
@@ -72,7 +81,8 @@ ui <- shinyUI(bootstrapPage(
     shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 ))
 server <- shinyServer(function(input, output) {
-    shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'))
+    shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'),
+                    defaultPath='', defaultRoot='wd')
 })
 
 runApp(list(
