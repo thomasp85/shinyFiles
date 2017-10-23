@@ -153,18 +153,22 @@ var shinyFiles = (function() {
 	var parseFiles = function(data) {
 		var parsedFiles = {};
 		data.files.filename.forEach(function(d, i) {
-			var mTime = data.files.mtime[i].split('-');
-			var cTime = data.files.ctime[i].split('-');
-			var aTime = data.files.atime[i].split('-');
-			parsedFiles[d] = {
-				name: d,
-				extension: data.files.extension[i],
-				isDir: data.files.isdir[i],
-				size: data.files.size[i],
-				mTime: new Date(mTime[0], mTime[1], mTime[2], mTime[3], mTime[4]),
-				cTime: new Date(cTime[0], cTime[1], cTime[2], cTime[3], cTime[4]),
-				aTime: new Date(aTime[0], aTime[1], aTime[2], aTime[3], aTime[4])
-			};
+            try{
+                var mTime = data.files.mtime[i].split('-');
+                var cTime = data.files.ctime[i].split('-');
+                var aTime = data.files.atime[i].split('-');
+                parsedFiles[d] = {
+                    name: d,
+                    extension: data.files.extension[i],
+                    isDir: data.files.isdir[i],
+                    size: data.files.size[i],
+                    mTime: new Date(mTime[0], mTime[1], mTime[2], mTime[3], mTime[4]),
+                    cTime: new Date(cTime[0], cTime[1], cTime[2], cTime[3], cTime[4]),
+                    aTime: new Date(aTime[0], aTime[1], aTime[2], aTime[3], aTime[4])
+                };
+            }   catch(err){
+                //This can happen if there is a broken link, for example
+            }
 		});
 		
 		return {
