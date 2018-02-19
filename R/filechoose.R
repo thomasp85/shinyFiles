@@ -166,13 +166,15 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(),
     return(observe({
         dir <- input[[paste0(id, '-modal')]]
         if(is.null(dir) || is.na(dir)) {
+            modal_exist <- FALSE
             dir <- list(dir=defaultPath, root=defaultRoot)
         } else {
+            modal_exist <- TRUE
             dir <- list(dir=dir$path, root=dir$root)
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
         newDir <- do.call('fileGet', dir)
-        if(!identical(currentDir, newDir)) {
+        if(!identical(currentDir, newDir) || !modal_exist) {
             currentDir <<- newDir
             session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
         }
