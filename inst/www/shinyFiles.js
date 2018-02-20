@@ -563,17 +563,17 @@ var shinyFiles = (function() {
 		}, 1);
 		
 		Shiny.bindAll();
-        
-        populateFileChooser(button, $(button).data('dataCache'));
+		
+		var cachedData = localStorage.getObject(button.id);
+        populateFileChooser(button, cachedData);
 	};
 
 	var populateFileChooser = function(element, data) {
+
 		var modal = $(element).data('modal');
-        
-        $(element).data('dataCache', data);
-        
+
 		if(!modal) return;
-        
+	
 		var currentData = modal.data('currentData');
 		
 		var single = $(element).data('selecttype') == 'single';
@@ -1698,10 +1698,28 @@ var shinyFiles = (function() {
     
     
 	var sF = {};
+
+	Storage.prototype.setObject = function(key, value) {
+		this.setItem(key, JSON.stringify(value));
+	}
+	
+	Storage.prototype.getObject = function(key) {
+		var value = this.getItem(key);
+		return value && JSON.parse(value);
+	}
 	
 	sF.init = function() {
         Shiny.addCustomMessageHandler('shinyFiles', function(data) {
-            populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir));
+			// cache the server side file list
+			var parsedData = parseFiles(data.dir);
+			localStorage.setObject(data.id, parsedData);
+
+			var button = $('.shinyFiles#' + data.id);
+			if (button.length == 0) {
+				return;
+			}
+
+            populateFileChooser(button, parsedData);
         });
         Shiny.addCustomMessageHandler('shinyDirectories', function(data) {
             populateDirChooser($('.shinyDirectories#'+data.id), data.dir);
