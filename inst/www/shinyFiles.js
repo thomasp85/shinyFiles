@@ -1367,7 +1367,7 @@ var shinyFiles = (function() {
             return false;
         })
         modal.find('.sF-newDir ul button').on('click', function() {
-            var name = $(this).closest('input-group').find('input').val();
+            var name = $(this).closest('.input-group').find('input').val();
             createFolder(name, modal);
         })
         
