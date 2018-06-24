@@ -107,7 +107,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @param updateFreq The time in milliseconds between file system lookups. This
 #' determines the responsiveness to changes in the filesystem (e.g. addition of
-#' files or drives)
+#' files or drives). For the default value (0) changes in the filesystem are 
+#' shown only when a shinyFiles button is clicked again
 #' 
 #' @param session The session object of the shinyServer call (usually 
 #' \code{session}).
@@ -157,7 +158,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
+shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(), 
                             defaultRoot=NULL, defaultPath='', ...) {
     fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()

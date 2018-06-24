@@ -181,7 +181,7 @@ dirCreator <- function(roots, ...) {
 #' 
 #' @importFrom shiny observe invalidateLater req
 #' 
-shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(),
+shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
                            defaultPath='', defaultRoot=NULL, ...) {
     dirGet <- do.call('dirGetter', list(...))
     fileGet <- do.call('fileGetter', list(...))
