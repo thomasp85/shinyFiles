@@ -596,7 +596,7 @@ var shinyFiles = (function() {
 		
 		if (newLocation || newVolumes) {
 			modal.find('.sF-breadcrumps').find('option, optgroup').remove();
-			
+			if (!data) return;
 			data.location.forEach(function(d, i) {
 				modal.find('.sF-breadcrumps').prepend(
 					$('<option>', {html: '&#128193; ' + (d || data.selectedRoot), value: d}).data('location', data.location.slice(0, i+1))
