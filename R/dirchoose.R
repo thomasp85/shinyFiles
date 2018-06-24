@@ -179,7 +179,7 @@ dirCreator <- function(roots, ...) {
 #' 
 #' @export
 #' 
-#' @importFrom shiny observe invalidateLater
+#' @importFrom shiny observe invalidateLater req
 #' 
 shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(),
                            defaultPath='', defaultRoot=NULL, ...) {
@@ -192,6 +192,7 @@ shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(),
     clientId = session$ns(id)
     
     return(observe({
+        req(input[[id]])
         tree <- input[[paste0(id, '-modal')]]
         createDir <- input[[paste0(id, '-newDir')]]
         if(!identical(createDir, lastDirCreate)) {
@@ -221,16 +222,18 @@ shinyDirChoose <- function(input, id, updateFreq=2000, session=getSession(),
             currentDir <<- newDir
             session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
         }
-        invalidateLater(updateFreq, session)
+        if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 #' @rdname shinyFiles-buttons
 #' 
 #' @importFrom htmltools tagList singleton tags
+#' @importFrom shiny restoreInput
 #' 
 #' @export
 #' 
 shinyDirButton <- function(id, label, title, buttonType='default', class=NULL) {
+    value <- restoreInput(id = id, default = NULL)
     tagList(
         singleton(tags$head(
             tags$script(src='sF/shinyFiles.js'),
@@ -248,8 +251,9 @@ shinyDirButton <- function(id, label, title, buttonType='default', class=NULL) {
         tags$button(
             id=id,
             type='button',
-            class=paste(c('shinyDirectories btn', paste0('btn-', buttonType), class), collapse=' '),
+            class=paste(c('shinyDirectories btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
             'data-title'=title,
+            `data-val` = value,
             as.character(label)
         )
     )
@@ -264,8 +268,11 @@ parseDirPath <- function(roots, selection) {
     
     if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
     
-    root <- currentRoots[selection$root]
-    
-    location <- do.call('file.path', as.list(selection$path))
-    gsub(pattern='//*', '/', file.path(root, location), perl=TRUE)
+    if (is.integer(selection)) {
+      character(0)
+    } else {
+      root <- currentRoots[selection$root]
+      location <- do.call('file.path', as.list(selection$path))
+      gsub(pattern='//*', '/', file.path(root, location), perl=TRUE)
+    }
 }

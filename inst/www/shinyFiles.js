@@ -596,8 +596,8 @@ var shinyFiles = (function() {
 		
 		
 		if (newLocation || newVolumes) {
-			modal.find('.sF-breadcrumps').find('option, optgroup').remove();
 			if (!data) return;
+			modal.find('.sF-breadcrumps').find('option, optgroup').remove();
 			data.location.forEach(function(d, i) {
 				modal.find('.sF-breadcrumps').prepend(
 					$('<option>', {html: '&#128193; ' + (d || data.selectedRoot), value: d}).data('location', data.location.slice(0, i+1))
@@ -1440,7 +1440,7 @@ var shinyFiles = (function() {
         
         $(element).data('dataCache', data);
         
-		if(!modal) return;
+		if(!modal || !data) return;
         
 		var currentData = modal.data('currentData');
         
