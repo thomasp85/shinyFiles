@@ -153,7 +153,7 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @family shinyFiles
 #' 
-#' @importFrom shiny observe invalidateLater
+#' @importFrom shiny observe invalidateLater req
 #' 
 #' @export
 #' 
@@ -162,8 +162,9 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(),
     fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()
     clientId = session$ns(id)
-    
+
     return(observe({
+        req(input[[id]])
         dir <- input[[paste0(id, '-modal')]]
         if(is.null(dir) || is.na(dir)) {
             dir <- list(dir=defaultPath, root=defaultRoot)
@@ -176,7 +177,7 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(),
             currentDir <<- newDir
             session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
         }
-        invalidateLater(updateFreq, session)
+        if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 
@@ -336,33 +337,36 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(),
 #' FatCows Farm-Fresh Web Icons (\url{http://www.fatcow.com/free-icons})
 #' 
 #' @importFrom htmltools tagList singleton tags
+#' @importFrom shiny restoreInput 
 #' 
 #' @export
 #' 
 shinyFilesButton <- function(id, label, title, multiple, buttonType='default', class=NULL, icon=NULL) {
+    value <- restoreInput(id = id, default = NULL)
     tagList(
         singleton(tags$head(
-                tags$script(src='sF/shinyFiles.js'),
-                tags$link(
-                    rel='stylesheet',
-                    type='text/css',
-                    href='sF/styles.css'
-                ),
-                tags$link(
-                    rel='stylesheet',
-                    type='text/css',
-                    href='sF/fileIcons.css'
-                )
-            )),
+            tags$script(src='sF/shinyFiles.js'),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/styles.css'
+            ),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/fileIcons.css'
+            )
+        )),
         tags$button(
             id=id,
             type='button',
-            class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class), collapse=' '),
+            class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
             'data-title'=title,
             'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
+            `data-val` = value,
             list(icon, label)
-            )
         )
+    )
 }
 
 #' Convert the output of a selection to platform specific path(s)
@@ -419,11 +423,14 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
 parseFilePaths <- function(roots, selection) {
     roots <- if(class(roots) == 'function') roots() else roots
     
-    if (is.null(selection) || is.na(selection)) return(data.frame(name=character(0), size=numeric(0),
-                                                                  type=character(0), datapath=character(0),
-                                                                  stringsAsFactors = FALSE))
-    files <- sapply(selection$files, function(x) {file.path(roots[selection$root], do.call('file.path', x))})
-    files <- gsub(pattern='//*', '/', files, perl=TRUE)
-    
-    data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files, stringsAsFactors = FALSE)
+    if (is.null(selection) || is.na(selection) || is.integer(selection)) {
+       data.frame(
+         name=character(0), size=numeric(0), type=character(0),
+         datapath=character(0), stringsAsFactors = FALSE
+       )
+    } else {
+      files <- sapply(selection$files, function(x) {file.path(roots[selection$root], do.call('file.path', x))})
+      files <- gsub(pattern='//*', '/', files, perl=TRUE)
+      data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files, stringsAsFactors = FALSE)
+    }
 }

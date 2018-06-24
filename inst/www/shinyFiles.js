@@ -301,7 +301,7 @@ var shinyFiles = (function() {
 	}
         
 	var removeFileChooser = function(button, modal, data) {
-		Shiny.unbindAll();
+		// Shiny.unbindAll();
 		
 		var modal = $(modal).removeClass('in');
 		var backdrop = $(modal).data('backdrop').removeClass('in');
@@ -309,7 +309,7 @@ var shinyFiles = (function() {
 		setTimeout(function() {
 			modal.remove();
 			backdrop.remove();
-			Shiny.bindAll();
+			// Shiny.bindAll();
             if(data !== undefined) {
                 Shiny.onInputChange($(button).attr('id'), data);
             }
@@ -375,7 +375,7 @@ var shinyFiles = (function() {
     // File chooser
 	var createFileChooser = function(button, title) {
         // Prepareations
-		Shiny.unbindAll();
+		// Shiny.unbindAll();
 		
 		$(button).prop('disabled', true);
 		
@@ -562,7 +562,7 @@ var shinyFiles = (function() {
 			backdrop.addClass('in');
 		}, 1);
 		
-		Shiny.bindAll();
+		// Shiny.bindAll();
         
         populateFileChooser(button, $(button).data('dataCache'));
 	};
@@ -827,7 +827,7 @@ var shinyFiles = (function() {
     // File saver
     var createFileSaver = function(button, title) {
         // Prepareations
-    	Shiny.unbindAll();
+    	// Shiny.unbindAll();
 		
 		$(button).prop('disabled', true);
 		
@@ -1091,7 +1091,7 @@ var shinyFiles = (function() {
 			backdrop.addClass('in');
 		}, 1);
 		
-		Shiny.bindAll();
+		// Shiny.bindAll();
         
         populateFileChooser(button, $(button).data('dataCache'));
 	};
@@ -1229,7 +1229,7 @@ var shinyFiles = (function() {
     var createDirChooser = function(button, title) {
         
         // Preparations
-        Shiny.unbindAll();
+        // Shiny.unbindAll();
     	
 		$(button).prop('disabled', true);
 		
@@ -1429,7 +1429,7 @@ var shinyFiles = (function() {
 			backdrop.addClass('in');
 		}, 1);
 		
-		Shiny.bindAll();
+		// Shiny.bindAll();
         
         populateDirChooser(button, $(button).data('dataCache'));
     };
@@ -1729,170 +1729,6 @@ var shinyFiles = (function() {
 		});
 	};
 	
-    
-    // Legacy stuff
-    
-    var createFileChooserBootstrap2 = function(button, title) {
-		Shiny.unbindAll();
-		
-		$(button).prop('disabled', true);
-		
-		initializeButton(button);
-		
-		var modal = $('<div>', {id: $(button).attr('id')+'-modal'}).addClass('sF-modal sF-modalContainer modal fade').css('display', 'block').append(
-			$('<div>').addClass('modal-header').append(
-				$('<button>', {html: '&times;', type: 'button'}).addClass('close')
-					.on('click', function() {
-						dismissFileChooser(button, modal)
-					})
-			).append(
-				$('<h4>', {text: title}).addClass('sF-title modal-title')
-			)
-		).append(
-			$('<div>').addClass('modal-body').append(
-				$('<div>').addClass('sF-navigation btn-toolbar').append(
-					$('<div>').addClass('btn-group btn-group-sm sF-navigate').append(
-						$('<button>', {id: 'sF-btn-back'}).addClass('btn btn-default').append(
-							$('<i>').addClass('icon-chevron-left')
-						).on('click', function() {
-							moveBack(button, modal);
-						})
-					).append(
-						$('<button>', {id: 'sF-btn-up'}).addClass('btn btn-default').append(
-							$('<i>').addClass('icon-arrow-up')
-						).on('click', function() {
-							moveUp(button, modal);
-						})
-					).append(
-						$('<button>', {id: 'sF-btn-forward'}).addClass('btn btn-default').append(
-							$('<i>').addClass('icon-chevron-right')
-						).on('click', function() {
-							moveForward(button, modal);
-						})
-					)
-				).append(
-					$('<div>').addClass('btn-group btn-group-sm sF-view').append(
-						$('<button>', {id: 'sF-btn-icon'}).addClass('btn btn-default').append(
-							$('<i>').addClass('icon-th')
-						)
-					).append(
-						$('<button>', {id: 'sF-btn-list'}).addClass('btn btn-default').append(
-							$('<i>').addClass('icon-th-list')
-						)
-					).append(
-						$('<button>', {id: 'sF-btn-detail'}).addClass('btn btn-default').append(
-							$('<i>').addClass('icon-align-justify')
-						)
-					).on('click', 'button', function() {
-						changeView(button, modal, $(this));
-					})
-				).append(
-					$('<div>').addClass('sF-sort dropdown btn-group btn-group-sm').append(
-						$('<button>', {id: 'sF-btn-sort'}).addClass('btn btn-default').css({
-							'padding-left': '3px',
-							'padding-right': '7px',
-							'border-radius': '4px'
-						}).append(
-							$('<i>').addClass('icon-resize-vertical')
-						).append(
-							$('<i>').addClass('icon-signal').css({
-								'-webkit-transform': 'rotate(90deg)',
-							    '-moz-transform': 'rotate(90deg)',
-							    '-ms-transform': 'rotate(90deg)',
-							    '-o-transform': 'rotate(90deg)',
-							    'transform': 'rotate(90deg)'
-							})
-						)
-					).append(
-						$('<ul>').addClass('dropdown-menu').append(
-							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Name'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Name' ? 'selected' : '')
-						).append(
-							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Type'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Type' ? 'selected' : '')
-						).append(
-							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Size'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Size' ? 'selected' : '')
-						).append(
-							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Created'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Created' ? 'selected' : '')
-						).append(
-							$('<li>').addClass('sortAttr').append($('<a>', {href: '#', text: 'Modified'}).prepend($('<i>').addClass('icon-ok'))).addClass($(button).data('sort') == 'Modified' ? 'selected' : '')
-						).append(
-							$('<li>').addClass('divider')
-						).append(
-							$('<li>').addClass('sortDir').append($('<a>', {href: '#', text: 'Sort direction'}).addClass($(button).data('sortDir')).prepend($('<i>').addClass('icon-arrow-down')).prepend($('<i>').addClass('icon-arrow-up')))
-						).on('click', 'li.sortAttr',  function() {
-							$(this).siblings('.sortAttr').removeClass('selected');
-							$(this).toggleClass('selected', true);
-							
-							$(modal).trigger('fileSort', [$(this).find('a').text(), $(this).siblings('.sortDir').find('a').attr('class')])
-						}).on('click', 'li.sortDir', function() {
-							$(this).find('a').toggleClass('ascending').toggleClass('descending')
-							
-							$(modal).trigger('fileSort', [$(this).parent().find('.selected a').text(), $(this).find('a').attr('class')])
-						})
-					).on('click', function() {
-						$(this).toggleClass('open')
-							.find('button').toggleClass('active');
-						return false;
-					})
-				).append(
-					$('<select>').addClass('sF-breadcrumps form-control input-sm').on('change', function() {
-							moveToDir(button, modal, this);
-						}).css({
-							'width': 'calc(100% - 291px)',
-							'margin-bottom': 0,
-							'float': 'right'
-						})
-				)
-			).append(
-				$('<div>').addClass('sF-fileWindow').append(
-					$('<div>').addClass('sF-fileList')
-				).on('click', function() {
-					modal.find('.sF-fileList .selected').toggleClass('selected');
-					toggleSelectButton(modal);
-				})
-			)
-		).append(
-			$('<div>').addClass('sF-responseButtons modal-footer').append(
-				$('<button>', {text: 'Cancel', type: 'button'}).addClass('btn btn-default')
-					.on('click', function() {
-						dismissFileChooser(button, modal);
-					})
-			).append(
-				$('<button>', {text: 'Select', type: 'button', id: 'sF-selectButton'}).addClass('btn btn-primary')
-					.on('click', function() {
-						selectFiles(button, modal);
-					})
-			)
-		).appendTo($('body'));
-		
-		var backdrop = $('<div>').addClass('modal-backdrop fade').appendTo($('body'));
-		
-		modal.data('backdrop', backdrop);
-		modal.data('button', button);
-		$(button).data('modal', modal);
-		
-		var view = $(button).data('view') || 'sF-btn-icon';
-		changeView(button, modal, modal.find('#'+view));
-		
-		modal.on('change', function() {
-			setDisabledButtons(button, modal);
-		}).on('fileSort', function(elem, attribute, direction) {
-			$(button).data('sort', attribute).data('sortDir', direction);
-			sortFiles(modal, attribute, direction);
-		});
-		
-		setTimeout(function() {
-			modal.addClass('in');
-			backdrop.addClass('in');
-		}, 1);
-		
-		Shiny.bindAll();
-        
-        populateFileChooser(button, $(button).data('dataCache'));
-	};
-    
-    // Legacy stuff ends
-    
-    
 	return sF;
 })();
 
