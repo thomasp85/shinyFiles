@@ -218,11 +218,9 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
             newDir$content <- content$files[, c('filename', 'extension', 'isdir', 'size'), drop=FALSE]
             newDir$writable <- content$writable
         }
-        if(!identical(currentDir, newDir)) {
-            currentDir <<- newDir
-            session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
-        }
-        if (updateFreq > 0) invalidateLater(updateFreq, session)
+        currentDir <<- newDir
+        session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
+        # if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 #' @rdname shinyFiles-buttons

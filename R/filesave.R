@@ -50,11 +50,15 @@ shinyFileSave <- function(input, id, updateFreq = 0, session=getSession(),
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
         newDir <- do.call('fileGet', dir)
-        if(!identical(currentDir, newDir) && newDir$exist) {
+        if(newDir$exist) {
             currentDir <<- newDir
             session$sendCustomMessage('shinySave', list(id=clientId, dir=newDir))
+        } else if (isTRUE(nchar(createDir$name) > 0)) {
+            dir <- list(dir=createDir$name, root=dir$root)
+            currentDir <<- do.call('fileGet', dir)
+            session$sendCustomMessage('shinySave', list(id=clientId, dir=currentDir))
         }
-        if (updateFreq > 0) invalidateLater(updateFreq, session)
+        # if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 #' @rdname shinyFiles-buttons
@@ -89,7 +93,7 @@ shinySaveButton <- function(id, label, title, filetype, buttonType='default', cl
             class=paste(c('shinySave btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
             'data-title'=title,
             'data-filetype'=filetype,
-            `data-val` = value,
+            'data-val' = value,
             list(icon, label)
         )
     )

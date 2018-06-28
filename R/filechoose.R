@@ -174,11 +174,9 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
         newDir <- do.call('fileGet', dir)
-        if(!identical(currentDir, newDir)) {
-            currentDir <<- newDir
-            session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
-        }
-        if (updateFreq > 0) invalidateLater(updateFreq, session)
+        currentDir <<- newDir
+        session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
+        # if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 
