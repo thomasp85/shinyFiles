@@ -58,7 +58,7 @@ shinyFileSave <- function(input, id, updateFreq = 0, session=getSession(),
             currentDir <<- do.call('fileGet', dir)
             session$sendCustomMessage('shinySave', list(id=clientId, dir=currentDir))
         }
-        # if (updateFreq > 0) invalidateLater(updateFreq, session)
+        if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 #' @rdname shinyFiles-buttons

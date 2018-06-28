@@ -220,7 +220,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
         }
         currentDir <<- newDir
         session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
-        # if (updateFreq > 0) invalidateLater(updateFreq, session)
+        if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 #' @rdname shinyFiles-buttons
