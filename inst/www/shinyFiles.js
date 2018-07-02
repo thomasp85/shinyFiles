@@ -5,7 +5,6 @@ var shinyFiles = (function() {
 	var elementSelector = function(event, element, single, forceSelect) {
 		var parent = $(element).parent();
 		var lastSelectedElement = parent.data('lastElement');
-	
 		
 		function toggleSelection(element) {
 		    $(element).toggleClass('selected');
@@ -208,11 +207,12 @@ var shinyFiles = (function() {
 	};
 	
 	var initializeButton = function(button) {
+	    
         var type = $(button).hasClass('shinyDirectories') ? 'directory' : 'file';
         
         var sort = $(button).data('sort') || 'Name';
     	var sortDir = $(button).data('sortDir') || 'ascending';
-        
+    	
         if(type == 'file') {
             var back = $(button).data('back') || [];
         	var forward = $(button).data('forward') || [];
@@ -765,6 +765,9 @@ var shinyFiles = (function() {
 		var currentDir = getCurrentDirectory(modal);
 		
 		changeDirectory(button, modal, newDir);
+		if (!$(button).data('forward')) {
+		  $(button).data('forward', []);
+		} 
 		$(button).data('forward').push(currentDir);
 	};
 	
@@ -775,6 +778,9 @@ var shinyFiles = (function() {
 		var currentDir = getCurrentDirectory(modal);
 		
 		changeDirectory(button, modal, newDir);
+		if (!$(button).data('back')) {
+		  $(button).data('back', []);
+		} 
 		$(button).data('back').push(currentDir);
 	};
 	
@@ -788,6 +794,9 @@ var shinyFiles = (function() {
 		};
 		
 		changeDirectory(button, modal, newDir);
+		if (!$(button).data('back')) {
+		  $(button).data('back', []);
+		} 
 		$(button).data('back').push(currentDir);
 		$(button).data('forward', []);
 	};
@@ -806,6 +815,9 @@ var shinyFiles = (function() {
 		}
 		
 		changeDirectory(button, modal, newDir);
+		if (!$(button).data('back')) {
+		  $(button).data('back', []);
+		} 
 		$(button).data('back').push(currentDir);
 		$(button).data('forward', []);
 	};
@@ -819,6 +831,10 @@ var shinyFiles = (function() {
 		newDir.path.push($(dir).find('.sF-file-name').text());
 		
 		changeDirectory(button, modal, newDir);
+
+		if (!$(button).data('back')) {
+		  $(button).data('back', []);
+		} 
 		$(button).data('back').push(currentDir);
 		$(button).data('forward', []);
 	}
@@ -918,7 +934,7 @@ var shinyFiles = (function() {
                                 $('<ul>').addClass('dropdown-menu').append(
                                     $('<li>').append(
                                         $('<div>').addClass('input-group input-group-sm').append(
-                                            $('<input>', {type: 'text', placeholder: 'Folder name'}).addClass('form-control')
+                                            $('<input>', {type: 'text', placeholder: 'Folder name', spellcheck: 'false'}).addClass('form-control')
                                         ).append(
                                             $('<span>').addClass('input-group-btn').append(
                                                 $('<button>', {type: 'button'}).addClass('btn btn-default').prop('disabled', true).append(
@@ -930,7 +946,7 @@ var shinyFiles = (function() {
                                 )
                             )
                         ).append(
-                            $('<input>', {type: 'text', placeholder: 'filename'}).addClass('form-control sF-filename')
+                            $('<input>', {type: 'text', value: $(button).attr('data-filename'), placeholder: 'filename', spellcheck: 'false'}).addClass('form-control sF-filename')
                         )
     				)
 				).append(
@@ -1256,7 +1272,7 @@ var shinyFiles = (function() {
                                 $('<ul>').addClass('dropdown-menu').append(
                                     $('<li>').append(
                                         $('<div>').addClass('input-group input-group-sm').append(
-                                            $('<input>', {type: 'text', placeholder: 'Folder name'}).addClass('form-control')
+                                            $('<input>', {type: 'text', placeholder: 'Folder name', spellcheck: 'false'}).addClass('form-control')
                                         ).append(
                                             $('<span>').addClass('input-group-btn').append(
                                                 $('<button>', {type: 'button'}).addClass('btn btn-default').prop('disabled', true).append(
@@ -1734,5 +1750,6 @@ var shinyFiles = (function() {
 })();
 
 $(document).ready(function() {
+
 	shinyFiles.init();
 });
