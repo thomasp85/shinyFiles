@@ -131,6 +131,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 }
 
 #' drop empty (i.e., "") from a vector
+#' @param x A vector of file paths
 dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
 
 #' Create a function that creates a new directory

@@ -3,6 +3,8 @@
 \name{shinyFiles-buttons}
 \alias{shinyFiles-buttons}
 \alias{shinyFilesButton}
+\alias{shinyFiles-buttons}
+\alias{shinyFilesLink}
 \alias{shinyDirButton}
 \alias{shinyDirLink}
 \alias{shinySaveButton}
@@ -11,6 +13,8 @@
 \usage{
 shinyFilesButton(id, label, title, multiple, buttonType = "default",
   class = NULL, icon = NULL)
+
+shinyFilesLink(id, label, title, multiple, class = NULL, icon = NULL)
 
 shinyDirButton(id, label, title, buttonType = "default", class = NULL,
   icon = NULL)

@@ -377,6 +377,8 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
     )
 }
 
+#' @rdname shinyFiles-buttons
+#' @name shinyFiles-buttons
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny restoreInput 
 #' 

@@ -6,6 +6,9 @@
 \usage{
 dropEmpty(x)
 }
+\arguments{
+\item{x}{A vector of file paths}
+}
 \description{
 drop empty (i.e., "") from a vector
 }
