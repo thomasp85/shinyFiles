@@ -137,7 +137,7 @@ shinySaveLink <- function(id, label, title, filename = "", filetype, class=NULL,
 #' Formats the value of the filetype argument
 #' 
 #' This function is intended to format the filetype argument of 
-#' \code{\link{shinySaveButton}} into a json string representation, so that it
+#' [shinySaveButton()] into a json string representation, so that it
 #' can be attached to the button.
 #' 
 #' @param filetype A named list of file extensions or NULL or NA

@@ -67,7 +67,7 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
 #' the folders, but merely creates a shell that traverseDirs can take as input.
 #' 
 #' @param oldChildren A list of children folders from the parent$children 
-#' element of tree in \code{\link{traverseDirs}}
+#' element of tree in [traverseDirs()]
 #' 
 #' @param currentChildren A vector of names of the folders that are currently
 #' present in the parent of oldChildren
@@ -87,7 +87,7 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' Create a function that updates a folder tree based on the given restrictions
 #' 
 #' This functions returns a new function that will handle updating the folder 
-#' tree. It is the folder equivalent of \code{\link{fileGetter}} but functions
+#' tree. It is the folder equivalent of [fileGetter()] but functions
 #' slightly different as it needs to handle expanded branches of the folder 
 #' hierarchy rather than just the content of a single directory at a time. The
 #' returned function takes a representation of a folder hierarchy along with the
@@ -107,7 +107,7 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' returned or not
 #' 
 #' @return A function taking a list representation of a folder hierarchy along
-#' with the name of the root where it starts. See \code{\link{traverseDirs}} for
+#' with the name of the root where it starts. See [traverseDirs()] for
 #' a description of the format for the list representation.
 #' 
 dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {

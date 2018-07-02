@@ -7,8 +7,8 @@
 updateChildren(oldChildren, currentChildren)
 }
 \arguments{
-\item{oldChildren}{A list of children folders from the parent$children 
-element of tree in \code{\link{traverseDirs}}}
+\item{oldChildren}{A list of children folders from the parent$children
+element of tree in \code{\link[=traverseDirs]{traverseDirs()}}}
 
 \item{currentChildren}{A vector of names of the folders that are currently
 present in the parent of oldChildren}

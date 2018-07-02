@@ -17,62 +17,62 @@ shinyFileSave(input, id, updateFreq = 0, session = getSession(),
   defaultPath = "", defaultRoot = NULL, ...)
 }
 \arguments{
-\item{input}{The input object of the \code{shinyServer()} call (usaully 
+\item{input}{The input object of the \code{shinyServer()} call (usaully
 \code{input})}
 
-\item{id}{The same ID as used in the matching call to 
+\item{id}{The same ID as used in the matching call to
 \code{shinyFilesButton} or as the id attribute of the button, in case of a
-manually defined html. This id will also define the id of the file choice in 
+manually defined html. This id will also define the id of the file choice in
 the input variable}
 
 \item{updateFreq}{The time in milliseconds between file system lookups. This
 determines the responsiveness to changes in the filesystem (e.g. addition of
-files or drives). For the default value (0) changes in the filesystem are 
+files or drives). For the default value (0) changes in the filesystem are
 shown only when a shinyFiles button is clicked again}
 
-\item{session}{The session object of the shinyServer call (usually 
+\item{session}{The session object of the shinyServer call (usually
 \code{session}).}
 
-\item{defaultRoot}{The default root to use. For instance if 
-\code{roots = c('wd' = '.', 'home', '/home')} then \code{defaultRoot} 
+\item{defaultRoot}{The default root to use. For instance if
+\code{roots = c('wd' = '.', 'home', '/home')} then \code{defaultRoot}
 can be either \code{'wd'} or \code{'home'}.}
 
 \item{defaultPath}{The default relative path specified given the \code{defaultRoot}.}
 
-\item{...}{Arguments to be passed on to \code{\link{fileGetter}} or 
-\code{\link{dirGetter}}}
+\item{...}{Arguments to be passed on to \code{\link[=fileGetter]{fileGetter()}} or
+\code{\link[=dirGetter]{dirGetter()}}}
 }
 \value{
-A reactive observer that takes care of the server side logic of the 
+A reactive observer that takes care of the server side logic of the
 filesystem connection.
 }
 \description{
-These function sets up the required connection to the client in order for the 
+These function sets up the required connection to the client in order for the
 user to navigate the filesystem. For this to work a matching button should be
-present in the html, either by using one of the button generating functions 
-or adding it manually. See \code{\link{shinyFiles-buttons}} for more details.
+present in the html, either by using one of the button generating functions
+or adding it manually. See \code{\link[=shinyFiles-buttons]{shinyFiles-buttons()}} for more details.
 }
 \details{
 Restrictions on the access rights of the client can be given in several ways.
-The root parameter specifies the starting position for the filesystem as 
+The root parameter specifies the starting position for the filesystem as
 presented to the client. This means that the client can only navigate in
-subdirectories of the root. Paths passed of to the \code{restrictions} 
-parameter will not show up in the client view, and it is impossible to 
-navigate into these subdirectories. The \code{filetypes} parameter takes a 
-vector of file extensions to filter the output on, so that the client is 
-only presented with these filetypes. The \code{hidden} parameter toggles 
-whether hidden files should be visible or not. Whenever a file or folder 
-choice is made the resulting files/folder will be accessible in the input 
-variable with the id given in the parameters. This value should probable be 
-run through a call to one of the parser (\code{\link{shinyFiles-parsers}}) in 
+subdirectories of the root. Paths passed of to the \code{restrictions}
+parameter will not show up in the client view, and it is impossible to
+navigate into these subdirectories. The \code{filetypes} parameter takes a
+vector of file extensions to filter the output on, so that the client is
+only presented with these filetypes. The \code{hidden} parameter toggles
+whether hidden files should be visible or not. Whenever a file or folder
+choice is made the resulting files/folder will be accessible in the input
+variable with the id given in the parameters. This value should probable be
+run through a call to one of the parser (\code{\link[=shinyFiles-parsers]{shinyFiles-parsers()}}) in
 order to get well formatted paths to work with.
 }
 \note{
 The syntax for this version has changed with version 0.4.0. Prior to
 that version the output of \code{shinyFileChoose()} should be assigned to the
-output object. This is no longer the case and doing so will result in an 
-error. In newer versions the function returns an observer which can be 
-ignored for the most part, or assigned to a variable if there needs to be 
+output object. This is no longer the case and doing so will result in an
+error. In newer versions the function returns an observer which can be
+ignored for the most part, or assigned to a variable if there needs to be
 interactions with it later on.
 }
 \examples{

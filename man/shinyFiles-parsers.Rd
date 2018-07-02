@@ -20,22 +20,22 @@ call in \code{shinyServer()}}
 \item{selection}{The corresponding input variable to be parsed}
 }
 \value{
-A data frame mathcing the format of \code{\link[shiny]{fileInput}}
+A data frame mathcing the format of \code{\link[shiny:fileInput]{shiny::fileInput()}}
 }
 \description{
-This function takes the value of a shinyFiles button input variable and 
+This function takes the value of a shinyFiles button input variable and
 converts it to be easier to work with on the server side. In the case of file
-selections  and saving the input variable is converted to a data frame (using 
-\code{parseFilePaths()} or \code{parseSavePath() respectively}) of the same 
-format as that provided by \code{\link[shiny]{fileInput}}. The only caveat 
-here is that the MIME type cannot be inferred in file selections so this will 
-always be an empty string and new files doesn't have a size so this is left 
-out with file saving. In the case of folder selection the input variable is 
-converted to a string (using \code{parseDirPath()}) giving the absolute path 
+selections  and saving the input variable is converted to a data frame (using
+\code{parseFilePaths()} or \code{parseSavePath() respectively}) of the same
+format as that provided by \code{\link[shiny:fileInput]{shiny::fileInput()}}. The only caveat
+here is that the MIME type cannot be inferred in file selections so this will
+always be an empty string and new files doesn't have a size so this is left
+out with file saving. In the case of folder selection the input variable is
+converted to a string (using \code{parseDirPath()}) giving the absolute path
 to the selected folder.
 }
 \details{
-The use of \code{parseFilePaths} makes it easy to substitute fileInput and 
+The use of \code{parseFilePaths} makes it easy to substitute fileInput and
 shinyFiles in your code as code that relies on the values of a file selection
 doesn't have to change.
 }

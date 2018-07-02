@@ -27,17 +27,17 @@ shinySaveLink(id, label, title, filename = "", filetype, class = NULL,
   icon = NULL)
 }
 \arguments{
-\item{id}{The id matching the \code{\link{shinyFileChoose}}}
+\item{id}{The id matching the \code{\link[=shinyFileChoose]{shinyFileChoose()}}}
 
 \item{label}{The text that should appear on the button}
 
-\item{title}{The heading of the dialog box that appears when the button is 
+\item{title}{The heading of the dialog box that appears when the button is
 pressed}
 
-\item{multiple}{A logical indicating whether or not it should be possible to 
+\item{multiple}{A logical indicating whether or not it should be possible to
 select multiple files}
 
-\item{buttonType}{The Bootstrap button markup used to colour the button. 
+\item{buttonType}{The Bootstrap button markup used to colour the button.
 Defaults to 'default' for a neutral appearance but can be changed for another
 look. The value will be pasted with 'btn-' and added as class.}
 
@@ -48,7 +48,7 @@ look. The value will be pasted with 'btn-' and added as class.}
 \item{filename}{A predifined filename to be filed in. Can be modified by the
 user during saving.}
 
-\item{filetype}{A named list of file extensions. The name of each element 
+\item{filetype}{A named list of file extensions. The name of each element
 gives the name of the filetype and the content of the element the possible
 extensions e.g. \code{list(picture=c('jpg', 'jpeg'))}. The first extension
 will be used as default if it is not supplied by the user.}
@@ -60,39 +60,39 @@ This function is called for its side effects
 This function adds the required html markup for the client to access the file
 system. The end result will be the appearance of a button on the webpage that
 summons one of the shinyFiles dialog boxes. The last position in the file
-system is automatically remembered between instances, but not shared between 
+system is automatically remembered between instances, but not shared between
 several shinyFiles buttons. For a button to have any functionality it must
-have a matching observer on the server side. shinyFilesButton() is matched 
+have a matching observer on the server side. shinyFilesButton() is matched
 with shinyFileChoose() and shinyDirButton with shinyDirChoose(). The id
-argument of two matching calls must be the same. See 
-\code{\link{shinyFiles-observers}} on how to handle client input on the 
+argument of two matching calls must be the same. See
+\code{\link[=shinyFiles-observers]{shinyFiles-observers()}} on how to handle client input on the
 server side.
 }
 \details{
 \strong{Selecting files}
 
 When a user selects one or several files the corresponding input variable is
-set to a list containing a character vector for each file. The character 
-vectors gives the traversal route from the root to the selected file(s). The 
-reason it does not give a path as a string is that the client has no 
-knowledge of the file system on the server and can therefore not ensure 
-proper formatting. The \code{\link{parseFilePaths}} function can be used on
-the server to format the input variable into a format similar to that 
-returned by \code{\link[shiny]{fileInput}}.
+set to a list containing a character vector for each file. The character
+vectors gives the traversal route from the root to the selected file(s). The
+reason it does not give a path as a string is that the client has no
+knowledge of the file system on the server and can therefore not ensure
+proper formatting. The \code{\link[=parseFilePaths]{parseFilePaths()}} function can be used on
+the server to format the input variable into a format similar to that
+returned by \code{\link[shiny:fileInput]{shiny::fileInput()}}.
 
 \strong{Selecting folders}
 
 When a folder is selected it will also be available in its respective input
 variable as a list giving the traversal route to the selected folder. To
-properly format it, feed it into \code{\link{parseDirPath}} and a string with
+properly format it, feed it into \code{\link[=parseDirPath]{parseDirPath()}} and a string with
 the full folder path will be returned.
 
 \strong{Creating files (saving)}
 
-When a new filename is created it will become available in the respective 
-input variable and can be formatted with \code{\link{parseSavePath}} into a 
-data.frame reminiscent that returned by fileInput. There is no size column 
-and the type is only present if the filetype argument is used in 
+When a new filename is created it will become available in the respective
+input variable and can be formatted with \code{\link[=parseSavePath]{parseSavePath()}} into a
+data.frame reminiscent that returned by fileInput. There is no size column
+and the type is only present if the filetype argument is used in
 \code{shinySaveButton}. In that case it will be the name of the chosen type
 (not the extension).
 
@@ -113,26 +113,26 @@ a shinyFiles button. The only markup required is:
 
 \code{<button id="inputId" type="button" class="shinySave btn-default" data-title="title" data-filetype="[{name: 'type1', ext: ['txt']}, {name: 'type2', ext: ['exe', 'bat']}]">label</button>}
 
-where the id tag matches the inputId parameter, the data-title tag matches 
-the title parameter, the data-selecttype is either "single" or "multiple" 
-(the non-logical form of the multiple parameter) and the internal textnode 
+where the id tag matches the inputId parameter, the data-title tag matches
+the title parameter, the data-selecttype is either "single" or "multiple"
+(the non-logical form of the multiple parameter) and the internal textnode
 mathces the label parameter. The data-filetype tag is a bit more involved as
 it is a json formatted array of objects with the properties 'name' and 'ext'.
-'name' gives the name of the filetype as a string and 'ext' the allowed 
-extensions as an array of strings. The non-exported 
-\code{\link{formatFiletype}} function can help convert from a named R list 
+'name' gives the name of the filetype as a string and 'ext' the allowed
+extensions as an array of strings. The non-exported
+\code{\link[=formatFiletype]{formatFiletype()}} function can help convert from a named R list
 into the string representation. In the example above "btn-default" is used as
-button styling, but this can be changed to any other Bootstrap style. 
+button styling, but this can be changed to any other Bootstrap style.
 
-Apart from this the html document should link to a script with the 
-following path 'sF/shinyFiles.js' and a stylesheet with the following path 
+Apart from this the html document should link to a script with the
+following path 'sF/shinyFiles.js' and a stylesheet with the following path
 'sF/styles.css'.
 
 The markup is bootstrap compliant so if the bootstrap css is used in the page
 the look will fit right in. There is nothing that hinders the developer from
-ignoring bootstrap altogether and designing the visuals themselves. The only 
-caveat being that the glyphs used in the menu buttons are bundled with 
-bootstrap. Use the css ::after pseudoclasses to add alternative content to 
+ignoring bootstrap altogether and designing the visuals themselves. The only
+caveat being that the glyphs used in the menu buttons are bundled with
+bootstrap. Use the css ::after pseudoclasses to add alternative content to
 these buttons. Additional filetype specific icons can be added with css using
 the following style:
 
@@ -151,7 +151,7 @@ If no large version is specified the small version gets upscaled.
 
 If the shiny app uses custom Javascript it is possible to react to selections
 directly from the javascript. Once a selection has been made, the button will
-fire of the event 'selection' and pass the selection data along with the 
+fire of the event 'selection' and pass the selection data along with the
 event. To listen for this event you simple add:
 
 \preformatted{
@@ -160,7 +160,7 @@ $(button).on('selection', function(event, path) {
 })
 }
 
-in the same way a 'cancel' event is fired when a user dismisses a selection 
+in the same way a 'cancel' event is fired when a user dismisses a selection
 box. In that case, no path is passed on.
 
 Outside events the current selection is available as an abject binded to the

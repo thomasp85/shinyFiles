@@ -14,6 +14,14 @@ locally this gives the user direct access to the file system without the
 need to "download" files to a temporary location. Both file and folder
 selection as well as file saving is available.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/thomasp85/shinyFiles}
+  \item Report bugs at \url{https://github.com/thomasp85/shinyFiles/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Thomas Lin Pedersen \email{thomasp85@gmail.com}
 

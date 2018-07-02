@@ -15,7 +15,7 @@
 #' navigate the R installation directory. To showcase the restrictions parameter
 #' the base package location has been hidden, and is thus inaccecible. A panel 
 #' besides the button shows how the user selection is made accessible to the 
-#' server after parsing with \code{\link{parseFilePaths}}.
+#' server after parsing with [parseFilePaths()].
 #' 
 #' @family shinyFiles
 #' 
@@ -29,7 +29,7 @@ shinyFilesExample <- function() {
 #' Get a list of available volumes
 #' 
 #' This function is intended as an input to the roots parameter in 
-#' \code{\link{fileGetter}} and \code{\link{shinyFileChoose}}. It returns a
+#' [fileGetter()] and [shinyFileChoose()]. It returns a
 #' function that returns a named vector of available volumes on the system. This
 #' construction makes it dynamic so that a shinyFiles instance reflects new
 #' volumes as they get added (e.g. usb drives). The function takes a single
