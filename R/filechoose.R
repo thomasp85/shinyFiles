@@ -22,6 +22,10 @@ NULL
 #' i.e. 'txt' not '.txt') to include in the output. Use the empty string to
 #' include files with no extension. If not set all file types will be included
 #'
+#' @param pattern A regular expression used to select files to show. See
+#' \code{\link[base:grep]{base::grepl()}} for additional discussion on how to 
+#' construct a regular expression (e.g., "log.*\\\\.txt")
+#' 
 #' @param hidden A logical value specifying whether hidden files should be
 #' returned or not
 #'
@@ -29,14 +33,20 @@ NULL
 #' returns a list of files to be passed on to shiny
 #'
 #' @importFrom tools file_ext
+#' @importFrom methods is
 #'
-fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
+fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
   if (missing(filetypes)) {
     filetypes <- NULL
   } else if (is.function(filetypes)) {
     filetypes <- filetypes()
   }
   if (missing(restrictions)) restrictions <- NULL
+  if (missing(pattern)) {
+    pattern <- ""
+  } else if (is.function(pattern)) {
+    pattern <- pattern()
+  }
 
   function(dir, root) {
     currentRoots <- if (class(roots) == "function") roots() else roots
@@ -74,6 +84,12 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
       matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes) & fileInfo$extension != ""
       fileInfo$isdir[matchedFiles] <- FALSE
       fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
+    }
+    if (nchar(pattern) > 0) {
+      matchedFiles <- try(grepl(pattern, fileInfo$filename), silent = TRUE)
+      if (!is(matchedFiles, "try-error")) {
+         fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
+      }
     }
     rownames(fileInfo) <- NULL
     breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
