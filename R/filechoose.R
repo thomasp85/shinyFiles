@@ -31,7 +31,11 @@ NULL
 #' @importFrom tools file_ext
 #' 
 fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
-    if (missing(filetypes)) filetypes <- NULL
+    if (missing(filetypes)) {
+      filetypes <- NULL
+    } else if (is.function(filetypes)) {
+      filetypes <- filetypes() 
+    }
     if (missing(restrictions)) restrictions <- NULL
     
     function(dir, root) {
@@ -40,10 +44,14 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
         if (is.null(root)) root <- names(currentRoots)[1]
         
-        fulldir <- file.path(currentRoots[root], dir)
+        ## drop paths with only "" to avoid // 
+        dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
+        fulldir <- file.path(currentRoots[root], dropEmpty(dir))
+        
+        dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
+        fulldir <- do.call('file.path', as.list(dropEmpty(c(currentRoots[root], dir))))
         writable <- as.logical(file.access(fulldir, 2) == 0)
         files <- list.files(fulldir, all.files=hidden, full.names=TRUE, no..=TRUE)
-        files <- gsub(pattern='//*', '/', files, perl=TRUE)
         if (!is.null(restrictions) && length(files) != 0) {
             if (length(files) == 1) {
                 keep <- !any(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}))
@@ -107,7 +115,8 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @param updateFreq The time in milliseconds between file system lookups. This
 #' determines the responsiveness to changes in the filesystem (e.g. addition of
-#' files or drives)
+#' files or drives). For the default value (0) changes in the filesystem are 
+#' shown only when a shinyFiles button is clicked again
 #' 
 #' @param session The session object of the shinyServer call (usually 
 #' \code{session}).
@@ -153,17 +162,17 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 #' @family shinyFiles
 #' 
-#' @importFrom shiny observe invalidateLater
+#' @importFrom shiny observe invalidateLater req
 #' 
 #' @export
 #' 
-shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(), 
+shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(), 
                             defaultRoot=NULL, defaultPath='', ...) {
-    fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()
     clientId = session$ns(id)
-    
+
     return(observe({
+        req(input[[id]])
         dir <- input[[paste0(id, '-modal')]]
         if(is.null(dir) || is.na(dir)) {
             dir <- list(dir=defaultPath, root=defaultRoot)
@@ -171,12 +180,12 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(),
             dir <- list(dir=dir$path, root=dir$root)
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
-        newDir <- do.call('fileGet', dir)
-        if(!identical(currentDir, newDir)) {
-            currentDir <<- newDir
-            session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
-        }
-        invalidateLater(updateFreq, session)
+        ## allows reactive links (e.g., for filetypes)
+        fileGet <- do.call(fileGetter, list(...))
+        newDir <- do.call(fileGet, dir)
+        currentDir <<- newDir
+        session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
+        if (updateFreq > 0) invalidateLater(updateFreq, session)
     }))
 }
 
@@ -336,34 +345,73 @@ shinyFileChoose <- function(input, id, updateFreq=2000, session = getSession(),
 #' FatCows Farm-Fresh Web Icons (\url{http://www.fatcow.com/free-icons})
 #' 
 #' @importFrom htmltools tagList singleton tags
+#' @importFrom shiny restoreInput 
 #' 
 #' @export
 #' 
 shinyFilesButton <- function(id, label, title, multiple, buttonType='default', class=NULL, icon=NULL) {
+    value <- restoreInput(id = id, default = NULL)
     tagList(
         singleton(tags$head(
-                tags$script(src='sF/shinyFiles.js'),
-                tags$link(
-                    rel='stylesheet',
-                    type='text/css',
-                    href='sF/styles.css'
-                ),
-                tags$link(
-                    rel='stylesheet',
-                    type='text/css',
-                    href='sF/fileIcons.css'
-                )
-            )),
+            tags$script(src='sF/shinyFiles.js'),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/styles.css'
+            ),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/fileIcons.css'
+            )
+        )),
         tags$button(
             id=id,
             type='button',
-            class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class), collapse=' '),
+            class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
             'data-title'=title,
             'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
+            'data-val' = value,
             list(icon, label)
-            )
         )
+    )
 }
+
+#' @rdname shinyFiles-buttons
+#' @name shinyFiles-buttons
+#' @importFrom htmltools tagList singleton tags
+#' @importFrom shiny restoreInput 
+#' 
+#' @export
+#' 
+shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
+    value <- restoreInput(id = id, default = NULL)
+    tagList(
+        singleton(tags$head(
+            tags$script(src='sF/shinyFiles.js'),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/styles.css'
+            ),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/fileIcons.css'
+            )
+        )),
+        tags$a(
+            id=id,
+            type='button',
+            class=paste(c('shinyFiles', class, 'action-button'), collapse=' '),
+            'data-title'=title,
+            'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
+            'data-val' = value,
+            list(icon, label)
+        )
+    )
+}
+
 
 #' Convert the output of a selection to platform specific path(s)
 #' 
@@ -419,11 +467,15 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
 parseFilePaths <- function(roots, selection) {
     roots <- if(class(roots) == 'function') roots() else roots
     
-    if (is.null(selection) || is.na(selection)) return(data.frame(name=character(0), size=numeric(0),
-                                                                  type=character(0), datapath=character(0),
-                                                                  stringsAsFactors = FALSE))
-    files <- sapply(selection$files, function(x) {file.path(roots[selection$root], do.call('file.path', x))})
-    files <- gsub(pattern='//*', '/', files, perl=TRUE)
-    
-    data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files, stringsAsFactors = FALSE)
+    if (is.null(selection) || is.na(selection) || is.integer(selection)) {
+       data.frame(
+         name=character(0), size=numeric(0), type=character(0),
+         datapath=character(0), stringsAsFactors = FALSE
+       )
+    } else {
+      files <- sapply(selection$files, function(x) file.path(roots[selection$root], do.call(file.path, x)))
+      files <- gsub(pattern='//*', '/', files, perl=TRUE)
+      
+      data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files, stringsAsFactors = FALSE)
+    }
 }

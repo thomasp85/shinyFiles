@@ -21,4 +21,4 @@ Collate:
     'filechoose.R'
     'dirchoose.R'
     'filesave.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
