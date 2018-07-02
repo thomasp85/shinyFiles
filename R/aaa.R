@@ -5,7 +5,7 @@
 #' @noRd
 #' 
 .onLoad <- function(...) {
-    addResourcePath('sF', system.file('www', package='shinyFiles'))
+  addResourcePath('sF', system.file('www', package='shinyFiles'))
 }
 
 #' Run a simple example app using the shinyFiles functionality
@@ -24,7 +24,7 @@
 #' @export
 #' 
 shinyFilesExample <- function() {
-    runApp(system.file('example', package='shinyFiles', mustWork=T), display.mode='showcase')
+  runApp(system.file('example', package='shinyFiles', mustWork=T), display.mode='showcase')
 }
 #' Get a list of available volumes
 #' 
@@ -54,48 +54,48 @@ shinyFilesExample <- function() {
 #' @export
 #' 
 getVolumes <- function(exclude) {
-    if(missing(exclude)) exclude <- NULL
-    
-    function() {
-        osSystem <- Sys.info()['sysname']
-        if (osSystem == 'Darwin') {
-            volumes <- list.files('/Volumes/', full.names=T)
-            names(volumes) <- basename(volumes)
-        } else if (osSystem == 'Linux') {
-            volumes <- c('Computer'='/')
-            media <- list.files('/media/', full.names=T)
-            names(media) <- basename(media)
-            volumes <- c(volumes, media)
-        } else if (osSystem == 'Windows') {
-            volumes <- system('wmic logicaldisk get Caption', intern=T)
-            volumes <- sub(' *\\r$', '', volumes)
-            keep <- !tolower(volumes) %in% c('caption', '')
-            volumes <- volumes[keep]
-            volNames <- system('wmic logicaldisk get VolumeName', intern=T)
-            volNames <- sub(' *\\r$', '', volNames)
-            volNames <- volNames[keep]
-            volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
-            volNames <- paste0(volNames, '(', volumes, ')')
-            names(volumes) <- volNames
-        } else {
-            stop('unsupported OS')
-        }
-        if (!is.null(exclude)) {
-            volumes <- volumes[!names(volumes) %in% exclude]
-        }
-        volumes
+  if(missing(exclude)) exclude <- NULL
+  
+  function() {
+    osSystem <- Sys.info()['sysname']
+    if (osSystem == 'Darwin') {
+      volumes <- list.files('/Volumes/', full.names=T)
+      names(volumes) <- basename(volumes)
+    } else if (osSystem == 'Linux') {
+      volumes <- c('Computer'='/')
+      media <- list.files('/media/', full.names=T)
+      names(media) <- basename(media)
+      volumes <- c(volumes, media)
+    } else if (osSystem == 'Windows') {
+      volumes <- system('wmic logicaldisk get Caption', intern=T)
+      volumes <- sub(' *\\r$', '', volumes)
+      keep <- !tolower(volumes) %in% c('caption', '')
+      volumes <- volumes[keep]
+      volNames <- system('wmic logicaldisk get VolumeName', intern=T)
+      volNames <- sub(' *\\r$', '', volNames)
+      volNames <- volNames[keep]
+      volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
+      volNames <- paste0(volNames, '(', volumes, ')')
+      names(volumes) <- volNames
+    } else {
+      stop('unsupported OS')
     }
+    if (!is.null(exclude)) {
+      volumes <- volumes[!names(volumes) %in% exclude]
+    }
+    volumes
+  }
 }
 
 getSession <- function() {
-    session <- shiny::getDefaultReactiveDomain()
-    
-    if (is.null(session)) {
-        stop(paste(
-            "could not find the Shiny session object. This usually happens when a",
-            "shinyjs function is called from a context that wasn't set up by a Shiny session."
-        ))
-    }
-    
-    session
+  session <- shiny::getDefaultReactiveDomain()
+  
+  if (is.null(session)) {
+    stop(paste(
+      "could not find the Shiny session object. This usually happens when a",
+      "shinyjs function is called from a context that wasn't set up by a Shiny session."
+    ))
+  }
+  
+  session
 }

@@ -27,36 +27,36 @@ NULL
 #' reflect the current file system state.
 #' 
 traverseDirs <- function(tree, root, restrictions, hidden) {
-    location <- file.path(root, tree$name)
-    if(!file.exists(location)) return(NULL)
-    
-    files <- list.files(location, all.files=hidden, full.names=TRUE, no..=TRUE)
-    files <- gsub(pattern='//*', '/', files, perl=TRUE)
-    if (!is.null(restrictions) && length(files) != 0) {
-        if (length(files) == 1) {
-            keep <- !any(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}))
-        } else {
-            keep <- !apply(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}), 1, any)
-        }
-        files <- files[keep]
-    }
-    fileInfo <- file.info(files)
-    folders <- basename(files)[fileInfo$isdir]
-    
-    if(length(folders) == 0) {
-        tree$empty <- TRUE
-        tree$children <- list()
-        tree$expanded <- FALSE
+  location <- file.path(root, tree$name)
+  if(!file.exists(location)) return(NULL)
+  
+  files <- list.files(location, all.files=hidden, full.names=TRUE, no..=TRUE)
+  files <- gsub(pattern='//*', '/', files, perl=TRUE)
+  if (!is.null(restrictions) && length(files) != 0) {
+    if (length(files) == 1) {
+      keep <- !any(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}))
     } else {
-        tree$empty <- FALSE
-        if(tree$expanded) {
-            children <- updateChildren(tree$children, folders)
-            tree$children <- lapply(children, traverseDirs, root=location, restrictions=restrictions, hidden=hidden)
-        } else {
-            tree$children <- list()
-        }
+      keep <- !apply(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}), 1, any)
     }
-    tree
+    files <- files[keep]
+  }
+  fileInfo <- file.info(files)
+  folders <- basename(files)[fileInfo$isdir]
+  
+  if(length(folders) == 0) {
+    tree$empty <- TRUE
+    tree$children <- list()
+    tree$expanded <- FALSE
+  } else {
+    tree$empty <- FALSE
+    if(tree$expanded) {
+      children <- updateChildren(tree$children, folders)
+      tree$children <- lapply(children, traverseDirs, root=location, restrictions=restrictions, hidden=hidden)
+    } else {
+      tree$children <- list()
+    }
+  }
+  tree
 }
 
 #' Update the children element to reflect current state
@@ -75,14 +75,14 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
 #' @return An updated list equal in format to oldChildren
 #' 
 updateChildren <- function(oldChildren, currentChildren) {
-    oldNames <- sapply(oldChildren, `[[`, 'name')
-    newChildren <- currentChildren[!currentChildren %in% oldNames]
-    children <- oldChildren[oldNames %in% currentChildren]
-    children <- append(children, lapply(newChildren, function(x) {
-        list(name=x, expanded=FALSE, children=list())
-    }))
-    childrenNames <- sapply(children, `[[`, 'name')
-    children[order(childrenNames)]
+  oldNames <- sapply(oldChildren, `[[`, 'name')
+  newChildren <- currentChildren[!currentChildren %in% oldNames]
+  children <- oldChildren[oldNames %in% currentChildren]
+  children <- append(children, lapply(newChildren, function(x) {
+    list(name=x, expanded=FALSE, children=list())
+  }))
+  childrenNames <- sapply(children, `[[`, 'name')
+  children[order(childrenNames)]
 }
 #' Create a function that updates a folder tree based on the given restrictions
 #' 
@@ -111,23 +111,23 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' a description of the format for the list representation.
 #' 
 dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
-    if (missing(filetypes)) filetypes <- NULL
-    if (missing(restrictions)) restrictions <- NULL
+  if (missing(filetypes)) filetypes <- NULL
+  if (missing(restrictions)) restrictions <- NULL
+  
+  function(tree, root) {
+    currentRoots <- if(class(roots) == 'function') roots() else roots
     
-    function(tree, root) {
-        currentRoots <- if(class(roots) == 'function') roots() else roots
-        
-        if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
-        if (is.null(root)) root <- names(currentRoots)[1]
-        
-        tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
-        
-        list(
-            tree=tree,
-            rootNames=I(names(currentRoots)),
-            selectedRoot=root
-        )
-    }
+    if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
+    if (is.null(root)) root <- names(currentRoots)[1]
+    
+    tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
+    
+    list(
+      tree=tree,
+      rootNames=I(names(currentRoots)),
+      selectedRoot=root
+    )
+  }
 }
 
 #' drop empty (i.e., "") from a vector
@@ -153,14 +153,14 @@ dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = log
 #' by the client.
 #' 
 dirCreator <- function(roots, ...) {
-    function(name, path, root) {
-        currentRoots <- if(class(roots) == 'function') roots() else roots
-        
-        if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
-        ## drop paths with only "" to avoid //
-        location <- do.call(file.path, as.list(dropEmpty(c(currentRoots[root], path, name))))
-        dir.create(location) 
-    }
+  function(name, path, root) {
+    currentRoots <- if(class(roots) == 'function') roots() else roots
+    
+    if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
+    ## drop paths with only "" to avoid //
+    location <- do.call(file.path, as.list(dropEmpty(c(currentRoots[root], path, name))))
+    dir.create(location) 
+  }
 }
 #' @rdname shinyFiles-observers
 #' 
@@ -186,45 +186,45 @@ dirCreator <- function(roots, ...) {
 #' 
 shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
                            defaultPath='', defaultRoot=NULL, ...) {
-    dirGet <- do.call(dirGetter, list(...))
-    fileGet <- do.call(fileGetter, list(...))
-    dirCreate <- do.call(dirCreator, list(...))
-    currentDir <- list()
-    currentFiles <- NULL
-    lastDirCreate <- NULL
-    clientId = session$ns(id)
-    
-    return(observe({
-        req(input[[id]])
-        tree <- input[[paste0(id, '-modal')]]
-        createDir <- input[[paste0(id, '-newDir')]]
-        if(!identical(createDir, lastDirCreate)) {
-            dirCreate(createDir$name, createDir$path, createDir$root)
-            lastDirCreate <<- createDir
-        }
-        if(is.null(tree) || is.na(tree)) {
-            dir <- list(tree=list(name=defaultPath, expanded=TRUE), root=defaultRoot)
-            files <- list(dir=NA, root=tree$selectedRoot)
-        } else {
-            dir <- list(tree=tree$tree, root=tree$selectedRoot)
-            files <- list(dir=unlist(tree$contentPath), root=tree$selectedRoot)
-        }
-        newDir <- do.call(dirGet, dir)
-        if(is.null(files$dir) || is.na(files$dir)) {
-            newDir$content <- NA
-            newDir$contentPath <- NA
-            newDir$writable <- FALSE
-        } else {
-            newDir$contentPath <- as.list(files$dir)
-            files$dir <- do.call(file.path, as.list(files$dir))
-            content <- do.call(fileGet, files)
-            newDir$content <- content$files[, c('filename', 'extension', 'isdir', 'size'), drop=FALSE]
-            newDir$writable <- content$writable
-        }
-        currentDir <<- newDir
-        session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
-        if (updateFreq > 0) invalidateLater(updateFreq, session)
-    }))
+  dirGet <- do.call(dirGetter, list(...))
+  fileGet <- do.call(fileGetter, list(...))
+  dirCreate <- do.call(dirCreator, list(...))
+  currentDir <- list()
+  currentFiles <- NULL
+  lastDirCreate <- NULL
+  clientId = session$ns(id)
+  
+  return(observe({
+    req(input[[id]])
+    tree <- input[[paste0(id, '-modal')]]
+    createDir <- input[[paste0(id, '-newDir')]]
+    if(!identical(createDir, lastDirCreate)) {
+      dirCreate(createDir$name, createDir$path, createDir$root)
+      lastDirCreate <<- createDir
+    }
+    if(is.null(tree) || is.na(tree)) {
+      dir <- list(tree=list(name=defaultPath, expanded=TRUE), root=defaultRoot)
+      files <- list(dir=NA, root=tree$selectedRoot)
+    } else {
+      dir <- list(tree=tree$tree, root=tree$selectedRoot)
+      files <- list(dir=unlist(tree$contentPath), root=tree$selectedRoot)
+    }
+    newDir <- do.call(dirGet, dir)
+    if(is.null(files$dir) || is.na(files$dir)) {
+      newDir$content <- NA
+      newDir$contentPath <- NA
+      newDir$writable <- FALSE
+    } else {
+      newDir$contentPath <- as.list(files$dir)
+      files$dir <- do.call(file.path, as.list(files$dir))
+      content <- do.call(fileGet, files)
+      newDir$content <- content$files[, c('filename', 'extension', 'isdir', 'size'), drop=FALSE]
+      newDir$writable <- content$writable
+    }
+    currentDir <<- newDir
+    session$sendCustomMessage('shinyDirectories', list(id=clientId, dir=newDir))
+    if (updateFreq > 0) invalidateLater(updateFreq, session)
+  }))
 }
 #' @rdname shinyFiles-buttons
 #' 
@@ -234,30 +234,30 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
 #' @export
 #' 
 shinyDirButton <- function(id, label, title, buttonType='default', class=NULL, icon=NULL) {
-    value <- restoreInput(id = id, default = NULL)
-    tagList(
-        singleton(tags$head(
-            tags$script(src='sF/shinyFiles.js'),
-            tags$link(
-                rel='stylesheet',
-                type='text/css',
-                href='sF/styles.css'
-            ),
-            tags$link(
-                rel='stylesheet',
-                type='text/css',
-                href='sF/fileIcons.css'
-            )
-        )),
-        tags$button(
-            id=id,
-            type='button',
-            class=paste(c('shinyDirectories btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
-            'data-title'=title,
-            'data-val' = value,
-            list(icon, as.character(label))
-        )
+  value <- restoreInput(id = id, default = NULL)
+  tagList(
+    singleton(tags$head(
+      tags$script(src='sF/shinyFiles.js'),
+      tags$link(
+        rel='stylesheet',
+        type='text/css',
+        href='sF/styles.css'
+      ),
+      tags$link(
+        rel='stylesheet',
+        type='text/css',
+        href='sF/fileIcons.css'
+      )
+    )),
+    tags$button(
+      id=id,
+      type='button',
+      class=paste(c('shinyDirectories btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
+      'data-title'=title,
+      'data-val' = value,
+      list(icon, as.character(label))
     )
+  )
 }
 
 #' @rdname shinyFiles-buttons
@@ -297,14 +297,13 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL) {
 #' @export
 #' 
 parseDirPath <- function(roots, selection) {
-    currentRoots <- if(class(roots) == 'function') roots() else roots
-    
-    if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
-    
-    if (is.integer(selection)) {
-      character(0)
-    } else {
-      do.call(file.path, as.list(dropEmpty(c(currentRoots[selection$root], selection$path))))
-    }
+  currentRoots <- if(class(roots) == 'function') roots() else roots
+  
+  if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
+  
+  if (is.integer(selection)) {
+    character(0)
+  } else {
+    do.call(file.path, as.list(dropEmpty(c(currentRoots[selection$root], selection$path))))
+  }
 }
- 
