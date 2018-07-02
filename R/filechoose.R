@@ -31,7 +31,11 @@ NULL
 #' @importFrom tools file_ext
 #' 
 fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
-    if (missing(filetypes)) filetypes <- NULL
+    if (missing(filetypes)) {
+      filetypes <- NULL
+    } else if (is.function(filetypes)) {
+      filetypes <- filetypes() 
+    }
     if (missing(restrictions)) restrictions <- NULL
     
     function(dir, root) {
@@ -40,10 +44,14 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
         if (is.null(root)) root <- names(currentRoots)[1]
         
-        fulldir <- file.path(currentRoots[root], dir)
+        ## drop paths with only "" to avoid // 
+        dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
+        fulldir <- file.path(currentRoots[root], dropEmpty(dir))
+        
+        dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
+        fulldir <- do.call('file.path', as.list(dropEmpty(c(currentRoots[root], dir))))
         writable <- as.logical(file.access(fulldir, 2) == 0)
         files <- list.files(fulldir, all.files=hidden, full.names=TRUE, no..=TRUE)
-        files <- gsub(pattern='//*', '/', files, perl=TRUE)
         if (!is.null(restrictions) && length(files) != 0) {
             if (length(files) == 1) {
                 keep <- !any(sapply(restrictions, function(x) {grepl(x, files, fixed=T)}))
@@ -160,7 +168,6 @@ fileGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' 
 shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(), 
                             defaultRoot=NULL, defaultPath='', ...) {
-    fileGet <- do.call('fileGetter', list(...))
     currentDir <- list()
     clientId = session$ns(id)
 
@@ -173,7 +180,9 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
             dir <- list(dir=dir$path, root=dir$root)
         }
         dir$dir <- do.call(file.path, as.list(dir$dir))
-        newDir <- do.call('fileGet', dir)
+        ## allows reactive links (e.g., for filetypes)
+        fileGet <- do.call(fileGetter, list(...))
+        newDir <- do.call(fileGet, dir)
         currentDir <<- newDir
         session$sendCustomMessage('shinyFiles', list(id=clientId, dir=newDir))
         if (updateFreq > 0) invalidateLater(updateFreq, session)
@@ -362,11 +371,45 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType='default', c
             class=paste(c('shinyFiles btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
             'data-title'=title,
             'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
-            `data-val` = value,
+            'data-val' = value,
             list(icon, label)
         )
     )
 }
+
+#' @importFrom htmltools tagList singleton tags
+#' @importFrom shiny restoreInput 
+#' 
+#' @export
+#' 
+shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
+    value <- restoreInput(id = id, default = NULL)
+    tagList(
+        singleton(tags$head(
+            tags$script(src='sF/shinyFiles.js'),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/styles.css'
+            ),
+            tags$link(
+                rel='stylesheet',
+                type='text/css',
+                href='sF/fileIcons.css'
+            )
+        )),
+        tags$a(
+            id=id,
+            type='button',
+            class=paste(c('shinyFiles', class, 'action-button'), collapse=' '),
+            'data-title'=title,
+            'data-selecttype'=ifelse(multiple, 'multiple', 'single'),
+            'data-val' = value,
+            list(icon, label)
+        )
+    )
+}
+
 
 #' Convert the output of a selection to platform specific path(s)
 #' 
@@ -428,8 +471,9 @@ parseFilePaths <- function(roots, selection) {
          datapath=character(0), stringsAsFactors = FALSE
        )
     } else {
-      files <- sapply(selection$files, function(x) {file.path(roots[selection$root], do.call('file.path', x))})
+      files <- sapply(selection$files, function(x) file.path(roots[selection$root], do.call(file.path, x)))
       files <- gsub(pattern='//*', '/', files, perl=TRUE)
+      
       data.frame(name=basename(files), size=file.info(files)$size, type='', datapath=files, stringsAsFactors = FALSE)
     }
 }

@@ -129,6 +129,10 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
         )
     }
 }
+
+#' drop empty (i.e., "") from a vector
+dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
+
 #' Create a function that creates a new directory
 #' 
 #' This function returns a function that can be used to create new directories
@@ -152,11 +156,9 @@ dirCreator <- function(roots, ...) {
         currentRoots <- if(class(roots) == 'function') roots() else roots
         
         if (is.null(names(currentRoots))) stop('Roots must be a named vector or a function returning one')
-        
-        location <- do.call('file.path', as.list(path))
-        location <- file.path(currentRoots[root], location, name)
-        
-        dir.create(location)
+        ## drop paths with only "" to avoid //
+        location <- do.call(file.path, as.list(dropEmpty(c(currentRoots[root], path, name))))
+        dir.create(location) 
     }
 }
 #' @rdname shinyFiles-observers
@@ -183,9 +185,9 @@ dirCreator <- function(roots, ...) {
 #' 
 shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
                            defaultPath='', defaultRoot=NULL, ...) {
-    dirGet <- do.call('dirGetter', list(...))
-    fileGet <- do.call('fileGetter', list(...))
-    dirCreate <- do.call('dirCreator', list(...))
+    dirGet <- do.call(dirGetter, list(...))
+    fileGet <- do.call(fileGetter, list(...))
+    dirCreate <- do.call(dirCreator, list(...))
     currentDir <- list()
     currentFiles <- NULL
     lastDirCreate <- NULL
@@ -206,7 +208,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
             dir <- list(tree=tree$tree, root=tree$selectedRoot)
             files <- list(dir=unlist(tree$contentPath), root=tree$selectedRoot)
         }
-        newDir <- do.call('dirGet', dir)
+        newDir <- do.call(dirGet, dir)
         if(is.null(files$dir) || is.na(files$dir)) {
             newDir$content <- NA
             newDir$contentPath <- NA
@@ -214,7 +216,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
         } else {
             newDir$contentPath <- as.list(files$dir)
             files$dir <- do.call(file.path, as.list(files$dir))
-            content <- do.call('fileGet', files)
+            content <- do.call(fileGet, files)
             newDir$content <- content$files[, c('filename', 'extension', 'isdir', 'size'), drop=FALSE]
             newDir$writable <- content$writable
         }
@@ -230,7 +232,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
 #' 
 #' @export
 #' 
-shinyDirButton <- function(id, label, title, buttonType='default', class=NULL) {
+shinyDirButton <- function(id, label, title, buttonType='default', class=NULL, icon=NULL) {
     value <- restoreInput(id = id, default = NULL)
     tagList(
         singleton(tags$head(
@@ -251,14 +253,45 @@ shinyDirButton <- function(id, label, title, buttonType='default', class=NULL) {
             type='button',
             class=paste(c('shinyDirectories btn', paste0('btn-', buttonType), class, 'action-button'), collapse=' '),
             'data-title'=title,
-            `data-val` = value,
-            as.character(label)
+            'data-val' = value,
+            list(icon, as.character(label))
         )
     )
 }
 
-#' @rdname shinyFiles-parsers
+#' @rdname shinyFiles-buttons
 #' 
+#' @importFrom htmltools tagList singleton tags
+#' @importFrom shiny restoreInput
+#' @export
+#' 
+shinyDirLink <- function(id, label, title, class=NULL, icon=NULL) {
+  value <- restoreInput(id = id, default = NULL)
+  tagList(
+    singleton(tags$head(
+      tags$script(src='sF/shinyFiles.js'),
+      tags$link(
+        rel='stylesheet',
+        type='text/css',
+        href='sF/styles.css'
+      ),
+      tags$link(
+        rel='stylesheet',
+        type='text/css',
+        href='sF/fileIcons.css'
+      )
+    )),
+    tags$a(
+      id=id,
+      type='button',
+      class=paste(c('shinyDirectories', class, 'action-button'), collapse=' '),
+      'data-title'=title,
+      'data-val' = value,
+      list(icon, as.character(label))
+    )
+  )
+}
+
 #' @export
 #' 
 parseDirPath <- function(roots, selection) {
@@ -269,8 +302,7 @@ parseDirPath <- function(roots, selection) {
     if (is.integer(selection)) {
       character(0)
     } else {
-      root <- currentRoots[selection$root]
-      location <- do.call('file.path', as.list(selection$path))
-      gsub(pattern='//*', '/', file.path(root, location), perl=TRUE)
+      do.call(file.path, as.list(dropEmpty(c(currentRoots[selection$root], selection$path))))
     }
 }
+ 
