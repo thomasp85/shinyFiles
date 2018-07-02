@@ -20,7 +20,7 @@ call in \code{shinyServer()}}
 \item{selection}{The corresponding input variable to be parsed}
 }
 \value{
-A data frame mathcing the format of \code{\link[shiny:fileInput]{shiny::fileInput()}}
+A data frame matching the format of \code{\link[shiny:fileInput]{shiny::fileInput()}}
 }
 \description{
 This function takes the value of a shinyFiles button input variable and
@@ -42,20 +42,20 @@ doesn't have to change.
 \examples{
 \dontrun{
 ui <- shinyUI(bootstrapPage(
-    shinyFilesButton('files', 'File select', 'Please select a file', FALSE),
-    verbatimTextOutput('rawInputValue'),
-    verbatimTextOutput('filepaths')
+  shinyFilesButton('files', 'File select', 'Please select a file', FALSE),
+  verbatimTextOutput('rawInputValue'),
+  verbatimTextOutput('filepaths')
 ))
 server <- shinyServer(function(input, output) {
-    roots = c(wd='.')
-    shinyFileChoose(input, 'files', roots=roots, filetypes=c('', 'txt'))
-    output$rawInputValue <- renderPrint({str(input$files)})
-    output$filepaths <- renderPrint({parseFilePaths(roots, input$files)})
+  roots = c(wd='.')
+  shinyFileChoose(input, 'files', roots=roots, filetypes=c('', 'txt'))
+  output$rawInputValue <- renderPrint({str(input$files)})
+  output$filepaths <- renderPrint({parseFilePaths(roots, input$files)})
 })
 
 runApp(list(
-    ui=ui,
-    server=server
+  ui=ui,
+  server=server
 ))
 }
 
