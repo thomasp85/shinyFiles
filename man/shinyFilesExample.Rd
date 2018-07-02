@@ -19,4 +19,4 @@ Other shinyFiles: \code{\link{shinyFiles-buttons}},
   \code{\link{shinyFiles-observers}},
   \code{\link{shinyFiles-parsers}}
 }
-
+\concept{shinyFiles}

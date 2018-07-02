@@ -292,7 +292,8 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL) {
     )
   )
 }
-
+#' @rdname shinyFiles-parsers
+#' 
 #' @export
 #' 
 parseDirPath <- function(roots, selection) {

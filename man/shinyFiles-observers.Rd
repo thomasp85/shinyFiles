@@ -128,3 +128,4 @@ Other shinyFiles: \code{\link{shinyFiles-buttons}},
   \code{\link{shinyFiles-parsers}},
   \code{\link{shinyFilesExample}}
 }
+\concept{shinyFiles}

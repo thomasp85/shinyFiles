@@ -30,4 +30,3 @@ it to reflect the current state of the file system as well as the settings
 for each node. Children (contained folders) are recursed into if the parents
 expanded element is set to TRUE, no matter if children are currently present.
 }
-

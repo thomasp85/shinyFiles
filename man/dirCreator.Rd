@@ -25,4 +25,3 @@ a platform compliant format and then uses dir.create to create it. The
 returned function returns TRUE if the directory was created successfully and
 FALSE otherwise.
 }
-

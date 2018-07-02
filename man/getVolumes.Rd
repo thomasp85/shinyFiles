@@ -32,4 +32,3 @@ depending on the system on which shiny is running.
 If the function does not recognize the system under which it is running it 
 will throw an error
 }
-

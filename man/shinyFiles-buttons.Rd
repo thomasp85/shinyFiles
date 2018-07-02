@@ -3,7 +3,6 @@
 \name{shinyFiles-buttons}
 \alias{shinyFiles-buttons}
 \alias{shinyFilesButton}
-\alias{shinyFiles-buttons}
 \alias{shinyFilesLink}
 \alias{shinyDirButton}
 \alias{shinyDirLink}
@@ -45,6 +44,9 @@ look. The value will be pasted with 'btn-' and added as class.}
 \item{class}{Additional classes added to the button}
 
 \item{icon}{An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
+
+\item{filename}{A predifined filename to be filed in. Can be modified by the
+user during saving.}
 
 \item{filetype}{A named list of file extensions. The name of each element 
 gives the name of the filetype and the content of the element the possible
@@ -184,3 +186,4 @@ Other shinyFiles: \code{\link{shinyFiles-observers}},
   \code{\link{shinyFiles-parsers}},
   \code{\link{shinyFilesExample}}
 }
+\concept{shinyFiles}

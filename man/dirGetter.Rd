@@ -33,4 +33,3 @@ returned function takes a representation of a folder hierarchy along with the
 root to where it belongs and updates the tree to correspond with the current
 state of the file system, without altering expansions etc.
 }
-

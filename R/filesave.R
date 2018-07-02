@@ -57,7 +57,8 @@ shinyFileSave <- function(input, id, updateFreq = 0, session=getSession(),
     }))
 }
 #' @rdname shinyFiles-buttons
-#' 
+#' @param filename A predifined filename to be filed in. Can be modified by the
+#' user during saving.
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny restoreInput
 #' 

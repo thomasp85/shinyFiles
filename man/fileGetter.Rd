@@ -34,4 +34,3 @@ in restrictions. Furthermore can the output be filtered to only contain
 certain filetypes using the filter parameter and hidden files can be toggled
 with the hidden parameter.
 }
-

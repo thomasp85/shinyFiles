@@ -22,4 +22,3 @@ longer existing folders, while keeping the state of transient folders in the
 children element of the tree structure. The function does not recurse into
 the folders, but merely creates a shell that traverseDirs can take as input.
 }
-
