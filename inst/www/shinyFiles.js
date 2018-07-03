@@ -1,6 +1,6 @@
 var shinyFiles = (function() {
     
-    // General functionality
+  // General functionality
     
   var elementSelector = function(event, element, single, forceSelect) {
     var parent = $(element).parent();
@@ -300,7 +300,7 @@ var shinyFiles = (function() {
   }
         
   var removeFileChooser = function(button, modal, data) {
-    
+
     var modal = $(modal).removeClass('in');
     var backdrop = $(modal).data('backdrop').removeClass('in');
     
@@ -478,6 +478,14 @@ var shinyFiles = (function() {
     modal.find('.modal-header button.close').on('click', function() {
       dismissFileChooser(button, modal)
     })
+
+    // working but if you open and close a few times you get 
+    // $(document).keyup(function(e) {
+    //   if (e.which == 27) {
+    //     dismissFileChooser(button, modal)
+    //   }
+    // });
+
     modal.find('.sF-responseButtons #sF-cancelButton').on('click', function() {
       dismissFileChooser(button, modal);
     })
@@ -531,13 +539,25 @@ var shinyFiles = (function() {
         modal.find('.sF-fileList .selected').toggleClass('selected');
         toggleSelectButton(modal);
       })
+      .on('dblclick', '.sF-file', function(event) {
+        var single = $(button).data('selecttype') == 'single';
+        elementSelector(event, this, single, false);
+        selectFiles(button, modal);
+      })
+      // not working
+      // .on('keyup', '.sF-directory', function(event) {
+      //   if (event.keyCode == 13) {
+      //     $(this).toggleClass('selected', true);
+      //     openDir($(element), modal, this);
+      //   }
+      // })
       .on('click', '.sF-file, .sF-directory', function(event) {
         var single = $(button).data('selecttype') == 'single';
         elementSelector(event, this, single, false);
         toggleSelectButton(modal);
         return false;
       })
-        
+
     // Custom events
     modal
       .on('change', function() {
@@ -659,12 +679,15 @@ var shinyFiles = (function() {
         openDir($(element), modal, this);
       });
     } else {
-      if (objSize(oldFiles) > 0) {
+
+      // if (objSize(oldFiles) > 0) {
+      if (Object.keys(oldFiles).length === 0) {
         modal.find('.sF-fileList').children().filter(function() {
           return oldFiles[$(this).find('.sF-file-name div').text()]
         }).remove();
       };
-      if (objSize(newFiles) > 0) {
+      // if (objSize(newFiles) > 0) {
+      if (Object.keys(newFiles).length === 0) {
         for (i in newFiles) {
           var d = newFiles[i];
           
@@ -1082,6 +1105,14 @@ var shinyFiles = (function() {
     modal.find('.sF-filename').on('input', function() {
       modal.trigger('change');
     })
+
+    // not working
+    // modal.find('.sF-filename input').on('keyup', function(e) {
+    //   var disabled = $(this).val() == '';
+    //   if (e.keyCode == 13) {
+    //     saveFile(modal, button)
+    //   }
+    // })
     
     // Custom events
     modal
