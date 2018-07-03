@@ -479,7 +479,7 @@ var shinyFiles = (function() {
       dismissFileChooser(button, modal)
     })
 
-    // working but if you open and close a few times you get 
+    // working but if you open and close a few times you get an error (see PR) 
     // $(document).keyup(function(e) {
     //   if (e.which == 27) {
     //     dismissFileChooser(button, modal)
@@ -612,7 +612,6 @@ var shinyFiles = (function() {
         if (!data.files[i]) oldFiles[i] = currentData.files[i];
       }
     };
-    
     
     if (newLocation || newVolumes) {
       if (!data) return;
