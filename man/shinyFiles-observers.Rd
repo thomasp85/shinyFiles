@@ -17,7 +17,7 @@ shinyFileSave(input, id, updateFreq = 0, session = getSession(),
   defaultPath = "", defaultRoot = NULL, ...)
 }
 \arguments{
-\item{input}{The input object of the \code{shinyServer()} call (usaully
+\item{input}{The input object of the \code{shinyServer()} call (usually
 \code{input})}
 
 \item{id}{The same ID as used in the matching call to
@@ -39,8 +39,7 @@ can be either \code{'wd'} or \code{'home'}.}
 
 \item{defaultPath}{The default relative path specified given the \code{defaultRoot}.}
 
-\item{...}{Arguments to be passed on to \code{\link[=fileGetter]{fileGetter()}} or
-\code{\link[=dirGetter]{dirGetter()}}}
+\item{...}{Arguments to be passed on to \code{\link[=fileGetter]{fileGetter()}} or \code{\link[=dirGetter]{dirGetter()}}}
 }
 \value{
 A reactive observer that takes care of the server side logic of the
@@ -79,46 +78,46 @@ interactions with it later on.
 \dontrun{
 # File selections
 ui <- shinyUI(bootstrapPage(
-    shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
+  shinyFilesButton('files', 'File select', 'Please select a file', FALSE)
 ))
 server <- shinyServer(function(input, output) {
-    shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'),
-                    defaultPath='', defaultRoot='wd')
+  shinyFileChoose(input, 'files', roots=c(wd='.'), filetypes=c('', 'txt'),
+                  defaultPath='', defaultRoot='wd')
 })
 
 runApp(list(
-    ui=ui,
-    server=server
+  ui=ui,
+  server=server
 ))
 }
 
 \dontrun{
 # Folder selections
 ui <- shinyUI(bootstrapPage(
-    shinyDirButton('folder', 'Folder select', 'Please select a folder', FALSE)
+  shinyDirButton('folder', 'Folder select', 'Please select a folder', FALSE)
 ))
 server <- shinyServer(function(input, output) {
-    shinyDirChoose(input, 'folder', roots=c(wd='.'), filetypes=c('', 'txt'))
+  shinyDirChoose(input, 'folder', roots=c(wd='.'), filetypes=c('', 'txt'))
 })
 
 runApp(list(
-    ui=ui,
-    server=server
+  ui=ui,
+  server=server
 ))
 }
 
 \dontrun{
 # File selections
 ui <- shinyUI(bootstrapPage(
-    shinySaveButton('save', 'Save', 'Save as...')
+  shinySaveButton('save', 'Save', 'Save as...')
 ))
 server <- shinyServer(function(input, output) {
-    shinyFileSave(input, 'save', roots=c(wd='.'))
+  shinyFileSave(input, 'save', roots=c(wd='.'))
 })
 
 runApp(list(
-    ui=ui,
-    server=server
+  ui=ui,
+  server=server
 ))
 }
 

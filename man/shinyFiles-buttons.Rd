@@ -45,7 +45,7 @@ look. The value will be pasted with 'btn-' and added as class.}
 
 \item{icon}{An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
 
-\item{filename}{A predifined filename to be filed in. Can be modified by the
+\item{filename}{A predefined filename to be filed in. Can be modified by the
 user during saving.}
 
 \item{filetype}{A named list of file extensions. The name of each element
@@ -116,7 +116,7 @@ a shinyFiles button. The only markup required is:
 where the id tag matches the inputId parameter, the data-title tag matches
 the title parameter, the data-selecttype is either "single" or "multiple"
 (the non-logical form of the multiple parameter) and the internal textnode
-mathces the label parameter. The data-filetype tag is a bit more involved as
+matches the label parameter. The data-filetype tag is a bit more involved as
 it is a json formatted array of objects with the properties 'name' and 'ext'.
 'name' gives the name of the filetype as a string and 'ext' the allowed
 extensions as an array of strings. The non-exported
@@ -141,7 +141,7 @@ the following style:
     content: url(path/to/16x16/pixel/png);
 }
 .sF-fileList.sF-icons .sF-file .sF-file-icon .yourFileExtension{
-    content: url(path/to/32x32/pixel/png);
+  content: url(path/to/32x32/pixel/png);
 }
 }
 
@@ -156,14 +156,14 @@ event. To listen for this event you simple add:
 
 \preformatted{
 $(button).on('selection', function(event, path) {
-    // Do something with the paths here
+  // Do something with the paths here
 })
 }
 
 in the same way a 'cancel' event is fired when a user dismisses a selection
 box. In that case, no path is passed on.
 
-Outside events the current selection is available as an abject binded to the
+Outside events the current selection is available as an object bound to the
 button and can be accessed at any time:
 
 \preformatted{

@@ -4,7 +4,7 @@
 \alias{fileGetter}
 \title{Create a function that returns fileinfo according to the given restrictions}
 \usage{
-fileGetter(roots, restrictions, filetypes, hidden = FALSE)
+fileGetter(roots, restrictions, filetypes, pattern, hidden = FALSE)
 }
 \arguments{
 \item{roots}{A named vector of absolute filepaths or a function returning a
@@ -17,6 +17,10 @@ filtered out of the results}
 \item{filetypes}{A character vector of file extensions (without dot in front
 i.e. 'txt' not '.txt') to include in the output. Use the empty string to
 include files with no extension. If not set all file types will be included}
+
+\item{pattern}{A regular expression used to select files to show. See
+\code{\link[base:grep]{base::grepl()}} for additional discussion on how to
+construct a regular expression (e.g., "log.*\\.txt")}
 
 \item{hidden}{A logical value specifying whether hidden files should be
 returned or not}

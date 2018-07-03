@@ -9,10 +9,10 @@
 \if{html}{\figure{logo.png}{options: align='right'}}
 
 Provides functionality for client-side navigation of
-the server side file system in shiny apps. In case the app is running
-locally this gives the user direct access to the file system without the
-need to "download" files to a temporary location. Both file and folder
-selection as well as file saving is available.
+    the server side file system in shiny apps. In case the app is running
+    locally this gives the user direct access to the file system without the
+    need to "download" files to a temporary location. Both file and folder
+    selection as well as file saving is available.
 }
 \seealso{
 Useful links:

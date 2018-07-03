@@ -10,7 +10,7 @@ shinyFilesExample()
 When the function is invoked a shiny app is started showing a very simple
 setup using shinyFiles. A button summons the dialog box allowing the user to
 navigate the R installation directory. To showcase the restrictions parameter
-the base package location has been hidden, and is thus inaccecible. A panel
+the base package location has been hidden, and is thus inaccessible. A panel
 besides the button shows how the user selection is made accessible to the
 server after parsing with \code{\link[=parseFilePaths]{parseFilePaths()}}.
 }
