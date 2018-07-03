@@ -7,8 +7,8 @@
 updateChildren(oldChildren, currentChildren)
 }
 \arguments{
-\item{oldChildren}{A list of children folders from the parent$children 
-element of tree in \code{\link{traverseDirs}}}
+\item{oldChildren}{A list of children folders from the parent$children
+element of tree in \code{\link[=traverseDirs]{traverseDirs()}}}
 
 \item{currentChildren}{A vector of names of the folders that are currently
 present in the parent of oldChildren}
@@ -22,4 +22,3 @@ longer existing folders, while keeping the state of transient folders in the
 children element of the tree structure. The function does not recurse into
 the folders, but merely creates a shell that traverseDirs can take as input.
 }
-

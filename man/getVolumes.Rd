@@ -13,8 +13,8 @@ getVolumes(exclude)
 A function returning a named vector of available volumes
 }
 \description{
-This function is intended as an input to the roots parameter in 
-\code{\link{fileGetter}} and \code{\link{shinyFileChoose}}. It returns a
+This function is intended as an input to the roots parameter in
+\code{\link[=fileGetter]{fileGetter()}} and \code{\link[=shinyFileChoose]{shinyFileChoose()}}. It returns a
 function that returns a named vector of available volumes on the system. This
 construction makes it dynamic so that a shinyFiles instance reflects new
 volumes as they get added (e.g. usb drives). The function takes a single
@@ -25,11 +25,10 @@ value.
 The function is OS specific and looks for volumes/drives in different places
 depending on the system on which shiny is running.
 \describe{
- \item{Windows}{Returns all drives mapped to a letter}
- \item{Mac OSX}{Looks in /Volumes/ and lists the directories therein}
- \item{Linux}{Returns the system root}
+\item{Windows}{Returns all drives mapped to a letter}
+\item{Mac OSX}{Looks in /Volumes/ and lists the directories therein}
+\item{Linux}{Returns the system root}
 }
-If the function does not recognize the system under which it is running it 
+If the function does not recognize the system under which it is running it
 will throw an error
 }
-

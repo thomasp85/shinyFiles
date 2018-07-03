@@ -13,8 +13,7 @@ formatFiletype(filetype)
 A string describing the input value in json format
 }
 \description{
-This function is intended to format the filetype argument of 
-\code{\link{shinySaveButton}} into a json string representation, so that it
+This function is intended to format the filetype argument of
+\code{\link[=shinySaveButton]{shinySaveButton()}} into a json string representation, so that it
 can be attached to the button.
 }
-

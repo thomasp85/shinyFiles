@@ -1,6 +1,4 @@
-<img src='inst/example/www/logo.png' width='200' style='float: right'/>
-
-* * *
+# shinyFiles <img src="man/figures/logo.png" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/thomasp85/shinyFiles.svg?branch=master)](https://travis-ci.org/thomasp85/shinyFiles) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles)
 

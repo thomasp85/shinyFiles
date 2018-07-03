@@ -4,21 +4,25 @@
 \alias{fileGetter}
 \title{Create a function that returns fileinfo according to the given restrictions}
 \usage{
-fileGetter(roots, restrictions, filetypes, hidden = FALSE)
+fileGetter(roots, restrictions, filetypes, pattern, hidden = FALSE)
 }
 \arguments{
-\item{roots}{A named vector of absolute filepaths or a function returning a 
+\item{roots}{A named vector of absolute filepaths or a function returning a
 named vector of absolute filepaths (the latter is useful if the volumes
 should adapt to changes in the filesystem).}
 
 \item{restrictions}{A vector of directories within the root that should be
 filtered out of the results}
 
-\item{filetypes}{A character vector of file extensions (without dot in front 
-i.e. 'txt' not '.txt') to include in the output. Use the empty string to 
+\item{filetypes}{A character vector of file extensions (without dot in front
+i.e. 'txt' not '.txt') to include in the output. Use the empty string to
 include files with no extension. If not set all file types will be included}
 
-\item{hidden}{A logical value specifying whether hidden files should be 
+\item{pattern}{A regular expression used to select files to show. See
+\code{\link[base:grep]{base::grepl()}} for additional discussion on how to
+construct a regular expression (e.g., "log.*\\.txt")}
+
+\item{hidden}{A logical value specifying whether hidden files should be
 returned or not}
 }
 \value{
@@ -26,12 +30,11 @@ A function taking a single path relative to the specified root, and
 returns a list of files to be passed on to shiny
 }
 \description{
-This functions returns a new function that can generate file information to 
-be send to a shiny app based on a path relative to the given root. The 
+This functions returns a new function that can generate file information to
+be send to a shiny app based on a path relative to the given root. The
 function is secure in the sense that it prevents access to files outside of
 the given root directory as well as to subdirectories matching the ones given
-in restrictions. Furthermore can the output be filtered to only contain 
+in restrictions. Furthermore can the output be filtered to only contain
 certain filetypes using the filter parameter and hidden files can be toggled
 with the hidden parameter.
 }
-

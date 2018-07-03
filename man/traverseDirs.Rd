@@ -7,8 +7,8 @@
 traverseDirs(tree, root, restrictions, hidden)
 }
 \arguments{
-\item{tree}{A list representing the tree structure of the file system to 
-traverse. Each element should at least contain the elements 'name' and 
+\item{tree}{A list representing the tree structure of the file system to
+traverse. Each element should at least contain the elements 'name' and
 'expanded'. The elements 'empty' and 'children' will be created or updates if
 they exist.}
 
@@ -17,17 +17,16 @@ they exist.}
 \item{restrictions}{A vector of directories within the root that should be
 filtered out of the results}
 
-\item{hidden}{A logical value specifying whether hidden folders should be 
+\item{hidden}{A logical value specifying whether hidden folders should be
 returned or not}
 }
 \value{
-A list of the same format as 'tree', but with updated values to 
+A list of the same format as 'tree', but with updated values to
 reflect the current file system state.
 }
 \description{
 This function takes a tree representing a part of the file system and updates
-it to reflect the current state of the file system as well as the settings 
+it to reflect the current state of the file system as well as the settings
 for each node. Children (contained folders) are recursed into if the parents
 expanded element is set to TRUE, no matter if children are currently present.
 }
-

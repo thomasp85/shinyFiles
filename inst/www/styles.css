@@ -1,394 +1,394 @@
 .sF-modalBackdrop {
-    top: 0;
-    bottom: 0;
-    position: fixed;
+  top: 0;
+  bottom: 0;
+  position: fixed;
 }
 .sF-navigation {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 .sF-fileWindow {
-    margin-top: 10px;
-	height: 200px;
-	border: 1px solid grey;
-	border-radius: 5px;
-	overflow: auto;
+  margin-top: 10px;
+  height: 200px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  overflow: auto;
 }
 .sF-permission {
-    float: left;
-    vertical-align: middle;
-    padding: 7px 0;
+  float: left;
+  vertical-align: middle;
+  padding: 7px 0;
 }
 .sF-permission span {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 .sF-fileList div {
-	cursor: default;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .sF-breadcrumps {
-	width: calc(100% - 255px);
-	margin-left: auto
+  width: calc(100% - 255px);
+  margin-left: auto
 }
 
 .sF-fileList>div.selected .sF-file-name div,
 .sF-dirList div.selected>.sF-file-name>div {
-	color: white;
-	background: steelblue;
-	border-radius: 5px;
+  color: white;
+  background: steelblue;
+  border-radius: 5px;
 }
 
 .sF-sort .dropdown-menu li .glyphicon-ok {
-	padding-right: 5px;
-	visibility: hidden;
+  padding-right: 5px;
+  visibility: hidden;
 }
 .sF-sort .dropdown-menu li.selected .glyphicon-ok {
-	visibility: visible;
+  visibility: visible;
 }
 .sF-sort .dropdown-menu a.ascending .glyphicon-arrow-down,
 .sF-sort .dropdown-menu a.descending .glyphicon-arrow-up {
-	padding-right: 5px;
+  padding-right: 5px;
 }
 .sF-sort .dropdown-menu a.ascending .glyphicon-arrow-up,
 .sF-sort .dropdown-menu a.descending .glyphicon-arrow-down {
-	display: none;
+  display: none;
 }
 
 
 /*
-	Icons
+  Icons
 */
 .sF-directory .sF-file-icon::after {
-	content: url(icons/Icons16x16/folder.png);
+  content: url(icons/Icons16x16/folder.png);
 }
 .sF-file-icon::after {
-	content: url(icons/Icons16x16/page_white.png);
+  content: url(icons/Icons16x16/page_white.png);
 }
 .sF-directory.root>.sF-file-icon::after {
-    content: url(icons/Icons16x16/drive.png);
+  content: url(icons/Icons16x16/drive.png);
 }
 .sF-icons .sF-directory .sF-file-icon::after {
-	content: url(icons/Icons32x32/folder.png);
+  content: url(icons/Icons32x32/folder.png);
 }
 .sF-icons .sF-file-icon::after {
-	content: url(icons/Icons32x32/page_white.png);
+  content: url(icons/Icons32x32/page_white.png);
 }
 .sF-icons .sF-directory.root>.sF-file-icon::after {
-    content: url(icons/Icons32x32/drive.png);
+  content: url(icons/Icons32x32/drive.png);
 }
 
 /*
-	Detail view
+  Detail view
 */
 .sF-fileList.sF-detail {
-	display: table;
-	width: auto;
-	min-width: 100%;
-	position: relative;
+  display: table;
+  width: auto;
+  min-width: 100%;
+  position: relative;
 }
 .sF-fileList.sF-detail>div {
-	display: table-row;
-	width: auto;
+  display: table-row;
+  width: auto;
 }
 .sF-fileList.sF-detail>div>div {
-	display: table-cell;
-	width: auto;
-	font-size: small;
-	white-space: nowrap;
-	padding: 1px 3px;
-	vertical-align: top;
+  display: table-cell;
+  width: auto;
+  font-size: small;
+  white-space: nowrap;
+  padding: 1px 3px;
+  vertical-align: top;
 }
 .sF-fileList.sF-detail .sF-file-name div{
-	float: left;
-	padding: 0 2px;
+  float: left;
+  padding: 0 2px;
 }
 .sF-fileList.sF-detail .sF-file-header {
-	display: table-header-group;
-	background: whitesmoke;
+  display: table-header-group;
+  background: whitesmoke;
 }
 .sF-fileList.sF-detail .sF-file-header>div {
-	display: table-row;
-	padding: 1px 0;
+  display: table-row;
+  padding: 1px 0;
 }
 .sF-fileList.sF-detail .sF-file-header>div>div {
-	display: table-cell;
-	padding: 0 3px;
+  display: table-cell;
+  padding: 0 3px;
 }
 .sF-fileList.sF-detail .sF-file-header>div>div+div::before {
-	content: '';
-	background-image: -webkit-linear-gradient(whitesmoke, lightgrey);
-	background-image: -moz-linear-gradient(whitesmoke, lightgrey);
-	background-image: -o-linear-gradient(whitesmoke, lightgrey);
-	background-image: linear-gradient(whitesmoke, lightgrey);
-	padding-left: 1px;
-	padding-bottom: 3px;
-	left: -3px;
-	position: relative;
+  content: '';
+  background-image: -webkit-linear-gradient(whitesmoke, lightgrey);
+  background-image: -moz-linear-gradient(whitesmoke, lightgrey);
+  background-image: -o-linear-gradient(whitesmoke, lightgrey);
+  background-image: linear-gradient(whitesmoke, lightgrey);
+  padding-left: 1px;
+  padding-bottom: 3px;
+  left: -3px;
+  position: relative;
 }
 .sF-fileList.sF-detail .sF-file-header>div>div+div.ascending::after {
-	content: '\25bc';
-	position: relative;
-	float: right;
-	font-size: xx-small;
+  content: '\25bc';
+  position: relative;
+  float: right;
+  font-size: xx-small;
 }
 .sF-fileList.sF-detail .sF-file-header>div>div+div.descending::after {
-	content: '\25b2';
-	position: relative;
-	float: right;
-	font-size: xx-small;
+  content: '\25b2';
+  position: relative;
+  float: right;
+  font-size: xx-small;
 }
 .sF-fileList.sF-detail .sF-file-header>div>div.sF-file-icon {
-	opacity: 0;
+  opacity: 0;
 }
 .sF-fileList.sF-detail .sF-file-aTime,
 .sF-fileList.sF-detail .sF-file-header>div>div.sF-file-aTime {
-	display: none;
+  display: none;
 }
 /*
-	List view
+  List view
 */
 .sF-fileWindow.sF-wide {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 .sF-fileList.sF-list {
-	-webkit-column-width: 150px;
-	-ms-column-width: 150px;
-	-moz-column-width: 150px;
-	column-width: 150px;
-	height: calc(100% - 5px);;
-    display: inline-block;
+  -webkit-column-width: 150px;
+  -ms-column-width: 150px;
+  -moz-column-width: 150px;
+  column-width: 150px;
+  height: calc(100% - 5px);;
+  display: inline-block;
 }
 .sF-fileList.sF-list>div {
-	width: auto;
-	white-space: nowrap;
+  width: auto;
+  white-space: nowrap;
 }
 .sF-fileList.sF-list>div>div {
-	width: auto;
-	position: relative;
-	display: inline-block;
-	vertical-align: top;
-	font-size: small;
-	padding: 2px 1px 1px 3px;
+  width: auto;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  font-size: small;
+  padding: 2px 1px 1px 3px;
 }
 .sF-fileList.sF-list .sF-file-name div{
-	max-width: 165px;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	padding: 0 2px;
+  max-width: 165px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 2px;
 }
 .sF-fileList.sF-list .sF-file-name div::after {
-	clear: both;
+  clear: both;
 }
 .sF-fileList.sF-list .sF-file-header,
 .sF-fileList.sF-list .sF-file-size,
 .sF-fileList.sF-list .sF-file-mTime,
 .sF-fileList.sF-list .sF-file-cTime,
 .sF-fileList.sF-list .sF-file-aTime {
-	display: none;
+  display: none;
 }
 
 /*
-	Big icons view
+  Big icons view
 */
 .sF-fileList.sF-icons {
-	text-align: justify;
+  text-align: justify;
 }
 .sF-fileList.sF-icons:after {
-	content: ' ';
-	width: 100%;
-	display: inline-block;
+  content: ' ';
+  width: 100%;
+  display: inline-block;
 }
 .sF-fileList.sF-icons>div {
-	position: relative;
-	display: inline-block;
-	width: 100px;
-	vertical-align: top;
-	margin: 5px 3px;
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  vertical-align: top;
+  margin: 5px 3px;
 }
 .sF-fileList.sF-icons .sF-file-icon {
-	text-align: center;
+  text-align: center;
 }
 .sF-fileList.sF-icons .sF-file-name {
-	position: relative;
+  position: relative;
 }
 .sF-fileList.sF-icons .sF-file-name div{
-	float: left;
-	position: relative;
-	left: 50%;
-	-webkit-transform: translate(-50%);
-	-moz-transform: translate(-50%);
-	-ms-transform: translate(-50%);
-	-o-transform: translate(-50%);
-	transform: translate(-50%);
-	max-width: 100%;
-	font-size: small;
-	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding: 0 2px;
+  float: left;
+  position: relative;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  -moz-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  -o-transform: translate(-50%);
+  transform: translate(-50%);
+  max-width: 100%;
+  font-size: small;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 2px;
 }
 .sF-fileList.sF-icons .sF-file-name div::after{
-	content: '';
-	clear: both;
+  content: '';
+  clear: both;
 }
 .sF-fileList.sF-icons>div:hover .sF-file-name div{
-	position: absolute;
-	white-space: normal;
-	z-index: 2;
-	background: white;
-	word-wrap: break-word;
+  position: absolute;
+  white-space: normal;
+  z-index: 2;
+  background: white;
+  word-wrap: break-word;
 }
 .sF-fileList.sF-icons>div.selected:hover .sF-file-name div{
-	background: steelblue;
+  background: steelblue;
 }
 .sF-fileList.sF-icons .sF-file-header,
 .sF-fileList.sF-icons .sF-file-size,
 .sF-fileList.sF-icons .sF-file-mTime,
 .sF-fileList.sF-icons .sF-file-cTime,
 .sF-fileList.sF-icons .sF-file-aTime {
-	display: none;
+  display: none;
 }
 
 /*
-    Dir chooser
+  Dir chooser
 */
 .sF-dirWindow {
-	min-height: 223px;
-    cursor: default;
+  min-height: 223px;
+  cursor: default;
 }
 .sF-dirWindow h6 {
-	margin-top: 0;
+  margin-top: 0;
 }
 .sF-dirWindow>div {
-	padding: 5px 2.5px 0 2.5px;
+  padding: 5px 2.5px 0 2.5px;
 }
 /*
-    List and content
+  List and content
 */
 .sF-dirInfo>div {
-    height: 200px;
-    border: 1px solid grey;
-	border-radius: 5px;
-	overflow: auto;
+  height: 200px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  overflow: auto;
 }
 .sF-dirList .sF-directory>.sF-file-icon, 
 .sF-dirContent div>.sF-file-icon{
-	padding: 0 2px;
+  padding: 0 2px;
 }
 /*
-    List only
+  List only
 */
 .sF-dirList .sF-directory>div:not(.sF-content) {
-    height: 23px;
-    -webkit-transition: height 2s;
-    transition: height 2s;
-    overflow: hidden;
+  height: 23px;
+  -webkit-transition: height 2s;
+  transition: height 2s;
+  overflow: hidden;
 }
 .sF-dirList .sF-directory.removing>div:not(.sF-content) {
-    height: 0;
-    -webkit-transition: height 2s;
-    transition: height 2s;
-    overflow: hidden;
+  height: 0;
+  -webkit-transition: height 2s;
+  transition: height 2s;
+  overflow: hidden;
 }
 .sF-dirList .sF-directory>div {
-    display: inline-block;
-	width: auto;
-	font-size: small;
-	white-space: nowrap;
-	padding: 1px 0;
-	vertical-align: top;
+  display: inline-block;
+  width: auto;
+  font-size: small;
+  white-space: nowrap;
+  padding: 1px 0;
+  vertical-align: top;
 }
 .sF-dirList .sF-file-name>div {
-    float: left;
-    padding: 0 4px;
+  float: left;
+  padding: 0 4px;
 }
 .sF-dirList .sF-directory>div.sF-content {
-	margin-left: 20px;
-	display: block;
-    padding: 0;
+  margin-left: 20px;
+  display: block;
+  padding: 0;
 }
 .sF-dirList .sF-directory>.sF-expander {
-    width: 20px;
-    text-align: center;
+  width: 20px;
+  text-align: center;
 }
 .sF-dirList .sF-directory.closed>.sF-expander {
-    -webkit-transform-origin: 60% 40%;
-    transform-origin: 60% 40%;
-    -webkit-transition: -webkit-transform 0.5s;
-    transition: transform 0.5s;
+  -webkit-transform-origin: 60% 40%;
+  transform-origin: 60% 40%;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
 }
 .sF-dirList .sF-directory.expanded>.sF-expander {
-    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-    transform: rotate(90deg);
-    -webkit-transform-origin: 60% 40%;
-    transform-origin: 60% 40%;
-    -webkit-transition: -webkit-transform 0.5s;
-    transition: transform 0.5s;
+  -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+  transform: rotate(90deg);
+  -webkit-transform-origin: 60% 40%;
+  transform-origin: 60% 40%;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
 }
 .sF-dirList .sF-directory.empty .sF-expander {
-    visibility: hidden;
+  visibility: hidden;
 }
 /*
-    Content only
+  Content only
 */
 .sF-dirContent {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
 }
 .sF-dirContent>div {
-    display: table-row;
+  display: table-row;
 }
 .sF-dirContent>div>div {
-    display: table-cell;
-    font-size: small;
-    padding-top: 0;
-    padding-bottom: 0;
+  display: table-cell;
+  font-size: small;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .sF-dirContent>div>div:first-child {
-    width: 20px;
-    vertical-align: middle;
+  width: 20px;
+  vertical-align: middle;
 }
 .sF-dirContent>div>div:nth-child(2)>div {
-    width: auto;
+  width: auto;
 }
 .sF-dirContent>div>div:nth-child(2)>div {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 .sF-dirContent>div>div:last-child {
-    text-align: right;
-    padding-right: 2px;
-    white-space: nowrap;
+  text-align: right;
+  padding-right: 2px;
+  white-space: nowrap;
 }
 .sF-dirContent.measuring>div>div {
-    display: inline;
-    visibility: hidden;
+  display: inline;
+  visibility: hidden;
 }
 .sF-dirContent.message {
-    display: block;
+  display: block;
 }
 .sF-dirContent.message>div {
-    color: grey;
-    font-style: italic;
-    text-align: center;
-    display: block;
-    padding-top: 75px;
+  color: grey;
+  font-style: italic;
+  text-align: center;
+  display: block;
+  padding-top: 75px;
 }
 /*
-    Dir creator
+  Dir creator
 */
 .sF-newDir .dropdown-menu {
-	padding: 5px;
+  padding: 5px;
 }
 .sF-newDir .dropdown-menu::before {
   position: absolute;
@@ -413,24 +413,24 @@
 }
 
 /*
-    File saver specifics
+  File saver specifics
 */
 .sF-filenaming {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 .sF-filenaming .sF-newDir>#sF-btn-newDir {
-    margin-right: 15px;
-    border-radius: 4px;
+  margin-right: 15px;
+  border-radius: 4px;
 }
 .input-group.sF-filenaming input.sF-filename.form-control {
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
-    text-align: right;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  text-align: right;
 }
 .input-group.sF-filenaming.has-feedback input.sF-filename.form-control {
-    padding-left: 42.5px;
+  padding-left: 42.5px;
 }
 #filenameWarn {
-    padding-top: 8px;
-    left: 149px
+  padding-top: 8px;
+  left: 149px
 }
