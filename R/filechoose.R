@@ -33,7 +33,6 @@ NULL
 #' returns a list of files to be passed on to shiny
 #'
 #' @importFrom tools file_ext
-#' @importFrom methods is
 #'
 fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
   if (missing(filetypes)) {
@@ -87,8 +86,8 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
     }
     if (nchar(pattern) > 0) {
       matchedFiles <- try(grepl(pattern, fileInfo$filename), silent = TRUE)
-      if (!is(matchedFiles, "try-error")) {
-         fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
+      if (!inherits(matchedFiles, "try-error")) {
+        fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
       }
     }
     rownames(fileInfo) <- NULL

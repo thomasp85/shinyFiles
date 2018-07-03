@@ -21,7 +21,6 @@ License: GPL (>= 2)
 Encoding: UTF-8
 Imports:
     tools,
-    methods,
     shiny (>= 0.11),
     htmltools,
     jsonlite
