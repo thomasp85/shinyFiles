@@ -44,7 +44,7 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
     }
     files <- files[keep]
   }
-  fileInfo <- file.info(files)
+  fileInfo <- .file.info(files)
   folders <- basename(files)[fileInfo$isdir]
 
   if (length(folders) == 0) {

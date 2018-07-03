@@ -73,7 +73,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
       }
       files <- files[keep]
     }
-    fileInfo <- file.info(files)
+    fileInfo <- .file.info(files)
     fileInfo$filename <- basename(files)
     fileInfo$extension <- tolower(file_ext(files))
     fileInfo$mtime <- format(fileInfo$mtime, format = "%Y-%m-%d-%H-%M")
@@ -494,6 +494,6 @@ parseFilePaths <- function(roots, selection) {
     files <- sapply(selection$files, function(x) file.path(roots[selection$root], do.call(file.path, x)))
     files <- gsub(pattern = "//*", "/", files, perl = TRUE)
 
-    data.frame(name = basename(files), size = file.info(files)$size, type = "", datapath = files, stringsAsFactors = FALSE)
+    data.frame(name = basename(files), size = .file.info(files)$size, type = "", datapath = files, stringsAsFactors = FALSE)
   }
 }
