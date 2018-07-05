@@ -10,6 +10,9 @@ Authors@R:
              email = "thomasp85@gmail.com"),
       person(given = "Vincent",
              family = "Nijs",
+             role = "aut"),
+      person(given = "Eric",
+             family = "Nantz",
              role = "aut"))
 Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
 Description: Provides functionality for client-side navigation of
