@@ -8,6 +8,14 @@
   addResourcePath("sF", system.file("www", package = "shinyFiles"))
 }
 
+#' Wrapper to file.info that suppresses warnings
+#'
+#' @noRd
+#'
+.file.info <- function(...) {
+  suppressWarnings(file.info(...))
+}
+
 #' Run a simple example app using the shinyFiles functionality
 #'
 #' When the function is invoked a shiny app is started showing a very simple
