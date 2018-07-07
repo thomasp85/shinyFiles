@@ -485,7 +485,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
 parseFilePaths <- function(roots, selection) {
   roots <- if (class(roots) == "function") roots() else roots
 
-  if (is.null(selection) || is.na(selection) || is.integer(selection)) {
+  if (is.null(selection) || is.na(selection) || is.integer(selection) || length(selection$files) == 0) {
     data.frame(
       name = character(0), size = numeric(0), type = character(0),
       datapath = character(0), stringsAsFactors = FALSE
