@@ -670,6 +670,7 @@ var shinyFiles = (function() {
           return oldFiles[$(this).find('.sF-file-name div').text()]
         }).remove();
       };
+      
       if (Object.keys(newFiles).length === 0) {
         for (i in newFiles) {
           var d = newFiles[i];

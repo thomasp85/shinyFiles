@@ -54,10 +54,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
     if (is.null(root)) root <- names(currentRoots)[1]
 
     ## drop paths with only "" to avoid //
-    dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
     fulldir <- file.path(currentRoots[root], dropEmpty(dir))
-
-    dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
     fulldir <- do.call("file.path", as.list(dropEmpty(c(currentRoots[root], dir))))
     writable <- as.logical(file.access(fulldir, 2) == 0)
     files <- list.files(fulldir, all.files = hidden, full.names = TRUE, no.. = TRUE)
@@ -485,7 +482,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
 parseFilePaths <- function(roots, selection) {
   roots <- if (class(roots) == "function") roots() else roots
 
-  if (is.null(selection) || is.na(selection) || is.integer(selection)) {
+  if (is.null(selection) || is.na(selection) || is.integer(selection) || length(selection$files) == 0) {
     data.frame(
       name = character(0), size = numeric(0), type = character(0),
       datapath = character(0), stringsAsFactors = FALSE
