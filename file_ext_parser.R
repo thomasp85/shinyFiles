@@ -1,20 +1,21 @@
 fileext <- list.files("inst/www/icons/Icons16x16/", pattern = "file_extension_*")
 fileext <- sub("file_extension_", "", fileext)
 fileext <- sub(".png", "", fileext, fixed = T)
+css_fn <- "inst/www/fileIcons.css"
+write("", css_fn, append = F)
 
 for (i in fileext) {
-  write(paste0(".sF-filetype-", i, "::after {"), "fileIcons.css", append = T)
-  write(paste0("    content: url(icons/Icons16x16/file_extension_", i, ".png);"), "fileIcons.css", append = T)
-  write("}", "fileIcons.css", append = T)
-  write(paste0(".sF-icons .sF-filetype-", i, "::after {"), "fileIcons.css", append = T)
-  write(paste0("    content: url(icons/Icons32x32/file_extension_", i, ".png);"), "fileIcons.css", append = T)
-  write("}\n", "fileIcons.css", append = T)
+  write(paste0(".sF-filetype-", i, "::after {"), css_fn, append = T)
+  write(paste0("  content: url(icons/Icons16x16/file_extension_", i, ".png);"), css_fn, append = T)
+  write("}", css_fn, append = T)
+  write(paste0(".sF-icons .sF-filetype-", i, "::after {"), css_fn, append = T)
+  write(paste0("  content: url(icons/Icons32x32/file_extension_", i, ".png);"), css_fn, append = T)
+  write("}\n", css_fn, append = T)
 }
 other <- list(
   "page_white_actionscript.png" = c("as"),
   "page_white_c.png" = c("c"),
-  "page_white_code.png" = c("r", "R", "lua", "m", "pl", "py", "sh", "js", "css", "fs", "fsx", "el", "lisp", "cl", "lsp", "pas", "s", "m", "f", "for", "f90"),
-  #    "page_white_compress.png"=c(),
+  "page_white_code.png" = c("lua", "m", "pl", "py", "sh", "js", "css", "fs", "fsx", "el", "lisp", "cl", "lsp", "pas", "s", "m", "f", "for", "f90"),
   "page_white_cplusplus.png" = c("C", "cc", "cpp", "CPP", "c++", "cp", "cxx"),
   "page_white_csharp.png" = c("cs"),
   "page_white_cup.png" = c("java", "class", "jar"),
@@ -30,10 +31,10 @@ other <- list(
     "FP", "FP3", "FP5", "FP7", "FRM", "GDB", "GTABLE", "KEXI", "KEXIC",
     "MYD", "MYI", "NCF", "NSF", "NTF", "NV2", "ODB", "ORA", "PDB",
     "PDI", "PDX", "PRC", "SQL", "REC", "REL", "RIN", "SDB", "SDF",
-    "UDL", "waData", "waIndx", "waModel", "waJournal", "WDB", "WMDB", "Rdata", "rdata", "RDS"
+    "UDL", "waData", "waIndx", "waModel", "waJournal", "WDB", "WMDB"
   ),
-  "page_white_excel.png" = c("xlm", "xlt", "xlsx", "xlsm", "xltx", "xltm", "xlsb", "xla", "xlam", "xll", "xlw"),
-  #    "page_white_flash.png"=c('swf', 'flv', 'fla'),
+  
+  "page_white_excel.png" = c("xlm", "xlt", "xlsx", "xlsm", "xltx", "xltm", "xlsb", "xla", "xlam", "xll", "xlw", "csv"),
   "page_white_gear.png" = c("conf", "sys", "bat", "ini", "cnf", "config", "cfg", "cf", "ch", "ini2", "opt", "par", "set"),
   "page_white_h.png" = c("h"),
   "page_white_office.png" = c("ade", "adp", "adn", "accdb", "accdr", "accdt", "mdb", "cdb", "mda", "mdn", "mdt", "mdw", "mdf", "mde", "accde", "mam", "maq", "mar", "mat", "maf", "ldb", "laccdb"),
@@ -45,7 +46,8 @@ other <- list(
   "page_white_word.png" = c("dot", "docx", "docm", "dotx", "dotm"),
   "page_white_zip.png" = c("deb", "pkg", "rpm", "tar", "zipx"),
   "film.png" = c("amv", "avi", "moov", "qt"),
-  "music.png" = c("iff", "mp3", "mpa", "ra", "flac", "act", "aac", "mmf")
+  "music.png" = c("iff", "mp3", "mpa", "ra", "flac", "act", "aac", "mmf"),
+  "r-data-formats.png" = c("rda", "rdata", "rds")
 )
 
 for (i in 1:length(other)) {
@@ -54,13 +56,13 @@ for (i in 1:length(other)) {
   extensions <- extensions[!extensions %in% fileext]
 
   for (j in 1:length(extensions)) {
-    write(paste0(".sF-filetype-", extensions[j], ifelse(j == length(extensions), "::after {", "::after,")), "fileIcons.css", append = T)
+    write(paste0(".sF-filetype-", extensions[j], ifelse(j == length(extensions), "::after {", "::after,")), css_fn, append = T)
   }
-  write(paste0("    content: url(icons/Icons16x16/", filename, ");"), "fileIcons.css", append = T)
-  write("}", "fileIcons.css", append = T)
+  write(paste0("  content: url(icons/Icons16x16/", filename, ");"), css_fn, append = T)
+  write("}", css_fn, append = T)
   for (j in 1:length(extensions)) {
-    write(paste0(".sF-icons .sF-filetype-", extensions[j], ifelse(j == length(extensions), "::after {", "::after,")), "fileIcons.css", append = T)
+    write(paste0(".sF-icons .sF-filetype-", extensions[j], ifelse(j == length(extensions), "::after {", "::after,")), css_fn, append = T)
   }
-  write(paste0("    content: url(icons/Icons32x32/", filename, ");"), "fileIcons.css", append = T)
-  write("}\n", "fileIcons.css", append = T)
+  write(paste0("  content: url(icons/Icons32x32/", filename, ");"), css_fn, append = T)
+  write("}\n", css_fn, append = T)
 }
