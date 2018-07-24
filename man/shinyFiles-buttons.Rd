@@ -11,20 +11,22 @@
 \title{Create a button to summon a shinyFiles dialog}
 \usage{
 shinyFilesButton(id, label, title, multiple, buttonType = "default",
-  class = NULL, icon = NULL)
+  class = NULL, icon = NULL, style = NULL)
 
-shinyFilesLink(id, label, title, multiple, class = NULL, icon = NULL)
+shinyFilesLink(id, label, title, multiple, class = NULL, icon = NULL,
+  style = NULL)
 
 shinyDirButton(id, label, title, buttonType = "default", class = NULL,
-  icon = NULL)
+  icon = NULL, style = NULL)
 
-shinyDirLink(id, label, title, class = NULL, icon = NULL)
+shinyDirLink(id, label, title, class = NULL, icon = NULL,
+  style = NULL)
 
 shinySaveButton(id, label, title, filename = "", filetype,
-  buttonType = "default", class = NULL, icon = NULL)
+  buttonType = "default", class = NULL, icon = NULL, style = NULL)
 
 shinySaveLink(id, label, title, filename = "", filetype, class = NULL,
-  icon = NULL)
+  icon = NULL, style = NULL)
 }
 \arguments{
 \item{id}{The id matching the \code{\link[=shinyFileChoose]{shinyFileChoose()}}}
@@ -44,6 +46,8 @@ look. The value will be pasted with 'btn-' and added as class.}
 \item{class}{Additional classes added to the button}
 
 \item{icon}{An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
+
+\item{style}{Additional styling added to the button (e.g., "margin-top: 25px;")}
 
 \item{filename}{A predefined filename to be filed in. Can be modified by the
 user during saving.}
