@@ -96,6 +96,21 @@ getVolumes <- function(exclude) {
   }
 }
 
+#' Find user directory
+#' @details Returns /Users/x and not /Users/x/Documents
+#' @export
+find_home <- function() {
+  os_type = Sys.info()["sysname"]
+  if (os_type == "Windows") {
+    normalizePath(
+      file.path(Sys.getenv("HOMEDRIVE"), Sys.getenv("HOMEPATH")),
+      winslash = "/"
+    )
+  } else {
+    Sys.getenv("HOME")
+  }
+}
+  
 getSession <- function() {
   session <- shiny::getDefaultReactiveDomain()
 

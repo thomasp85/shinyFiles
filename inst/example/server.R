@@ -2,7 +2,7 @@ library(shiny)
 library(shinyFiles)
 
 shinyServer(function(input, output, session) {
-  volumes <- c(Home = "~", "R Installation" = R.home(), getVolumes()())
+  volumes <- c(Home = find_home(), "R Installation" = R.home(), getVolumes()())
   shinyFileChoose(
     input, "file", roots = volumes, session = session,
     defaultRoot = "R Installation", defaultPath = "library"
