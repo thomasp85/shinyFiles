@@ -54,10 +54,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
     if (is.null(root)) root <- names(currentRoots)[1]
 
     ## drop paths with only "" to avoid //
-    dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
     fulldir <- file.path(currentRoots[root], dropEmpty(dir))
-
-    dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
     fulldir <- do.call("file.path", as.list(dropEmpty(c(currentRoots[root], dir))))
     writable <- as.logical(file.access(fulldir, 2) == 0)
     files <- list.files(fulldir, all.files = hidden, full.names = TRUE, no.. = TRUE)
@@ -346,6 +343,8 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #' @param class Additional classes added to the button
 #'
 #' @param icon An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.
+#' 
+#' @param style Additional styling added to the button (e.g., "margin-top: 25px;")
 #'
 #' @param filetype A named list of file extensions. The name of each element
 #' gives the name of the filetype and the content of the element the possible
@@ -367,7 +366,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #'
 #' @export
 #'
-shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL) {
+shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL, style=NULL) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -387,6 +386,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
       id = id,
       type = "button",
       class = paste(c("shinyFiles btn", paste0("btn-", buttonType), class, "action-button"), collapse = " "),
+      style = style,
       "data-title" = title,
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
@@ -402,7 +402,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
 #'
 #' @export
 #'
-shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
+shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, style=NULL) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -422,6 +422,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
       id = id,
       type = "button",
       class = paste(c("shinyFiles", class, "action-button"), collapse = " "),
+      style = style,
       "data-title" = title,
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
@@ -485,7 +486,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
 parseFilePaths <- function(roots, selection) {
   roots <- if (class(roots) == "function") roots() else roots
 
-  if (is.null(selection) || is.na(selection) || is.integer(selection)) {
+  if (is.null(selection) || is.na(selection) || is.integer(selection) || length(selection$files) == 0) {
     data.frame(
       name = character(0), size = numeric(0), type = character(0),
       datapath = character(0), stringsAsFactors = FALSE
