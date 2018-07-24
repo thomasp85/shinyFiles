@@ -2,13 +2,14 @@ library(shiny)
 library(shinyFiles)
 
 shinyServer(function(input, output, session) {
-  volumes <- c("R Installation" = R.home())
-  shinyFileChoose(input, "file",
-    roots = volumes, session = session, restrictions = system.file(package = "base"),
+  volumes <- c(Home = "~", "R Installation" = R.home(), getVolumes()())
+  shinyFileChoose(
+    input, "file", roots = volumes, session = session,
     defaultRoot = "R Installation", defaultPath = "library"
   )
   shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"))
   shinyFileSave(input, "save", roots = volumes, session = session, restrictions = system.file(package = "base"))
+  
   output$filepaths <- renderPrint({
     parseFilePaths(volumes, input$file)
   })
