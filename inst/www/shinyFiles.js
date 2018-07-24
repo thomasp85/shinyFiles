@@ -479,13 +479,6 @@ var shinyFiles = (function() {
       dismissFileChooser(button, modal)
     })
 
-    // working but if you open and close a few times you get an error (see PR) 
-    // $(document).keyup(function(e) {
-    //   if (e.which == 27) {
-    //     dismissFileChooser(button, modal)
-    //   }
-    // });
-
     modal.find('.sF-responseButtons #sF-cancelButton').on('click', function() {
       dismissFileChooser(button, modal);
     })
@@ -544,13 +537,6 @@ var shinyFiles = (function() {
         elementSelector(event, this, single, false);
         selectFiles(button, modal);
       })
-      // not working
-      // .on('keyup', '.sF-directory', function(event) {
-      //   if (event.keyCode == 13) {
-      //     $(this).toggleClass('selected', true);
-      //     openDir($(element), modal, this);
-      //   }
-      // })
       .on('click', '.sF-file, .sF-directory', function(event) {
         var single = $(button).data('selecttype') == 'single';
         elementSelector(event, this, single, false);
@@ -1104,14 +1090,6 @@ var shinyFiles = (function() {
       modal.trigger('change');
     })
 
-    // not working
-    // modal.find('.sF-filename input').on('keyup', function(e) {
-    //   var disabled = $(this).val() == '';
-    //   if (e.keyCode == 13) {
-    //     saveFile(modal, button)
-    //   }
-    // })
-    
     // Custom events
     modal
       .on('change', function() {
@@ -1552,6 +1530,7 @@ var shinyFiles = (function() {
     var selected = false;
     var childSelection = null;
     element.toggleClass('sF-directory', true);
+    if (!tree) return;
     if(selectPath != null) {
       if(selectPath[0] == tree.name) {
         if(selectPath.length == 1) {
@@ -1576,7 +1555,7 @@ var shinyFiles = (function() {
     if(element.children().length == 0) {
       element.append(
         $('<div>').addClass('sF-expander').append(
-          $('<span>').addClass('glyphicon glyphicon-chevron-right')
+          $('<span>').addClass('glyphicon glyphicon-triangle-right')
         )
       ).append(
         $('<div>').addClass('sF-file-icon')
@@ -1600,7 +1579,7 @@ var shinyFiles = (function() {
         var childName = childElem.children('.sF-file-name').children().text();
         var remove = true;
         for(var i = 0; i < tree.children.length; i++) {
-          if(childName == tree.children[i].name) {
+          if(tree.children[i] != null && childName == tree.children[i].name) {
             updateTree(childElem, tree.children[i], selectPath);
             oldChildren.push(i);
             remove = false;
@@ -1642,9 +1621,11 @@ var shinyFiles = (function() {
     setDisabledButtons(button, modal);
     toggleSelectButton(modal);
         
-    modal.data('currentData').contentPath = path;
-    Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
-        
+    if (modal.data('currentData')) {
+      modal.data('currentData').contentPath = path;
+      Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
+    } 
+    
     return false;
   };
     
@@ -1656,19 +1637,25 @@ var shinyFiles = (function() {
         modal.data('currentData').contentPath = path.slice();
       }
       path.shift();
-      var tree = modal.data('currentData').tree;
-      while(true) {
-        if(path.length == 0) {
-          tree.expanded = !tree.expanded;
-          break;
-        } else {
-          var name = path.shift();
-          tree = tree.children.filter(function(f) {
-            return f.name == name;
-          })[0];
+      if (modal.data('currentData') && modal.data('currentData').tree) {
+        var tree = modal.data('currentData').tree;
+        while(true) {
+          if(path.length == 0) {
+            tree.expanded = !tree.expanded;
+            break;
+          } else {
+            var name = path.shift();
+            tree = tree.children.filter(function(f) {
+              if (f == null) {
+                return null;
+              } else {
+                return f.name == name;
+              }
+            })[0];
+          }
         }
+        Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
       }
-      Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
     }
     return false;
   };

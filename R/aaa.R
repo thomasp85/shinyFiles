@@ -67,11 +67,11 @@ getVolumes <- function(exclude) {
   function() {
     osSystem <- Sys.info()["sysname"]
     if (osSystem == "Darwin") {
-      volumes <- list.files("/Volumes/", full.names = T)
+      volumes <- list.files("/Volumes", full.names = T)
       names(volumes) <- basename(volumes)
     } else if (osSystem == "Linux") {
       volumes <- c("Computer" = "/")
-      media <- list.files("/media/", full.names = T)
+      media <- list.files("/media", full.names = T)
       names(media) <- basename(media)
       volumes <- c(volumes, media)
     } else if (osSystem == "Windows") {
@@ -85,6 +85,7 @@ getVolumes <- function(exclude) {
       volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
       volNames <- paste0(volNames, "(", volumes, ")")
       names(volumes) <- volNames
+      volumes <- gsub(":$", ":/", volumes)
     } else {
       stop("unsupported OS")
     }
