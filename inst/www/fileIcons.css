@@ -1,3 +1,4 @@
+
 .sF-filetype-3gp::after {
   content: url(icons/Icons16x16/file_extension_3gp.png);
 }
@@ -348,6 +349,13 @@
   content: url(icons/Icons32x32/file_extension_mcd.png);
 }
 
+.sF-filetype-md::after {
+  content: url(icons/Icons16x16/file_extension_md.png);
+}
+.sF-icons .sF-filetype-md::after {
+  content: url(icons/Icons32x32/file_extension_md.png);
+}
+
 .sF-filetype-mdb::after {
   content: url(icons/Icons16x16/file_extension_mdb.png);
 }
@@ -495,6 +503,13 @@
   content: url(icons/Icons32x32/file_extension_qxd.png);
 }
 
+.sF-filetype-r::after {
+  content: url(icons/Icons16x16/file_extension_r.png);
+}
+.sF-icons .sF-filetype-r::after {
+  content: url(icons/Icons32x32/file_extension_r.png);
+}
+
 .sF-filetype-ram::after {
   content: url(icons/Icons16x16/file_extension_ram.png);
 }
@@ -516,11 +531,25 @@
   content: url(icons/Icons32x32/file_extension_rm.png);
 }
 
+.sF-filetype-Rmd::after {
+  content: url(icons/Icons16x16/file_extension_Rmd.png);
+}
+.sF-icons .sF-filetype-Rmd::after {
+  content: url(icons/Icons32x32/file_extension_Rmd.png);
+}
+
 .sF-filetype-rmvb::after {
   content: url(icons/Icons16x16/file_extension_rmvb.png);
 }
 .sF-icons .sF-filetype-rmvb::after {
   content: url(icons/Icons32x32/file_extension_rmvb.png);
+}
+
+.sF-filetype-rproj::after {
+  content: url(icons/Icons16x16/file_extension_rproj.png);
+}
+.sF-icons .sF-filetype-rproj::after {
+  content: url(icons/Icons32x32/file_extension_rproj.png);
 }
 
 .sF-filetype-rtf::after {
@@ -698,8 +727,6 @@
   content: url(icons/Icons32x32/page_white_c.png);
 }
 
-.sF-filetype-r::after,
-.sF-filetype-R::after,
 .sF-filetype-lua::after,
 .sF-filetype-m::after,
 .sF-filetype-pl::after,
@@ -721,8 +748,6 @@
 .sF-filetype-f90::after {
   content: url(icons/Icons16x16/page_white_code.png);
 }
-.sF-icons .sF-filetype-r::after,
-.sF-icons .sF-filetype-R::after,
 .sF-icons .sF-filetype-lua::after,
 .sF-icons .sF-filetype-m::after,
 .sF-icons .sF-filetype-pl::after,
@@ -880,10 +905,7 @@
 .sF-filetype-waModel::after,
 .sF-filetype-waJournal::after,
 .sF-filetype-WDB::after,
-.sF-filetype-WMDB::after,
-.sF-filetype-Rdata::after,
-.sF-filetype-rdata::after,
-.sF-filetype-RDS::after {
+.sF-filetype-WMDB::after {
   content: url(icons/Icons16x16/page_white_database.png);
 }
 .sF-icons .sF-filetype-4db::after,
@@ -986,10 +1008,7 @@
 .sF-icons .sF-filetype-waModel::after,
 .sF-icons .sF-filetype-waJournal::after,
 .sF-icons .sF-filetype-WDB::after,
-.sF-icons .sF-filetype-WMDB::after,
-.sF-icons .sF-filetype-Rdata::after,
-.sF-icons .sF-filetype-rdata::after,
-.sF-icons .sF-filetype-RDS::after {
+.sF-icons .sF-filetype-WMDB::after {
   content: url(icons/Icons32x32/page_white_database.png);
 }
 
@@ -1003,7 +1022,8 @@
 .sF-filetype-xla::after,
 .sF-filetype-xlam::after,
 .sF-filetype-xll::after,
-.sF-filetype-xlw::after {
+.sF-filetype-xlw::after,
+.sF-filetype-csv::after {
   content: url(icons/Icons16x16/page_white_excel.png);
 }
 .sF-icons .sF-filetype-xlm::after,
@@ -1016,7 +1036,8 @@
 .sF-icons .sF-filetype-xla::after,
 .sF-icons .sF-filetype-xlam::after,
 .sF-icons .sF-filetype-xll::after,
-.sF-icons .sF-filetype-xlw::after {
+.sF-icons .sF-filetype-xlw::after,
+.sF-icons .sF-filetype-csv::after {
   content: url(icons/Icons32x32/page_white_excel.png);
 }
 
@@ -1250,5 +1271,16 @@
 .sF-icons .sF-filetype-aac::after,
 .sF-icons .sF-filetype-mmf::after {
   content: url(icons/Icons32x32/music.png);
+}
+
+.sF-filetype-rda::after,
+.sF-filetype-rdata::after,
+.sF-filetype-rds::after {
+  content: url(icons/Icons16x16/r-data-formats.png);
+}
+.sF-icons .sF-filetype-rda::after,
+.sF-icons .sF-filetype-rdata::after,
+.sF-icons .sF-filetype-rds::after {
+  content: url(icons/Icons32x32/r-data-formats.png);
 }
 

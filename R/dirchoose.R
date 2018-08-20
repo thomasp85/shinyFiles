@@ -237,7 +237,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
 #'
 #' @export
 #'
-shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, icon=NULL) {
+shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, icon=NULL, style=NULL) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -257,6 +257,7 @@ shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, i
       id = id,
       type = "button",
       class = paste(c("shinyDirectories btn", paste0("btn-", buttonType), class, "action-button"), collapse = " "),
+      style = style,
       "data-title" = title,
       "data-val" = value,
       list(icon, as.character(label))
@@ -270,7 +271,7 @@ shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, i
 #' @importFrom shiny restoreInput
 #' @export
 #'
-shinyDirLink <- function(id, label, title, class=NULL, icon=NULL) {
+shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -290,6 +291,7 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL) {
       id = id,
       type = "button",
       class = paste(c("shinyDirectories", class, "action-button"), collapse = " "),
+      style = style,
       "data-title" = title,
       "data-val" = value,
       list(icon, as.character(label))
