@@ -15,7 +15,7 @@ shinyUI(pageWithSidebar(
            remembered, as well as any other states. Each button has its own\n
            memory."),
     tags$hr(),
-    shinyFilesButton("file", "File select", "Please select a file", FALSE),
+    shinyFilesButton("file", "File select", "Please select a file", multiple = TRUE),
     tags$p(),
     tags$p('The file selection button allows the user to select one or several 
             files and get their absolute position communicated back to the shiny

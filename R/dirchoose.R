@@ -25,13 +25,16 @@ NULL
 #'
 #' @return A list of the same format as 'tree', but with updated values to
 #' reflect the current file system state.
+#' 
+#' @importFrom fs path dir_exists dir_ls file_info path_file
 #'
 traverseDirs <- function(tree, root, restrictions, hidden) {
-  location <- file.path(root, tree$name)
-  if (!file.exists(location)) return(NULL)
+  location <- path(root, tree$name)
+  if (!dir_exists(location)) return(NULL)
+  
+  files <- suppressWarnings(dir_ls(location, all = hidden, fail = FALSE))
+  if (length(files) == 0) return(NULL)
 
-  files <- list.files(location, all.files = hidden, full.names = TRUE, no.. = TRUE)
-  files <- gsub(pattern = "//*", "/", files, perl = TRUE)
   if (!is.null(restrictions) && length(files) != 0) {
     if (length(files) == 1) {
       keep <- !any(sapply(restrictions, function(x) {
@@ -44,8 +47,9 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
     }
     files <- files[keep]
   }
-  fileInfo <- .file.info(files)
-  folders <- basename(files)[fileInfo$isdir]
+  
+  fileInfo <- suppressWarnings(file_info(files, fail = FALSE))
+  folders <- path_file(files[fileInfo$type %in% c("directory", "symlink")])
 
   if (length(folders) == 0) {
     tree$empty <- TRUE
@@ -125,7 +129,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
     if (is.null(root)) root <- names(currentRoots)[1]
 
     tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
-
+    
     list(
       tree = tree,
       rootNames = I(names(currentRoots)),
@@ -133,10 +137,6 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
     )
   }
 }
-
-#' drop empty (i.e., "") from a vector
-#' @param x A vector of file paths
-dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
 
 #' Create a function that creates a new directory
 #'
@@ -155,15 +155,15 @@ dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = log
 #'
 #' @return A function that creates directories based on the information returned
 #' by the client.
+#' 
+#' @importFrom fs path dir_create
 #'
 dirCreator <- function(roots, ...) {
   function(name, path, root) {
     currentRoots <- if (class(roots) == "function") roots() else roots
-
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
-    ## drop paths with only "" to avoid //
-    location <- do.call(file.path, as.list(dropEmpty(c(currentRoots[root], path, name))))
-    dir.create(location)
+    location <- fs::path(currentRoots[root], paste0(c(path, name), collapse = "/"))
+    dir_create(location)
   }
 }
 #' @rdname shinyFiles-observers
@@ -184,9 +184,9 @@ dirCreator <- function(roots, ...) {
 #' ))
 #' }
 #'
-#' @export
-#'
 #' @importFrom shiny observe invalidateLater req
+#'
+#' @export
 #'
 shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
                            defaultPath="", defaultRoot=NULL, ...) {
@@ -197,7 +197,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
   currentFiles <- NULL
   lastDirCreate <- NULL
   clientId <- session$ns(id)
-
+  
   observe({
     req(input[[id]])
     tree <- input[[paste0(id, "-modal")]]
@@ -220,7 +220,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
       newDir$writable <- FALSE
     } else {
       newDir$contentPath <- as.list(files$dir)
-      files$dir <- do.call(file.path, as.list(files$dir))
+      files$dir <- paste0(files$dir, collapse = "/")
       content <- do.call(fileGet, files)
       newDir$content <- content$files[, c("filename", "extension", "isdir", "size"), drop = FALSE]
       newDir$writable <- content$writable
@@ -269,6 +269,7 @@ shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, i
 #'
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny restoreInput
+#' 
 #' @export
 #'
 shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
@@ -300,6 +301,8 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
 }
 #' @rdname shinyFiles-parsers
 #'
+#' @importFrom fs path
+#' 
 #' @export
 #'
 parseDirPath <- function(roots, selection) {
@@ -310,6 +313,6 @@ parseDirPath <- function(roots, selection) {
   if (is.integer(selection)) {
     character(0)
   } else {
-    do.call(file.path, as.list(dropEmpty(c(currentRoots[selection$root], selection$path))))
+    path(currentRoots[selection$root], paste0(selection$path, collapse = "/"))
   }
 }
