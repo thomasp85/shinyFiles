@@ -33,7 +33,6 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
   if (!dir_exists(location)) return(NULL)
   
   files <- suppressWarnings(dir_ls(location, all = hidden, fail = FALSE))
-  if (length(files) == 0) return(NULL)
 
   if (!is.null(restrictions) && length(files) != 0) {
     if (length(files) == 1) {

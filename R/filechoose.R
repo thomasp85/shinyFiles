@@ -57,12 +57,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
     
     fulldir <- path(currentRoots[root], paste0(dir, collapse = "/"))
     writable <- as.logical(file_access(fulldir, "write"))
-    
-    ## needed in case folder search is not permitted
     files <- suppressWarnings(dir_ls(fulldir, all = hidden, fail = FALSE))
-    if (length(files) == 0) {
-      return(NULL)
-    }
   
     if (!is.null(restrictions) && length(files) != 0) {
       if (length(files) == 1) {
@@ -97,7 +92,6 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
       }
     }
     
-    rownames(fileInfo) <- NULL
     breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
     
     list(
