@@ -22,9 +22,9 @@ NULL
 #' ))
 #' }
 #'
-#' @export
-#'
 #' @importFrom shiny observe invalidateLater req
+#' 
+#' @export
 #'
 shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
                           defaultPath="", defaultRoot=NULL, ...) {
@@ -47,9 +47,9 @@ shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
     } else {
       dir <- list(dir = dir$path, root = dir$root)
     }
-    dir$dir <- do.call(file.path, as.list(dir$dir))
+    dir$dir <- paste0(dir$dir, collapse = "/")
     newDir <- do.call(fileGet, dir)
-    if (newDir$exist) {
+    if (isTRUE(newDir$exist)) {
       currentDir <<- newDir
       session$sendCustomMessage("shinySave", list(id = clientId, dir = newDir))
     }
@@ -159,11 +159,14 @@ formatFiletype <- function(filetype) {
 }
 #' @rdname shinyFiles-parsers
 #'
+#' @importFrom fs path path_file
+#' @importFrom tibble tibble
+#' 
 #' @export
 #'
 parseSavePath <- function(roots, selection) {
   if (is.null(selection)) {
-    return(data.frame(
+    return(tibble(
       name = character(), type = character(),
       datapath = character(), stringsAsFactors = FALSE
     ))
@@ -174,12 +177,12 @@ parseSavePath <- function(roots, selection) {
   if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
 
   if (is.integer(selection)) {
-    data.frame(name = character(0), type = character(0), datapath = character(0), stringsAsFactors = FALSE)
+    tibble(name = character(0), type = character(0), datapath = character(0), stringsAsFactors = FALSE)
   } else {
     root <- currentRoots[selection$root]
-    savefile <- do.call(file.path, as.list(dropEmpty(c(root, selection$path, selection$name))))
+    savefile <- path(root, paste0(c(selection$path, selection$name), collapse = "/"))
     type <- selection$type
     type <- if (length(type) == 0) "" else unlist(type)
-    data.frame(name = selection$name, type = type, datapath = savefile, stringsAsFactors = FALSE)
+    tibble(name = path_file(savefile), type = type, datapath = savefile, stringsAsFactors = FALSE)
   }
 }

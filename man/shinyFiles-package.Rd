@@ -28,6 +28,7 @@ Useful links:
 Authors:
 \itemize{
   \item Vincent Nijs
+  \item Eric Nantz
 }
 
 }

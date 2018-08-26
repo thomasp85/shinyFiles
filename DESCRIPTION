@@ -1,8 +1,8 @@
 Package: shinyFiles
 Type: Package
 Title: A Server-Side File System Viewer for Shiny
-Version: 0.7.0.9000
-Date: 2018-07-24
+Version: 0.7.0.9001
+Date: 2018-08-23
 Authors@R:
     c(person(given = "Thomas Lin",
              family = "Pedersen",
@@ -23,17 +23,19 @@ Description: Provides functionality for client-side navigation of
 License: GPL (>= 2)
 Encoding: UTF-8
 Imports:
-    tools,
-    shiny (>= 0.11),
     htmltools,
-    jsonlite
+    jsonlite,
+    tools,
+    shiny (>= 1.1.0),
+    fs (>= 1.2.6),
+    tibble (>= 1.4.2)
 Collate:
     'aaa.R'
     'filechoose.R'
     'dirchoose.R'
     'filesave.R'
     'shinyFiles-package.R'
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.0
 URL: https://github.com/thomasp85/shinyFiles
 BugReports: https://github.com/thomasp85/shinyFiles/issues
 Roxygen: list(markdown = TRUE)
