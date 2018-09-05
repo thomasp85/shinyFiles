@@ -534,7 +534,7 @@ var shinyFiles = (function() {
       })
       .on('dblclick', '.sF-file', function(event) {
         var single = $(button).data('selecttype') == 'single';
-        elementSelector(event, this, single, false);
+        elementSelector(event, this, single, true);
         selectFiles(button, modal);
       })
       .on('click', '.sF-file, .sF-directory', function(event) {
