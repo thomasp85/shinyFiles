@@ -1756,6 +1756,13 @@ var shinyFiles = (function() {
     }).on('click', function(e) {
       $('.sF-modal .open').removeClass('open').find('button').removeClass('active');
     });
+    
+    // close modal on ESC
+    $(document).keydown(function(event) {
+      if ($("#sF-cancelButton").is(":visible") && event.keyCode == 27 && !$("div.sF-newDir").hasClass("open")) {
+        $("#sF-cancelButton").click();
+      };
+    });
   };
   
   return sF;
