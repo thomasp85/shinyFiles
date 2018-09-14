@@ -76,7 +76,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
     fileInfo$extension <- tolower(path_ext(files))
     fileInfo$isdir <- fileInfo$type %in% c("directory", "symlink")
     fileInfo$mtime <- format(fileInfo$modification_time, format = "%Y-%m-%d-%H-%M")
-    fileInfo$ctime <- format(fileInfo$change_time, format = "%Y-%m-%d-%H-%M")
+    fileInfo$ctime <- format(fileInfo$birth_time, format = "%Y-%m-%d-%H-%M")
     fileInfo$atime <- format(fileInfo$access_time, format = "%Y-%m-%d-%H-%M")
     
     if (!is.null(filetypes)) {
