@@ -8,25 +8,24 @@ shinyUI(pageWithSidebar(
   ),
   sidebarPanel(
     img(src = "logo.png", style = "float: left; width: 120px; margin-right: 10px; margin-top: 5px"),
-    tags$p("The following buttons will expose the users R installation\n
-           directory. To showcase the restriction feature the base package\n
-           has been hidden."),
+    tags$p("The following buttons will expose the users home directory,\n
+           R installation directory and other available volumes. To showcase\n 
+           the restriction feature the base package has been hidden."),
     tags$p("As each button is used multiple times, the last location is\n
            remembered, as well as any other states. Each button has its own\n
            memory."),
     tags$hr(),
-    shinyFilesButton("file", "File select", "Please select a file", FALSE),
+    shinyFilesButton("file", "File select", "Please select a file", multiple = TRUE),
     tags$p(),
     tags$p('The file selection button allows the user to select one or several 
             files and get their absolute position communicated back to the shiny
             server. In this example the button has been set to single-file mode 
-            and the default path has been set to the "library" subdirectory of 
-            the "R Installation" path.'),
+            and the default path has been set to the users home directory.'),
     tags$hr(),
     shinyDirButton("directory", "Folder select", "Please select a folder"),
     tags$p(),
     tags$p("This button lets the user navigate the file system and select a\n
-           folder. The absolute path of the selected folder is then send\n
+           folder. The absolute path of the selected folder is then sent\n
            back to the server. While only folders can be selected, it is\n
            possible to get an overview of the content beforehand. \n
            Furthermore it is permission aware and warns if a folder with \n
@@ -37,7 +36,7 @@ shinyUI(pageWithSidebar(
     tags$p(),
     tags$p('The last type of button is the save button which allows the user
             to navigate to a position in the filesystem and specify the name
-            of a new file to be send back to the server. As above write 
+            of a new file to be sent back to the server. As above, write 
             permissions are communicated and folders can be created. It is
             possible to specify a range of different filetypes that the user
             can choose between. In this example it is "text" and "picture"')
@@ -47,7 +46,8 @@ shinyUI(pageWithSidebar(
     tags$p(HTML("When one or several files are chosen the result is made \n
                 available to the shinyServer instance. In order for it to get the\n
                 formatting expected of a filepath it must first be fed into\n
-                <code>parseFilePaths()</code> after which the output matches the formatting of\n                 that returned by shinys own fileInput widget.")),
+                <code>parseFilePaths()</code> after which the output matches the formatting of\n
+                that returned by shiny's own fileInput widget.")),
     verbatimTextOutput("filepaths"),
     tags$hr(),
     tags$h4("The output of a folder selection"),
@@ -58,12 +58,12 @@ shinyUI(pageWithSidebar(
     verbatimTextOutput("directorypath"),
     tags$hr(),
     tags$h4("The output of a file save"),
-    tags$p(HTML('When a file is "saved" the name, path and type is sent back to
-                the server, where it can be formatted with <code>parseSavePath()</code>. The 
-                format after parsing is very similar to a file choise, except
+    tags$p(HTML('When a file is "saved" the name, path, and type are sent back to
+                the server and formatted with <code>parseSavePath()</code>. The 
+                format after parsing is very similar to a file choice, except
                 size information is omitted (often the file doesn\'t exist yet)
                 and type is now available (provided that filetype information has
-                been send from the server).')),
+                been sent from the server).')),
     verbatimTextOutput("savefile")
   )
 ))

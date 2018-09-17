@@ -33,6 +33,8 @@ NULL
 #' returns a list of files to be passed on to shiny
 #'
 #' @importFrom tools file_ext
+#' @importFrom fs path file_access file_exists dir_ls file_info path_file path_ext
+#' @importFrom tibble as_tibble
 #'
 fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
   if (missing(filetypes)) {
@@ -52,15 +54,11 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
 
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     if (is.null(root)) root <- names(currentRoots)[1]
-
-    ## drop paths with only "" to avoid //
-    dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
-    fulldir <- file.path(currentRoots[root], dropEmpty(dir))
-
-    dropEmpty <- function(x) x[!vapply(x, function(x) nchar(x) == 0, FUN.VALUE = logical(1))]
-    fulldir <- do.call("file.path", as.list(dropEmpty(c(currentRoots[root], dir))))
-    writable <- as.logical(file.access(fulldir, 2) == 0)
-    files <- list.files(fulldir, all.files = hidden, full.names = TRUE, no.. = TRUE)
+    
+    fulldir <- path(currentRoots[root], paste0(dir, collapse = "/"))
+    writable <- as.logical(file_access(fulldir, "write"))
+    files <- suppressWarnings(dir_ls(fulldir, all = hidden, fail = FALSE))
+  
     if (!is.null(restrictions) && length(files) != 0) {
       if (length(files) == 1) {
         keep <- !any(sapply(restrictions, function(x) {
@@ -73,29 +71,33 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
       }
       files <- files[keep]
     }
-    fileInfo <- .file.info(files)
-    fileInfo$filename <- basename(files)
-    fileInfo$extension <- tolower(file_ext(files))
-    fileInfo$mtime <- format(fileInfo$mtime, format = "%Y-%m-%d-%H-%M")
-    fileInfo$ctime <- format(fileInfo$ctime, format = "%Y-%m-%d-%H-%M")
-    fileInfo$atime <- format(fileInfo$atime, format = "%Y-%m-%d-%H-%M")
+    fileInfo <- suppressWarnings(file_info(files, fail = FALSE))
+    fileInfo$filename <- path_file(files)
+    fileInfo$extension <- tolower(path_ext(files))
+    fileInfo$isdir <- fileInfo$type %in% c("directory", "symlink")
+    fileInfo$mtime <- format(fileInfo$modification_time, format = "%Y-%m-%d-%H-%M")
+    fileInfo$ctime <- format(fileInfo$birth_time, format = "%Y-%m-%d-%H-%M")
+    fileInfo$atime <- format(fileInfo$access_time, format = "%Y-%m-%d-%H-%M")
+    
     if (!is.null(filetypes)) {
       matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes) & fileInfo$extension != ""
       fileInfo$isdir[matchedFiles] <- FALSE
       fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
     }
+    
     if (nchar(pattern) > 0) {
       matchedFiles <- try(grepl(pattern, fileInfo$filename), silent = TRUE)
       if (!inherits(matchedFiles, "try-error")) {
         fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
       }
     }
-    rownames(fileInfo) <- NULL
+    
     breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
+    
     list(
-      files = fileInfo[, c("filename", "extension", "isdir", "size", "mtime", "ctime", "atime")],
+      files = as_tibble(fileInfo[, c("filename", "extension", "isdir", "size", "mtime", "ctime", "atime")]),
       writable = writable,
-      exist = file.exists(fulldir),
+      exist = as.logical(file_exists(fulldir)),
       breadcrumps = I(c("", breadcrumps[breadcrumps != ""])),
       roots = I(names(currentRoots)),
       root = root
@@ -181,6 +183,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
 #' @family shinyFiles
 #'
 #' @importFrom shiny observe invalidateLater req
+#' @importFrom fs path 
 #'
 #' @export
 #'
@@ -197,7 +200,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
     } else {
       dir <- list(dir = dir$path, root = dir$root)
     }
-    dir$dir <- do.call(file.path, as.list(dir$dir))
+    dir$dir <- paste0(dir$dir, collapse = "/")
     ## allows reactive links (e.g., for filetypes)
     fileGet <- do.call(fileGetter, list(...))
     newDir <- do.call(fileGet, dir)
@@ -346,6 +349,8 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #' @param class Additional classes added to the button
 #'
 #' @param icon An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.
+#' 
+#' @param style Additional styling added to the button (e.g., "margin-top: 25px;")
 #'
 #' @param filetype A named list of file extensions. The name of each element
 #' gives the name of the filetype and the content of the element the possible
@@ -367,7 +372,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #'
 #' @export
 #'
-shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL) {
+shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL, style=NULL) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -387,6 +392,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
       id = id,
       type = "button",
       class = paste(c("shinyFiles btn", paste0("btn-", buttonType), class, "action-button"), collapse = " "),
+      style = style,
       "data-title" = title,
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
@@ -402,7 +408,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
 #'
 #' @export
 #'
-shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
+shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, style=NULL) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -422,6 +428,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
       id = id,
       type = "button",
       class = paste(c("shinyFiles", class, "action-button"), collapse = " "),
+      style = style,
       "data-title" = title,
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
@@ -479,21 +486,22 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL) {
 #' @name shinyFiles-parsers
 #'
 #' @family shinyFiles
+#' 
+#' @importFrom tibble tibble
+#' @importFrom fs path file_info path_file
 #'
 #' @export
 #'
 parseFilePaths <- function(roots, selection) {
   roots <- if (class(roots) == "function") roots() else roots
-
-  if (is.null(selection) || is.na(selection) || is.integer(selection)) {
-    data.frame(
+  
+  if (is.null(selection) || is.na(selection) || is.integer(selection) || length(selection$files) == 0) {
+    tibble(
       name = character(0), size = numeric(0), type = character(0),
       datapath = character(0), stringsAsFactors = FALSE
     )
   } else {
-    files <- sapply(selection$files, function(x) file.path(roots[selection$root], do.call(file.path, x)))
-    files <- gsub(pattern = "//*", "/", files, perl = TRUE)
-
-    data.frame(name = basename(files), size = .file.info(files)$size, type = "", datapath = files, stringsAsFactors = FALSE)
+    files <- sapply(selection$files, function(x) path(roots[selection$root], paste0(x, collapse = "/")))
+    tibble(name = path_file(files), size = as.numeric(file_info(files)$size), type = "", datapath = files)
   }
 }

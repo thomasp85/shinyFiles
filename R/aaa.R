@@ -8,14 +8,6 @@
   addResourcePath("sF", system.file("www", package = "shinyFiles"))
 }
 
-#' Wrapper to file.info that suppresses warnings
-#'
-#' @noRd
-#'
-.file.info <- function(...) {
-  suppressWarnings(file.info(...))
-}
-
 #' Run a simple example app using the shinyFiles functionality
 #'
 #' When the function is invoked a shiny app is started showing a very simple
@@ -58,6 +50,8 @@ shinyFilesExample <- function() {
 #' @param exclude A vector of volume names to be excluded from the return value
 #'
 #' @return A function returning a named vector of available volumes
+#' 
+#' @importFrom fs dir_ls
 #'
 #' @export
 #'
@@ -67,11 +61,11 @@ getVolumes <- function(exclude) {
   function() {
     osSystem <- Sys.info()["sysname"]
     if (osSystem == "Darwin") {
-      volumes <- list.files("/Volumes/", full.names = T)
+      volumes <- dir_ls("/Volumes")
       names(volumes) <- basename(volumes)
     } else if (osSystem == "Linux") {
       volumes <- c("Computer" = "/")
-      media <- list.files("/media/", full.names = T)
+      media <- dir_ls("/media")
       names(media) <- basename(media)
       volumes <- c(volumes, media)
     } else if (osSystem == "Windows") {
@@ -85,6 +79,7 @@ getVolumes <- function(exclude) {
       volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
       volNames <- paste0(volNames, "(", volumes, ")")
       names(volumes) <- volNames
+      volumes <- gsub(":$", ":/", volumes)
     } else {
       stop("unsupported OS")
     }

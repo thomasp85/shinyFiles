@@ -32,6 +32,7 @@ It is equally simple to implement directly in your custom html file as it only r
 
 For an overview of all the different modules try the `shinyFilesExample()` function in the package. It gives an overview of all the necessary code, along with descriptions and working examples.
 
-Credit
+Credits
 ----------
-The file icons used in the file system navigator is taken from FatCows Farm-Fresh Web Icons (http://www.fatcow.com/free-icons)
+* The file icons used in the file system navigator are taken from FatCows Farm-Fresh Web Icons (http://www.fatcow.com/free-icons)
+* RStudio is a trademark of RStudio, Inc. File icons used by permission of RStudio, Inc. 

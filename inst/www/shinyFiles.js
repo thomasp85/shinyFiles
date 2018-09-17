@@ -534,7 +534,7 @@ var shinyFiles = (function() {
       })
       .on('dblclick', '.sF-file', function(event) {
         var single = $(button).data('selecttype') == 'single';
-        elementSelector(event, this, single, false);
+        elementSelector(event, this, single, true);
         selectFiles(button, modal);
       })
       .on('click', '.sF-file, .sF-directory', function(event) {
@@ -670,6 +670,7 @@ var shinyFiles = (function() {
           return oldFiles[$(this).find('.sF-file-name div').text()]
         }).remove();
       };
+      
       if (Object.keys(newFiles).length === 0) {
         for (i in newFiles) {
           var d = newFiles[i];
@@ -1529,6 +1530,7 @@ var shinyFiles = (function() {
     var selected = false;
     var childSelection = null;
     element.toggleClass('sF-directory', true);
+    if (!tree) return;
     if(selectPath != null) {
       if(selectPath[0] == tree.name) {
         if(selectPath.length == 1) {
@@ -1553,7 +1555,7 @@ var shinyFiles = (function() {
     if(element.children().length == 0) {
       element.append(
         $('<div>').addClass('sF-expander').append(
-          $('<span>').addClass('glyphicon glyphicon-chevron-right')
+          $('<span>').addClass('glyphicon glyphicon-triangle-right')
         )
       ).append(
         $('<div>').addClass('sF-file-icon')
@@ -1577,7 +1579,7 @@ var shinyFiles = (function() {
         var childName = childElem.children('.sF-file-name').children().text();
         var remove = true;
         for(var i = 0; i < tree.children.length; i++) {
-          if(childName == tree.children[i].name) {
+          if(tree.children[i] != null && childName == tree.children[i].name) {
             updateTree(childElem, tree.children[i], selectPath);
             oldChildren.push(i);
             remove = false;
@@ -1619,9 +1621,11 @@ var shinyFiles = (function() {
     setDisabledButtons(button, modal);
     toggleSelectButton(modal);
         
-    modal.data('currentData').contentPath = path;
-    Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
-        
+    if (modal.data('currentData')) {
+      modal.data('currentData').contentPath = path;
+      Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
+    } 
+    
     return false;
   };
     
@@ -1633,19 +1637,25 @@ var shinyFiles = (function() {
         modal.data('currentData').contentPath = path.slice();
       }
       path.shift();
-      var tree = modal.data('currentData').tree;
-      while(true) {
-        if(path.length == 0) {
-          tree.expanded = !tree.expanded;
-          break;
-        } else {
-          var name = path.shift();
-          tree = tree.children.filter(function(f) {
-            return f.name == name;
-          })[0];
+      if (modal.data('currentData') && modal.data('currentData').tree) {
+        var tree = modal.data('currentData').tree;
+        while(true) {
+          if(path.length == 0) {
+            tree.expanded = !tree.expanded;
+            break;
+          } else {
+            var name = path.shift();
+            tree = tree.children.filter(function(f) {
+              if (f == null) {
+                return null;
+              } else {
+                return f.name == name;
+              }
+            })[0];
+          }
         }
+        Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
       }
-      Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
     }
     return false;
   };
@@ -1745,6 +1755,13 @@ var shinyFiles = (function() {
       createFileSaver(this, $(this).data('title'));
     }).on('click', function(e) {
       $('.sF-modal .open').removeClass('open').find('button').removeClass('active');
+    });
+    
+    // close modal on ESC
+    $(document).keydown(function(event) {
+      if ($("#sF-cancelButton").is(":visible") && event.keyCode == 27 && !$("div.sF-newDir").hasClass("open")) {
+        $("#sF-cancelButton").click();
+      };
     });
   };
   
