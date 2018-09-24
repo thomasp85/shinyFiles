@@ -1872,7 +1872,6 @@ var shinyFiles = (function() {
           break;
         case 37:
           // Left Arrow
-          console.log("LEFT");
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "left");
@@ -1882,7 +1881,6 @@ var shinyFiles = (function() {
           break;
         case 39:
           // Right Arrow
-          console.log("RIGHT");
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "right");
@@ -1892,7 +1890,6 @@ var shinyFiles = (function() {
           break;
         case 38:
           // Up arrow
-          console.log("UP");
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "up");
@@ -1902,7 +1899,6 @@ var shinyFiles = (function() {
           break;
         case 40:
           // Down arrow
-          console.log("DOWN");
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "down");
