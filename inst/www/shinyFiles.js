@@ -1,5 +1,4 @@
 var shinyFiles = (function() {
-    
   // General functionality
     
   var elementSelector = function(event, element, single, forceSelect) {
@@ -1762,6 +1761,13 @@ var shinyFiles = (function() {
       if ($("#sF-cancelButton").is(":visible") && event.keyCode == 27 && !$("div.sF-newDir").hasClass("open")) {
         $("#sF-cancelButton").click();
       };
+    });
+
+    // Close modal when clicking on backdrop
+    $(document).on('click', '.sF-modalContainer', function(e) {
+      if (!$(e.target).closest('.modal-content').length > 0 && $("#sF-cancelButton").is(":visible")) {
+        $("#sF-cancelButton").click();
+      }
     });
   };
   
