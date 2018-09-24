@@ -8,6 +8,7 @@ var shinyFiles = (function() {
     function toggleSelection(element) {
       $(element).toggleClass('selected');
       parent.data('lastElement', element);
+      parent.data('selectionEnd', null);
     }
     
     function selectElementsBetweenIndexes(indexes) {
@@ -19,13 +20,16 @@ var shinyFiles = (function() {
         for (var i = indexes[0]; i <= indexes[1]; i++) {
           $(els[i]).addClass('selected');
         }
+
+        parent.data('selectionEnd', $(els[indexes[1]])[0])
     }
     
     function clearAll() {
       parent.children().removeClass('selected');
     }
   
-    if (event.button === 0) {
+    // Use the same selector event for arrow key navigation
+    if (event.button === 0 || event.type === "keydown") {
       if ((!event.metaKey && !event.ctrlKey && !event.shiftKey) || single) {
         var selected = $(element).hasClass('selected');
         var nSelected = parent.children('.selected').length;
@@ -39,6 +43,106 @@ var shinyFiles = (function() {
         selectElementsBetweenIndexes([$(lastSelectedElement).index(), $(element).index()]);
       }
     }
+  };
+
+  var moveSelection = function (event, single, direction) {
+    var parent = $(".sF-fileList");
+    var currentElement = parent.data('lastElement');
+    var selectionEnd;
+    if ('selectionEnd' in parent.data() && parent.data('selectionEnd') !== null) {
+      selectionEnd = parent.data('selectionEnd');
+    } else {
+      // For the purposes of selecting next/previous elements,
+      //    consider a single selected item to be both the
+      //    first and last item in a selection of multiple items.
+      selectionEnd = currentElement;
+    }
+
+    // No element is currently selected, return without action
+    if (!$(currentElement).hasClass('selected')) {
+      return false;
+    }
+
+    var originIndex = $(currentElement).index(); // The original selected icon
+    var endIndex = $(selectionEnd).index();      // The end that moves for multi-selection
+    var ends = [originIndex, endIndex].sort();
+
+    // Number of icons that fit with the file list, left to right
+    var boundingWidth = $(".sF-fileList.sF-icons").width();
+    var iconWidth = $(".sF-fileList.sF-icons>div").outerWidth(true);
+    var numAcross = Math.floor(boundingWidth / iconWidth);
+    var lastIconIndex = parent.children().length - 1;  // Subtract 1 to account for header
+
+    var invalidFlag = false;
+
+    // CURRENTLY ONLY HANDLING ICON DISPLAY
+
+    // NOTE: The appropriate left/right/up/down position depends on whether shift is held
+    // Dealing with a multi-selection
+    if (!single && event.shiftKey) {
+      // Find new index, if valid, based on movement direction.
+      //    Does not move the original anchor, regardless of which item comes first in the list.
+      if (direction === "left") {
+        var indexLimit = ((Math.ceil(endIndex / numAcross) - 1) * numAcross) + 1;
+        var newIndex = endIndex - 1;
+
+        if (newIndex < 1 || newIndex < indexLimit) { invalidFlag = true; }
+      }
+
+      if (direction === "right") {
+        var indexLimit = (Math.ceil(endIndex / numAcross) * numAcross);
+        var newIndex = endIndex + 1;
+
+        if (newIndex > lastIconIndex || newIndex > indexLimit) {  invalidFlag = true; }
+      }
+
+      if (direction === "up") {
+        var newIndex = endIndex - numAcross;
+
+        if (newIndex < 0) { invalidFlag = true; }
+      }
+
+      if (direction === "down") {
+        var newIndex = endIndex + numAcross;
+
+        if (newIndex > lastIconIndex) { invalidFlag = true; }
+      }
+    } else {
+      // Slightly different behavior when switching to a single selection
+      //    Left and Up move from the first item (index: ends[0])
+      //    Right and Down move from the last item (index: ends[1])
+      var newIndex = originIndex;
+
+      if (direction === "left") {
+        var indexLimit = ((Math.ceil(ends[0] / numAcross) - 1) * numAcross) + 1;
+        newIndex = ends[0] - 1;
+
+        if (newIndex < 1 || newIndex < indexLimit) { invalidFlag = true; }
+      }
+
+      if (direction === "right") {
+        var indexLimit = (Math.ceil(ends[1] / numAcross) * numAcross);
+        newIndex = ends[1] + 1;
+
+        if (newIndex > lastIconIndex || newIndex > indexLimit) {  invalidFlag = true; }
+      }
+
+      if (direction === "up") {
+        newIndex = ends[0] - numAcross;
+
+        if (newIndex < 0) { invalidFlag = true; }
+      }
+
+      if (direction === "down") {
+        newIndex = ends[1] + numAcross;
+
+        if (newIndex > lastIconIndex) { invalidFlag = true; }
+      }
+    }
+
+    var newElement = parent.children()[newIndex];
+
+    elementSelector(event, newElement, single, true);
   };
   
   var compareArrays = function (arrayA, arrayB) {
@@ -1756,11 +1860,57 @@ var shinyFiles = (function() {
       $('.sF-modal .open').removeClass('open').find('button').removeClass('active');
     });
     
-    // close modal on ESC
+    // Handle keypresses
     $(document).keydown(function(event) {
-      if ($("#sF-cancelButton").is(":visible") && event.keyCode == 27 && !$("div.sF-newDir").hasClass("open")) {
-        $("#sF-cancelButton").click();
-      };
+      switch(event.keyCode) {
+        case 27:
+          // Escape
+          if ($("#sF-cancelButton").is(":visible") && !$("div.sF-newDir").hasClass("open")) {
+            $("#sF-cancelButton").click();
+          };
+
+          break;
+        case 37:
+          // Left Arrow
+          console.log("LEFT");
+          if ($(".sF-modalContainer").is(":visible")) {
+            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
+            moveSelection(event, single, "left");
+            event.stopPropagation();
+          }
+
+          break;
+        case 39:
+          // Right Arrow
+          console.log("RIGHT");
+          if ($(".sF-modalContainer").is(":visible")) {
+            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
+            moveSelection(event, single, "right");
+            event.stopPropagation();
+          }
+
+          break;
+        case 38:
+          // Up arrow
+          console.log("UP");
+          if ($(".sF-modalContainer").is(":visible")) {
+            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
+            moveSelection(event, single, "up");
+            event.stopPropagation();
+          }
+
+          break;
+        case 40:
+          // Down arrow
+          console.log("DOWN");
+          if ($(".sF-modalContainer").is(":visible")) {
+            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
+            moveSelection(event, single, "down");
+            event.stopPropagation();
+          }
+
+          break;
+      }
     });
 
     // Close modal when clicking on backdrop
