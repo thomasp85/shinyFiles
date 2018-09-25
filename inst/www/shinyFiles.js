@@ -9,6 +9,7 @@ var shinyFiles = (function() {
       $(element).toggleClass('selected');
       parent.data('lastElement', element);
       parent.data('selectionEnd', null);
+      toggleSelectButton($('.sF-modalContainer'));
     }
     
     function selectElementsBetweenIndexes(indexes) {
@@ -163,6 +164,8 @@ var shinyFiles = (function() {
       var newElement = parent.children()[newIndex];
 
       elementSelector(event, newElement, single, true);
+    } else {
+      console.log("WOMP");
     }
   };
   
