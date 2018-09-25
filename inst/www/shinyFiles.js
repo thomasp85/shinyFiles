@@ -8,7 +8,6 @@ var shinyFiles = (function() {
     function toggleSelection(element) {
       $(element).toggleClass('selected');
       parent.data('lastElement', element);
-      parent.data('selectionEnd', null);
       toggleSelectButton($('.sF-modalContainer'));
     }
     
@@ -18,11 +17,11 @@ var shinyFiles = (function() {
           return a - b;
         });
     
+        clearAll();
+
         for (var i = indexes[0]; i <= indexes[1]; i++) {
           $(els[i]).addClass('selected');
         }
-
-        parent.data('selectionEnd', $(els[indexes[1]])[0])
     }
     
     function clearAll() {
@@ -31,13 +30,35 @@ var shinyFiles = (function() {
 
     function scrollToSelected() {
       // Adjust for any overall offsets
-      var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
-      var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+      // Adjustments depend on what kind of modal/display is present
+      var modal = $('.sF-modalContainer');
+      var button = $(modal.data('button'));
+      var fileFlag = button.hasClass('shinyFiles');
+      var saveFlag = button.hasClass('shinySave');
+      var dirFlag = button.hasClass('shinyDirectories');
 
-      if (topOffset < scrollPosition) {
-        $('.sF-fileWindow')[0].scrollTop = topOffset;
-      } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
-        $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
+      if (fileFlag || saveFlag) {
+        // Similarly, there are different display modes to handle for file/save modal
+        var viewType = button.data('view');
+
+        if (viewType === "sF-btn-icon") {
+          var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
+          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+
+          if (topOffset < scrollPosition) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
+          }
+        } else if (viewType === "sF-btn-list") {
+
+        } else if (viewType === "sF-btn-detail") {
+
+        }
+      } else if (dirFlag) {
+
+      } else {
+        console.warn("Unknown type of modal");
       }
     }
   
@@ -62,110 +83,188 @@ var shinyFiles = (function() {
   };
 
   var moveSelection = function (event, single, direction) {
-    var parent = $(".sF-fileList");
-    var currentElement = parent.data('lastElement');
-    var selectionEnd;
-    if ('selectionEnd' in parent.data() && parent.data('selectionEnd') !== null) {
-      selectionEnd = parent.data('selectionEnd');
-    } else {
-      // For the purposes of selecting next/previous elements,
-      //    consider a single selected item to be both the
-      //    first and last item in a selection of multiple items.
-      selectionEnd = currentElement;
-    }
+    var modal = $('.sF-modalContainer');
+    var button = $(modal.data('button'));
+    var fileFlag = button.hasClass('shinyFiles');
+    var saveFlag = button.hasClass('shinySave');
+    var dirFlag = button.hasClass('shinyDirectories');
 
-    // No element is currently selected, return without action
-    // if (!$(currentElement).hasClass('selected')) {
-    if (!('lastElement' in parent.data())
-        || parent.data('lastElement') === null
-        || !$(parent.data('lastElement')).is(":visible")) {
-      // Start on the first element if none are currently selected.
-      var newElement = parent.children()[1];
-      elementSelector(event, newElement, single, true);
-      return;
-    }
-
-    var originIndex = $(currentElement).index(); // The original selected icon
-    var endIndex = $(selectionEnd).index();      // The end that moves for multi-selection
-    var ends = [originIndex, endIndex].sort();
-
-    // Number of icons that fit with the file list, left to right
-    var boundingWidth = $(".sF-fileList.sF-icons").width();
-    var iconWidth = $(".sF-fileList.sF-icons>div").outerWidth(true);
-    var numAcross = Math.floor(boundingWidth / iconWidth);
-    var lastIconIndex = parent.children().length - 1;  // Subtract 1 to account for header
-
-    var invalidFlag = false;
-
-    // CURRENTLY ONLY HANDLING ICON DISPLAY
-
-    // NOTE: The appropriate left/right/up/down position depends on whether shift is held
-    // Dealing with a multi-selection
-    if (!single && event.shiftKey) {
-      // Find new index, if valid, based on movement direction.
-      //    Does not move the original anchor, regardless of which item comes first in the list.
-      if (direction === "left") {
-        var indexLimit = ((Math.ceil(endIndex / numAcross) - 1) * numAcross) + 1;
-        var newIndex = endIndex - 1;
-
-        if (newIndex < 1 || newIndex < indexLimit) { invalidFlag = true; }
+    if (fileFlag || saveFlag) {
+      var parent = $(".sF-fileList");
+      var currentElement = parent.data('lastElement');
+      var selectionEnd;
+      if ('selectionEnd' in parent.data() && parent.data('selectionEnd') !== null) {
+        selectionEnd = parent.data('selectionEnd');
+      } else {
+        // For the purposes of selecting next/previous elements,
+        //    consider a single selected item to be both the
+        //    first and last item in a selection of multiple items.
+        selectionEnd = currentElement;
       }
 
-      if (direction === "right") {
-        var indexLimit = (Math.ceil(endIndex / numAcross) * numAcross);
-        var newIndex = endIndex + 1;
-
-        if (newIndex > lastIconIndex || newIndex > indexLimit) {  invalidFlag = true; }
+      // No element is currently selected, return without action
+      // if (!$(currentElement).hasClass('selected')) {
+      if (!('lastElement' in parent.data())
+          || parent.data('lastElement') === null
+          || !$(parent.data('lastElement')).is(":visible")) {
+        // Start on the first element if none are currently selected.
+        var newElement = parent.children()[1];
+        elementSelector(event, newElement, single, true);
+        return;
       }
 
-      if (direction === "up") {
-        var newIndex = endIndex - numAcross;
+      var originIndex = $(currentElement).index(); // The original selected icon
+      var endIndex = $(selectionEnd).index();      // The end that moves for multi-selection
+      var ends = [originIndex, endIndex].sort();
 
-        if (newIndex < 1) { invalidFlag = true; }
+      // Number of icons that fit with the file list, left to right
+      var boundingWidth = $(".sF-fileList.sF-icons").width();
+      var iconWidth = $(".sF-fileList.sF-icons>div").outerWidth(true);
+      var numAcross = Math.floor(boundingWidth / iconWidth);
+      var lastItemIndex = parent.children().length - 1;  // Subtract 1 to account for header
+
+      var viewType = button.data('view');
+      var bounds = {};
+
+      var invalidFlag = false;
+
+      // NOTE: The appropriate left/right/up/down position depends on whether shift is held
+      // Dealing with a multi-selection
+      if (!single && event.shiftKey) {
+        if (viewType === "sF-btn-icon") {
+          bounds = {
+            left: Math.max(((Math.ceil(endIndex / numAcross) - 1) * numAcross) + 1, 1),
+            right: Math.min(Math.ceil(endIndex / numAcross) * numAcross, lastItemIndex),
+            up: 1,
+            down: lastItemIndex
+          };
+        } else if (viewType === "sF-btn-list") {
+          bounds = {};
+        } else if (viewType === "sF-btn-detail") {
+          bounds = {};
+        }
+
+        // Find new index, if valid, based on movement direction.
+        //    Does not move the original anchor, regardless of which item comes first in the list.
+        if (viewType === "sF-btn-icon") {
+          switch (direction) {
+            case "left":
+              var newIndex = endIndex - 1;
+              if (newIndex < bounds.left) { invalidFlag = true; }
+              break;
+            case "right":
+              var newIndex = endIndex + 1;
+              if (newIndex > bounds.right) { invalidFlag = true; }
+              break;
+            case "up":
+              var newIndex = endIndex - numAcross;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              var newIndex = endIndex + numAcross;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        } else if (viewType === "sF-btn-list") {
+          switch (direction) {
+            case "left":
+              break;
+            case "right":
+              break;
+            case "up":
+              break;
+            case "down":
+              break;
+          }
+        } else if (viewType === "sF-btn-detail") {
+          switch (direction) {
+            case "left":
+              break;
+            case "right":
+              break;
+            case "up":
+              break;
+            case "down":
+              break;
+          }
+        }
+      } else {
+        if (viewType === "sF-btn-icon") {
+          bounds = {
+            left: Math.max(((Math.ceil(ends[0] / numAcross) - 1) * numAcross) + 1, 1),
+            right: Math.min(Math.ceil(ends[1] / numAcross) * numAcross, lastItemIndex),
+            up: 1,
+            down: lastItemIndex
+          };
+        } else if (viewType === "sF-btn-list") {
+          bounds = {};
+        } else if (viewType === "sF-btn-detail") {
+          bounds = {};
+        }
+
+        // Slightly different behavior when switching to a single selection
+        //    Left and Up move from the first item (index: ends[0])
+        //    Right and Down move from the last item (index: ends[1])
+        var newIndex = originIndex;
+
+        if (viewType === "sF-btn-icon") {
+          switch (direction) {
+            case "left":
+              newIndex = ends[0] - 1;
+              if (newIndex < bounds.left) { invalidFlag = true; }
+              break;
+            case "right":
+              newIndex = ends[1] + 1;
+              if (newIndex > bounds.right) { invalidFlag = true; }
+              break;
+            case "up":
+              newIndex = endIndex - numAcross;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = endIndex + numAcross;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        } else if (viewType === "sF-btn-list") {
+          switch (direction) {
+            case "left":
+              break;
+            case "right":
+              break;
+            case "up":
+              break;
+            case "down":
+              break;
+          }
+        } else if (viewType === "sF-btn-detail") {
+          switch (direction) {
+            case "left":
+              break;
+            case "right":
+              break;
+            case "up":
+              break;
+            case "down":
+              break;
+          }
+        }
       }
 
-      if (direction === "down") {
-        var newIndex = endIndex + numAcross;
+      if (!invalidFlag) {
+        var newElement = parent.children()[newIndex];
+        elementSelector(event, newElement, single, true);
 
-        if (newIndex > lastIconIndex) { invalidFlag = true; }
+        if (!single && event.shiftKey) {
+          // Preserve 'lastElement' during multi-selection, ensuring an anchor is consistent
+          parent.data('lastElement', currentElement);
+          parent.data('selectionEnd', newElement);
+        } else {
+          parent.data('selectionEnd', null);
+        }
       }
-    } else {
-      // Slightly different behavior when switching to a single selection
-      //    Left and Up move from the first item (index: ends[0])
-      //    Right and Down move from the last item (index: ends[1])
-      var newIndex = originIndex;
-
-      if (direction === "left") {
-        var indexLimit = ((Math.ceil(ends[0] / numAcross) - 1) * numAcross) + 1;
-        newIndex = ends[0] - 1;
-
-        if (newIndex < 1 || newIndex < indexLimit) { invalidFlag = true; }
-      }
-
-      if (direction === "right") {
-        var indexLimit = (Math.ceil(ends[1] / numAcross) * numAcross);
-        newIndex = ends[1] + 1;
-
-        if (newIndex > lastIconIndex || newIndex > indexLimit) {  invalidFlag = true; }
-      }
-
-      if (direction === "up") {
-        newIndex = ends[0] - numAcross;
-
-        if (newIndex < 1) { invalidFlag = true; }
-      }
-
-      if (direction === "down") {
-        newIndex = ends[1] + numAcross;
-
-        if (newIndex > lastIconIndex) { invalidFlag = true; }
-      }
-    }
-
-    if (!invalidFlag) {
-      var newElement = parent.children()[newIndex];
-
-      elementSelector(event, newElement, single, true);
+    } else if (dirFlag) {
+      console.log("Cannot use arrow keys in directory yet");
     }
   };
   
