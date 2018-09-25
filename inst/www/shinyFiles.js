@@ -1906,6 +1906,25 @@ var shinyFiles = (function() {
           }
 
           break;
+        case 13:
+          // Enter
+          if ($(".sF-modalContainer").is(":visible") && ("lastElement" in $(".sF-fileList").data())) {
+            var lastElement = $(".sF-fileList").data('lastElement');
+            if ($($(".sF-fileList").data('lastElement')).hasClass('selected')) {
+              var modalType;
+              var modalButton = $($(".sF-modalContainer").data('button'));
+              if (modalButton.hasClass("shinyFiles")) {
+                // Select File
+                selectFiles(modalButton, $(".sF-modalContainer"));
+              } else if (modalButton.hasClass("shinySave")) {
+                // Select Directory
+                saveFile(modalButton, $(".sF-modalContainer"));
+              } else if (modalButton.hasClass("shinyDirectories")) {
+                // Save File
+                selectFolder($(".sF-dirList"), $(".sF-modalContainer"), modalButton);
+              }
+            }
+          }
       }
     });
 
