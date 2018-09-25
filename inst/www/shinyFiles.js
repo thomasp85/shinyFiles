@@ -51,7 +51,15 @@ var shinyFiles = (function() {
             $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
           }
         } else if (viewType === "sF-btn-list") {
+          // Lists scroll left to right, but otherwise the logic is very similar to icons
+          var leftOffset = $(element)[0].offsetLeft - parent.children()[1].offsetLeft;
+          var scrollPosition = $('.sF-fileWindow')[0].scrollLeft;
 
+          if (leftOffset < scrollPosition) {
+            $('.sF-fileWindow')[0].scrollLeft = leftOffset;
+          } else if (leftOffset + $(element).outerWidth(true) > scrollPosition + $('.sF-fileWindow').width()) {
+            $('.sF-fileWindow')[0].scrollLeft = leftOffset - $('.sF-fileWindow').width() + $(element).outerWidth(true);
+          }
         } else if (viewType === "sF-btn-detail") {
 
         }
