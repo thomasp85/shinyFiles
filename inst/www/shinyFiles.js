@@ -1172,10 +1172,6 @@ var shinyFiles = (function() {
   };
 
   var refreshDirectory = function(modal) {
-    var directory = getCurrentDirectory(modal);
-    // Shiny.onInputChange($(modal.data('button')).attr('id')+'-modal', null);
-    // Shiny.onInputChange($(modal.data('button')).attr('id')+'-modal', directory);
-
     // Use timestamp to ensure change in value, triggering the backend observeEvent
     Shiny.onInputChange($(modal.data('button')).attr('id')+'-refresh', (new Date()).getTime());
   }
