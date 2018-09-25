@@ -36,8 +36,8 @@ var shinyFiles = (function() {
 
       if (topOffset < scrollPosition) {
         $('.sF-fileWindow')[0].scrollTop = topOffset;
-      } else if (topOffset > scrollPosition + $('.sF-fileWindow').height() - parent.children()[1].offsetTop) {
-        $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').innerHeight() + $(element).outerHeight();
+      } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
+        $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
       }
     }
   
@@ -76,7 +76,9 @@ var shinyFiles = (function() {
 
     // No element is currently selected, return without action
     // if (!$(currentElement).hasClass('selected')) {
-    if (!('lastElement' in parent.data())) {
+    if (!('lastElement' in parent.data())
+        || parent.data('lastElement') === null
+        || !$(parent.data('lastElement')).is(":visible")) {
       // Start on the first element if none are currently selected.
       var newElement = parent.children()[1];
       elementSelector(event, newElement, single, true);
@@ -119,7 +121,7 @@ var shinyFiles = (function() {
       if (direction === "up") {
         var newIndex = endIndex - numAcross;
 
-        if (newIndex < 0) { invalidFlag = true; }
+        if (newIndex < 1) { invalidFlag = true; }
       }
 
       if (direction === "down") {
@@ -150,7 +152,7 @@ var shinyFiles = (function() {
       if (direction === "up") {
         newIndex = ends[0] - numAcross;
 
-        if (newIndex < 0) { invalidFlag = true; }
+        if (newIndex < 1) { invalidFlag = true; }
       }
 
       if (direction === "down") {
@@ -164,8 +166,6 @@ var shinyFiles = (function() {
       var newElement = parent.children()[newIndex];
 
       elementSelector(event, newElement, single, true);
-    } else {
-      console.log("WOMP");
     }
   };
   
