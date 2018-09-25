@@ -930,7 +930,6 @@ var shinyFiles = (function() {
     // Refresh
     modal.find('.sF-refresh').on('click', function(event) {
       event.preventDefault();
-      // populateFileChooser(button, $(button).data('dataCache'))
       refreshDirectory(modal);
     })
         
@@ -978,10 +977,10 @@ var shinyFiles = (function() {
       backdrop.addClass('in');
     }, 1);
     
-    populateFileChooser(button, $(button).data('dataCache'));
+    populateFileChooser(button, $(button).data('dataCache'), false);
   };
 
-  var populateFileChooser = function(element, data) {
+  var populateFileChooser = function(element, data, forceUpdate) {
     var modal = $(element).data('modal');
       
     $(element).data('dataCache', data);
@@ -1007,7 +1006,7 @@ var shinyFiles = (function() {
       }
     };
     
-    if (newLocation || newVolumes) {
+    if (forceUpdate || newLocation || newVolumes) {
       if (!data) return;
       modal.find('.sF-breadcrumps').find('option, optgroup').remove();
       data.location.forEach(function(d, i) {
@@ -1025,7 +1024,7 @@ var shinyFiles = (function() {
       })
     };
     
-    if (newLocation) {
+    if (forceUpdate || newLocation) {
       modal.find('.sF-fileList').children().remove();
       
       modal.find('.sF-fileList').append(
@@ -1176,6 +1175,9 @@ var shinyFiles = (function() {
     var directory = getCurrentDirectory(modal);
     // Shiny.onInputChange($(modal.data('button')).attr('id')+'-modal', null);
     // Shiny.onInputChange($(modal.data('button')).attr('id')+'-modal', directory);
+
+    // Use timestamp to ensure change in value, triggering the backend observeEvent
+    Shiny.onInputChange($(modal.data('button')).attr('id')+'-refresh', (new Date()).getTime());
   }
   
   var moveBack = function(button, modal) {
@@ -1544,7 +1546,7 @@ var shinyFiles = (function() {
       backdrop.addClass('in');
     }, 1);
     
-    populateFileChooser(button, $(button).data('dataCache'));
+    populateFileChooser(button, $(button).data('dataCache'), false);
   };
     
   var addFiletypeChoice = function(button, modal) {
@@ -1864,7 +1866,6 @@ var shinyFiles = (function() {
     // Refresh
     modal.find('.sF-refresh').on('click', function(e) {
       e.preventDefault();
-      // populateDirChooser(button, $(button).data('dataCache'));
       refreshDirectory(modal);
     })
     
@@ -2203,17 +2204,25 @@ var shinyFiles = (function() {
   
   sF.init = function() {
     Shiny.addCustomMessageHandler('shinyFiles', function(data) {
-      console.log('data', data);
-      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir));
-      console.log('parsed', parseFiles(data.dir));
+      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir), false);
     });
     Shiny.addCustomMessageHandler('shinyDirectories', function(data) {
       populateDirChooser($('.shinyDirectories#'+data.id), data.dir);
     });
     Shiny.addCustomMessageHandler('shinySave', function(data) {
-      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir));
+      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir), false);
     });
-    
+
+    Shiny.addCustomMessageHandler('shinyFiles-refresh', function(data) {
+      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir), true);
+    });
+    Shiny.addCustomMessageHandler('shinyDirectories-refresh', function(data) {
+      populateDirChooser($('.shinyDirectories#'+data.id), data.dir);
+    });
+    Shiny.addCustomMessageHandler('shinySave-refresh', function(data) {
+      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir), true);
+    });
+
     $(document).on('click', '.shinyFiles', function(e) {
       createFileChooser(this, $(this).data('title'));
     }).on('click', function(e) {
