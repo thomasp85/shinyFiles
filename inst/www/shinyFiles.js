@@ -327,6 +327,11 @@ var shinyFiles = (function() {
         var newElement = parent.children()[newIndex];
         elementSelector(event, newElement, single, true);
 
+        if (button.hasClass("shinySave")) {
+          var filename = $(newElement).find('.sF-file-name>div').text();
+          setFilename(modal, filename);
+        }
+
         if (!single && event.shiftKey) {
           // Preserve 'lastElement' during multi-selection, ensuring an anchor is consistent
           parent.data('lastElement', currentElement);
@@ -2023,6 +2028,16 @@ var shinyFiles = (function() {
     Shiny.onInputChange($(button).attr('id')+'-modal', data);
   };
   // Directory chooser ends
+
+  var handleArrowKey = function(direction) {
+    var modal = $('.sF-modalContainer');
+    if (modal.is(":visible") && !($(modal.data('button')).hasClass("shinySave") && $('.sF-filename').is(":focus"))) {
+      var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
+      moveSelection(event, single, direction);
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
     
   var sF = {};
   
@@ -2067,43 +2082,19 @@ var shinyFiles = (function() {
           break;
         case 37:
           // Left Arrow
-          if ($(".sF-modalContainer").is(":visible")) {
-            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
-            moveSelection(event, single, "left");
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
+          handleArrowKey("left");
           break;
         case 39:
           // Right Arrow
-          if ($(".sF-modalContainer").is(":visible")) {
-            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
-            moveSelection(event, single, "right");
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
+          handleArrowKey("right");
           break;
         case 38:
           // Up arrow
-          if ($(".sF-modalContainer").is(":visible")) {
-            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
-            moveSelection(event, single, "up");
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
+          handleArrowKey("up");
           break;
         case 40:
           // Down arrow
-          if ($(".sF-modalContainer").is(":visible")) {
-            var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
-            moveSelection(event, single, "down");
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
+          handleArrowKey("down");
           break;
         case 13:
           // Enter
@@ -2120,9 +2111,11 @@ var shinyFiles = (function() {
                   openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
                 }
               } else if (modalButton.hasClass("shinySave")) {
-                // Select Directory
-                console.log("TBD");
-                // saveFile(modalButton, $(".sF-modalContainer"));
+                if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
+                  saveFile($('.sF-modalContainer'), modalButton);
+                } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
+                  openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+                }
               } else if (modalButton.hasClass("shinyDirectories")) {
                 // Save File
                 console.log("TBD");
