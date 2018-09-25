@@ -2048,37 +2048,26 @@ var shinyFiles = (function() {
   };
     
   var toggleExpander = function(element, modal, button) {
-    console.log("yop");
-    console.log("element", element);
     var parent = $(element.closest('.sF-directory')[0]);
-    console.log("parent", parent);
+
     if(!parent.hasClass('empty')) {
-      console.log("good a");
       var path = getPath(element);
-      console.log(path);
       if(parent.find('.selected').length != 0) {
-        console.log("huh");
         modal.data('currentData').contentPath = path.slice();
       }
       path.shift();
       if (modal.data('currentData') && modal.data('currentData').tree) {
-        console.log("b");
         var tree = modal.data('currentData').tree;
         while(true) {
-          console.log("ccccc");
           if(path.length == 0) {
-            console.log('d');
             tree.expanded = !tree.expanded;
             break;
           } else {
-            console.log("e");
             var name = path.shift();
             tree = tree.children.filter(function(f) {
               if (f == null) {
-                console.log("f");
                 return null;
               } else {
-                console.log("g");
                 return f.name == name;
               }
             })[0];
