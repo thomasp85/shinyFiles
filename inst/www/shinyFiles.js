@@ -846,6 +846,12 @@ var shinyFiles = (function() {
                 )
               )
             ).append(
+              $('<div>').addClass('sF-refresh btn-group btn-group-sm').append(
+                $('<button>', {id: 'sF-btn-refresh'}).addClass('btn btn-default').append(
+                  $('<span>').addClass('glyphicon glyphicon-refresh')
+                )
+              )
+            ).append(
               $('<select>').addClass('sF-breadcrumps form-control input-sm')
             )
           ).append(
@@ -919,6 +925,13 @@ var shinyFiles = (function() {
     // Breadcrump and volume navigation
     modal.find('.sF-breadcrumps').on('change', function() {
       moveToDir(button, modal, this);
+    })
+
+    // Refresh
+    modal.find('.sF-refresh').on('click', function(event) {
+      event.preventDefault();
+      // populateFileChooser(button, $(button).data('dataCache'))
+      refreshDirectory(modal);
     })
         
     // File window
@@ -1158,6 +1171,12 @@ var shinyFiles = (function() {
     
     Shiny.onInputChange($(button).attr('id')+'-modal', directory);
   };
+
+  var refreshDirectory = function(modal) {
+    var directory = getCurrentDirectory(modal);
+    // Shiny.onInputChange($(modal.data('button')).attr('id')+'-modal', null);
+    // Shiny.onInputChange($(modal.data('button')).attr('id')+'-modal', directory);
+  }
   
   var moveBack = function(button, modal) {
     $('.sF-btn-back').prop('disabled', true);
@@ -1323,6 +1342,12 @@ var shinyFiles = (function() {
                 )
               )
             ).append(
+              $('<div>').addClass('sF-refresh btn-group btn-group-sm').append(
+                $('<button>', {id: 'sF-btn-refresh'}).addClass('btn btn-default').append(
+                  $('<span>').addClass('glyphicon glyphicon-refresh')
+                )
+              )
+            ).append(
               $('<select>').addClass('sF-breadcrumps form-control input-sm')
             )
           ).append(
@@ -1417,6 +1442,12 @@ var shinyFiles = (function() {
         
         $(modal).trigger('fileSort', [$(this).parent().find('.selected a').text(), $(this).find('a').attr('class')])
       })
+
+    // Refresh
+    modal.find('.sF-refresh').on('click', function(e) {
+      e.preventDefault();
+      refreshDirectory(modal);
+    })
         
     // Breadcrump and volume navigation
     modal.find('.sF-breadcrumps').on('change', function() {
@@ -1709,6 +1740,12 @@ var shinyFiles = (function() {
                 )
               )
             ).append(
+              $('<div>').addClass('sF-refresh btn-group btn-group-sm').append(
+                $('<button>', {id: 'sF-btn-refresh'}).addClass('btn btn-default').append(
+                  $('<span>').addClass('glyphicon glyphicon-refresh')
+                )
+              )
+            ).append(
               $('<select>').addClass('sF-breadcrumps form-control input-sm')
             )
           ).append(
@@ -1823,6 +1860,13 @@ var shinyFiles = (function() {
       .on('click', '.sF-file-icon, .sF-file-name', function(e) {
         selectFolder($(this), modal, button);
       })
+
+    // Refresh
+    modal.find('.sF-refresh').on('click', function(e) {
+      e.preventDefault();
+      // populateDirChooser(button, $(button).data('dataCache'));
+      refreshDirectory(modal);
+    })
     
     // Custom events
     modal
@@ -2159,7 +2203,9 @@ var shinyFiles = (function() {
   
   sF.init = function() {
     Shiny.addCustomMessageHandler('shinyFiles', function(data) {
+      console.log('data', data);
       populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir));
+      console.log('parsed', parseFiles(data.dir));
     });
     Shiny.addCustomMessageHandler('shinyDirectories', function(data) {
       populateDirChooser($('.shinyDirectories#'+data.id), data.dir);

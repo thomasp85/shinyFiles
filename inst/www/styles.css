@@ -59,6 +59,13 @@
   display: none;
 }
 
+.btn-toolbar .btn-group.sF-refresh {
+  float: right;
+}
+
+.btn-toolbar .btn-group {
+  margin-bottom: 5px;
+}
 
 /*
   Icons
