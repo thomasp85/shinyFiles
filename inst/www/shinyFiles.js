@@ -73,7 +73,7 @@ var shinyFiles = (function() {
           }
         }
       } else if (dirFlag) {
-
+        console.log("No Directory Modal support yet");
       } else {
         console.warn("Unknown type of modal");
       }
@@ -135,9 +135,12 @@ var shinyFiles = (function() {
       var ends = [originIndex, endIndex].sort();
 
       // Number of icons that fit with the file list, left to right
-      var boundingWidth = $(".sF-fileList.sF-icons").width();
-      var iconWidth = $(".sF-fileList.sF-icons>div").outerWidth(true);
-      var numAcross = Math.floor(boundingWidth / iconWidth);
+      var boundingWidth = $(".sF-fileWindow").width();
+      var boundingHeight = $(".sF-fileWindow").height();
+      var itemWidth = $(parent.children()[1]).outerWidth(true);
+      var itemHeight = $(parent.children()[1]).outerHeight(true);
+      var numHorizontal = Math.floor(boundingWidth / itemWidth);
+      var numVertical = Math.floor(boundingHeight / itemHeight);
       var lastItemIndex = parent.children().length - 1;  // Subtract 1 to account for header
 
       var viewType = button.data('view');
@@ -145,52 +148,69 @@ var shinyFiles = (function() {
 
       var invalidFlag = false;
 
+      var newIndex;
+
       // NOTE: The appropriate left/right/up/down position depends on whether shift is held
       // Dealing with a multi-selection
       if (!single && event.shiftKey) {
         if (viewType === "sF-btn-icon") {
           bounds = {
-            left: Math.max(((Math.ceil(endIndex / numAcross) - 1) * numAcross) + 1, 1),
-            right: Math.min(Math.ceil(endIndex / numAcross) * numAcross, lastItemIndex),
+            left: Math.max(((Math.ceil(endIndex / numHorizontal) - 1) * numHorizontal) + 1, 1),
+            right: Math.min(Math.ceil(endIndex / numHorizontal) * numHorizontal, lastItemIndex),
             up: 1,
             down: lastItemIndex
           };
         } else if (viewType === "sF-btn-list") {
-          bounds = {};
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: Math.max(((Math.ceil(endIndex / numVertical) - 1) * numVertical) + 1, 1),
+            down: Math.min(Math.ceil(endIndex / numVertical) * numVertical, lastItemIndex)
+          };
         } else if (viewType === "sF-btn-detail") {
           bounds = {};
         }
+
+        newIndex = endIndex;
 
         // Find new index, if valid, based on movement direction.
         //    Does not move the original anchor, regardless of which item comes first in the list.
         if (viewType === "sF-btn-icon") {
           switch (direction) {
             case "left":
-              var newIndex = endIndex - 1;
+              newIndex = endIndex - 1;
               if (newIndex < bounds.left) { invalidFlag = true; }
               break;
             case "right":
-              var newIndex = endIndex + 1;
+              newIndex = endIndex + 1;
               if (newIndex > bounds.right) { invalidFlag = true; }
               break;
             case "up":
-              var newIndex = endIndex - numAcross;
+              newIndex = endIndex - numHorizontal;
               if (newIndex < bounds.up) { invalidFlag = true; }
               break;
             case "down":
-              var newIndex = endIndex + numAcross;
+              newIndex = endIndex + numHorizontal;
               if (newIndex > bounds.down) { invalidFlag = true; }
               break;
           }
         } else if (viewType === "sF-btn-list") {
           switch (direction) {
             case "left":
+              newIndex = endIndex - numVertical;
+              if (newIndex < bounds.left) { invalidFlag = true; }
               break;
             case "right":
+              newIndex = endIndex + numVertical;
+              if (newIndex > bounds.right) { invalidFlag = true; }
               break;
             case "up":
+              newIndex = endIndex - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
               break;
             case "down":
+              newIndex = endIndex + 1;
+              if (newIndex > bounds.down) { invalidFlag = true; }
               break;
           }
         } else if (viewType === "sF-btn-detail") {
@@ -208,13 +228,18 @@ var shinyFiles = (function() {
       } else {
         if (viewType === "sF-btn-icon") {
           bounds = {
-            left: Math.max(((Math.ceil(ends[0] / numAcross) - 1) * numAcross) + 1, 1),
-            right: Math.min(Math.ceil(ends[1] / numAcross) * numAcross, lastItemIndex),
+            left: Math.max(((Math.ceil(ends[0] / numHorizontal) - 1) * numHorizontal) + 1, 1),
+            right: Math.min(Math.ceil(ends[1] / numHorizontal) * numHorizontal, lastItemIndex),
             up: 1,
             down: lastItemIndex
           };
         } else if (viewType === "sF-btn-list") {
-          bounds = {};
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: Math.max(((Math.ceil(ends[0] / numVertical) - 1) * numVertical) + 1, 1),
+            down: Math.min(Math.ceil(ends[1] / numVertical) * numVertical, lastItemIndex)
+          };
         } else if (viewType === "sF-btn-detail") {
           bounds = {};
         }
@@ -222,7 +247,7 @@ var shinyFiles = (function() {
         // Slightly different behavior when switching to a single selection
         //    Left and Up move from the first item (index: ends[0])
         //    Right and Down move from the last item (index: ends[1])
-        var newIndex = originIndex;
+        newIndex = originIndex;
 
         if (viewType === "sF-btn-icon") {
           switch (direction) {
@@ -235,23 +260,31 @@ var shinyFiles = (function() {
               if (newIndex > bounds.right) { invalidFlag = true; }
               break;
             case "up":
-              newIndex = endIndex - numAcross;
+              newIndex = endIndex - numHorizontal;
               if (newIndex < bounds.up) { invalidFlag = true; }
               break;
             case "down":
-              newIndex = endIndex + numAcross;
+              newIndex = endIndex + numHorizontal;
               if (newIndex > bounds.down) { invalidFlag = true; }
               break;
           }
         } else if (viewType === "sF-btn-list") {
           switch (direction) {
             case "left":
+              newIndex = ends[0] - numVertical;
+              if (newIndex < bounds.left) { invalidFlag = true; }
               break;
             case "right":
+              newIndex = ends[1] + numVertical;
+              if (newIndex > bounds.right) { invalidFlag = true; }
               break;
             case "up":
+              newIndex = ends[0] - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
               break;
             case "down":
+              newIndex = ends[1] + 1;
+              if (newIndex > bounds.down) { invalidFlag = true; }
               break;
           }
         } else if (viewType === "sF-btn-detail") {
