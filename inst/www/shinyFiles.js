@@ -27,6 +27,18 @@ var shinyFiles = (function() {
     function clearAll() {
       parent.children().removeClass('selected');
     }
+
+    function scrollToSelected() {
+      // Adjust for any overall offsets
+      var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
+      var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+
+      if (topOffset < scrollPosition) {
+        $('.sF-fileWindow')[0].scrollTop = topOffset;
+      } else if (topOffset > scrollPosition + $('.sF-fileWindow').height() - parent.children()[1].offsetTop) {
+        $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').innerHeight() + $(element).outerHeight();
+      }
+    }
   
     // Use the same selector event for arrow key navigation
     if (event.button === 0 || event.type === "keydown") {
@@ -35,12 +47,15 @@ var shinyFiles = (function() {
         var nSelected = parent.children('.selected').length;
           clearAll();
           if ((!selected || nSelected != 1) || forceSelect) {
-            toggleSelection(element);               
+            toggleSelection(element);
+            scrollToSelected();              
           }
       } else if ((event.metaKey || event.ctrlKey) && !single) {
         toggleSelection(element);
+        scrollToSelected();
       } else if (event.shiftKey && !single) {
         selectElementsBetweenIndexes([$(lastSelectedElement).index(), $(element).index()]);
+        scrollToSelected();
       }
     }
   };
@@ -59,8 +74,12 @@ var shinyFiles = (function() {
     }
 
     // No element is currently selected, return without action
-    if (!$(currentElement).hasClass('selected')) {
-      return false;
+    // if (!$(currentElement).hasClass('selected')) {
+    if (!('lastElement' in parent.data())) {
+      // Start on the first element if none are currently selected.
+      var newElement = parent.children()[1];
+      elementSelector(event, newElement, single, true);
+      return;
     }
 
     var originIndex = $(currentElement).index(); // The original selected icon
@@ -140,9 +159,11 @@ var shinyFiles = (function() {
       }
     }
 
-    var newElement = parent.children()[newIndex];
+    if (!invalidFlag) {
+      var newElement = parent.children()[newIndex];
 
-    elementSelector(event, newElement, single, true);
+      elementSelector(event, newElement, single, true);
+    }
   };
   
   var compareArrays = function (arrayA, arrayB) {
@@ -1875,6 +1896,7 @@ var shinyFiles = (function() {
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "left");
+            event.preventDefault();
             event.stopPropagation();
           }
 
@@ -1884,6 +1906,7 @@ var shinyFiles = (function() {
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "right");
+            event.preventDefault();
             event.stopPropagation();
           }
 
@@ -1893,6 +1916,7 @@ var shinyFiles = (function() {
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "up");
+            event.preventDefault();
             event.stopPropagation();
           }
 
@@ -1902,6 +1926,7 @@ var shinyFiles = (function() {
           if ($(".sF-modalContainer").is(":visible")) {
             var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
             moveSelection(event, single, "down");
+            event.preventDefault();
             event.stopPropagation();
           }
 
@@ -1915,13 +1940,19 @@ var shinyFiles = (function() {
               var modalButton = $($(".sF-modalContainer").data('button'));
               if (modalButton.hasClass("shinyFiles")) {
                 // Select File
-                selectFiles(modalButton, $(".sF-modalContainer"));
+                if ($($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
+                  selectFiles(modalButton, $(".sF-modalContainer"));
+                } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
+                  openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+                }
               } else if (modalButton.hasClass("shinySave")) {
                 // Select Directory
-                saveFile(modalButton, $(".sF-modalContainer"));
+                console.log("TBD");
+                // saveFile(modalButton, $(".sF-modalContainer"));
               } else if (modalButton.hasClass("shinyDirectories")) {
                 // Save File
-                selectFolder($(".sF-dirList"), $(".sF-modalContainer"), modalButton);
+                console.log("TBD");
+                // selectFolder($(".sF-dirList"), $(".sF-modalContainer"), modalButton);
               }
             }
           }
