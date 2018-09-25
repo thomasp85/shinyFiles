@@ -168,7 +168,12 @@ var shinyFiles = (function() {
             down: Math.min(Math.ceil(endIndex / numVertical) * numVertical, lastItemIndex)
           };
         } else if (viewType === "sF-btn-detail") {
-          bounds = {};
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: 1,
+            right: lastItemIndex
+          };
         }
 
         newIndex = endIndex;
@@ -216,12 +221,18 @@ var shinyFiles = (function() {
         } else if (viewType === "sF-btn-detail") {
           switch (direction) {
             case "left":
+              invalidFlag = true;
               break;
             case "right":
+              invalidFlag = true;
               break;
             case "up":
+              newIndex = endIndex - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
               break;
             case "down":
+              newIndex = endIndex + 1;
+              if (newIndex > bounds.down) { invalidFlag = true; }
               break;
           }
         }
@@ -241,7 +252,12 @@ var shinyFiles = (function() {
             down: Math.min(Math.ceil(ends[1] / numVertical) * numVertical, lastItemIndex)
           };
         } else if (viewType === "sF-btn-detail") {
-          bounds = {};
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: 1,
+            down: lastItemIndex,
+          };
         }
 
         // Slightly different behavior when switching to a single selection
@@ -290,12 +306,18 @@ var shinyFiles = (function() {
         } else if (viewType === "sF-btn-detail") {
           switch (direction) {
             case "left":
+              invalidFlag = true;
               break;
             case "right":
+              invalidFlag = true;
               break;
             case "up":
+              newIndex = ends[0] - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
               break;
             case "down":
+              newIndex = ends[1] + 1;
+              if (newIndex > bounds.down)  { invalidFlag = true; }
               break;
           }
         }
