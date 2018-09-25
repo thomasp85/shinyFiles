@@ -42,6 +42,7 @@ var shinyFiles = (function() {
         var viewType = button.data('view');
 
         if (viewType === "sF-btn-icon") {
+          // Vertical scroll
           var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
           var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
 
@@ -51,7 +52,7 @@ var shinyFiles = (function() {
             $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
           }
         } else if (viewType === "sF-btn-list") {
-          // Lists scroll left to right, but otherwise the logic is very similar to icons
+          // Lists scroll horizontally, but otherwise the logic is very similar to icons
           var leftOffset = $(element)[0].offsetLeft - parent.children()[1].offsetLeft;
           var scrollPosition = $('.sF-fileWindow')[0].scrollLeft;
 
@@ -61,7 +62,15 @@ var shinyFiles = (function() {
             $('.sF-fileWindow')[0].scrollLeft = leftOffset - $('.sF-fileWindow').width() + $(element).outerWidth(true);
           }
         } else if (viewType === "sF-btn-detail") {
+          // Essentially the same as icons, but header is visible
+          var topOffset = $(element)[0].offsetTop - parent.children()[0].offsetTop;
+          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
 
+          if (topOffset < scrollPosition) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true)
+          }
         }
       } else if (dirFlag) {
 
