@@ -35,10 +35,9 @@ var shinyFiles = (function() {
       var button = $(modal.data('button'));
       var fileFlag = button.hasClass('shinyFiles');
       var saveFlag = button.hasClass('shinySave');
-      var dirFlag = button.hasClass('shinyDirectories');
 
       if (fileFlag || saveFlag) {
-        // Similarly, there are different display modes to handle for file/save modal
+        // Different display modes handled differently for file/save modal
         var viewType = button.data('view');
 
         if (viewType === "sF-btn-icon") {
@@ -72,11 +71,7 @@ var shinyFiles = (function() {
             $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true)
           }
         }
-      } else if (dirFlag) {
-        console.log("No Directory Modal support yet");
-      } else {
-        console.warn("Unknown type of modal");
-      }
+      } // NOTE: Selection in dirchooser is handled by selectFolder. Submission is handled by selectFiles
     }
   
     // Use the same selector event for arrow key navigation
@@ -341,7 +336,104 @@ var shinyFiles = (function() {
         }
       }
     } else if (dirFlag) {
-      console.log("Cannot use arrow keys in directory yet");
+      var list = $('.sF-dirList');
+      var currentElement = list.find('.selected');
+
+      function nextSibling(elem) {
+        return elem.next('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+      }
+
+      function prevSibling(elem) {
+        return elem.prev('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+      }
+
+      function firstChild(elem) {
+        var children = elem.find('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+        return $(children[0]);
+      }
+
+      function lastChild(elem) {
+        var children = elem.find('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+        return $(children[children.length - 1]);
+      }
+
+      function parentDir(elem) {
+        return $(elem.parents('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty')[0]);
+      }
+
+      if (currentElement.length != 1) {
+        // No selection yet
+        newElement = $(list.find('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty')[0]);
+        selectFolder($(newElement[0]), modal, button);
+        return;
+      }
+
+      var newElement = currentElement;
+
+      switch (direction) {
+        case "left":
+          // Close if currently expanded
+          if (currentElement.hasClass("expanded")) {
+            // Close expanded directory
+            toggleExpander($(currentElement.find('.sF-expander>span')[0]), modal, button);
+            return;
+          } else {
+            return;
+          }
+
+          break;
+        case "right":
+          // Open if currently not expanded
+          if (currentElement.hasClass("closed")) {
+            // Expand closed directory
+            toggleExpander($(currentElement.find('.sF-expander>span')[0]), modal, button);
+            return;
+          } else {
+            return;
+          }
+
+          break;
+        case "up":
+          // Navigate up (last child of previous sibling if open, previous sibling otherwise)
+          var pSib = $(prevSibling(currentElement));
+          if (pSib.length === 0) {
+            // Navigate to parent. Will never have to go multiple levels at once for parent.
+            newElement = parentDir(currentElement);
+          } else if (pSib.hasClass('expanded')) {
+            // Last child of previous sibling
+            newElement = lastChild(pSib);
+          } else {
+            // Previous sibling
+            newElement = pSib;
+          }
+
+          break;
+        case "down":
+          // Navigate down (first child if expanded, next sibling otherwise)
+          var nSib = $(nextSibling(currentElement));
+          if (currentElement.hasClass('expanded')) {
+            // First child of current selection
+            newElement = firstChild(currentElement);
+          } else if (nSib.length === 0) {
+            // Navigate to next sibling of closest ancestor that has a sibling
+            var parDir = parentDir(currentElement);
+            do {
+              nSib = nextSibling(parDir);
+              parDir = parentDir(parDir);
+            } while (nSib.length === 0);
+
+            newElement = nSib;
+          } else {
+            // Next sibling of current element
+            newElement = nSib;
+          }
+
+          break;
+      }
+
+      if (newElement.length > 0) {
+        selectFolder($(newElement[0]), modal, button);
+      }
     }
   };
   
@@ -1684,8 +1776,10 @@ var shinyFiles = (function() {
       var disabled = $(this).val() == '';
       $(this).parent().find('button').prop('disabled', disabled);
       if(e.keyCode == 13) {
+        // Enter
         createFolder($(this).val(), modal);
       } else if(e.keyCode == 27) {
+        // Escape
         var parent = $(this).closest('.sF-newDir');
         parent.toggleClass('open', false)
           .find('button.sF-btn-newDir').toggleClass('active', true);
@@ -1913,12 +2007,33 @@ var shinyFiles = (function() {
     var deselect = element.closest('.sF-directory').hasClass('selected');
     var list = element.closest('.sF-dirList');
     list.find('.selected').toggleClass('selected');
-        
+    
+    function scrollToSelected() {
+      var modal = $('.sF-modalContainer');
+      var button = $(modal.data('button'));
+      var dirFlag = button.hasClass('shinyDirectories');
+
+      if (dirFlag) {
+        var buffer = list.children()[0].offsetTop;
+        var itemOffset = $(element)[0].offsetTop - buffer;
+        var scrollElement = $('.sF-dirInfo>div');
+        var scrollPosition = scrollElement[0].scrollTop;
+        var elementHeight = $(element).find('sF-file-icon').outerHeight(true);
+
+        if (itemOffset < scrollPosition) {
+          scrollElement[0].scrollTop = itemOffset;
+        } else if (itemOffset + elementHeight > scrollPosition + scrollElement.height()) {
+          scrollElement[0].scrollTop = itemOffset - scrollElement.height() + elementHeight;
+        }
+      } // NOTE: Only handle directory modal
+    }
+
     if(deselect) {
       var path = null;
     } else {
       var path = getPath(element);
       element.closest('.sF-directory').toggleClass('selected');
+      scrollToSelected();
     }
         
     setDisabledButtons(button, modal);
@@ -1933,25 +2048,37 @@ var shinyFiles = (function() {
   };
     
   var toggleExpander = function(element, modal, button) {
-    var parent = element.closest('.sF-directory');
+    console.log("yop");
+    console.log("element", element);
+    var parent = $(element.closest('.sF-directory')[0]);
+    console.log("parent", parent);
     if(!parent.hasClass('empty')) {
+      console.log("good a");
       var path = getPath(element);
+      console.log(path);
       if(parent.find('.selected').length != 0) {
+        console.log("huh");
         modal.data('currentData').contentPath = path.slice();
       }
       path.shift();
       if (modal.data('currentData') && modal.data('currentData').tree) {
+        console.log("b");
         var tree = modal.data('currentData').tree;
         while(true) {
+          console.log("ccccc");
           if(path.length == 0) {
+            console.log('d');
             tree.expanded = !tree.expanded;
             break;
           } else {
+            console.log("e");
             var name = path.shift();
             tree = tree.children.filter(function(f) {
               if (f == null) {
+                console.log("f");
                 return null;
               } else {
+                console.log("g");
                 return f.name == name;
               }
             })[0];
@@ -2098,28 +2225,31 @@ var shinyFiles = (function() {
           break;
         case 13:
           // Enter
-          if ($(".sF-modalContainer").is(":visible") && ("lastElement" in $(".sF-fileList").data())) {
+          if ($(".sF-modalContainer").is(":visible")) {
+            var modalButton = $($(".sF-modalContainer").data('button'));
             var lastElement = $(".sF-fileList").data('lastElement');
-            if ($($(".sF-fileList").data('lastElement')).hasClass('selected')) {
-              var modalType;
-              var modalButton = $($(".sF-modalContainer").data('button'));
-              if (modalButton.hasClass("shinyFiles")) {
-                // Select File
-                if ($($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
-                  selectFiles(modalButton, $(".sF-modalContainer"));
-                } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
-                  openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
-                }
-              } else if (modalButton.hasClass("shinySave")) {
-                if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
-                  saveFile($('.sF-modalContainer'), modalButton);
-                } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
-                  openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
-                }
-              } else if (modalButton.hasClass("shinyDirectories")) {
-                // Save File
-                console.log("TBD");
-                // selectFolder($(".sF-dirList"), $(".sF-modalContainer"), modalButton);
+
+            if (modalButton.hasClass("shinyFiles")) {
+              if (!$($(".sF-fileList").data('lastElement')).hasClass('selected')) { return; }
+
+              // Select File
+              if ($($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
+                selectFiles(modalButton, $(".sF-modalContainer"));
+              } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
+                openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+              }
+            } else if (modalButton.hasClass("shinySave")) {
+              if (!$($(".sF-fileList").data('lastElement')).hasClass('selected')) { return; }
+
+              if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
+                saveFile($('.sF-modalContainer'), modalButton);
+              } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
+                openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+              }
+            } else if (modalButton.hasClass("shinyDirectories")) {
+              // Save File
+              if ($($(".sF-dirList").find(".selected")).length === 1) {
+                selectFiles(modalButton, $(".sF-modalContainer"));
               }
             }
           }
