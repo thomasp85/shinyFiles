@@ -2267,6 +2267,7 @@ var shinyFiles = (function() {
           handleArrowKey("down");
           break;
         case 13:
+
           // Enter
           if ($(".sF-modalContainer").is(":visible")) {
             var modalButton = $($(".sF-modalContainer").data('button'));
@@ -2283,11 +2284,11 @@ var shinyFiles = (function() {
               }
             } else if (modalButton.hasClass("shinySave")) {
               // Assume the button is properly disabled/enabled
-              if ($("#sF-selectButton").prop('disabled')) { return; }
-
               if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
                 var filename = $(".sF-filename").val();
                 var parts = filename.split(".");
+
+                if ($("#sF-selectButton").prop('disabled')) { return; }
 
                 // Do not use enter to submit an empty filename (just a file extension)
                 if (($(".sF-filetype").length > 0 && filename.length > 0) || parts.slice(0,parts.length-1).join(".").length > 0) {
