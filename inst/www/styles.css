@@ -63,6 +63,11 @@
   float: right;
 }
 
+.btn-toolbar .sF-breadcrumps {
+  margin-left: 5px;
+  float: left;
+}
+
 .btn-toolbar .btn-group {
   margin-bottom: 5px;
 }
