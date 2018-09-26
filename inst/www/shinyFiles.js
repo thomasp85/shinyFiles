@@ -2282,10 +2282,17 @@ var shinyFiles = (function() {
                 openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
               }
             } else if (modalButton.hasClass("shinySave")) {
-              if (!$($(".sF-fileList").data('lastElement')).hasClass('selected')) { return; }
+              // Assume the button is properly disabled/enabled
+              if ($("#sF-selectButton").prop('disabled')) { return; }
 
               if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
-                saveFile($('.sF-modalContainer'), modalButton);
+                var filename = $(".sF-filename").val();
+                var parts = filename.split(".");
+
+                // Do not use enter to submit an empty filename (just a file extension)
+                if (parts.slice(0,parts.length-1).join(".").length > 0) {
+                  saveFile($('.sF-modalContainer'), modalButton);
+                }
               } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
                 openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
               }
