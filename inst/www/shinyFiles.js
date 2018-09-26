@@ -377,7 +377,10 @@ var shinyFiles = (function() {
             // Close expanded directory
             toggleExpander($(currentElement.find('.sF-expander>span')[0]), modal, button);
             return;
-          } else {
+          } else if (currentElement.hasClass("empty") || currentElement.hasClass("closed")) {
+            newElement = $(parentDir(currentElement));
+            selectFolder($(newElement[0]), modal, button);
+            toggleExpander($($(parentDir(currentElement)).find('.sF-expander>span')[0]), modal, button);
             return;
           }
 
