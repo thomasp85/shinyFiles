@@ -2208,13 +2208,13 @@ var shinyFiles = (function() {
   
   sF.init = function() {
     Shiny.addCustomMessageHandler('shinyFiles', function(data) {
-      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir), false);
+      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir), true);
     });
     Shiny.addCustomMessageHandler('shinyDirectories', function(data) {
       populateDirChooser($('.shinyDirectories#'+data.id), data.dir);
     });
     Shiny.addCustomMessageHandler('shinySave', function(data) {
-      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir), false);
+      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir), true);
     });
 
     Shiny.addCustomMessageHandler('shinyFiles-refresh', function(data) {
