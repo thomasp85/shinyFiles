@@ -2290,7 +2290,7 @@ var shinyFiles = (function() {
                 var parts = filename.split(".");
 
                 // Do not use enter to submit an empty filename (just a file extension)
-                if (parts.slice(0,parts.length-1).join(".").length > 0) {
+                if (($(".sF-filetype").length > 0 && filename.length > 0) || parts.slice(0,parts.length-1).join(".").length > 0) {
                   saveFile($('.sF-modalContainer'), modalButton);
                 }
               } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
