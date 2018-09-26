@@ -323,7 +323,12 @@ var shinyFiles = (function() {
         elementSelector(event, newElement, single, true);
 
         if (button.hasClass("shinySave")) {
-          var filename = $(newElement).find('.sF-file-name>div').text();
+          if (!$(newElement).hasClass('sF-directory')) {
+            var filename = $(newElement).find('.sF-file-name>div').text();
+          } else {
+            var filename = '';
+          }
+
           setFilename(modal, filename);
         }
 
