@@ -32,7 +32,7 @@
 }
 
 .sF-breadcrumps {
-  width: calc(100% - 255px);
+  width: calc(100% - 300px);
   margin-left: auto
 }
 
@@ -59,6 +59,18 @@
   display: none;
 }
 
+.btn-toolbar .btn-group.sF-refresh {
+  float: right;
+}
+
+.btn-toolbar .sF-breadcrumps {
+  margin-left: 5px;
+  float: left;
+}
+
+.btn-toolbar .btn-group {
+  margin-bottom: 5px;
+}
 
 /*
   Icons

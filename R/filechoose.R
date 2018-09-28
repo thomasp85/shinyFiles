@@ -192,7 +192,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
   currentDir <- list()
   clientId <- session$ns(id)
 
-  observe({
+  sendDirectoryData <- function(message) {
     req(input[[id]])
     dir <- input[[paste0(id, "-modal")]]
     if (is.null(dir) || is.na(dir)) {
@@ -205,8 +205,18 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
     fileGet <- do.call(fileGetter, list(...))
     newDir <- do.call(fileGet, dir)
     currentDir <<- newDir
-    session$sendCustomMessage("shinyFiles", list(id = clientId, dir = newDir))
+    session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     if (updateFreq > 0) invalidateLater(updateFreq, session)
+  }
+
+  observe({
+    sendDirectoryData("shinyFiles")
+  })
+
+  observeEvent(input[[paste0(id, "-refresh")]], {
+    if (!is.null(input[[paste0(id, "-refresh")]])) {
+      sendDirectoryData("shinyFiles-refresh")
+    }
   })
 }
 

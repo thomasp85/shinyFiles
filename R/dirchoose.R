@@ -197,7 +197,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
   lastDirCreate <- NULL
   clientId <- session$ns(id)
   
-  observe({
+  sendDirectoryData <- function(message) {
     req(input[[id]])
     tree <- input[[paste0(id, "-modal")]]
     createDir <- input[[paste0(id, "-newDir")]]
@@ -225,8 +225,18 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
       newDir$writable <- content$writable
     }
     currentDir <<- newDir
-    session$sendCustomMessage("shinyDirectories", list(id = clientId, dir = newDir))
+    session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     if (updateFreq > 0) invalidateLater(updateFreq, session)
+  }
+
+  observe({
+    sendDirectoryData("shinyDirectories")
+  })
+
+  observeEvent(input[[paste0(id, "-refresh")]], {
+    if (!is.null(input[[paste0(id, "-refresh")]])) {
+      sendDirectoryData("shinyDirectories-refresh")
+    }
   })
 }
 #' @rdname shinyFiles-buttons

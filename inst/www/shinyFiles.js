@@ -1,5 +1,4 @@
 var shinyFiles = (function() {
-    
   // General functionality
     
   var elementSelector = function(event, element, single, forceSelect) {
@@ -9,6 +8,7 @@ var shinyFiles = (function() {
     function toggleSelection(element) {
       $(element).toggleClass('selected');
       parent.data('lastElement', element);
+      toggleSelectButton($('.sF-modalContainer'));
     }
     
     function selectElementsBetweenIndexes(indexes) {
@@ -17,6 +17,8 @@ var shinyFiles = (function() {
           return a - b;
         });
     
+        clearAll();
+
         for (var i = indexes[0]; i <= indexes[1]; i++) {
           $(els[i]).addClass('selected');
         }
@@ -25,19 +27,420 @@ var shinyFiles = (function() {
     function clearAll() {
       parent.children().removeClass('selected');
     }
+
+    function scrollToSelected() {
+      // Adjust for any overall offsets
+      // Adjustments depend on what kind of modal/display is present
+      var modal = $('.sF-modalContainer');
+      var button = $(modal.data('button'));
+      var fileFlag = button.hasClass('shinyFiles');
+      var saveFlag = button.hasClass('shinySave');
+
+      if (fileFlag || saveFlag) {
+        // Different display modes handled differently for file/save modal
+        var viewType = button.data('view');
+
+        if (viewType === "sF-btn-icon") {
+          // Vertical scroll
+          var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
+          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+
+          if (topOffset < scrollPosition) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
+          }
+        } else if (viewType === "sF-btn-list") {
+          // Lists scroll horizontally, but otherwise the logic is very similar to icons
+          var leftOffset = $(element)[0].offsetLeft - parent.children()[1].offsetLeft;
+          var scrollPosition = $('.sF-fileWindow')[0].scrollLeft;
+
+          if (leftOffset < scrollPosition) {
+            $('.sF-fileWindow')[0].scrollLeft = leftOffset;
+          } else if (leftOffset + $(element).outerWidth(true) > scrollPosition + $('.sF-fileWindow').width()) {
+            $('.sF-fileWindow')[0].scrollLeft = leftOffset - $('.sF-fileWindow').width() + $(element).outerWidth(true);
+          }
+        } else if (viewType === "sF-btn-detail") {
+          // Essentially the same as icons, but header is visible
+          var topOffset = $(element)[0].offsetTop - parent.children()[0].offsetTop;
+          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+
+          if (topOffset < scrollPosition) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
+            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true)
+          }
+        }
+      } // NOTE: Selection in dirchooser is handled by selectFolder. Submission is handled by selectFiles
+    }
   
-    if (event.button === 0) {
+    // Use the same selector event for arrow key navigation
+    if (event.button === 0 || event.type === "keydown") {
       if ((!event.metaKey && !event.ctrlKey && !event.shiftKey) || single) {
         var selected = $(element).hasClass('selected');
         var nSelected = parent.children('.selected').length;
           clearAll();
           if ((!selected || nSelected != 1) || forceSelect) {
-            toggleSelection(element);               
+            toggleSelection(element);
+            scrollToSelected();              
           }
       } else if ((event.metaKey || event.ctrlKey) && !single) {
         toggleSelection(element);
+        scrollToSelected();
       } else if (event.shiftKey && !single) {
         selectElementsBetweenIndexes([$(lastSelectedElement).index(), $(element).index()]);
+        scrollToSelected();
+      }
+    }
+  };
+
+  var moveSelection = function (event, single, direction) {
+    var modal = $('.sF-modalContainer');
+    var button = $(modal.data('button'));
+    var fileFlag = button.hasClass('shinyFiles');
+    var saveFlag = button.hasClass('shinySave');
+    var dirFlag = button.hasClass('shinyDirectories');
+
+    if (fileFlag || saveFlag) {
+      var parent = $(".sF-fileList");
+      var currentElement = parent.data('lastElement');
+      var selectionEnd;
+      if ('selectionEnd' in parent.data() && parent.data('selectionEnd') !== null) {
+        selectionEnd = parent.data('selectionEnd');
+      } else {
+        // For the purposes of selecting next/previous elements,
+        //    consider a single selected item to be both the
+        //    first and last item in a selection of multiple items.
+        selectionEnd = currentElement;
+      }
+
+      // No element is currently selected, return without action
+      // if (!$(currentElement).hasClass('selected')) {
+      if (!('lastElement' in parent.data())
+          || parent.data('lastElement') === null
+          || !$(parent.data('lastElement')).is(":visible")) {
+        // Start on the first element if none are currently selected.
+        var newElement = parent.children()[1];
+        elementSelector(event, newElement, single, true);
+        return;
+      }
+
+      var originIndex = $(currentElement).index(); // The original selected icon
+      var endIndex = $(selectionEnd).index();      // The end that moves for multi-selection
+      var ends = [originIndex, endIndex].sort();
+
+      // Number of icons that fit with the file list, left to right
+      var boundingWidth = $(".sF-fileWindow").width();
+      var boundingHeight = $(".sF-fileWindow").height();
+      var itemWidth = $(parent.children()[1]).outerWidth(true);
+      var itemHeight = $(parent.children()[1]).outerHeight(true);
+      var numHorizontal = Math.floor(boundingWidth / itemWidth);
+      var numVertical = Math.floor(boundingHeight / itemHeight);
+      var lastItemIndex = parent.children().length - 1;  // Subtract 1 to account for header
+
+      var viewType = button.data('view');
+      var bounds = {};
+
+      var invalidFlag = false;
+
+      var newIndex;
+
+      // NOTE: The appropriate left/right/up/down position depends on whether shift is held
+      // Dealing with a multi-selection
+      if (!single && event.shiftKey) {
+        if (viewType === "sF-btn-icon") {
+          bounds = {
+            left: Math.max(((Math.ceil(endIndex / numHorizontal) - 1) * numHorizontal) + 1, 1),
+            right: Math.min(Math.ceil(endIndex / numHorizontal) * numHorizontal, lastItemIndex),
+            up: 1,
+            down: lastItemIndex
+          };
+        } else if (viewType === "sF-btn-list") {
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: Math.max(((Math.ceil(endIndex / numVertical) - 1) * numVertical) + 1, 1),
+            down: Math.min(Math.ceil(endIndex / numVertical) * numVertical, lastItemIndex)
+          };
+        } else if (viewType === "sF-btn-detail") {
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: 1,
+            right: lastItemIndex
+          };
+        }
+
+        newIndex = endIndex;
+
+        // Find new index, if valid, based on movement direction.
+        //    Does not move the original anchor, regardless of which item comes first in the list.
+        if (viewType === "sF-btn-icon") {
+          switch (direction) {
+            case "left":
+              newIndex = endIndex - 1;
+              if (newIndex < bounds.left) { invalidFlag = true; }
+              break;
+            case "right":
+              newIndex = endIndex + 1;
+              if (newIndex > bounds.right) { invalidFlag = true; }
+              break;
+            case "up":
+              newIndex = endIndex - numHorizontal;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = endIndex + numHorizontal;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        } else if (viewType === "sF-btn-list") {
+          switch (direction) {
+            case "left":
+              newIndex = endIndex - numVertical;
+              if (newIndex < bounds.left) { invalidFlag = true; }
+              break;
+            case "right":
+              newIndex = endIndex + numVertical;
+              if (newIndex > bounds.right) { invalidFlag = true; }
+              break;
+            case "up":
+              newIndex = endIndex - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = endIndex + 1;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        } else if (viewType === "sF-btn-detail") {
+          switch (direction) {
+            case "left":
+              invalidFlag = true;
+              break;
+            case "right":
+              invalidFlag = true;
+              break;
+            case "up":
+              newIndex = endIndex - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = endIndex + 1;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        }
+      } else {
+        if (viewType === "sF-btn-icon") {
+          bounds = {
+            left: Math.max(((Math.ceil(ends[0] / numHorizontal) - 1) * numHorizontal) + 1, 1),
+            right: Math.min(Math.ceil(ends[1] / numHorizontal) * numHorizontal, lastItemIndex),
+            up: 1,
+            down: lastItemIndex
+          };
+        } else if (viewType === "sF-btn-list") {
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: Math.max(((Math.ceil(ends[0] / numVertical) - 1) * numVertical) + 1, 1),
+            down: Math.min(Math.ceil(ends[1] / numVertical) * numVertical, lastItemIndex)
+          };
+        } else if (viewType === "sF-btn-detail") {
+          bounds = {
+            left: 1,
+            right: lastItemIndex,
+            up: 1,
+            down: lastItemIndex,
+          };
+        }
+
+        // Slightly different behavior when switching to a single selection
+        //    Left and Up move from the first item (index: ends[0])
+        //    Right and Down move from the last item (index: ends[1])
+        newIndex = originIndex;
+
+        if (viewType === "sF-btn-icon") {
+          switch (direction) {
+            case "left":
+              newIndex = ends[0] - 1;
+              if (newIndex < bounds.left) { invalidFlag = true; }
+              break;
+            case "right":
+              newIndex = ends[1] + 1;
+              if (newIndex > bounds.right) { invalidFlag = true; }
+              break;
+            case "up":
+              newIndex = endIndex - numHorizontal;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = endIndex + numHorizontal;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        } else if (viewType === "sF-btn-list") {
+          switch (direction) {
+            case "left":
+              newIndex = ends[0] - numVertical;
+              if (newIndex < bounds.left) { invalidFlag = true; }
+              break;
+            case "right":
+              newIndex = ends[1] + numVertical;
+              if (newIndex > bounds.right) { invalidFlag = true; }
+              break;
+            case "up":
+              newIndex = ends[0] - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = ends[1] + 1;
+              if (newIndex > bounds.down) { invalidFlag = true; }
+              break;
+          }
+        } else if (viewType === "sF-btn-detail") {
+          switch (direction) {
+            case "left":
+              invalidFlag = true;
+              break;
+            case "right":
+              invalidFlag = true;
+              break;
+            case "up":
+              newIndex = ends[0] - 1;
+              if (newIndex < bounds.up) { invalidFlag = true; }
+              break;
+            case "down":
+              newIndex = ends[1] + 1;
+              if (newIndex > bounds.down)  { invalidFlag = true; }
+              break;
+          }
+        }
+      }
+
+      if (!invalidFlag) {
+        var newElement = parent.children()[newIndex];
+        elementSelector(event, newElement, single, true);
+
+        if (button.hasClass("shinySave")) {
+          if (!$(newElement).hasClass('sF-directory')) {
+            var filename = $(newElement).find('.sF-file-name>div').text();
+          } else {
+            var filename = '';
+          }
+
+          setFilename(modal, filename);
+        }
+
+        if (!single && event.shiftKey) {
+          // Preserve 'lastElement' during multi-selection, ensuring an anchor is consistent
+          parent.data('lastElement', currentElement);
+          parent.data('selectionEnd', newElement);
+        } else {
+          parent.data('selectionEnd', null);
+        }
+      }
+    } else if (dirFlag) {
+      var list = $('.sF-dirList');
+      var currentElement = list.find('.selected');
+
+      function nextSibling(elem) {
+        return elem.next('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+      }
+
+      function prevSibling(elem) {
+        return elem.prev('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+      }
+
+      function firstChild(elem) {
+        var children = elem.find('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+        return $(children[0]);
+      }
+
+      function lastChild(elem) {
+        var children = elem.find('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty');
+        return $(children[children.length - 1]);
+      }
+
+      function parentDir(elem) {
+        return $(elem.parents('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty')[0]);
+      }
+
+      if (currentElement.length != 1) {
+        // No selection yet
+        newElement = $(list.find('.sF-directory.expanded,.sF-directory.closed,.sF-directory.empty')[0]);
+        selectFolder($(newElement[0]), modal, button);
+        return;
+      }
+
+      var newElement = currentElement;
+
+      switch (direction) {
+        case "left":
+          // Close if currently expanded
+          if (currentElement.hasClass("expanded")) {
+            // Close expanded directory
+            toggleExpander($(currentElement.find('.sF-expander>span')[0]), modal, button);
+            return;
+          } else if (currentElement.hasClass("empty") || currentElement.hasClass("closed")) {
+            newElement = $(parentDir(currentElement));
+            selectFolder($(newElement[0]), modal, button);
+            toggleExpander($($(parentDir(currentElement)).find('.sF-expander>span')[0]), modal, button);
+            return;
+          }
+
+          break;
+        case "right":
+          // Open if currently not expanded
+          if (currentElement.hasClass("closed")) {
+            // Expand closed directory
+            toggleExpander($(currentElement.find('.sF-expander>span')[0]), modal, button);
+            return;
+          } else {
+            return;
+          }
+
+          break;
+        case "up":
+          // Navigate up (last child of previous sibling if open, previous sibling otherwise)
+          var pSib = $(prevSibling(currentElement));
+          if (pSib.length === 0) {
+            // Navigate to parent. Will never have to go multiple levels at once for parent.
+            newElement = parentDir(currentElement);
+          } else if (pSib.hasClass('expanded')) {
+            // Last child of previous sibling
+            newElement = lastChild(pSib);
+          } else {
+            // Previous sibling
+            newElement = pSib;
+          }
+
+          break;
+        case "down":
+          // Navigate down (first child if expanded, next sibling otherwise)
+          var nSib = $(nextSibling(currentElement));
+          if (currentElement.hasClass('expanded')) {
+            // First child of current selection
+            newElement = firstChild(currentElement);
+          } else if (nSib.length === 0) {
+            // Navigate to next sibling of closest ancestor that has a sibling
+            var parDir = parentDir(currentElement);
+            do {
+              nSib = nextSibling(parDir);
+              parDir = parentDir(parDir);
+            } while (nSib.length === 0);
+
+            newElement = nSib;
+          } else {
+            // Next sibling of current element
+            newElement = nSib;
+          }
+
+          break;
+      }
+
+      if (newElement.length > 0) {
+        selectFolder($(newElement[0]), modal, button);
       }
     }
   };
@@ -451,6 +854,12 @@ var shinyFiles = (function() {
                 )
               )
             ).append(
+              $('<div>').addClass('sF-refresh btn-group btn-group-sm').append(
+                $('<button>', {id: 'sF-btn-refresh'}).addClass('btn btn-default').append(
+                  $('<span>').addClass('glyphicon glyphicon-refresh')
+                )
+              )
+            ).append(
               $('<select>').addClass('sF-breadcrumps form-control input-sm')
             )
           ).append(
@@ -525,6 +934,12 @@ var shinyFiles = (function() {
     modal.find('.sF-breadcrumps').on('change', function() {
       moveToDir(button, modal, this);
     })
+
+    // Refresh
+    modal.find('.sF-refresh').on('click', function(event) {
+      event.preventDefault();
+      refreshDirectory(modal);
+    })
         
     // File window
     modal.find('.sF-fileWindow')
@@ -570,10 +985,10 @@ var shinyFiles = (function() {
       backdrop.addClass('in');
     }, 1);
     
-    populateFileChooser(button, $(button).data('dataCache'));
+    populateFileChooser(button, $(button).data('dataCache'), false);
   };
 
-  var populateFileChooser = function(element, data) {
+  var populateFileChooser = function(element, data, forceUpdate) {
     var modal = $(element).data('modal');
       
     $(element).data('dataCache', data);
@@ -599,7 +1014,7 @@ var shinyFiles = (function() {
       }
     };
     
-    if (newLocation || newVolumes) {
+    if (forceUpdate || newLocation || newVolumes) {
       if (!data) return;
       modal.find('.sF-breadcrumps').find('option, optgroup').remove();
       data.location.forEach(function(d, i) {
@@ -617,7 +1032,7 @@ var shinyFiles = (function() {
       })
     };
     
-    if (newLocation) {
+    if (forceUpdate || newLocation) {
       modal.find('.sF-fileList').children().remove();
       
       modal.find('.sF-fileList').append(
@@ -763,6 +1178,11 @@ var shinyFiles = (function() {
     
     Shiny.onInputChange($(button).attr('id')+'-modal', directory);
   };
+
+  var refreshDirectory = function(modal) {
+    // Use timestamp to ensure change in value, triggering the backend observeEvent
+    Shiny.onInputChange($(modal.data('button')).attr('id')+'-refresh', (new Date()).getTime());
+  }
   
   var moveBack = function(button, modal) {
     $('.sF-btn-back').prop('disabled', true);
@@ -928,6 +1348,12 @@ var shinyFiles = (function() {
                 )
               )
             ).append(
+              $('<div>').addClass('sF-refresh btn-group btn-group-sm').append(
+                $('<button>', {id: 'sF-btn-refresh'}).addClass('btn btn-default').append(
+                  $('<span>').addClass('glyphicon glyphicon-refresh')
+                )
+              )
+            ).append(
               $('<select>').addClass('sF-breadcrumps form-control input-sm')
             )
           ).append(
@@ -1022,6 +1448,12 @@ var shinyFiles = (function() {
         
         $(modal).trigger('fileSort', [$(this).parent().find('.selected a').text(), $(this).find('a').attr('class')])
       })
+
+    // Refresh
+    modal.find('.sF-refresh').on('click', function(e) {
+      e.preventDefault();
+      refreshDirectory(modal);
+    })
         
     // Breadcrump and volume navigation
     modal.find('.sF-breadcrumps').on('change', function() {
@@ -1118,7 +1550,7 @@ var shinyFiles = (function() {
       backdrop.addClass('in');
     }, 1);
     
-    populateFileChooser(button, $(button).data('dataCache'));
+    populateFileChooser(button, $(button).data('dataCache'), false);
   };
     
   var addFiletypeChoice = function(button, modal) {
@@ -1314,6 +1746,12 @@ var shinyFiles = (function() {
                 )
               )
             ).append(
+              $('<div>').addClass('sF-refresh btn-group btn-group-sm').append(
+                $('<button>', {id: 'sF-btn-refresh'}).addClass('btn btn-default').append(
+                  $('<span>').addClass('glyphicon glyphicon-refresh')
+                )
+              )
+            ).append(
               $('<select>').addClass('sF-breadcrumps form-control input-sm')
             )
           ).append(
@@ -1381,8 +1819,10 @@ var shinyFiles = (function() {
       var disabled = $(this).val() == '';
       $(this).parent().find('button').prop('disabled', disabled);
       if(e.keyCode == 13) {
+        // Enter
         createFolder($(this).val(), modal);
       } else if(e.keyCode == 27) {
+        // Escape
         var parent = $(this).closest('.sF-newDir');
         parent.toggleClass('open', false)
           .find('button.sF-btn-newDir').toggleClass('active', true);
@@ -1426,6 +1866,12 @@ var shinyFiles = (function() {
       .on('click', '.sF-file-icon, .sF-file-name', function(e) {
         selectFolder($(this), modal, button);
       })
+
+    // Refresh
+    modal.find('.sF-refresh').on('click', function(e) {
+      e.preventDefault();
+      refreshDirectory(modal);
+    })
     
     // Custom events
     modal
@@ -1610,12 +2056,33 @@ var shinyFiles = (function() {
     var deselect = element.closest('.sF-directory').hasClass('selected');
     var list = element.closest('.sF-dirList');
     list.find('.selected').toggleClass('selected');
-        
+    
+    function scrollToSelected() {
+      var modal = $('.sF-modalContainer');
+      var button = $(modal.data('button'));
+      var dirFlag = button.hasClass('shinyDirectories');
+
+      if (dirFlag) {
+        var buffer = list.children()[0].offsetTop;
+        var itemOffset = $(element)[0].offsetTop - buffer;
+        var scrollElement = $('.sF-dirInfo>div');
+        var scrollPosition = scrollElement[0].scrollTop;
+        var elementHeight = $(element).find('sF-file-icon').outerHeight(true);
+
+        if (itemOffset < scrollPosition) {
+          scrollElement[0].scrollTop = itemOffset;
+        } else if (itemOffset + elementHeight > scrollPosition + scrollElement.height()) {
+          scrollElement[0].scrollTop = itemOffset - scrollElement.height() + elementHeight;
+        }
+      } // NOTE: Only handle directory modal
+    }
+
     if(deselect) {
       var path = null;
     } else {
       var path = getPath(element);
       element.closest('.sF-directory').toggleClass('selected');
+      scrollToSelected();
     }
         
     setDisabledButtons(button, modal);
@@ -1630,7 +2097,8 @@ var shinyFiles = (function() {
   };
     
   var toggleExpander = function(element, modal, button) {
-    var parent = element.closest('.sF-directory');
+    var parent = $(element.closest('.sF-directory')[0]);
+
     if(!parent.hasClass('empty')) {
       var path = getPath(element);
       if(parent.find('.selected').length != 0) {
@@ -1725,20 +2193,40 @@ var shinyFiles = (function() {
     Shiny.onInputChange($(button).attr('id')+'-modal', data);
   };
   // Directory chooser ends
+
+  var handleArrowKey = function(direction) {
+    var modal = $('.sF-modalContainer');
+    if (modal.is(":visible") && !($(modal.data('button')).hasClass("shinySave") && $('.sF-filename').is(":focus"))) {
+      var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
+      moveSelection(event, single, direction);
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
     
   var sF = {};
   
   sF.init = function() {
     Shiny.addCustomMessageHandler('shinyFiles', function(data) {
-      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir));
+      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir), true);
     });
     Shiny.addCustomMessageHandler('shinyDirectories', function(data) {
       populateDirChooser($('.shinyDirectories#'+data.id), data.dir);
     });
     Shiny.addCustomMessageHandler('shinySave', function(data) {
-      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir));
+      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir), true);
     });
-    
+
+    Shiny.addCustomMessageHandler('shinyFiles-refresh', function(data) {
+      populateFileChooser($('.shinyFiles#'+data.id), parseFiles(data.dir), true);
+    });
+    Shiny.addCustomMessageHandler('shinyDirectories-refresh', function(data) {
+      populateDirChooser($('.shinyDirectories#'+data.id), data.dir);
+    });
+    Shiny.addCustomMessageHandler('shinySave-refresh', function(data) {
+      populateFileChooser($('.shinySave#'+data.id), parseFiles(data.dir), true);
+    });
+
     $(document).on('click', '.shinyFiles', function(e) {
       createFileChooser(this, $(this).data('title'));
     }).on('click', function(e) {
@@ -1757,11 +2245,78 @@ var shinyFiles = (function() {
       $('.sF-modal .open').removeClass('open').find('button').removeClass('active');
     });
     
-    // close modal on ESC
+    // Handle keypresses
     $(document).keydown(function(event) {
-      if ($("#sF-cancelButton").is(":visible") && event.keyCode == 27 && !$("div.sF-newDir").hasClass("open")) {
+      switch(event.keyCode) {
+        case 27:
+          // Escape
+          if ($("#sF-cancelButton").is(":visible") && !$("div.sF-newDir").hasClass("open")) {
+            $("#sF-cancelButton").click();
+          };
+
+          break;
+        case 37:
+          // Left Arrow
+          handleArrowKey("left");
+          break;
+        case 39:
+          // Right Arrow
+          handleArrowKey("right");
+          break;
+        case 38:
+          // Up arrow
+          handleArrowKey("up");
+          break;
+        case 40:
+          // Down arrow
+          handleArrowKey("down");
+          break;
+        case 13:
+
+          // Enter
+          if ($(".sF-modalContainer").is(":visible")) {
+            var modalButton = $($(".sF-modalContainer").data('button'));
+            var lastElement = $(".sF-fileList").data('lastElement');
+
+            if (modalButton.hasClass("shinyFiles")) {
+              if (!$($(".sF-fileList").data('lastElement')).hasClass('selected')) { return; }
+
+              // Select File
+              if ($($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
+                selectFiles(modalButton, $(".sF-modalContainer"));
+              } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
+                openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+              }
+            } else if (modalButton.hasClass("shinySave")) {
+              // Assume the button is properly disabled/enabled
+              if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
+                var filename = $(".sF-filename").val();
+                var parts = filename.split(".");
+
+                if ($("#sF-selectButton").prop('disabled')) { return; }
+
+                // Do not use enter to submit an empty filename (just a file extension)
+                if (($(".sF-filetype").length > 0 && filename.length > 0) || parts.slice(0,parts.length-1).join(".").length > 0) {
+                  saveFile($('.sF-modalContainer'), modalButton);
+                }
+              } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
+                openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+              }
+            } else if (modalButton.hasClass("shinyDirectories")) {
+              // Save File
+              if ($($(".sF-dirList").find(".selected")).length === 1) {
+                selectFiles(modalButton, $(".sF-modalContainer"));
+              }
+            }
+          }
+      }
+    });
+
+    // Close modal when clicking on backdrop
+    $(document).on('click', '.sF-modalContainer', function(e) {
+      if (!$(e.target).closest('.modal-content').length > 0 && $("#sF-cancelButton").is(":visible")) {
         $("#sF-cancelButton").click();
-      };
+      }
     });
   };
   

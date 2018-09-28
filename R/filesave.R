@@ -34,7 +34,7 @@ shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
   lastDirCreate <- NULL
   clientId <- session$ns(id)
 
-  observe({
+  sendDirectoryData <- function(message) {
     req(input[[id]])
     dir <- input[[paste0(id, "-modal")]]
     createDir <- input[[paste0(id, "-newDir")]]
@@ -51,9 +51,19 @@ shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
     newDir <- do.call(fileGet, dir)
     if (isTRUE(newDir$exist)) {
       currentDir <<- newDir
-      session$sendCustomMessage("shinySave", list(id = clientId, dir = newDir))
+      session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     }
     if (updateFreq > 0) invalidateLater(updateFreq, session)
+  }
+
+  observe({
+    sendDirectoryData("shinySave")
+  })
+
+  observeEvent(input[[paste0(id, "-refresh")]], {
+    if (!is.null(input[[paste0(id, "-refresh")]])) {
+      sendDirectoryData("shinySave-refresh")
+    }
   })
 }
 #' @rdname shinyFiles-buttons
