@@ -888,6 +888,13 @@ var shinyFiles = (function() {
       dismissFileChooser(button, modal)
     })
 
+    // working but if you open and close a few times you get an error (see PR) 
+    // $(document).keyup(function(e) {
+    //   if (e.which == 27) {
+    //     dismissFileChooser(button, modal)
+    //   }
+    // });
+
     modal.find('.sF-responseButtons #sF-cancelButton').on('click', function() {
       dismissFileChooser(button, modal);
     })
@@ -952,6 +959,13 @@ var shinyFiles = (function() {
         elementSelector(event, this, single, true);
         selectFiles(button, modal);
       })
+      // not working
+      // .on('keyup', '.sF-directory', function(event) {
+      //   if (event.keyCode == 13) {
+      //     $(this).toggleClass('selected', true);
+      //     openDir($(element), modal, this);
+      //   }
+      // })
       .on('click', '.sF-file, .sF-directory', function(event) {
         var single = $(button).data('selecttype') == 'single';
         elementSelector(event, this, single, false);
@@ -1522,6 +1536,14 @@ var shinyFiles = (function() {
       modal.trigger('change');
     })
 
+    // not working
+    // modal.find('.sF-filename input').on('keyup', function(e) {
+    //   var disabled = $(this).val() == '';
+    //   if (e.keyCode == 13) {
+    //     saveFile(modal, button)
+    //   }
+    // })
+    
     // Custom events
     modal
       .on('change', function() {
