@@ -1,8 +1,8 @@
 Package: shinyFiles
 Type: Package
 Title: A Server-Side File System Viewer for Shiny
-Version: 0.7.1
-Date: 2018-09-17
+Version: 0.7.1.0001
+Date: 2018-09-29
 Authors@R:
     c(person(given = "Thomas Lin",
              family = "Pedersen",
@@ -10,6 +10,9 @@ Authors@R:
              email = "thomasp85@gmail.com"),
       person(given = "Vincent",
              family = "Nijs",
+             role = "aut"),
+      person(given = "Thomas",
+             family = "Schaffner",
              role = "aut"),
       person(given = "Eric",
              family = "Nantz",
