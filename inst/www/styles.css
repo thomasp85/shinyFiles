@@ -3,6 +3,10 @@
   bottom: 0;
   position: fixed;
 }
+.modal-content {
+  resize: both;
+  overflow: auto;
+}
 .sF-navigation {
   margin-bottom: 5px;
 }
