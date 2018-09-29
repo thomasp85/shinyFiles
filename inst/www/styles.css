@@ -6,6 +6,8 @@
 .modal-content {
   resize: both;
   overflow: auto;
+  min-width: 276px;
+  max-height: 90vh;
 }
 .sF-navigation {
   margin-bottom: 5px;
@@ -37,7 +39,8 @@
 
 .sF-breadcrumps {
   width: calc(100% - 300px);
-  margin-left: auto
+  margin-left: auto;
+  min-width: 150px;
 }
 
 .sF-fileList>div.selected .sF-file-name div,
