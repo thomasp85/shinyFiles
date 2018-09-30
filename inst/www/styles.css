@@ -7,6 +7,7 @@
   overflow: auto;
   min-width: 276px;
   max-height: calc(100vh - 60px);
+  resize: both;
 }
 .sF-navigation {
   margin-bottom: 5px;
