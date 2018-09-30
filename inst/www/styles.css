@@ -4,10 +4,9 @@
   position: fixed;
 }
 .modal-content {
-  resize: both;
   overflow: auto;
   min-width: 276px;
-  max-height: 90vh;
+  max-height: calc(100vh - 60px);
 }
 .sF-navigation {
   margin-bottom: 5px;
