@@ -6,7 +6,7 @@
 .modal-content {
   overflow: auto;
   min-width: 276px;
-  max-height: calc(100vh - 60px);
+  max-height: calc(100vh - 45px);
   resize: both;
 }
 .sF-navigation {
