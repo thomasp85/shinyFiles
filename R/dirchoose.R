@@ -25,13 +25,16 @@ NULL
 #'
 #' @return A list of the same format as 'tree', but with updated values to
 #' reflect the current file system state.
-#' 
-#' @importFrom fs path dir_exists dir_ls file_info path_file
+#'
+#' @importFrom fs path dir_exists dir_ls file_info link_exists link_path path_file
 #'
 traverseDirs <- function(tree, root, restrictions, hidden) {
   location <- path(root, tree$name)
+  if (link_exists(location)) {
+    location <- link_path(location)
+  }
   if (!dir_exists(location)) return(NULL)
-  
+
   files <- suppressWarnings(dir_ls(location, all = hidden, fail = FALSE))
 
   if (!is.null(restrictions) && length(files) != 0) {
@@ -46,7 +49,7 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
     }
     files <- files[keep]
   }
-  
+
   fileInfo <- suppressWarnings(file_info(files, fail = FALSE))
   folders <- path_file(files[fileInfo$type %in% c("directory", "symlink")])
 
@@ -128,7 +131,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
     if (is.null(root)) root <- names(currentRoots)[1]
 
     tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
-    
+
     list(
       tree = tree,
       rootNames = I(names(currentRoots)),
@@ -154,7 +157,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'
 #' @return A function that creates directories based on the information returned
 #' by the client.
-#' 
+#'
 #' @importFrom fs path dir_create
 #'
 dirCreator <- function(roots, ...) {
@@ -196,7 +199,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
   currentFiles <- NULL
   lastDirCreate <- NULL
   clientId <- session$ns(id)
-  
+
   sendDirectoryData <- function(message) {
     req(input[[id]])
     tree <- input[[paste0(id, "-modal")]]
@@ -278,7 +281,7 @@ shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, i
 #'
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny restoreInput
-#' 
+#'
 #' @export
 #'
 shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
@@ -311,7 +314,7 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
 #' @rdname shinyFiles-parsers
 #'
 #' @importFrom fs path
-#' 
+#'
 #' @export
 #'
 parseDirPath <- function(roots, selection) {
