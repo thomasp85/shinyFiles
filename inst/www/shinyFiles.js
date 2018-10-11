@@ -1949,11 +1949,17 @@ var shinyFiles = (function() {
     } else {
       dirContent.toggleClass('message', false)
       data.content.filename.forEach(function(file, i) {
+        var mTime = data.content.mtime[i].split('-');
+        var cTime = data.content.ctime[i].split('-');
+        var aTime = data.content.atime[i].split('-');
         var d = {
           name: file,
           isDir: data.content.isdir[i],
           extension: data.content.extension[i],
-          size: data.content.size[i]
+          size: data.content.size[i],
+          mTime: new Date(mTime[0], mTime[1]-1, mTime[2], mTime[3], mTime[4]),
+          cTime: new Date(cTime[0], cTime[1]-1, cTime[2], cTime[3], cTime[4]),
+          aTime: new Date(aTime[0], aTime[1]-1, aTime[2], aTime[3], aTime[4])
         };
         dirContent.append(
           $('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
