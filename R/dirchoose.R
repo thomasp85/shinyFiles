@@ -26,11 +26,11 @@ NULL
 #' @return A list of the same format as 'tree', but with updated values to
 #' reflect the current file system state.
 #'
-#' @importFrom fs path dir_ls file_exists file_info path_file
+#' @importFrom fs path dir_ls file_info path_file
 #'
 traverseDirs <- function(tree, root, restrictions, hidden) {
   location <- path(root, tree$name)
-  if (!file_exists(location)) return(NULL)
+  if (!dir.exists(location)) return(NULL)
 
   files <- suppressWarnings(dir_ls(location, all = hidden, fail = FALSE))
 
@@ -47,8 +47,7 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
     files <- files[keep]
   }
 
-  fileInfo <- suppressWarnings(file_info(files, fail = FALSE))
-  folders <- path_file(files[fileInfo$type %in% c("directory", "symlink")])
+  folders <- path_file(files[dir.exists(files)])
 
   if (length(folders) == 0) {
     tree$empty <- TRUE

@@ -1,6 +1,8 @@
 shinyFiles 0.7.2
 --------------------------------------------------------------------
 
+* Fix for softlinks / shortcuts used with `shinyDirChoose` by @raggaraluz [PR104](https://github.com/thomasp85/shinyFiles/pull/104) 
+
 UI improvement listed below by @AFriendlyRobot [PR97](https://github.com/thomasp85/shinyFiles/pull/97)
 
 * Close modal with escape key or by clicking outside the modal, i.e., the equivalent of easyClose for Shiny modals (#76)
