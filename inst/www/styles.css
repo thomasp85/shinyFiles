@@ -3,11 +3,10 @@
   bottom: 0;
   position: fixed;
 }
-.modal-content {
+.sF-modal .modal-content {
   overflow: auto;
   min-width: 276px;
   max-height: calc(100vh - 45px);
-  /*resize: both;*/
 }
 .sF-navigation {
   margin-bottom: 5px;
