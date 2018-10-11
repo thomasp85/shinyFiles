@@ -220,7 +220,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
       newDir$contentPath <- as.list(files$dir)
       files$dir <- paste0(files$dir, collapse = "/")
       content <- do.call(fileGet, files)
-      newDir$content <- content$files[, c("filename", "extension", "isdir", "size"), drop = FALSE]
+      newDir$content <- content$files
       newDir$writable <- content$writable
     }
     currentDir <<- newDir

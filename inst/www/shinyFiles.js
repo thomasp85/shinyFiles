@@ -1738,6 +1738,14 @@ var shinyFiles = (function() {
                     $('<a>', {href: '#', text: 'Size'}).prepend($('<span>').addClass('glyphicon glyphicon-ok'))
                   ).addClass($(button).data('sort') == 'Size' ? 'selected' : '')
                 ).append(
+                  $('<li>').addClass('sortAttr').append(
+                    $('<a>', {href: '#', text: 'Created'}).prepend($('<span>').addClass('glyphicon glyphicon-ok'))
+                  ).addClass($(button).data('sort') == 'Created' ? 'selected' : '')
+                ).append(
+                  $('<li>').addClass('sortAttr').append(
+                    $('<a>', {href: '#', text: 'Modified'}).prepend($('<span>').addClass('glyphicon glyphicon-ok'))
+                  ).addClass($(button).data('sort') == 'Modified' ? 'selected' : '')
+                ).append(
                   $('<li>').addClass('divider')
                 ).append(
                   $('<li>').addClass('sortDir').append(
