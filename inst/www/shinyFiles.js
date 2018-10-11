@@ -2258,7 +2258,7 @@ var shinyFiles = (function() {
     }).on('click', function(e) {
       $('.sF-modal .open').removeClass('open').find('button').removeClass('active');
     });
-    
+
     // Handle keypresses
     $(document).keydown(function(event) {
       switch(event.keyCode) {
