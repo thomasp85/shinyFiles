@@ -22,7 +22,7 @@ NULL
 #' ))
 #' }
 #'
-#' @importFrom shiny observe invalidateLater req
+#' @importFrom shiny observe invalidateLater req observeEvent
 #' 
 #' @export
 #'
