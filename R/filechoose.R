@@ -182,7 +182,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
 #'
 #' @family shinyFiles
 #'
-#' @importFrom shiny observe invalidateLater req
+#' @importFrom shiny observe invalidateLater req observeEvent
 #' @importFrom fs path 
 #'
 #' @export

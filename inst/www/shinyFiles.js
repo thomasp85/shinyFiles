@@ -981,6 +981,11 @@ var shinyFiles = (function() {
     
     // Ready to enter
     setTimeout(function() {
+      if($('#shiny-modal').length ==0){
+        modal.detach().appendTo('body')
+      }else{
+        modal.detach().appendTo('#shiny-modal')
+      }
       modal.addClass('in');
       backdrop.addClass('in');
     }, 1);
@@ -1546,6 +1551,11 @@ var shinyFiles = (function() {
     
     // Ready to enter
     setTimeout(function() {
+      if($('#shiny-modal').length ==0){
+        modal.detach().appendTo('body')
+      }else{
+        modal.detach().appendTo('#shiny-modal')
+      }
       modal.addClass('in');
       backdrop.addClass('in');
     }, 1);
@@ -1902,6 +1912,11 @@ var shinyFiles = (function() {
           
     // Ready to enter
     setTimeout(function() {
+      if($('#shiny-modal').length ==0){
+        modal.detach().appendTo('body')
+      }else{
+        modal.detach().appendTo('#shiny-modal')
+      }
       modal.addClass('in');
       backdrop.addClass('in');
     }, 1);
