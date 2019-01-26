@@ -31,7 +31,8 @@ other <- list(
     "FP", "FP3", "FP5", "FP7", "FRM", "GDB", "GTABLE", "KEXI", "KEXIC",
     "MYD", "MYI", "NCF", "NSF", "NTF", "NV2", "ODB", "ORA", "PDB",
     "PDI", "PDX", "PRC", "SQL", "REC", "REL", "RIN", "SDB", "SDF",
-    "UDL", "waData", "waIndx", "waModel", "waJournal", "WDB", "WMDB"
+    "UDL", "waData", "waIndx", "waModel", "waJournal", "WDB", "WMDB",
+    "dta", "sav", "sas7bdat"
   ),
   
   "page_white_excel.png" = c("xlm", "xlt", "xlsx", "xlsm", "xltx", "xltm", "xlsb", "xla", "xlam", "xll", "xlw", "csv"),

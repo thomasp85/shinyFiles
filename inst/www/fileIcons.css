@@ -905,7 +905,10 @@
 .sF-filetype-waModel::after,
 .sF-filetype-waJournal::after,
 .sF-filetype-WDB::after,
-.sF-filetype-WMDB::after {
+.sF-filetype-WMDB::after,
+.sF-filetype-dta::after,
+.sF-filetype-sav::after,
+.sF-filetype-sas7bdat::after {
   content: url(icons/Icons16x16/page_white_database.png);
 }
 .sF-icons .sF-filetype-4db::after,
@@ -1008,7 +1011,10 @@
 .sF-icons .sF-filetype-waModel::after,
 .sF-icons .sF-filetype-waJournal::after,
 .sF-icons .sF-filetype-WDB::after,
-.sF-icons .sF-filetype-WMDB::after {
+.sF-icons .sF-filetype-WMDB::after,
+.sF-icons .sF-filetype-dta::after,
+.sF-icons .sF-filetype-sav::after,
+.sF-icons .sF-filetype-sas7bdat::after {
   content: url(icons/Icons32x32/page_white_database.png);
 }
 
