@@ -555,7 +555,6 @@ var shinyFiles = (function() {
     var parsedFiles = {};
     data.files.filename.forEach(function(d, i) {
       try{
-        // month index starts as zero
         parsedFiles[d] = {
           name: d,
           extension: data.files.extension[i],
