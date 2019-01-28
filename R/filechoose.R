@@ -36,7 +36,7 @@ NULL
 #' @importFrom fs path file_access file_exists dir_ls file_info path_file path_ext
 #' @importFrom tibble as_tibble
 #'
-fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
+fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
   if (missing(filetypes)) {
     filetypes <- NULL
   } else if (is.function(filetypes)) {
@@ -75,9 +75,9 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
     fileInfo$filename <- path_file(files)
     fileInfo$extension <- tolower(path_ext(files))
     fileInfo$isdir <- dir.exists(files)
-    fileInfo$mtime <- format(fileInfo$modification_time, format = "%Y-%m-%d-%H-%M")
-    fileInfo$ctime <- format(fileInfo$birth_time, format = "%Y-%m-%d-%H-%M")
-    fileInfo$atime <- format(fileInfo$access_time, format = "%Y-%m-%d-%H-%M")
+    fileInfo$mtime <- as.integer(fileInfo$modification_time) * 1000
+    fileInfo$ctime <- as.integer(fileInfo$birth_time) * 1000
+    fileInfo$atime <- as.integer(fileInfo$access_time) * 1000
     
     if (!is.null(filetypes)) {
       matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes) & fileInfo$extension != ""
