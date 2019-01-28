@@ -555,18 +555,15 @@ var shinyFiles = (function() {
     var parsedFiles = {};
     data.files.filename.forEach(function(d, i) {
       try{
-        var mTime = data.files.mtime[i].split('-');
-        var cTime = data.files.ctime[i].split('-');
-        var aTime = data.files.atime[i].split('-');
         // month index starts as zero
         parsedFiles[d] = {
           name: d,
           extension: data.files.extension[i],
           isDir: data.files.isdir[i],
           size: data.files.size[i],
-          mTime: new Date(mTime[0], mTime[1]-1, mTime[2], mTime[3], mTime[4]),
-          cTime: new Date(cTime[0], cTime[1]-1, cTime[2], cTime[3], cTime[4]),
-          aTime: new Date(aTime[0], aTime[1]-1, aTime[2], aTime[3], aTime[4])
+          mTime: new Date(data.files.mtime[i]),
+          cTime: new Date(data.files.ctime[i]),
+          aTime: new Date(data.files.atime[i])
         };
       } catch(err) {
         //This can happen if there is a broken link, for example
@@ -1964,17 +1961,14 @@ var shinyFiles = (function() {
     } else {
       dirContent.toggleClass('message', false)
       data.content.filename.forEach(function(file, i) {
-        var mTime = data.content.mtime[i].split('-');
-        var cTime = data.content.ctime[i].split('-');
-        var aTime = data.content.atime[i].split('-');
         var d = {
           name: file,
           isDir: data.content.isdir[i],
           extension: data.content.extension[i],
           size: data.content.size[i],
-          mTime: new Date(mTime[0], mTime[1]-1, mTime[2], mTime[3], mTime[4]),
-          cTime: new Date(cTime[0], cTime[1]-1, cTime[2], cTime[3], cTime[4]),
-          aTime: new Date(aTime[0], aTime[1]-1, aTime[2], aTime[3], aTime[4])
+          mTime: new Date(data.content.mtime[i]),
+          cTime: new Date(data.content.ctime[i]),
+          aTime: new Date(data.content.atime[i])
         };
         dirContent.append(
           $('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
