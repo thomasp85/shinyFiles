@@ -1,8 +1,8 @@
 Package: shinyFiles
 Type: Package
 Title: A Server-Side File System Viewer for Shiny
-Version: 0.7.2
-Date: 2018-11-12
+Version: 0.7.2.1
+Date: 2019-1-27
 Authors@R:
     c(person(given = "Thomas Lin",
              family = "Pedersen",
