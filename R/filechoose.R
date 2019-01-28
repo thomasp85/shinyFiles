@@ -75,9 +75,9 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     fileInfo$filename <- path_file(files)
     fileInfo$extension <- tolower(path_ext(files))
     fileInfo$isdir <- dir.exists(files)
-    fileInfo$mtime <- as.numeric(fileInfo$modification_time) * 1000
-    fileInfo$ctime <- as.numeric(fileInfo$birth_time) * 1000
-    fileInfo$atime <- as.numeric(fileInfo$access_time) * 1000
+    fileInfo$mtime <- as.integer(fileInfo$modification_time) * 1000
+    fileInfo$ctime <- as.integer(fileInfo$birth_time) * 1000
+    fileInfo$atime <- as.integer(fileInfo$access_time) * 1000
     
     if (!is.null(filetypes)) {
       matchedFiles <- tolower(fileInfo$extension) %in% tolower(filetypes) & fileInfo$extension != ""
