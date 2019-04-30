@@ -1,3 +1,10 @@
+shinyFiles 0.7.3
+--------------------------------------------------------------------
+
+* Check parent existence when attempting to navigate 'down' in directory selection to avoid down-arrow freeze (@AFriendlyRobot, [PR118](https://github.com/thomasp85/shinyFiles/pull/118))
+* Return the epoch in milliseconds from the server (@keqiang, [PR1113](https://github.com/thomasp85/shinyFiles/pull/113))
+* Allow launching shinyFiles from within a shiny modal (@ifellows, [PR111](https://github.com/thomasp85/shinyFiles/pull/111))
+
 shinyFiles 0.7.2
 --------------------------------------------------------------------
 
