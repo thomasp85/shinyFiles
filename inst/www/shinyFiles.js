@@ -428,7 +428,7 @@ var shinyFiles = (function() {
             do {
               nSib = nextSibling(parDir);
               parDir = parentDir(parDir);
-            } while (nSib.length === 0);
+            } while (nSib.length === 0 && parDir.length > 0);
 
             newElement = nSib;
           } else {
