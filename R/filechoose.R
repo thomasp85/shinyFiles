@@ -50,7 +50,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
   }
 
   function(dir, root) {
-    currentRoots <- if (class(roots) == "function") roots() else roots
+    currentRoots <- if (inherits(roots, "function")) roots() else roots
 
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     if (is.null(root)) root <- names(currentRoots)[1]
@@ -503,7 +503,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, st
 #' @export
 #'
 parseFilePaths <- function(roots, selection) {
-  roots <- if (class(roots) == "function") roots() else roots
+  roots <- if (inherits(roots, "function")) roots() else roots
   
   if (is.null(selection) || is.na(selection) || is.integer(selection) || length(selection$files) == 0) {
     tibble(
