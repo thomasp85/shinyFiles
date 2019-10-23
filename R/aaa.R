@@ -69,7 +69,7 @@ getVolumes <- function(exclude) {
       names(media) <- basename(media)
       volumes <- c(volumes, media)
     } else if (osSystem == "Windows") {
-      where <- system("where wmicx", intern = T)
+      where <- system("where wmic", intern = T)
       if (length(attr(where, "status")) == 0) {
         volumes <- system("wmic logicaldisk get Caption", intern = T)
         volumes <- sub(" *\\r$", "", volumes)
