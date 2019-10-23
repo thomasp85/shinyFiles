@@ -1,3 +1,10 @@
+shinyFiles 0.7.5
+--------------------------------------------------------------------
+
+* Check if "wmic" is accessible on Windows and return a message to the user and an empty volumes vector. See 
+https://github.com/thomasp85/shinyFiles/issues/85#issuecomment-494601646
+
+
 shinyFiles 0.7.4
 --------------------------------------------------------------------
 

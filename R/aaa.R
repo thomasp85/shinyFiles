@@ -69,17 +69,24 @@ getVolumes <- function(exclude) {
       names(media) <- basename(media)
       volumes <- c(volumes, media)
     } else if (osSystem == "Windows") {
-      volumes <- system("wmic logicaldisk get Caption", intern = T)
-      volumes <- sub(" *\\r$", "", volumes)
-      keep <- !tolower(volumes) %in% c("caption", "")
-      volumes <- volumes[keep]
-      volNames <- system("wmic logicaldisk get VolumeName", intern = T)
-      volNames <- sub(" *\\r$", "", volNames)
-      volNames <- volNames[keep]
-      volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
-      volNames <- paste0(volNames, "(", volumes, ")")
-      names(volumes) <- volNames
-      volumes <- gsub(":$", ":/", volumes)
+      where <- system("where wmicx", intern = T)
+      if (length(attr(where, "status")) == 0) {
+        volumes <- system("wmic logicaldisk get Caption", intern = T)
+        volumes <- sub(" *\\r$", "", volumes)
+        keep <- !tolower(volumes) %in% c("caption", "")
+        volumes <- volumes[keep]
+        volNames <- system("wmic logicaldisk get VolumeName", intern = T)
+        volNames <- sub(" *\\r$", "", volNames)
+        volNames <- volNames[keep]
+        volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
+        volNames <- paste0(volNames, "(", volumes, ")")
+        names(volumes) <- volNames
+        volumes <- gsub(":$", ":/", volumes)
+      } else {
+        message("The wmic command does not seem to be in your system path. For a possible\nfix, see the link below or contact your IT department for help.")
+        message("https://github.com/thomasp85/shinyFiles/issues/85#issuecomment-494601646")
+        volumes <- c()
+      }
     } else {
       stop("unsupported OS")
     }

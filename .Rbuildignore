@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 file_ext_parser.R
 .travis.yml
+build/
