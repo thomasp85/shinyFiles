@@ -1,3 +1,20 @@
+shinyFiles 0.7.5
+--------------------------------------------------------------------
+
+* Check if "wmic" is accessible on Windows. If not, return a message to the user and a volumes vector with only the HOMEDRIVE
+
+shinyFiles 0.7.4
+--------------------------------------------------------------------
+
+* Use `inherits` rather than `class(...) == ...` (#123) 
+
+shinyFiles 0.7.3
+--------------------------------------------------------------------
+
+* Check parent existence when attempting to navigate 'down' in directory selection to avoid down-arrow freeze (@AFriendlyRobot, [PR118](https://github.com/thomasp85/shinyFiles/pull/118))
+* Return the epoch in milliseconds from the server (@keqiang, [PR1113](https://github.com/thomasp85/shinyFiles/pull/113))
+* Allow launching shinyFiles from within a shiny modal (@ifellows, [PR111](https://github.com/thomasp85/shinyFiles/pull/111))
+
 shinyFiles 0.7.2
 --------------------------------------------------------------------
 
