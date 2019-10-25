@@ -121,7 +121,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
   if (missing(restrictions)) restrictions <- NULL
 
   function(tree, root) {
-    currentRoots <- if (class(roots) == "function") roots() else roots
+    currentRoots <- if (inherits(roots, "function")) roots() else roots
 
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     if (is.null(root)) root <- names(currentRoots)[1]
@@ -158,7 +158,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'
 dirCreator <- function(roots, ...) {
   function(name, path, root) {
-    currentRoots <- if (class(roots) == "function") roots() else roots
+    currentRoots <- if (inherits(roots, "function")) roots() else roots
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     location <- fs::path(currentRoots[root], paste0(c(path, name), collapse = "/"))
     dir_create(location)
@@ -314,7 +314,7 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
 #' @export
 #'
 parseDirPath <- function(roots, selection) {
-  currentRoots <- if (class(roots) == "function") roots() else roots
+  currentRoots <- if (inherits(roots, "function")) roots() else roots
 
   if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
 
