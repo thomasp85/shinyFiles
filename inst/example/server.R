@@ -27,14 +27,26 @@ shinyServer(function(input, output, session) {
  
   ## print to browser
   output$filepaths <- renderPrint({
-    parseFilePaths(volumes, input$file)
+    if (is.integer(input$file)) {
+      cat("No files have been selected (shinyFileChoose)")
+    } else {
+      parseFilePaths(volumes, input$file)
+    }
   })
   
   output$directorypath <- renderPrint({
-    parseDirPath(volumes, input$directory)
+    if (is.integer(input$directory)) {
+      cat("No directory has been selected (shinyDirChoose)")
+    } else {
+      parseDirPath(volumes, input$directory)
+    }
   })
   
   output$savefile <- renderPrint({
-    parseSavePath(volumes, input$save)
+    if (is.integer(input$file)) {
+      cat("No file-save path has been set (shinyFileSave)")
+    } else {
+      parseSavePath(volumes, input$save)
+    }
   })
 })
