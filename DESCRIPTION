@@ -2,12 +2,12 @@ Package: shinyFiles
 Type: Package
 Title: A Server-Side File System Viewer for Shiny
 Version: 0.7.5
-Date: 2019-10-25
 Authors@R:
     c(person(given = "Thomas Lin",
              family = "Pedersen",
              role = c("cre", "aut"),
-             email = "thomasp85@gmail.com"),
+             email = "thomasp85@gmail.com",
+             comment = c(ORCID = "0000-0002-5147-4711")),
       person(given = "Vincent",
              family = "Nijs",
              role = "aut"),
