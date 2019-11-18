@@ -4,3 +4,5 @@ file_ext_parser.R
 .travis.yml
 ^CRAN-RELEASE$
 build/
+^cran-comments\.md$
+^revdep$
