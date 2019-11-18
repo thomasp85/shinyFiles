@@ -1,3 +1,5 @@
+# shinyFiles (development version)
+
 # shinyFiles 0.7.5
 
 * Check if "wmic" is accessible on Windows. If not, return a message to the user 
