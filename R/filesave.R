@@ -182,8 +182,7 @@ parseSavePath <- function(roots, selection) {
     ))
   }
 
-  currentRoots <- if (class(roots) == "function") roots() else roots
-
+  currentRoots <- if (inherits(roots, "function")) roots() else roots
   if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
 
   if (is.integer(selection)) {

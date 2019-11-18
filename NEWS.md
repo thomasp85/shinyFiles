@@ -1,3 +1,14 @@
+shinyFiles 0.7.5
+--------------------------------------------------------------------
+
+* Check if "wmic" is accessible on Windows. If not, return a message to the user and a volumes vector with only the HOMEDRIVE
+* Updated example in "showcase" mode. Also, demonstrates the use of `as.integer` to check if a file or directory has been selected
+
+shinyFiles 0.7.4
+--------------------------------------------------------------------
+
+* Use `inherits` rather than `class(...) == ...` (#123) 
+
 shinyFiles 0.7.3
 --------------------------------------------------------------------
 

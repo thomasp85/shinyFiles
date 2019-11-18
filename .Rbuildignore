@@ -3,3 +3,4 @@
 file_ext_parser.R
 .travis.yml
 ^CRAN-RELEASE$
+build/
