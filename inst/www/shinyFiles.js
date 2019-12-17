@@ -444,9 +444,34 @@ var shinyFiles = (function() {
                                         $('<a>', {href: '#', text: 'Sort direction'}).addClass($(button).data('sortDir')).prepend($('<span>').addClass('glyphicon glyphicon-arrow-down')).prepend($('<span>').addClass('glyphicon glyphicon-arrow-up')))
         						)
         					)
+        						
+        						//////begin new section
+        						///mabchoose
+        						).append(
+        					$('<div>').addClass('sF-textChoice btn-group input-group-btn btn-group-sm').append(
+        						$('<button>', {id: 'sF-btn-textChoice', text: ''}).addClass('btn btn-default dropdown-toggle').prepend(
+                                    $('<span>').addClass('glyphicon glyphicon-pencil')
+                                )
+                            ).append(
+                                $('<ul>').addClass('dropdown-menu').append(
+                                    $('<li>').append(
+                                        $('<div>').addClass('input-group input-group-sm').append(
+                                            $('<input>', {type: 'text', placeholder: 'Enter Path'}).addClass('form-control')
+                                        ).append(
+                                            $('<span>').addClass('input-group-btn').append(
+                                                $('<button>', {type: 'button'}).addClass('btn btn-default').prop('disabled', true).append(
+                                                    $('<span>').addClass('glyphicon glyphicon-ok-sign')    
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            //end new section
         				).append(
 							$('<select>').addClass('sF-breadcrumps form-control input-sm')
 						)
+						
 					).append(
 						$('<div>').addClass('sF-fileWindow').append(
 							$('<div>').addClass('sF-fileList')
@@ -489,6 +514,7 @@ var shinyFiles = (function() {
         modal.find('.sF-navigate #sF-btn-forward').on('click', function() {
 			moveForward(button, modal);
 		})
+		
         
         // View changing
         modal.find('.sF-view').on('click', 'button', function() {
@@ -531,6 +557,41 @@ var shinyFiles = (function() {
 				toggleSelectButton(modal);
 				return false;
 			})
+			
+		// Text Choice
+		
+		///mabchoose
+        modal.find('.sF-textChoice').on('click', function() {
+            var directory = getCurrentDirectory(modal);
+            var disabled = $(this).find('button').prop('disabled')
+            if(!disabled) {
+                $(this).toggleClass('open')
+    			    .find('button.sF-btn-textChoice').toggleClass('active');
+                if($(this).hasClass('open')) {
+                    $(this).find('input').val(directory.root + directory.path.join("/")).focus();
+                    $(this).find('.input-group-btn>button').prop('disabled', true);
+                }
+            }
+			return false;
+		})
+		modal.find('.sF-textChoice input').on('keyup', function(e) {
+            var disabled = $(this).val() == '';
+            $(this).parent().find('button').prop('disabled', disabled);
+            if(e.keyCode == 13) {
+                 setPathFromTextInput($(this).val(), modal);
+            } else if(e.keyCode == 27) {
+                var parent = $(this).closest('.sF-textChoice');
+                parent.toggleClass('open', false)
+                    .find('button.sF-btn-textChoice').toggleClass('active', true);
+            }
+        })
+		modal.find('.sF-textChoice ul').on('click', function() {
+            return false;
+        })
+        modal.find('.sF-textChoice ul button').on('click', function() {
+            var name = $(this).closest('.input-group').find('input').val();
+           setPathFromTextInput(name,modal);
+        })
         
         // Custom events
         modal
@@ -896,6 +957,29 @@ var shinyFiles = (function() {
                                         $('<a>', {href: '#', text: 'Sort direction'}).addClass($(button).data('sortDir')).prepend($('<span>').addClass('glyphicon glyphicon-arrow-down')).prepend($('<span>').addClass('glyphicon glyphicon-arrow-up')))
         						)
         					)
+        							//////begin new section
+        						///mabsave
+        						).append( 
+        					$('<div>').addClass('sF-textChoice btn-group input-group-btn btn-group-sm').append(
+        						$('<button>', {id: 'sF-btn-textChoice', text: ''}).addClass('btn btn-default dropdown-toggle').prepend(
+                                    $('<span>').addClass('glyphicon glyphicon-pencil')
+                                )
+                            ).append(
+                                $('<ul>').addClass('dropdown-menu').append(
+                                    $('<li>').append(
+                                        $('<div>').addClass('input-group input-group-sm').append(
+                                            $('<input>', {type: 'text', placeholder: 'Enter Path'}).addClass('form-control')
+                                        ).append(
+                                            $('<span>').addClass('input-group-btn').append(
+                                                $('<button>', {type: 'button'}).addClass('btn btn-default').prop('disabled', true).append(
+                                                    $('<span>').addClass('glyphicon glyphicon-ok-sign')    
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            //end new section
         				).append(
 							$('<select>').addClass('sF-breadcrumps form-control input-sm')
 						)
@@ -1012,6 +1096,41 @@ var shinyFiles = (function() {
 				return false;
 			})
         
+        //Folder Text Selection
+        ///mabsave
+        modal.find('.sF-textChoice').on('click', function() {
+            var directory = getCurrentDirectory(modal);
+            var disabled = $(this).find('button').prop('disabled')
+            if(!disabled) {
+                $(this).toggleClass('open')
+    			    .find('button.sF-btn-textChoice').toggleClass('active');
+                if($(this).hasClass('open')) {
+                    $(this).find('input').val(directory.root + directory.path.join("/")).focus();
+                    $(this).find('.input-group-btn>button').prop('disabled', true);
+                }
+            }
+			return false;
+		})
+		modal.find('.sF-textChoice input').on('keyup', function(e) {
+            var disabled = $(this).val() == '';
+            $(this).parent().find('button').prop('disabled', disabled);
+            if(e.keyCode == 13) {
+                 setPathFromTextInput($(this).val(), modal);
+            } else if(e.keyCode == 27) {
+                var parent = $(this).closest('.sF-textChoice');
+                parent.toggleClass('open', false)
+                    .find('button.sF-btn-textChoice').toggleClass('active', true);
+            }
+        })
+		modal.find('.sF-textChoice ul').on('click', function() {
+            return false;
+        })
+        modal.find('.sF-textChoice ul button').on('click', function() {
+            var name = $(this).closest('.input-group').find('input').val();
+           setPathFromTextInput(name,modal);
+        })
+        
+        
         // Folder creation
         modal.find('.sF-newDir').on('click', function() {
             var disabled = $(this).find('button').prop('disabled')
@@ -1040,7 +1159,7 @@ var shinyFiles = (function() {
             return false;
         })
         modal.find('.sF-newDir ul button').on('click', function() {
-            var name = $(this).closest('input-group').find('input').val();
+            var name = $(this).closest('.input-group').find('input').val();
             createFolder(name, modal);
         })
         
@@ -1284,6 +1403,29 @@ var shinyFiles = (function() {
                                         $('<a>', {href: '#', text: 'Sort direction'}).addClass($(button).data('sortDir')).prepend($('<span>').addClass('glyphicon glyphicon-arrow-down')).prepend($('<span>').addClass('glyphicon glyphicon-arrow-up')))
         						)
         					)
+        							//////begin new section
+        						///mabfolder
+        						).append( 
+        					$('<div>').addClass('sF-textChoice btn-group input-group-btn btn-group-sm').append(
+        						$('<button>', {id: 'sF-btn-textChoice', text: ''}).addClass('btn btn-default dropdown-toggle').prepend(
+                                    $('<span>').addClass('glyphicon glyphicon-pencil')
+                                )
+                            ).append(
+                                $('<ul>').addClass('dropdown-menu').append(
+                                    $('<li>').append(
+                                        $('<div>').addClass('input-group input-group-sm').append(
+                                            $('<input>', {type: 'text', placeholder: 'Enter Path'}).addClass('form-control')
+                                        ).append(
+                                            $('<span>').addClass('input-group-btn').append(
+                                                $('<button>', {type: 'button'}).addClass('btn btn-default').prop('disabled', true).append(
+                                                    $('<span>').addClass('glyphicon glyphicon-ok-sign')    
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            //end new section
         				).append(
 							$('<select>').addClass('sF-breadcrumps form-control input-sm')
 						)
@@ -1334,6 +1476,41 @@ var shinyFiles = (function() {
         modal.find('.sF-responseButtons #sF-selectButton').on('click', function() {
 			selectFiles(button, modal);
 		})
+		
+		//Folder Text Selection
+        ///mabsave
+        modal.find('.sF-textChoice').on('click', function() {
+            var directory = getCurrentDirectory(modal);
+            var disabled = $(this).find('button').prop('disabled')
+            if(!disabled) {
+                $(this).toggleClass('open')
+    			    .find('button.sF-btn-textChoice').toggleClass('active');
+                if($(this).hasClass('open')) {
+                    $(this).find('input').val(directory.root + directory.path.join("/")).focus();
+                    $(this).find('.input-group-btn>button').prop('disabled', true);
+                }
+            }
+			return false;
+		})
+		modal.find('.sF-textChoice input').on('keyup', function(e) {
+            var disabled = $(this).val() == '';
+            $(this).parent().find('button').prop('disabled', disabled);
+            if(e.keyCode == 13) {
+                 setPathFromTextInput($(this).val(), modal);
+            } else if(e.keyCode == 27) {
+                var parent = $(this).closest('.sF-textChoice');
+                parent.toggleClass('open', false)
+                    .find('button.sF-btn-textChoice').toggleClass('active', true);
+            }
+        })
+		modal.find('.sF-textChoice ul').on('click', function() {
+            return false;
+        })
+        modal.find('.sF-textChoice ul button').on('click', function() {
+            var name = $(this).closest('.input-group').find('input').val();
+           setPathFromTextInput(name,modal);
+        })
+        
         
         // Create dir
         modal.find('.sF-newDir').on('click', function() {
@@ -1363,7 +1540,7 @@ var shinyFiles = (function() {
             return false;
         })
         modal.find('.sF-newDir ul button').on('click', function() {
-            var name = $(this).closest('input-group').find('input').val();
+            var name = $(this).closest('.input-group').find('input').val();
             createFolder(name, modal);
         })
         
@@ -1656,6 +1833,54 @@ var shinyFiles = (function() {
             $(modal).find('.sF-newDir').toggleClass('open', false)
                 .find('.sF-btn-newDir').toggleClass('active', false);
         }
+    };
+    
+    //mabxx
+    var setPathFromTextInput = function(path, modal) {
+        if(path != '') {
+            var button = $($(modal).data('button'));
+            var currentDir = getCurrentDirectory(modal);
+            var date = new Date();
+            var data = {
+                name: path,
+                path: currentDir.path,
+                root: currentDir.root,
+                id: date.getTime()
+            }
+            
+            var breadcrumps = modal.find('.sF-breadcrumps')
+            var volumes = breadcrumps.find('optgroup option')
+           
+            //Set a new root, if there is a match in the text path
+            var foundRoot = false;
+            $(volumes).each(function(i,volume) {
+                if(path.startsWith($(volume).val())){
+                    data.root = $(volume).val();
+                    data.path = path.substr(data.root.length).split(/[/\\]/)
+                    foundRoot = true;
+                }
+            })
+            if(!foundRoot){
+                debugger;
+                var searchPattern = new RegExp(/^[/\\]/);
+                if(searchPattern.test(path)){ //From the root
+                    data.path = path.split(/[/\\]/);
+                }else{ //relative path
+                    data.path.push(path.split(/[/\\]/));
+                }
+            }
+            
+            $(modal).find('.sF-textChoice').toggleClass('open', false)
+                .find('.sF-btn-textChoice').toggleClass('active', false);
+        
+        
+            modal.data('currentData').contentPath = data.path;
+            console.log($(button).attr('id'))
+            Shiny.onInputChange($(button).attr('id')+'-modal', data);
+            $(button).data('back').push(currentDir);
+		    $(button).data('forward', []);
+        }
+        return false;
     };
     
     var getPath = function(element) {

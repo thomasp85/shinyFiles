@@ -32,7 +32,7 @@
 }
 
 .sF-breadcrumps {
-	width: calc(100% - 255px);
+	width: calc(100% - 290px);
 	margin-left: auto
 }
 
@@ -413,6 +413,33 @@
 }
 
 /*
+    text Choice
+*/
+.sF-textChoice .dropdown-menu {
+	padding: 5px;
+}
+.sF-textChoice .dropdown-menu::before {
+  position: absolute;
+  top: -7px;
+  left: 9px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+.sF-textChoice .dropdown-menu::after {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+/*
     File saver specifics
 */
 .sF-filenaming {
@@ -422,6 +449,12 @@
     margin-right: 15px;
     border-radius: 4px;
 }
+
+.sF-filenaming .sF-textChoice>#sF-btn-textChoice {
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
 .input-group.sF-filenaming input.sF-filename.form-control {
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
