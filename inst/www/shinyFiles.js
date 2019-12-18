@@ -1505,6 +1505,7 @@ var shinyFiles = (function() {
 		})
 		var setPathFromTextInputFolderSelection = function(path, modal) {
             if(path != '') {
+                console.log(modal.data('currentData').selectedRoot);
                 var currentDir = getCurrentDirectoryFolderSelection(modal);
                 var date = new Date();
                 var data = {
@@ -1524,7 +1525,8 @@ var shinyFiles = (function() {
                         foundRoot = true;
                         if(data.root != $(volume).val()){
                             data.root = $(volume).val();
-                            changeVolume(data.root,modal);
+                            //changeVolume(data.root,modal);
+                            modal.data('currentData').selectedRoot = data.root;
                         }
                         data.path = path.substr(data.root.length).split(/[/\\]/);
                     }
@@ -1546,7 +1548,7 @@ var shinyFiles = (function() {
 
                 //traverse the new path and expand directories
                 if(!parent.hasClass('empty')) {
-                    var tree = JSON.parse(JSON.stringify(modal.data('currentData').tree);
+                    var tree = modal.data('currentData').tree;
                     var tpath = JSON.parse(JSON.stringify(data.path))
                     tpath.shift()
                     while(true) {
@@ -1560,10 +1562,6 @@ var shinyFiles = (function() {
                             tree = tree.children.filter(function(f) {
                                 return f.name == name;
                             })[0];
-                            newParent = $(parent).find("sF-content .sF-directory :contains(" + name + ")").closest(".sF-directory");
-                            if(newParent !== undefined){
-                                parent = newParent;
-                            }
                         }
                     }
                     
@@ -1571,15 +1569,15 @@ var shinyFiles = (function() {
                 
                 //select the final path element
                 parent.toggleClass('selected');
-                debugger;
-                        
+
                 $(modal).find('.sF-textChoice').toggleClass('open', false)
                     .find('.sF-btn-textChoice').toggleClass('active', false);
 
                 modal.data('currentData').contentPath = data.path;
                     
-                console.log(modal.data('currentData'))
                 Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
+               // newParent = $(parent).find(".sF-content .sF-directory :contains(" + name + ")").closest(".sF-directory");
+                            
             }
             return false;
         };  
