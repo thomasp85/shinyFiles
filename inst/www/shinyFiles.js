@@ -1478,9 +1478,20 @@ var shinyFiles = (function() {
 		})
 		
 		//Folder Text Selection
-        ///mabsave
+		///mabfolder
+		var getCurrentDirectoryFolderSelection = function(modal){
+            var path = getPath($(modal).find('.sF-dirList .selected'));
+            $(button).data('directory', path)
+                .trigger('selection', path);
+            var data = {
+                path: path,
+                root: $(modal).data('currentData').selectedRoot
+            };
+            return data;
+		}
+		
         modal.find('.sF-textChoice').on('click', function() {
-            var directory = getCurrentDirectory(modal);
+            var directory = getCurrentDirectoryFolderSelection(modal);
             var disabled = $(this).find('button').prop('disabled')
             if(!disabled) {
                 $(this).toggleClass('open')
@@ -1492,11 +1503,92 @@ var shinyFiles = (function() {
             }
 			return false;
 		})
+		var setPathFromTextInputFolderSelection = function(path, modal) {
+            if(path != '') {
+                var currentDir = getCurrentDirectoryFolderSelection(modal);
+                var date = new Date();
+                var data = {
+                    name: path,
+                    path: currentDir.path,
+                    root: currentDir.root,
+                    id: date.getTime()
+                }
+                
+                var breadcrumps = modal.find('.sF-breadcrumps')
+                var volumes = breadcrumps.find('optgroup option')
+               
+                //Set a new root, if there is a match in the text path
+                var foundRoot = false;
+                $(volumes).each(function(i,volume) {
+                    if(path.startsWith($(volume).val())){
+                        foundRoot = true;
+                        if(data.root != $(volume).val()){
+                            data.root = $(volume).val();
+                            changeVolume(data.root,modal);
+                        }
+                        data.path = path.substr(data.root.length).split(/[/\\]/);
+                    }
+                })
+
+                
+                if(!foundRoot){
+                    var searchPattern = new RegExp(/^[/\\]/);
+                    if(searchPattern.test(path)){ //From the root
+                        data.path = path.split(/[/\\]/);
+                    }else{ //relative path
+                        data.path.push(path.split(/[/\\]/));
+                    }
+                }
+                
+                //deselect selected elements
+                $('.sF-dirList .selected').toggleClass('selected');
+                parent = $(".sF-dirList .sF-directory :contains(" + data.root + ")").closest(".sF-directory");
+
+                //traverse the new path and expand directories
+                if(!parent.hasClass('empty')) {
+                    var tree = JSON.parse(JSON.stringify(modal.data('currentData').tree);
+                    var tpath = JSON.parse(JSON.stringify(data.path))
+                    tpath.shift()
+                    while(true) {
+                        if(tree !== undefined){
+                            tree.expanded = true;
+                        }
+                        if(tpath.length == 0) {
+                            break;
+                        } else {
+                            var name = tpath.shift();
+                            tree = tree.children.filter(function(f) {
+                                return f.name == name;
+                            })[0];
+                            newParent = $(parent).find("sF-content .sF-directory :contains(" + name + ")").closest(".sF-directory");
+                            if(newParent !== undefined){
+                                parent = newParent;
+                            }
+                        }
+                    }
+                    
+                }
+                
+                //select the final path element
+                parent.toggleClass('selected');
+                debugger;
+                        
+                $(modal).find('.sF-textChoice').toggleClass('open', false)
+                    .find('.sF-btn-textChoice').toggleClass('active', false);
+
+                modal.data('currentData').contentPath = data.path;
+                    
+                console.log(modal.data('currentData'))
+                Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
+            }
+            return false;
+        };  
+        
 		modal.find('.sF-textChoice input').on('keyup', function(e) {
             var disabled = $(this).val() == '';
             $(this).parent().find('button').prop('disabled', disabled);
             if(e.keyCode == 13) {
-                 setPathFromTextInput($(this).val(), modal);
+                 setPathFromTextInputFolderSelection($(this).val(), modal);
             } else if(e.keyCode == 27) {
                 var parent = $(this).closest('.sF-textChoice');
                 parent.toggleClass('open', false)
@@ -1508,7 +1600,7 @@ var shinyFiles = (function() {
         })
         modal.find('.sF-textChoice ul button').on('click', function() {
             var name = $(this).closest('.input-group').find('input').val();
-           setPathFromTextInput(name,modal);
+           setPathFromTextInputFolderSelection(name,modal);
         })
         
         
@@ -1798,6 +1890,7 @@ var shinyFiles = (function() {
                     })[0];
                 }
             }
+            console.log($(button).attr('id')+'-modal')
             Shiny.onInputChange($(button).attr('id')+'-modal', modal.data('currentData'));
         }
         return false;
@@ -1875,7 +1968,6 @@ var shinyFiles = (function() {
         
         
             modal.data('currentData').contentPath = data.path;
-            console.log($(button).attr('id'))
             Shiny.onInputChange($(button).attr('id')+'-modal', data);
             $(button).data('back').push(currentDir);
 		    $(button).data('forward', []);
