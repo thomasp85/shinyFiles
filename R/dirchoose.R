@@ -127,7 +127,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
     if (is.null(root)) root <- names(currentRoots)[1]
 
     tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
-
+    
     list(
       tree = tree,
       rootNames = I(names(currentRoots)),
@@ -195,7 +195,7 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
   currentFiles <- NULL
   lastDirCreate <- NULL
   clientId <- session$ns(id)
-
+  
   sendDirectoryData <- function(message) {
     req(input[[id]])
     tree <- input[[paste0(id, "-modal")]]
@@ -204,12 +204,17 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
       dirCreate(createDir$name, createDir$path, createDir$root)
       lastDirCreate <<- createDir
     }
+    
+    
+    exist <- TRUE
     if (is.null(tree) || is.na(tree)) {
       dir <- list(tree = list(name = defaultPath, expanded = TRUE), root = defaultRoot)
       files <- list(dir = NA, root = tree$selectedRoot)
     } else {
       dir <- list(tree = tree$tree, root = tree$selectedRoot)
       files <- list(dir = unlist(tree$contentPath), root = tree$selectedRoot)
+      passedPath <- list(list(...)$roots[tree$selectedRoot])
+      exist = dir.exists(do.call(path,c(passedPath,files$dir[-1])))
     }
     newDir <- do.call(dirGet, dir)
     if (is.null(files$dir) || is.na(files$dir)) {
@@ -223,6 +228,8 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
       newDir$content <- content$files
       newDir$writable <- content$writable
     }
+    newDir$exist <- exist
+    newDir$root <- files$root
     currentDir <<- newDir
     session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     if (updateFreq > 0) invalidateLater(updateFreq, session)

@@ -18,12 +18,12 @@
   border-radius: 5px;
   overflow: auto;
 }
-.sF-permission {
+.sF-warning {
   float: left;
   vertical-align: middle;
   padding: 7px 0;
 }
-.sF-permission span {
+.sF-warning span {
   padding-right: 5px;
 }
 .sF-fileList div {

@@ -52,6 +52,9 @@ shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
     if (isTRUE(newDir$exist)) {
       currentDir <<- newDir
       session$sendCustomMessage(message, list(id = clientId, dir = newDir))
+    }else{
+      currentDir$exist = FALSE
+      session$sendCustomMessage(message, list(id = clientId, dir = currentDir))
     }
     if (updateFreq > 0) invalidateLater(updateFreq, session)
   }

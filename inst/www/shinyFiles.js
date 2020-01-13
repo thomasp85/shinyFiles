@@ -573,6 +573,7 @@ var shinyFiles = (function() {
       files: parsedFiles,
       location: data.breadcrumps,
       writable: data.writable,
+      exist: data.exist,
       rootNames: data.roots,
       selectedRoot: data.root
     };
@@ -746,25 +747,45 @@ var shinyFiles = (function() {
     removeFileChooser(button, modal, data);
   };
     
-    var setPermission = function(modal, writable) {
-      var currentState = $(modal).find('.sF-permission').length == 0;
-      var footer = $(modal).find('.modal-footer');
-      var overwrite = $($(modal).data('button')).hasClass('shinySave') ? true : filesSelected(modal);
-      
-      $(modal).find('#sF-btn-newDir').prop('disabled', !(overwrite && writable));
-      
-      if(writable || !overwrite) {
-        footer.find('.sF-permission').remove();
-      } else if(currentState != writable) {
-        footer.prepend(
-          $('<div>').addClass('sF-permission text-warning').append(
-            $('<span>').addClass('glyphicon glyphicon-warning-sign')
-          ).append(
-            $('<span>').text('No write permission for folder')
-          )
+  var setPermission = function(modal, writable) {
+    var currentState = $(modal).find('.sF-warning').length == 0;
+    var footer = $(modal).find('.modal-footer');
+    var overwrite = $($(modal).data('button')).hasClass('shinySave') ? true : filesSelected(modal);
+    
+    $(modal).find('#sF-btn-newDir').prop('disabled', !(overwrite && writable));
+    
+    if(writable || !overwrite) {
+      footer.find('.sF-warning').remove();
+    } else if(currentState != writable) {
+      footer.prepend(
+        $('<div>').addClass('sF-warning text-warning').append(
+          $('<span>').addClass('glyphicon glyphicon-warning-sign')
+        ).append(
+          $('<span>').text('No write permission for folder')
         )
-      }
+      )
     }
+  }
+  
+  var setExists = function(modal, exists) {
+    var currentState = $(modal).find('.sF-warning').length == 0;
+    var footer = $(modal).find('.modal-footer');
+    
+    $(modal).find('#sF-btn-newDir').prop('disabled', !(exists));
+    
+    
+    footer.find('.sF-warning').remove();
+    if(!exists) {
+      footer.prepend(
+        $('<div>').addClass('sF-warning text-warning').append(
+          $('<span>').addClass('glyphicon glyphicon-warning-sign')
+        ).append(
+          $('<span>').text('Folder does not exist')
+        )
+      )
+    }
+  }
+  
   // General functionality ends
     
     
@@ -964,6 +985,7 @@ var shinyFiles = (function() {
           var disabled = $(this).val() == '';
           $(this).parent().find('button').prop('disabled', disabled);
           if(e.keyCode == 13) {
+             e.stopPropagation();
              setPathFromTextInput($(this).val(), modal);
           } else if(e.keyCode == 27) {
             var parent = $(this).closest('.sF-textChoice');
@@ -1168,6 +1190,7 @@ var shinyFiles = (function() {
     if($(element).hasClass('shinySave')) {
       setPermission(modal, data.writable);
     }
+    setExists(modal, data.exist);
     toggleSelectButton(modal);
     
     modal.data('currentData', data);
@@ -1567,7 +1590,8 @@ var shinyFiles = (function() {
           var disabled = $(this).val() == '';
           $(this).parent().find('button').prop('disabled', disabled);
           if(e.keyCode == 13) {
-             setPathFromTextInput($(this).val(), modal);
+            e.stopPropagation();
+            setPathFromTextInput($(this).val(), modal);
           } else if(e.keyCode == 27) {
             var parent = $(this).closest('.sF-textChoice');
             parent.toggleClass('open', false)
@@ -1731,7 +1755,7 @@ var shinyFiles = (function() {
   var evalFilename = function(modal) {
     var parent = modal.find('.sF-filenaming');
     var name = getFilename(modal).name;
-    modal.find('#sF-selectButton').prop('disabled', name == '' || modal.find('.sF-permission').length != 0);
+    modal.find('#sF-selectButton').prop('disabled', name == '' || modal.find('.sF-warning').length != 0);
     if(nameExist(modal, name)) {
       parent.toggleClass('has-feedback', true)
         .toggleClass('has-warning', true);
@@ -2049,7 +2073,8 @@ var shinyFiles = (function() {
         var disabled = $(this).val() == '';
         $(this).parent().find('button').prop('disabled', disabled);
         if(e.keyCode == 13) {
-           setPathFromTextInputFolderSelection($(this).val(), modal);
+          e.stopPropagation();
+          setPathFromTextInputFolderSelection($(this).val(), modal);
         } else if(e.keyCode == 27) {
           var parent = $(this).closest('.sF-textChoice');
           parent.toggleClass('open', false)
@@ -2237,6 +2262,7 @@ var shinyFiles = (function() {
     
     toggleSelectButton(modal);
     setPermission(modal, data.writable);
+    setExists(modal,data.exist);
     
     modal.data('currentData', data);
     $(modal).trigger('change');
