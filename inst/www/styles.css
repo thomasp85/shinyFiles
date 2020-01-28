@@ -37,7 +37,7 @@
 }
 
 .sF-breadcrumps {
-  width: calc(100% - 330px);
+  width: calc(100% - 340px);
   margin-left: auto;
   min-width: 150px;
 }
@@ -70,7 +70,7 @@
 }
 
 .btn-toolbar .sF-breadcrumps {
-  margin-left: 30px;
+  margin-left: 35px;
   float: left;
 }
 
