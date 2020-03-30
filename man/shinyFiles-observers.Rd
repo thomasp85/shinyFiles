@@ -7,14 +7,35 @@
 \alias{shinyFileSave}
 \title{Create a connection to the server side filesystem}
 \usage{
-shinyFileChoose(input, id, updateFreq = 0, session = getSession(),
-  defaultRoot = NULL, defaultPath = "", ...)
+shinyFileChoose(
+  input,
+  id,
+  updateFreq = 0,
+  session = getSession(),
+  defaultRoot = NULL,
+  defaultPath = "",
+  ...
+)
 
-shinyDirChoose(input, id, updateFreq = 0, session = getSession(),
-  defaultPath = "", defaultRoot = NULL, ...)
+shinyDirChoose(
+  input,
+  id,
+  updateFreq = 0,
+  session = getSession(),
+  defaultPath = "",
+  defaultRoot = NULL,
+  ...
+)
 
-shinyFileSave(input, id, updateFreq = 0, session = getSession(),
-  defaultPath = "", defaultRoot = NULL, ...)
+shinyFileSave(
+  input,
+  id,
+  updateFreq = 0,
+  session = getSession(),
+  defaultPath = "",
+  defaultRoot = NULL,
+  ...
+)
 }
 \arguments{
 \item{input}{The input object of the \code{shinyServer()} call (usually
@@ -123,8 +144,9 @@ runApp(list(
 
 }
 \seealso{
-Other shinyFiles: \code{\link{shinyFiles-buttons}},
-  \code{\link{shinyFiles-parsers}},
-  \code{\link{shinyFilesExample}}
+Other shinyFiles: 
+\code{\link{shinyFiles-buttons}},
+\code{\link{shinyFiles-parsers}},
+\code{\link{shinyFilesExample}()}
 }
 \concept{shinyFiles}

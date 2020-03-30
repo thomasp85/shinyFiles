@@ -361,6 +361,8 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #' @param icon An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.
 #' 
 #' @param style Additional styling added to the button (e.g., "margin-top: 25px;")
+#' 
+#' @param viewtype View type to use in the file browser. One of "detail" (default), "list", or "icon"
 #'
 #' @param filetype A named list of file extensions. The name of each element
 #' gives the name of the filetype and the content of the element the possible
@@ -382,8 +384,9 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #'
 #' @export
 #'
-shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL, style=NULL) {
+shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL, style=NULL, viewtype="detail") {
   value <- restoreInput(id = id, default = NULL)
+  viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
   tagList(
     singleton(tags$head(
       tags$script(src = "sF/shinyFiles.js"),
@@ -406,6 +409,7 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
       "data-title" = title,
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
+      "data-view" = paste0("sF-btn-", viewtype),
       list(icon, label)
     )
   )
@@ -418,8 +422,9 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
 #'
 #' @export
 #'
-shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, style=NULL) {
+shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, style=NULL, viewtype="detail") {
   value <- restoreInput(id = id, default = NULL)
+  viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
   tagList(
     singleton(tags$head(
       tags$script(src = "sF/shinyFiles.js"),
@@ -442,6 +447,7 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, st
       "data-title" = title,
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
+      "data-view" = paste0("sF-btn-", viewtype),
       list(icon, label)
     )
   )

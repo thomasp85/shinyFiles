@@ -10,23 +10,65 @@
 \alias{shinySaveLink}
 \title{Create a button to summon a shinyFiles dialog}
 \usage{
-shinyFilesButton(id, label, title, multiple, buttonType = "default",
-  class = NULL, icon = NULL, style = NULL)
+shinyFilesButton(
+  id,
+  label,
+  title,
+  multiple,
+  buttonType = "default",
+  class = NULL,
+  icon = NULL,
+  style = NULL,
+  viewtype = "detail"
+)
 
-shinyFilesLink(id, label, title, multiple, class = NULL, icon = NULL,
-  style = NULL)
+shinyFilesLink(
+  id,
+  label,
+  title,
+  multiple,
+  class = NULL,
+  icon = NULL,
+  style = NULL,
+  viewtype = "detail"
+)
 
-shinyDirButton(id, label, title, buttonType = "default", class = NULL,
-  icon = NULL, style = NULL)
+shinyDirButton(
+  id,
+  label,
+  title,
+  buttonType = "default",
+  class = NULL,
+  icon = NULL,
+  style = NULL
+)
 
-shinyDirLink(id, label, title, class = NULL, icon = NULL,
-  style = NULL)
+shinyDirLink(id, label, title, class = NULL, icon = NULL, style = NULL)
 
-shinySaveButton(id, label, title, filename = "", filetype,
-  buttonType = "default", class = NULL, icon = NULL, style = NULL)
+shinySaveButton(
+  id,
+  label,
+  title,
+  filename = "",
+  filetype,
+  buttonType = "default",
+  class = NULL,
+  icon = NULL,
+  style = NULL,
+  viewtype = "detail"
+)
 
-shinySaveLink(id, label, title, filename = "", filetype, class = NULL,
-  icon = NULL, style = NULL)
+shinySaveLink(
+  id,
+  label,
+  title,
+  filename = "",
+  filetype,
+  class = NULL,
+  icon = NULL,
+  style = NULL,
+  viewtype = "detail"
+)
 }
 \arguments{
 \item{id}{The id matching the \code{\link[=shinyFileChoose]{shinyFileChoose()}}}
@@ -48,6 +90,8 @@ look. The value will be pasted with 'btn-' and added as class.}
 \item{icon}{An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
 
 \item{style}{Additional styling added to the button (e.g., "margin-top: 25px;")}
+
+\item{viewtype}{View type to use in the file browser. One of "detail" (default), "list", or "icon"}
 
 \item{filename}{A predefined filename to be filed in. Can be modified by the
 user during saving.}
@@ -107,11 +151,11 @@ a shinyFiles button. The only markup required is:
 
 \emph{shinyFilesButton}
 
-\code{<button id="inputId" type="button" class="shinyFiles btn btn-default" data-title="title" data-selecttype="single"|"multiple">label</button>}
+\verb{<button id="inputId" type="button" class="shinyFiles btn btn-default" data-title="title" data-selecttype="single"|"multiple">label</button>}
 
 \emph{shinyDirButton}
 
-\code{<button id="inputId" type="button" class="shinyDirectories btn-default" data-title="title">label</button>}
+\verb{<button id="inputId" type="button" class="shinyDirectories btn-default" data-title="title">label</button>}
 
 \emph{shinySaveButton}
 
@@ -186,8 +230,9 @@ The file icons used in the file system navigator is taken from
 FatCows Farm-Fresh Web Icons (\url{http://www.fatcow.com/free-icons})
 }
 \seealso{
-Other shinyFiles: \code{\link{shinyFiles-observers}},
-  \code{\link{shinyFiles-parsers}},
-  \code{\link{shinyFilesExample}}
+Other shinyFiles: 
+\code{\link{shinyFiles-observers}},
+\code{\link{shinyFiles-parsers}},
+\code{\link{shinyFilesExample}()}
 }
 \concept{shinyFiles}

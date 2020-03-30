@@ -20,7 +20,7 @@ include files with no extension. If not set all file types will be included}
 
 \item{pattern}{A regular expression used to select files to show. See
 \code{\link[base:grep]{base::grepl()}} for additional discussion on how to
-construct a regular expression (e.g., "log.*\\.txt")}
+construct a regular expression (e.g., "log.*\\\\.txt")}
 
 \item{hidden}{A logical value specifying whether hidden files should be
 returned or not}

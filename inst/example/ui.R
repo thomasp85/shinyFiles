@@ -15,7 +15,7 @@ shinyUI(pageWithSidebar(
            remembered, as well as any other states. Each button has its own\n
            memory."),
     tags$hr(),
-    shinyFilesButton("file", "File select", "Please select a file", multiple = TRUE),
+    shinyFilesButton("file", "File select", "Please select a file", multiple = TRUE, viewtype = "detail"),
     tags$p(),
     tags$p('The file selection button allows the user to select one or several 
             files and get their absolute position communicated back to the shiny
@@ -32,7 +32,7 @@ shinyUI(pageWithSidebar(
            missing write permissions is selected. Lastly it is possible to\n
            create folders on the fly"),
     tags$hr(),
-    shinySaveButton("save", "Save file", "Save file as...", filetype = list(text = "txt", picture = c("jpeg", "jpg"))),
+    shinySaveButton("save", "Save file", "Save file as...", filetype = list(text = "txt", picture = c("jpeg", "jpg")), viewtype = "icon"),
     tags$p(),
     tags$p('The last type of button is the save button which allows the user
             to navigate to a position in the filesystem and specify the name

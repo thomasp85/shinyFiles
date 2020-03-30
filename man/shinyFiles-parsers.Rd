@@ -26,7 +26,7 @@ A data frame matching the format of \code{\link[shiny:fileInput]{shiny::fileInpu
 This function takes the value of a shinyFiles button input variable and
 converts it to be easier to work with on the server side. In the case of file
 selections  and saving the input variable is converted to a data frame (using
-\code{parseFilePaths()} or \code{parseSavePath() respectively}) of the same
+\code{parseFilePaths()} or \verb{parseSavePath() respectively}) of the same
 format as that provided by \code{\link[shiny:fileInput]{shiny::fileInput()}}. The only caveat
 here is that the MIME type cannot be inferred in file selections so this will
 always be an empty string and new files doesn't have a size so this is left
@@ -61,8 +61,9 @@ runApp(list(
 
 }
 \seealso{
-Other shinyFiles: \code{\link{shinyFiles-buttons}},
-  \code{\link{shinyFiles-observers}},
-  \code{\link{shinyFilesExample}}
+Other shinyFiles: 
+\code{\link{shinyFiles-buttons}},
+\code{\link{shinyFiles-observers}},
+\code{\link{shinyFilesExample}()}
 }
 \concept{shinyFiles}

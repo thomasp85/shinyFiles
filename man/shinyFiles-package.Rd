@@ -6,7 +6,7 @@
 \alias{shinyFiles-package}
 \title{A Server-Side File System Viewer for Shiny}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Provides functionality for client-side navigation of
     the server side file system in shiny apps. In case the app is running
@@ -23,7 +23,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Thomas Lin Pedersen \email{thomasp85@gmail.com} (0000-0002-5147-4711)
+\strong{Maintainer}: Thomas Lin Pedersen \email{thomasp85@gmail.com} (\href{https://orcid.org/0000-0002-5147-4711}{ORCID})
 
 Authors:
 \itemize{

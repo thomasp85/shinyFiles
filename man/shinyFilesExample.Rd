@@ -15,8 +15,9 @@ besides the button shows how the user selection is made accessible to the
 server after parsing with \code{\link[=parseFilePaths]{parseFilePaths()}}.
 }
 \seealso{
-Other shinyFiles: \code{\link{shinyFiles-buttons}},
-  \code{\link{shinyFiles-observers}},
-  \code{\link{shinyFiles-parsers}}
+Other shinyFiles: 
+\code{\link{shinyFiles-buttons}},
+\code{\link{shinyFiles-observers}},
+\code{\link{shinyFiles-parsers}}
 }
 \concept{shinyFiles}
