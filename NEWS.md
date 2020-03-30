@@ -1,5 +1,10 @@
 # shinyFiles (development version)
 
+# shinyFiles 0.7.6
+
+* The default `viewtype` in the file browser has been changed to "detail". A new argument `viewtype` has been added to shinyFilesButton, shinyFilesLink, shinySaveButton, and shinySaveLink that should be one of "detail" (default), "list", or "icon"
+* Allow the user to type a path, including the filename. In filechoose, the file will be selected if it exists. In filesave, if the file does not exist, but the base directory does, the filename will be entered into the dialog. (@bellma-lilly, #129 and #131)
+
 # shinyFiles 0.7.5
 
 * Check if "wmic" is accessible on Windows. If not, return a message to the user 
