@@ -53,8 +53,21 @@ shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
       currentDir <<- newDir
       session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     }else{
-      currentDir$exist = FALSE
-      session$sendCustomMessage(message, list(id = clientId, dir = currentDir))
+      #first, back up a directory and try again; maybe the user is trying to save as a new filename
+      savedDir = dir$dir
+      selectedFile = sub(".*/(.*)$","\\1",dir$dir)
+      #shorten the directory (include the slash at the end to make sure we don't look for a non-directory)
+      dir$dir = sub("(.*/).*$","\\1",dir$dir)
+      newDir <- do.call(fileGet, dir)
+      if (isTRUE(newDir$exist)) { #backing up once, we find a valid directory
+        newDir$selectedFile <- selectedFile
+        currentDir <<- newDir
+        session$sendCustomMessage(message, list(id = clientId, dir = newDir))
+      }else{
+        #even backing up, the directory is not valid
+        currentDir$exist = FALSE
+        session$sendCustomMessage(message, list(id = clientId, dir = currentDir))
+      }
     }
     if (updateFreq > 0) invalidateLater(updateFreq, session)
   }

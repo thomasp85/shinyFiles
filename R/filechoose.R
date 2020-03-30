@@ -56,6 +56,18 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     if (is.null(root)) root <- names(currentRoots)[1]
     
     fulldir <- path(currentRoots[root], paste0(dir, collapse = "/"))
+    selectedFile = ""
+    if(file.exists(fulldir) && !dir.exists(fulldir)){
+      #dir is a normal file, not a directory
+      #get the filename, and use it as the selectedFile
+      selectedFile = sub(".*/(.*)$","\\1",fulldir)
+      #shorten the directory
+      fulldir = sub("(.*)/.*$","\\1",fulldir)
+      #dir also needs shortened for breadcrumps
+      dir = sub("(.*)/.*$","\\1",dir)
+    }
+    
+    
     writable <- as.logical(file_access(fulldir, "write"))
     files <- suppressWarnings(dir_ls(fulldir, all = hidden, fail = FALSE))
   
@@ -100,7 +112,8 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
       exist = as.logical(file_exists(fulldir)),
       breadcrumps = I(c("", breadcrumps[breadcrumps != ""])),
       roots = I(names(currentRoots)),
-      root = root
+      root = root,
+      selectedFile = selectedFile
     )
   }
 }

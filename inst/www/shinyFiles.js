@@ -575,7 +575,8 @@ var shinyFiles = (function() {
       writable: data.writable,
       exist: data.exist,
       rootNames: data.roots,
-      selectedRoot: data.root
+      selectedRoot: data.root,
+      selectedFile: data.selectedFile
     };
   };
     
@@ -1065,6 +1066,7 @@ var shinyFiles = (function() {
   };
 
   var populateFileChooser = function(element, data, forceUpdate) {
+
     var modal = $(element).data('modal');
       
     $(element).data('dataCache', data);
@@ -1133,7 +1135,7 @@ var shinyFiles = (function() {
         var d = data.files[i];
         
         modal.find('.sF-fileList').append(
-          $('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
+          $('<div>').toggleClass('sF-file', !d.isDir).toggleClass('selected',d.name==data.selectedFile).toggleClass('sF-directory', d.isDir).append(
             $('<div>').addClass('sF-file-icon').addClass('sF-filetype-'+d.extension)
           ).append(
             $('<div>').addClass('sF-file-name').append(
@@ -1162,12 +1164,13 @@ var shinyFiles = (function() {
         }).remove();
       };
       
+      
       if (Object.keys(newFiles).length === 0) {
         for (i in newFiles) {
           var d = newFiles[i];
           
           modal.find('.sF-fileList').append(
-            $('<div>').toggleClass('sF-file', !d.isDir).toggleClass('sF-directory', d.isDir).append(
+            $('<div>').toggleClass('sF-file', !d.isDir).toggleClass('selected',d.name==data.selectedFile).toggleClass('sF-directory', d.isDir).append(
               $('<div>').addClass('sF-file-icon').addClass('sF-filetype-'+d.extension)
             ).append(
               $('<div>').addClass('sF-file-name').append(
@@ -1189,6 +1192,9 @@ var shinyFiles = (function() {
     
     if($(element).hasClass('shinySave')) {
       setPermission(modal, data.writable);
+      if(data.selectedFile != ""){
+        setFilename(modal,data.selectedFile)
+      }
     }
     setExists(modal, data.exist);
     toggleSelectButton(modal);
