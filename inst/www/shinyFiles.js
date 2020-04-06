@@ -800,7 +800,7 @@ var shinyFiles = (function() {
     
     // Creating modal
     var modal = $('<div>', {id: $(button).attr('id')+'-modal'}).addClass('sF-modalContainer modal fade').css('display', 'block').append(
-      $('<div>').addClass('sF-modal modal-dialog').append(
+      $('<div>').addClass('sF-modal modal-dialog modal-lg').append(
         $('<div>').addClass('modal-content').append(
           $('<div>').addClass('modal-header').append(
             $('<button>', {html: '&times;', type: 'button'}).addClass('close')
@@ -1359,7 +1359,7 @@ var shinyFiles = (function() {
   
   // Creating modal
   var modal = $('<div>', {id: $(button).attr('id')+'-modal'}).addClass('sF-modalContainer modal fade').css('display', 'block').append(
-      $('<div>').addClass('sF-modal modal-dialog').append(
+      $('<div>').addClass('sF-modal modal-dialog modal-lg').append(
         $('<div>').addClass('modal-content').append(
           $('<div>').addClass('modal-header').append(
             $('<button>', {html: '&times;', type: 'button'}).addClass('close')
@@ -1833,7 +1833,7 @@ var shinyFiles = (function() {
           
     // Create the dialog
     var modal = $('<div>', {id: $(button).attr('id')+'-modal'}).addClass('sF-modalContainer modal fade').css('display', 'block'  ).append(
-      $('<div>').addClass('sF-modal modal-dialog').append(
+      $('<div>').addClass('sF-modal modal-dialog modal-lg').append(
         $('<div>').addClass('modal-content').append(
           $('<div>').addClass('modal-header').append(
             $('<button>', {html: '&times;', type: 'button'}).addClass('close')
