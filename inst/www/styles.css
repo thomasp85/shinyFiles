@@ -13,7 +13,7 @@
 }
 .sF-fileWindow {
   margin-top: 10px;
-  height: 200px;
+  height: 50vh;
   border: 1px solid grey;
   border-radius: 5px;
   overflow: auto;
@@ -278,7 +278,7 @@
   Dir chooser
 */
 .sF-dirWindow {
-  min-height: 223px;
+  min-height: 50vh;
   cursor: default;
 }
 .sF-dirWindow h6 {
@@ -291,7 +291,7 @@
   List and content
 */
 .sF-dirInfo>div {
-  height: 200px;
+  height: 48vh;
   border: 1px solid grey;
   border-radius: 5px;
   overflow: auto;
