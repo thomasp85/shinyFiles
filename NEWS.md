@@ -1,3 +1,5 @@
+# shinyFiles (development version)
+
 # shinyFiles 0.8.0
 
 * Increase in default height based on a experimentation by @SamGG. This works well with the new default detail view. Users can still adjust in CSS as discussed in https://github.com/thomasp85/shinyFiles/issues/134
