@@ -186,8 +186,10 @@ dirCreator <- function(roots, ...) {
 #'
 #' @export
 #'
-shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
-                           defaultPath="", defaultRoot=NULL, ...) {
+shinyDirChoose <- function(
+  input, id, updateFreq = 0, session=getSession(),
+  defaultPath="", defaultRoot=NULL, ...
+) {
   dirGet <- do.call(dirGetter, list(...))
   fileGet <- do.call(fileGetter, list(...))
   dirCreate <- do.call(dirCreator, list(...))
@@ -252,7 +254,10 @@ shinyDirChoose <- function(input, id, updateFreq = 0, session=getSession(),
 #'
 #' @export
 #'
-shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, icon=NULL, style=NULL) {
+shinyDirButton <- function(
+  id, label, title, buttonType="default", 
+  class=NULL, icon=NULL, style=NULL, ...
+) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -275,7 +280,8 @@ shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, i
       style = style,
       "data-title" = title,
       "data-val" = value,
-      list(icon, as.character(label))
+      list(icon, as.character(label)),
+      ...
     )
   )
 }
@@ -287,7 +293,7 @@ shinyDirButton <- function(id, label, title, buttonType="default", class=NULL, i
 #'
 #' @export
 #'
-shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
+shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL, ...) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
     singleton(tags$head(
@@ -310,7 +316,8 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL) {
       style = style,
       "data-title" = title,
       "data-val" = value,
-      list(icon, as.character(label))
+      list(icon, as.character(label)),
+      ...
     )
   )
 }
