@@ -19,7 +19,8 @@ shinyFilesButton(
   class = NULL,
   icon = NULL,
   style = NULL,
-  viewtype = "detail"
+  viewtype = "detail",
+  ...
 )
 
 shinyFilesLink(
@@ -30,7 +31,8 @@ shinyFilesLink(
   class = NULL,
   icon = NULL,
   style = NULL,
-  viewtype = "detail"
+  viewtype = "detail",
+  ...
 )
 
 shinyDirButton(
@@ -40,10 +42,11 @@ shinyDirButton(
   buttonType = "default",
   class = NULL,
   icon = NULL,
-  style = NULL
+  style = NULL,
+  ...
 )
 
-shinyDirLink(id, label, title, class = NULL, icon = NULL, style = NULL)
+shinyDirLink(id, label, title, class = NULL, icon = NULL, style = NULL, ...)
 
 shinySaveButton(
   id,
@@ -55,7 +58,8 @@ shinySaveButton(
   class = NULL,
   icon = NULL,
   style = NULL,
-  viewtype = "detail"
+  viewtype = "detail",
+  ...
 )
 
 shinySaveLink(
@@ -67,7 +71,8 @@ shinySaveLink(
   class = NULL,
   icon = NULL,
   style = NULL,
-  viewtype = "detail"
+  viewtype = "detail",
+  ...
 )
 }
 \arguments{
@@ -92,6 +97,8 @@ look. The value will be pasted with 'btn-' and added as class.}
 \item{style}{Additional styling added to the button (e.g., "margin-top: 25px;")}
 
 \item{viewtype}{View type to use in the file browser. One of "detail" (default), "list", or "icon"}
+
+\item{...}{Named attributes to be applied to the button or link (e.g., 'onclick')}
 
 \item{filename}{A predefined filename to be filed in. Can be modified by the
 user during saving.}

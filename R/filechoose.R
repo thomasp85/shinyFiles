@@ -381,6 +381,8 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #' gives the name of the filetype and the content of the element the possible
 #' extensions e.g. `list(picture=c('jpg', 'jpeg'))`. The first extension
 #' will be used as default if it is not supplied by the user.
+#' 
+#' @param ... Named attributes to be applied to the button or link (e.g., 'onclick')
 #'
 #' @return This function is called for its side effects
 #'
@@ -397,7 +399,10 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #'
 #' @export
 #'
-shinyFilesButton <- function(id, label, title, multiple, buttonType="default", class=NULL, icon=NULL, style=NULL, viewtype="detail") {
+shinyFilesButton <- function(
+  id, label, title, multiple, buttonType="default", 
+  class=NULL, icon=NULL, style=NULL, viewtype="detail", ...
+) {
   value <- restoreInput(id = id, default = NULL)
   viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
   tagList(
@@ -423,7 +428,8 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
       "data-view" = paste0("sF-btn-", viewtype),
-      list(icon, label)
+      list(icon, label),
+      ...
     )
   )
 }
@@ -435,7 +441,10 @@ shinyFilesButton <- function(id, label, title, multiple, buttonType="default", c
 #'
 #' @export
 #'
-shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, style=NULL, viewtype="detail") {
+shinyFilesLink <- function(
+  id, label, title, multiple, class=NULL, icon=NULL, style=NULL, 
+  viewtype="detail", ...
+) {
   value <- restoreInput(id = id, default = NULL)
   viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
   tagList(
@@ -461,7 +470,8 @@ shinyFilesLink <- function(id, label, title, multiple, class=NULL, icon=NULL, st
       "data-selecttype" = ifelse(multiple, "multiple", "single"),
       "data-val" = value,
       "data-view" = paste0("sF-btn-", viewtype),
-      list(icon, label)
+      list(icon, label),
+      ...
     )
   )
 }

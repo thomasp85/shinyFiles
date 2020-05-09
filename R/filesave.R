@@ -26,8 +26,10 @@ NULL
 #' 
 #' @export
 #'
-shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
-                          defaultPath="", defaultRoot=NULL, ...) {
+shinyFileSave <- function(
+  input, id, updateFreq=0, session=getSession(),
+  defaultPath="", defaultRoot=NULL, ...
+) {
   fileGet <- do.call(fileGetter, list(...))
   dirCreate <- do.call(dirCreator, list(...))
   currentDir <- list()
@@ -90,8 +92,10 @@ shinyFileSave <- function(input, id, updateFreq=0, session=getSession(),
 #'
 #' @export
 #'
-shinySaveButton <- function(id, label, title, filename="", filetype, 
-                            buttonType="default", class=NULL, icon=NULL, style=NULL, viewtype="detail") {
+shinySaveButton <- function(
+  id, label, title, filename="", filetype,  buttonType="default", 
+  class=NULL, icon=NULL, style=NULL, viewtype="detail", ...
+) {
   if (missing(filetype)) filetype <- NA
   filetype <- formatFiletype(filetype)
   viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
@@ -121,7 +125,8 @@ shinySaveButton <- function(id, label, title, filename="", filetype,
       "data-filename" = filename,
       "data-val" = value,
       "data-view" = paste0("sF-btn-", viewtype),
-      list(icon, label)
+      list(icon, label),
+      ...
     )
   )
 }
@@ -132,7 +137,10 @@ shinySaveButton <- function(id, label, title, filename="", filetype,
 #'
 #' @export
 #'
-shinySaveLink <- function(id, label, title, filename="", filetype, class=NULL, icon=NULL, style=NULL, viewtype="detail") {
+shinySaveLink <- function(
+  id, label, title, filename="", filetype, 
+  class=NULL, icon=NULL, style=NULL, viewtype="detail", ...
+) {
   if (missing(filetype)) filetype <- NA
   filetype <- formatFiletype(filetype)
   viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
@@ -162,7 +170,8 @@ shinySaveLink <- function(id, label, title, filename="", filetype, class=NULL, i
       "data-filename" = filename,
       "data-val" = value,
       "data-view" = paste0("sF-btn-", viewtype),
-      list(icon, label)
+      list(icon, label),
+      ...
     )
   )
 }
