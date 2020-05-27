@@ -36,7 +36,7 @@ NULL
 #' @importFrom fs path file_access file_exists dir_ls file_info path_file path_ext
 #' @importFrom tibble as_tibble
 #'
-fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
+fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE, max_files=NULL) {
   if (missing(filetypes)) {
     filetypes <- NULL
   } else if (is.function(filetypes)) {
@@ -66,7 +66,6 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
       #dir also needs shortened for breadcrumps
       dir = sub("(.*)/.*$","\\1",dir)
     }
-    
     
     writable <- as.logical(file_access(fulldir, "write"))
     files <- suppressWarnings(dir_ls(fulldir, all = hidden, fail = FALSE))
@@ -105,6 +104,10 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     }
     
     breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
+    
+    if (length(max_files) > 0 && is.numeric(max_files) && nrow(fileInfo) > max_files) {
+      fileInfo <- fileInfo[seq_len(max_files), ]
+    }
     
     list(
       files = as_tibble(fileInfo[, c("filename", "extension", "isdir", "size", "mtime", "ctime", "atime")]),

@@ -5,7 +5,8 @@ library(fs)
 shinyServer(function(input, output, session) {
   volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
   shinyFileChoose(input, "file", roots = volumes, session = session)
-  shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"))
+  ## maximum number of files to show in the Content preview is set to 100
+  shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"), max_files = 100)
   shinyFileSave(input, "save", roots = volumes, session = session, restrictions = system.file(package = "base"))
   
   ## print to console to see how the value of the shinyFiles 

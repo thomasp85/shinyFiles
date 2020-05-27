@@ -188,10 +188,10 @@ dirCreator <- function(roots, ...) {
 #'
 shinyDirChoose <- function(
   input, id, updateFreq = 0, session=getSession(),
-  defaultPath="", defaultRoot=NULL, ...
+  defaultPath="", defaultRoot=NULL, max_files=NULL, ...
 ) {
   dirGet <- do.call(dirGetter, list(...))
-  fileGet <- do.call(fileGetter, list(...))
+  fileGet <- do.call(fileGetter, list(..., max_files=max_files))
   dirCreate <- do.call(dirCreator, list(...))
   currentDir <- list()
   currentFiles <- NULL
