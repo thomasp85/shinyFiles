@@ -43,7 +43,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$savefile <- renderPrint({
-    if (is.integer(input$file)) {
+    if (is.integer(input$save)) {
       cat("No file-save path has been set (shinyFileSave)")
     } else {
       parseSavePath(volumes, input$save)
