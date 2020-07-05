@@ -1,6 +1,7 @@
 # shinyFiles (development version)
 
 * Allow additional arguments to be passed to shinyFiles buttons and links (e.g., onclick)
+* Fix for creating a new folder using the `Create new folder > +` button in shinyFileSave (https://github.com/thomasp85/shinyFiles/issues/142)
 
 # shinyFiles 0.8.0
 
