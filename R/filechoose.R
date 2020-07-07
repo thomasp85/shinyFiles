@@ -161,9 +161,9 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
 #'
 #' @param defaultPath The default relative path specified given the `defaultRoot`.
 #' 
-#' @param writable Whether creating files/directories is allowed.
+#' @param allowDirCreate Logical that indicates if creating new directories by the user is allowed.
 #'
-#' @param ... Arguments to be passed on to [fileGetter()] or [dirGetter()]
+#' @param ... Arguments to be passed on to [fileGetter()] or [dirGetter()].
 #'
 #' @return A reactive observer that takes care of the server side logic of the
 #' filesystem connection.

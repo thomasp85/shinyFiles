@@ -24,7 +24,7 @@ shinyDirChoose(
   session = getSession(),
   defaultPath = "",
   defaultRoot = NULL,
-  writable = TRUE,
+  allowDirCreate = TRUE,
   ...
 )
 
@@ -35,6 +35,7 @@ shinyFileSave(
   session = getSession(),
   defaultPath = "",
   defaultRoot = NULL,
+  allowDirCreate = TRUE,
   ...
 )
 }
@@ -61,9 +62,9 @@ can be either \code{'wd'} or \code{'home'}.}
 
 \item{defaultPath}{The default relative path specified given the \code{defaultRoot}.}
 
-\item{...}{Arguments to be passed on to \code{\link[=fileGetter]{fileGetter()}} or \code{\link[=dirGetter]{dirGetter()}}}
+\item{...}{Arguments to be passed on to \code{\link[=fileGetter]{fileGetter()}} or \code{\link[=dirGetter]{dirGetter()}}.}
 
-\item{writable}{Whether creating files/directories is allowed.}
+\item{allowDirCreate}{Logical that indicates if creating new directories by the user is allowed.}
 }
 \value{
 A reactive observer that takes care of the server side logic of the

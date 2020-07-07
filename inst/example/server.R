@@ -5,7 +5,8 @@ library(fs)
 shinyServer(function(input, output, session) {
   volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
   shinyFileChoose(input, "file", roots = volumes, session = session)
-  shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"))
+  # by setting `allowDirCreate = FALSE` a user will not be able to create a new directory
+  shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"), allowDirCreate = FALSE)
   shinyFileSave(input, "save", roots = volumes, session = session, restrictions = system.file(package = "base"))
   
   ## print to console to see how the value of the shinyFiles 

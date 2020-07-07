@@ -1,7 +1,7 @@
 Package: shinyFiles
 Type: Package
 Title: A Server-Side File System Viewer for Shiny
-Version: 0.8.0.9001
+Version: 0.8.0.9002
 Authors@R:
     c(person(given = "Thomas Lin",
              family = "Pedersen",
@@ -38,7 +38,7 @@ Collate:
     'dirchoose.R'
     'filesave.R'
     'shinyFiles-package.R'
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 URL: https://github.com/thomasp85/shinyFiles
 BugReports: https://github.com/thomasp85/shinyFiles/issues
 Roxygen: list(markdown = TRUE)

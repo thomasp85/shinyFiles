@@ -2,6 +2,7 @@
 
 * Allow additional arguments to be passed to shinyFiles buttons and links (e.g., onclick)
 * Fix for creating a new folder using the `Create new folder > +` button in shinyFileSave (https://github.com/thomasp85/shinyFiles/issues/142)
+* Allow dir chooser to disable creating new directories (@dipterix# 144). Extended to allow the same functionality on saving files
 
 # shinyFiles 0.8.0
 

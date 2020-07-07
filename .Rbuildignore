@@ -6,3 +6,4 @@ file_ext_parser.R
 build/
 ^cran-comments\.md$
 ^revdep$
+shinyFiles.code-workspace
