@@ -160,6 +160,8 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
 #' can be either `'wd'` or `'home'`.
 #'
 #' @param defaultPath The default relative path specified given the `defaultRoot`.
+#' 
+#' @param writable Whether creating files/directories is allowed.
 #'
 #' @param ... Arguments to be passed on to [fileGetter()] or [dirGetter()]
 #'

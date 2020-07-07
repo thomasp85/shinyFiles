@@ -24,6 +24,7 @@ shinyDirChoose(
   session = getSession(),
   defaultPath = "",
   defaultRoot = NULL,
+  writable = TRUE,
   ...
 )
 
@@ -61,6 +62,8 @@ can be either \code{'wd'} or \code{'home'}.}
 \item{defaultPath}{The default relative path specified given the \code{defaultRoot}.}
 
 \item{...}{Arguments to be passed on to \code{\link[=fileGetter]{fileGetter()}} or \code{\link[=dirGetter]{dirGetter()}}}
+
+\item{writable}{Whether creating files/directories is allowed.}
 }
 \value{
 A reactive observer that takes care of the server side logic of the

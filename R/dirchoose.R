@@ -188,7 +188,7 @@ dirCreator <- function(roots, ...) {
 #'
 shinyDirChoose <- function(
   input, id, updateFreq = 0, session=getSession(),
-  defaultPath="", defaultRoot=NULL, ...
+  defaultPath="", defaultRoot=NULL, writable = TRUE, ...
 ) {
   dirGet <- do.call(dirGetter, list(...))
   fileGet <- do.call(fileGetter, list(...))
@@ -202,9 +202,16 @@ shinyDirChoose <- function(
     req(input[[id]])
     tree <- input[[paste0(id, "-modal")]]
     createDir <- input[[paste0(id, "-newDir")]]
+    
+    # To avoid showing notifications even users are not trying to create
+    # new folders; put "writable" check inside of the "identical" check
     if (!identical(createDir, lastDirCreate)) {
-      dirCreate(createDir$name, createDir$path, createDir$root)
-      lastDirCreate <<- createDir
+      if ( writable ){
+          dirCreate(createDir$name, createDir$path, createDir$root)
+          lastDirCreate <<- createDir
+      } else {
+        shiny::showNotification(shiny::p('Creating directory is disabled.'), type = 'error')
+      }
     }
     
     
