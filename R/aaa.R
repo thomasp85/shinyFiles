@@ -5,7 +5,7 @@
 #' @noRd
 #'
 .onLoad <- function(...) {
-  addResourcePath("sF", system.file("www", package = "shinyFiles"))
+  shiny::addResourcePath("sF", system.file("www", package = "shinyFiles"))
 }
 
 #' Run a simple example app using the shinyFiles functionality
@@ -24,7 +24,7 @@
 #' @export
 #'
 shinyFilesExample <- function() {
-  runApp(system.file("example", package = "shinyFiles", mustWork = T), display.mode = "showcase")
+  shiny::runApp(system.file("example", package = "shinyFiles", mustWork = T), display.mode = "showcase")
 }
 #' Get a list of available volumes
 #'
@@ -51,7 +51,7 @@ shinyFilesExample <- function() {
 #'
 #' @return A function returning a named vector of available volumes
 #' 
-#' @importFrom fs dir_ls
+#' @importFrom fs dir_exists dir_ls 
 #'
 #' @export
 #'
@@ -65,9 +65,11 @@ getVolumes <- function(exclude) {
       names(volumes) <- basename(volumes)
     } else if (osSystem == "Linux") {
       volumes <- c("Computer" = "/")
-      media <- dir_ls("/media")
-      names(media) <- basename(media)
-      volumes <- c(volumes, media)
+      if (isTRUE(dir_exists("/media"))) {
+        media <- dir_ls("/media")
+        names(media) <- basename(media)
+        volumes <- c(volumes, media)
+      }
     } else if (osSystem == "Windows") {
       wmic <- paste0(Sys.getenv("SystemRoot"), "\\System32\\Wbem\\WMIC.exe")
       if (!file.exists(wmic)) {
