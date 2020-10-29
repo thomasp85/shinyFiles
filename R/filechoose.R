@@ -55,7 +55,15 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     if (is.null(root)) root <- names(currentRoots)[1]
     
+
     fulldir <- path(currentRoots[root], paste0(dir, collapse = "/"))
+    fulldir <- try(path_norm(fulldir), silent = TRUE)
+    if (inherits(fulldir, "try-error") ||
+        !path_has_parent(fulldir, currentRoots[root])) {
+      fulldir <- path(currentRoots[root])
+      dir <- ""
+    }
+    
     selectedFile = ""
     if(file.exists(fulldir) && !dir.exists(fulldir)){
       #dir is a normal file, not a directory
