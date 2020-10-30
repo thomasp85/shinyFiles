@@ -33,7 +33,8 @@ NULL
 #' returns a list of files to be passed on to shiny
 #'
 #' @importFrom tools file_ext
-#' @importFrom fs path file_access file_exists dir_ls file_info path_file path_ext
+#' @importFrom fs path file_access file_exists dir_ls file_info path_file 
+#'   path_ext path_norm path_has_parent
 #' @importFrom tibble as_tibble
 #'
 fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
