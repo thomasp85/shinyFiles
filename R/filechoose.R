@@ -59,7 +59,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     fulldir <- path_join(c(currentRoots[root], dir))
     testdir <- try(path_norm(fulldir), silent = TRUE) 
     if (Sys.info()["sysname"] != "Windows") {
-      testdir <- sub("/{2,}", "/", testdir)
+      testdir <- gsub("/{2,}", "/", testdir)
     }
     if (inherits(testdir, "try-error") ||
         !path_has_parent(testdir, currentRoots[root])) {
