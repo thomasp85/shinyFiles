@@ -34,7 +34,7 @@ NULL
 #'
 #' @importFrom tools file_ext
 #' @importFrom fs path file_access file_exists dir_ls file_info path_file 
-#'   path_ext path_norm path_has_parent
+#'   path_ext path_join path_norm path_has_parent
 #' @importFrom tibble as_tibble
 #'
 fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
@@ -56,26 +56,29 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     if (is.null(root)) root <- names(currentRoots)[1]
     
-
-    fulldir <- path(currentRoots[root], paste0(dir, collapse = "/"))
-    fulldir <- try(path_norm(fulldir), silent = TRUE)
-    if (inherits(fulldir, "try-error") ||
-        !path_has_parent(fulldir, currentRoots[root])) {
+    fulldir <- path_join(c(currentRoots[root], dir))
+    testdir <- try(path_norm(fulldir), silent = TRUE) 
+    if (Sys.info()["sysname"] != "Windows") {
+      testdir <- sub("/{2,}", "/", testdir)
+    }
+    if (inherits(testdir, "try-error") ||
+        !path_has_parent(testdir, currentRoots[root])) {
       fulldir <- path(currentRoots[root])
-      dir <- ""
+      dir <- selectedFile <- ""
+    } else {
+      fulldir <- testdir
     }
     
     selectedFile = ""
     if(file.exists(fulldir) && !dir.exists(fulldir)){
-      #dir is a normal file, not a directory
-      #get the filename, and use it as the selectedFile
-      selectedFile = sub(".*/(.*)$","\\1",fulldir)
-      #shorten the directory
-      fulldir = sub("(.*)/.*$","\\1",fulldir)
-      #dir also needs shortened for breadcrumps
-      dir = sub("(.*)/.*$","\\1",dir)
+      # dir is a normal file, not a directory
+      # get the filename, and use it as the selectedFile
+      selectedFile = sub(".*/(.*)$", "\\1", fulldir)
+      # shorten the directory
+      fulldir = sub("(.*)/.*$", "\\1", fulldir)
+      # dir also needs shortened for breadcrumbs
+      dir = sub("(.*)/.*$", "\\1", dir)
     }
-    
     
     writable <- as.logical(file_access(fulldir, "write"))
     files <- suppressWarnings(dir_ls(fulldir, all = hidden, fail = FALSE))
