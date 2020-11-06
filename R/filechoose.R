@@ -58,18 +58,23 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     
     fulldir <- path_join(c(currentRoots[root], dir))
     testdir <- try(path_norm(fulldir), silent = TRUE) 
-    if (Sys.info()["sysname"] != "Windows") {
-      testdir <- gsub("/{2,}", "/", testdir)
-    }
-    if (inherits(testdir, "try-error") ||
-        !path_has_parent(testdir, currentRoots[root])) {
+
+    if (inherits(testdir, "try-error")) {
       fulldir <- path(currentRoots[root])
-      dir <- selectedFile <- ""
+      dir <- ""
     } else {
-      fulldir <- testdir
+      if (Sys.info()["sysname"] != "Windows") {
+        testdir <- gsub("/{2,}", "/", testdir)
+      }
+      if (path_has_parent(testdir, currentRoots[root])) {
+        fulldir <- testdir
+      } else {
+        fulldir <- path(currentRoots[root])
+        dir <- ""
+      }
     }
     
-    selectedFile = ""
+    selectedFile <- ""
     if(file.exists(fulldir) && !dir.exists(fulldir)){
       # dir is a normal file, not a directory
       # get the filename, and use it as the selectedFile
