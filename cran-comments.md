@@ -1,6 +1,4 @@
-This is a minor version with a bunch of new features and bug fixes. No breaking
-changes has been introduced and no problems in reverse dependencies has been 
-detected.
+This is a new feature and bug-fix version with no breaking changes
 
 ## Test environments
 * local R installation, R 3.6.0

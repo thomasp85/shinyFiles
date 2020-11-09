@@ -1,4 +1,4 @@
-# shinyFiles (development version)
+# shinyFiles 0.9.0
 
 * Security fix that ensures a user cannot bypass folder navigation limits (@lz100 issue #152, @bellma-lilly PR #153)
 * Allow additional arguments to be passed to shinyFiles buttons and links (e.g., onclick)
