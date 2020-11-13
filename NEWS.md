@@ -1,3 +1,5 @@
+# shinyFiles (development version)
+
 # shinyFiles 0.9.0
 
 * Security fix that ensures a user cannot bypass folder navigation limits (@lz100 issue #152, @bellma-lilly PR #153)
