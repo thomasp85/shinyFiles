@@ -34,5 +34,5 @@ For an overview of all the different modules try the `shinyFilesExample()` funct
 
 Credits
 ----------
-* The file icons used in the file system navigator are taken from FatCows Farm-Fresh Web Icons (http://www.fatcow.com/free-icons)
+* The file icons used in the file system navigator are taken from FatCows Farm-Fresh Web Icons (https://www.fatcow.com/free-icons)
 * RStudio is a trademark of RStudio, Inc. File icons used by permission of RStudio, Inc. 

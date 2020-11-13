@@ -1,5 +1,5 @@
-﻿Free FatCow-Farm Fresh Icons
-http://www.fatcow.com/free-icons
+Free FatCow-Farm Fresh Icons
+https://www.fatcow.com/free-icons
 
 FatCow Farm-Fresh final release (3926 icons, 5 parts):
 - fatcow-hosting-icons-3.9.2.zip default (10.9 Mb)

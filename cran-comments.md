@@ -1,4 +1,5 @@
-This is a new feature and bug-fix version with no breaking changes
+updated links as requested. Trailing slash cannot be added to 
+https://www.fatcow.com/free-icons as it breaks the link
 
 ## Test environments
 * local R installation, R 3.6.0

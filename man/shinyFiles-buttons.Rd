@@ -92,7 +92,7 @@ look. The value will be pasted with 'btn-' and added as class.}
 
 \item{class}{Additional classes added to the button}
 
-\item{icon}{An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
+\item{icon}{An optional \href{https://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.}
 
 \item{style}{Additional styling added to the button (e.g., "margin-top: 25px;")}
 
@@ -234,7 +234,7 @@ $(button).data('file')
 }
 \references{
 The file icons used in the file system navigator is taken from
-FatCows Farm-Fresh Web Icons (\url{http://www.fatcow.com/free-icons})
+FatCows Farm-Fresh Web Icons (\url{https://www.fatcow.com/free-icons})
 }
 \seealso{
 Other shinyFiles: 

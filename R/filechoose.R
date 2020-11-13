@@ -390,7 +390,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #'
 #' @param class Additional classes added to the button
 #'
-#' @param icon An optional \href{http://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.
+#' @param icon An optional \href{https://shiny.rstudio.com/reference/shiny/latest/icon.html}{icon} to appear on the button.
 #' 
 #' @param style Additional styling added to the button (e.g., "margin-top: 25px;")
 #' 
@@ -411,7 +411,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #' @family shinyFiles
 #'
 #' @references The file icons used in the file system navigator is taken from
-#' FatCows Farm-Fresh Web Icons (<http://www.fatcow.com/free-icons>)
+#' FatCows Farm-Fresh Web Icons (<https://www.fatcow.com/free-icons>)
 #'
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny restoreInput
