@@ -79,11 +79,11 @@ getVolumes <- function(exclude) {
         volumes <- Sys.getenv("HOMEDRIVE")                      
         volNames <- ""
       } else {
-        volumes <- system(paste(wmic, "logicaldisk get Caption"), intern = TRUE, ignore.stdout = TRUE, ignore.stderr=TRUE)
+        volumes <- system(paste(wmic, "logicaldisk get Caption"), intern = TRUE, ignore.stderr=TRUE)
         volumes <- sub(" *\\r$", "", volumes)
         keep <- !tolower(volumes) %in% c("caption", "")
         volumes <- volumes[keep]
-        volNames <- system(paste(wmic, "/FAILFAST:1000 logicaldisk get VolumeName"), intern = TRUE, ignore.stdout = TRUE, ignore.stderr=TRUE)
+        volNames <- system(paste(wmic, "/FAILFAST:1000 logicaldisk get VolumeName"), intern = TRUE, ignore.stderr=TRUE)
         volNames <- sub(" *\\r$", "", volNames)
         volNames <- volNames[keep]
         volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
