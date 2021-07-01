@@ -1,7 +1,7 @@
 library(shiny)
 library(shinyFiles)
 
-shinyUI(pageWithSidebar(
+pageWithSidebar(
   headerPanel(
     "Selections with shinyFiles",
     "shinyFiles example"
@@ -66,4 +66,4 @@ shinyUI(pageWithSidebar(
                 been sent from the server).')),
     verbatimTextOutput("savefile")
   )
-))
+)
