@@ -1,5 +1,10 @@
+/* for bootrap >= 4 open state for the dropdown */
+.open  > .dropdown-menu { display: block; }
 .sF-title {
   display: inline-block;
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0
 }
 .sF-modalBackdrop {
   top: 0;
