@@ -50,6 +50,10 @@
   min-width: 150px;
 }
 
+#directory-modal .sF-breadcrumps {
+  width: calc(100% - 380px);
+}
+
 .sF-fileList>div.selected .sF-file-name div,
 .sF-dirList div.selected>.sF-file-name>div {
   color: white;
@@ -288,6 +292,7 @@
 .sF-dirWindow {
   min-height: 50vh;
   cursor: default;
+  display: flex;
 }
 .sF-dirWindow h6 {
   margin-top: 0;
