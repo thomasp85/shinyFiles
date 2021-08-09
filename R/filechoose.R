@@ -53,8 +53,8 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
   function(dir, root) {
     currentRoots <- if (inherits(roots, "function")) roots() else roots
 
-    if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
-    if (is.null(root)) root <- names(currentRoots)[1]
+    if (all(is.null(names(currentRoots)))) stop("Roots must be a named vector or a function returning one")
+    if (all(is.null(root))) root <- names(currentRoots)[1]
     
     fulldir <- path_join(c(currentRoots[root], dir))
     testdir <- try(path_norm(fulldir), silent = TRUE) 
@@ -227,7 +227,7 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
   sendDirectoryData <- function(message) {
     req(input[[id]])
     dir <- input[[paste0(id, "-modal")]]
-    if (is.null(dir) || is.na(dir)) {
+    if (all(is.null(dir)) || all(is.na(dir))) {
       dir <- list(dir = defaultPath, root = defaultRoot)
     } else {
       dir <- list(dir = dir$path, root = dir$root)
@@ -553,7 +553,7 @@ shinyFilesLink <- function(
 parseFilePaths <- function(roots, selection) {
   roots <- if (inherits(roots, "function")) roots() else roots
   
-  if (is.null(selection) || is.na(selection) || is.integer(selection) || length(selection$files) == 0) {
+  if (all(is.null(selection)) || all(is.na(selection)) || all(is.integer(selection)) || length(selection$files) == 0) {
     tibble(
       name = character(0), size = numeric(0), type = character(0),
       datapath = character(0), stringsAsFactors = FALSE

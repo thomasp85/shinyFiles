@@ -213,7 +213,7 @@ formatFiletype <- function(filetype) {
 #' @export
 #'
 parseSavePath <- function(roots, selection) {
-  if (is.null(selection)) {
+  if (all(is.null(selection))) {
     return(tibble(
       name = character(), type = character(),
       datapath = character(), stringsAsFactors = FALSE
@@ -221,9 +221,9 @@ parseSavePath <- function(roots, selection) {
   }
 
   currentRoots <- if (inherits(roots, "function")) roots() else roots
-  if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
+  if (all(is.null(names(currentRoots)))) stop("Roots must be a named vector or a function returning one")
 
-  if (is.integer(selection)) {
+  if (all(is.integer(selection))) {
     tibble(name = character(0), type = character(0), datapath = character(0), stringsAsFactors = FALSE)
   } else {
     root <- currentRoots[selection$root]
