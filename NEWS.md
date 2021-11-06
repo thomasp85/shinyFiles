@@ -1,5 +1,11 @@
 # shinyFiles (development version)
 
+# shinyFiles 0.9.1
+
+* Fixes for logical checks that may see a vector of length > 1 (https://github.com/thomasp85/shinyFiles/issues/159)
+* Fixes to display modals correctly with BS4 (https://github.com/thomasp85/shinyFiles/issues/158)
+* Fix long delay if a network drive is not mountable without VPN (https://github.com/thomasp85/shinyFiles/issues/155)
+
 # shinyFiles 0.9.0
 
 * Security fix that ensures a user cannot bypass folder navigation limits (@lz100 issue #152, @bellma-lilly PR #153)
