@@ -1,3 +1,5 @@
+# shinyFiles (development version)
+
 # shinyFiles 0.9.1
 
 * Fixes for logical checks that may see a vector of length > 1 (https://github.com/thomasp85/shinyFiles/issues/159)
