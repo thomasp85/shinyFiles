@@ -1,6 +1,9 @@
 # shinyFiles <img src="man/figures/logo.png" align="right" />
 
-[![Travis-CI Build Status](https://travis-ci.org/thomasp85/shinyFiles.svg?branch=master)](https://travis-ci.org/thomasp85/shinyFiles) [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/thomasp85/shinyFiles/workflows/R-CMD-check/badge.svg)](https://github.com/thomasp85/shinyFiles/actions)
+[![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles)
+<!-- badges: end -->
 
 This package extends the functionality of shiny by providing an API for client side access to the server file system. As many shiny apps are run locally this is equivalent to accessing the filesystem of the users own computer, without the overhead of copying files to temporary locations that is tied to the use of `fileInput()`.
 
