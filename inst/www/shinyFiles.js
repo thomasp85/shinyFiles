@@ -1818,7 +1818,7 @@ var shinyFiles = (function () {
     $.extend(file, dir);
 
     $(button).data('file', file)
-      .trigger('selection', [file]);
+      .trigger('save', file);
 
     removeFileChooser(button, modal, file);
   }
