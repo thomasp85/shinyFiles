@@ -206,8 +206,8 @@ If no large version is specified the small version gets upscaled.
 
 If the shiny app uses custom Javascript it is possible to react to selections
 directly from the javascript. Once a selection has been made, the button will
-fire of the event 'selection' and pass the selection data along with the
-event. To listen for this event you simple add:
+fire the event 'selection' and pass the selection data along with the event.
+To listen for this event you simple add:
 
 \preformatted{
 $(button).on('selection', function(event, path) {
@@ -215,7 +215,17 @@ $(button).on('selection', function(event, path) {
 })
 }
 
-in the same way a 'cancel' event is fired when a user dismisses a selection
+In the same way, when a file is saved, the save button will fire the event
+'save' and pass the file path along with the event. To listen for this event
+you can use:
+
+\preformatted{
+$(button).on('save', function(event, path) {
+  // Do something with the path here
+})
+}
+
+Moreover, a 'cancel' event is fired when a user dismisses a ShinyFiles dialog
 box. In that case, no path is passed on.
 
 Outside events the current selection is available as an object bound to the
