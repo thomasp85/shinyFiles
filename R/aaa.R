@@ -73,11 +73,15 @@ getVolumes <- function(exclude) {
     } else if (osSystem == "Windows") {
       wmic <- paste0(Sys.getenv("SystemRoot"), "\\System32\\Wbem\\WMIC.exe")
       if (!file.exists(wmic)) {
-        message("\nThe wmic program does not seem to be in the default location")
-        message("Please report this problem and include output from the command") 
-        message("'where wmic' to https://github.com/thomasp85/shinyFiles/issues")
-        volumes <- Sys.getenv("HOMEDRIVE")                      
-        volNames <- ""
+        volumes_info <- system2("powershell", "$dvr=[System.IO.DriveInfo]::GetDrives();Write-Output $dvr.length $dvr.name $dvr.VolumeLabel;", stdout = TRUE)
+        num = as.integer(volumes_info[1])
+        if(num == 0) return(NULL)
+        mat <- matrix(volumes_info[-1], nrow = num, ncol = 2)
+        mat[, 1] <- gsub(":\\\\$", ":/", mat[, 1])
+        sel <- mat[, 2] == ""
+        mat[sel, 2] <- mat[sel, 1]
+        volumes <- mat[, 1]
+        volNames <- mat[, 2]
       } else {
         volumes <- system(paste(wmic, "logicaldisk get Caption"), intern = TRUE, ignore.stderr=TRUE)
         volumes <- sub(" *\\r$", "", volumes)
@@ -88,7 +92,7 @@ getVolumes <- function(exclude) {
         volNames <- volNames[keep]
         volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
       }
-      volNames <- paste0(volNames, "(", volumes, ")")
+      volNames <- paste0(volNames, " (", gsub(":/$", ":", volumes), ")")
       names(volumes) <- volNames
       volumes <- gsub(":$", ":/", volumes)
   } else {
