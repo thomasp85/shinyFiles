@@ -1,8 +1,14 @@
 library(shiny)
 library(shinyFiles)
 
+if (require(bslib)) {
+  theme <- bslib::bs_theme(version = 4)
+} else {
+  theme <- NULL
+}
+
 fluidPage(
-  # theme = bslib::bs_theme(version = 4),
+  theme = theme, 
   headerPanel(
     "Selections with shinyFiles",
     "shinyFiles example"
