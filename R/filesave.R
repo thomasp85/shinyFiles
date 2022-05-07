@@ -52,8 +52,8 @@ shinyFileSave <- function(
         lastDirCreate <<- createDir
       }
     }
-    
-    if (all(is.null(dir)) || all(is.na(dir))) {
+
+    if (.is_not(dir)) {
       dir <- list(dir = defaultPath, root = defaultRoot)
     } else {
       dir <- list(dir = dir$path, root = dir$root)
@@ -198,7 +198,8 @@ shinySaveLink <- function(
 #' @importFrom jsonlite toJSON
 #'
 formatFiletype <- function(filetype) {
-  if (!all(is.na(filetype)) && !all(is.null(filetype))) {
+
+  if (!.is_not(filetype)) {
     filetype <- lapply(1:length(filetype), function(i) {
       list(name = names(filetype)[i], ext = I(filetype[[i]]))
     })

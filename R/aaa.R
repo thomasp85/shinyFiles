@@ -8,6 +8,12 @@
   shiny::addResourcePath("sF", system.file("www", package = "shinyFiles"))
 }
 
+#' check for NULL or NA
+#'
+#' @noRd
+#'
+.is_not <- function(x) length(x) == 0 || (length(x) == 1 && is.na(x))
+
 #' Run a simple example app using the shinyFiles functionality
 #'
 #' When the function is invoked a shiny app is started showing a very simple
@@ -82,6 +88,7 @@ getVolumes <- function(exclude) {
         mat[sel, 2] <- mat[sel, 1]
         volumes <- mat[, 1]
         volNames <- mat[, 2]
+        volNames <- paste0(volNames, " (", gsub(":/$", ":", volumes), ")")
       } else {
         volumes <- system(paste(wmic, "logicaldisk get Caption"), intern = TRUE, ignore.stderr=TRUE)
         volumes <- sub(" *\\r$", "", volumes)
@@ -91,11 +98,11 @@ getVolumes <- function(exclude) {
         volNames <- sub(" *\\r$", "", volNames)
         volNames <- volNames[keep]
         volNames <- paste0(volNames, ifelse(volNames == "", "", " "))
+        volNames <- paste0(volNames, "(", volumes, ")")
       }
-      volNames <- paste0(volNames, " (", gsub(":/$", ":", volumes), ")")
       names(volumes) <- volNames
       volumes <- gsub(":$", ":/", volumes)
-  } else {
+    } else {
       stop("unsupported OS")
     }
     if (!is.null(exclude)) {

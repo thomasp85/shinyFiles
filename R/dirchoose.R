@@ -216,7 +216,7 @@ shinyDirChoose <- function(
     }
     
     exist <- TRUE
-    if (all(is.null(tree)) || all(is.na(tree))) {
+    if (.is_not(tree)) {
       dir <- list(tree = list(name = defaultPath, expanded = TRUE), root = defaultRoot)
       files <- list(dir = NA, root = tree$selectedRoot)
     } else {
@@ -226,7 +226,7 @@ shinyDirChoose <- function(
       exist = dir.exists(do.call(path,c(passedPath,files$dir[-1])))
     }
     newDir <- do.call(dirGet, dir)
-    if (all(is.null(files$dir)) || all(is.na(files$dir))) {
+    if (.is_not(files$dir)) {
       newDir$content <- NA
       newDir$contentPath <- NA
       newDir$writable <- FALSE
