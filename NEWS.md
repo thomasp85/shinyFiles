@@ -3,7 +3,9 @@
 # shinyFiles 0.9.1
 
 * Fixes for logical checks that may see a vector of length > 1 (https://github.com/thomasp85/shinyFiles/issues/159)
-* Fixes to display modals correctly with BS4 (https://github.com/thomasp85/shinyFiles/issues/158)
+* PR from @sgvignali (https://github.com/thomasp85/shinyFiles/pull/164) to have `shinySaveButton` trigger an event that can be detected and used in JS code
+* Fix to keep getVolumes working after WMIC.exe is deprecated (https://github.com/thomasp85/shinyFiles/issues/163). Thanks go to @Mailinnia
+* Fixes to display modals correctly with BS4 (https://github.com/thomasp85/shinyFiles/issues/158). Thanks go to @ruthkr
 * Fix long delay if a network drive is not mountable without VPN (https://github.com/thomasp85/shinyFiles/issues/155)
 
 # shinyFiles 0.9.0
