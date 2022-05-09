@@ -10,26 +10,24 @@ NULL
 #' \dontrun{
 #' # File selections
 #' ui <- shinyUI(bootstrapPage(
-#'   shinySaveButton('save', 'Save', 'Save as...')
+#'   shinySaveButton("save", "Save", "Save as...")
 #' ))
 #' server <- shinyServer(function(input, output) {
-#'   shinyFileSave(input, 'save', roots=c(wd='.'))
+#'   shinyFileSave(input, "save", roots = c(wd = "."))
 #' })
 #'
 #' runApp(list(
-#'   ui=ui,
-#'   server=server
+#'   ui = ui,
+#'   server = server
 #' ))
 #' }
 #'
 #' @importFrom shiny observe invalidateLater req observeEvent showNotification p
-#' 
+#'
 #' @export
 #'
-shinyFileSave <- function(
-  input, id, updateFreq = 0, session = getSession(),
-  defaultPath = "", defaultRoot = NULL, allowDirCreate = TRUE, ...
-) {
+shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
+                          defaultPath = "", defaultRoot = NULL, allowDirCreate = TRUE, ...) {
   fileGet <- do.call(fileGetter, list(...))
   dirCreate <- do.call(dirCreator, list(...))
   currentDir <- list()
@@ -40,15 +38,15 @@ shinyFileSave <- function(
     req(input[[id]])
     dir <- input[[paste0(id, "-modal")]]
     createDir <- input[[paste0(id, "-newDir")]]
-    
-    # Show a notification if a user is trying to create a 
-    # new directory when that option has been disabled 
+
+    # Show a notification if a user is trying to create a
+    # new directory when that option has been disabled
     if (!identical(createDir, lastDirCreate)) {
       if (allowDirCreate) {
         dirCreate(createDir$name, createDir$path, createDir$root)
         lastDirCreate <<- createDir
       } else {
-        shiny::showNotification(shiny::p('Creating directories has been disabled.'), type = 'error')
+        shiny::showNotification(shiny::p("Creating directories has been disabled."), type = "error")
         lastDirCreate <<- createDir
       }
     }
@@ -63,20 +61,20 @@ shinyFileSave <- function(
     if (isTRUE(newDir$exist)) {
       currentDir <<- newDir
       session$sendCustomMessage(message, list(id = clientId, dir = newDir))
-    }else{
-      #first, back up a directory and try again; maybe the user is trying to save as a new filename
-      savedDir = dir$dir
-      selectedFile = sub(".*/(.*)$","\\1",dir$dir)
-      #shorten the directory (include the slash at the end to make sure we don't look for a non-directory)
-      dir$dir = sub("(.*/).*$","\\1",dir$dir)
+    } else {
+      # first, back up a directory and try again; maybe the user is trying to save as a new filename
+      savedDir <- dir$dir
+      selectedFile <- sub(".*/(.*)$", "\\1", dir$dir)
+      # shorten the directory (include the slash at the end to make sure we don't look for a non-directory)
+      dir$dir <- sub("(.*/).*$", "\\1", dir$dir)
       newDir <- do.call(fileGet, dir)
-      if (isTRUE(newDir$exist)) { #backing up once, we find a valid directory
+      if (isTRUE(newDir$exist)) { # backing up once, we find a valid directory
         newDir$selectedFile <- selectedFile
         currentDir <<- newDir
         session$sendCustomMessage(message, list(id = clientId, dir = newDir))
-      }else{
-        #even backing up, the directory is not valid
-        currentDir$exist = FALSE
+      } else {
+        # even backing up, the directory is not valid
+        currentDir$exist <- FALSE
         session$sendCustomMessage(message, list(id = clientId, dir = currentDir))
       }
     }
@@ -101,10 +99,8 @@ shinyFileSave <- function(
 #'
 #' @export
 #'
-shinySaveButton <- function(
-  id, label, title, filename="", filetype,  buttonType="default", 
-  class=NULL, icon=NULL, style=NULL, viewtype="detail", ...
-) {
+shinySaveButton <- function(id, label, title, filename = "", filetype, buttonType = "default",
+                            class = NULL, icon = NULL, style = NULL, viewtype = "detail", ...) {
   if (missing(filetype)) filetype <- NA
   filetype <- formatFiletype(filetype)
   viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
@@ -146,10 +142,8 @@ shinySaveButton <- function(
 #'
 #' @export
 #'
-shinySaveLink <- function(
-  id, label, title, filename="", filetype, 
-  class=NULL, icon=NULL, style=NULL, viewtype="detail", ...
-) {
+shinySaveLink <- function(id, label, title, filename = "", filetype,
+                          class = NULL, icon = NULL, style = NULL, viewtype = "detail", ...) {
   if (missing(filetype)) filetype <- NA
   filetype <- formatFiletype(filetype)
   viewtype <- if (length(viewtype) > 0 && viewtype %in% c("detail", "list", "icon")) viewtype else "detail"
@@ -198,7 +192,6 @@ shinySaveLink <- function(
 #' @importFrom jsonlite toJSON
 #'
 formatFiletype <- function(filetype) {
-
   if (!.is_not(filetype)) {
     filetype <- lapply(1:length(filetype), function(i) {
       list(name = names(filetype)[i], ext = I(filetype[[i]]))
@@ -210,7 +203,7 @@ formatFiletype <- function(filetype) {
 #'
 #' @importFrom fs path path_file
 #' @importFrom tibble tibble
-#' 
+#'
 #' @export
 #'
 parseSavePath <- function(roots, selection) {
