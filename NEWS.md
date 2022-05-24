@@ -1,4 +1,4 @@
-# shinyFiles (development version)
+# shinyFiles 0.9.2
 
 * Fixes for logical checks that may see a vector of length > 1 (https://github.com/thomasp85/shinyFiles/issues/159)
 * PR from @sgvignali (https://github.com/thomasp85/shinyFiles/pull/164) to have `shinySaveButton` trigger an event that can be detected and used in JS code
