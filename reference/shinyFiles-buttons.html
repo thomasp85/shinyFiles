@@ -71,110 +71,135 @@ server side.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">shinyFilesButton</span><span class="op">(</span>
-  <span class="va">id</span>,
-  <span class="va">label</span>,
-  <span class="va">title</span>,
-  <span class="va">multiple</span>,
-  buttonType <span class="op">=</span> <span class="st">"default"</span>,
-  class <span class="op">=</span> <span class="cn">NULL</span>,
-  icon <span class="op">=</span> <span class="cn">NULL</span>,
-  style <span class="op">=</span> <span class="cn">NULL</span>,
-  viewtype <span class="op">=</span> <span class="st">"detail"</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">shinyFilesLink</span><span class="op">(</span>
-  <span class="va">id</span>,
-  <span class="va">label</span>,
-  <span class="va">title</span>,
-  <span class="va">multiple</span>,
-  class <span class="op">=</span> <span class="cn">NULL</span>,
-  icon <span class="op">=</span> <span class="cn">NULL</span>,
-  style <span class="op">=</span> <span class="cn">NULL</span>,
-  viewtype <span class="op">=</span> <span class="st">"detail"</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">shinyDirButton</span><span class="op">(</span>
-  <span class="va">id</span>,
-  <span class="va">label</span>,
-  <span class="va">title</span>,
-  buttonType <span class="op">=</span> <span class="st">"default"</span>,
-  class <span class="op">=</span> <span class="cn">NULL</span>,
-  icon <span class="op">=</span> <span class="cn">NULL</span>,
-  style <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">shinyDirLink</span><span class="op">(</span><span class="va">id</span>, <span class="va">label</span>, <span class="va">title</span>, class <span class="op">=</span> <span class="cn">NULL</span>, icon <span class="op">=</span> <span class="cn">NULL</span>, style <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">shinySaveButton</span><span class="op">(</span>
-  <span class="va">id</span>,
-  <span class="va">label</span>,
-  <span class="va">title</span>,
-  filename <span class="op">=</span> <span class="st">""</span>,
-  <span class="va">filetype</span>,
-  buttonType <span class="op">=</span> <span class="st">"default"</span>,
-  class <span class="op">=</span> <span class="cn">NULL</span>,
-  icon <span class="op">=</span> <span class="cn">NULL</span>,
-  style <span class="op">=</span> <span class="cn">NULL</span>,
-  viewtype <span class="op">=</span> <span class="st">"detail"</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">shinySaveLink</span><span class="op">(</span>
-  <span class="va">id</span>,
-  <span class="va">label</span>,
-  <span class="va">title</span>,
-  filename <span class="op">=</span> <span class="st">""</span>,
-  <span class="va">filetype</span>,
-  class <span class="op">=</span> <span class="cn">NULL</span>,
-  icon <span class="op">=</span> <span class="cn">NULL</span>,
-  style <span class="op">=</span> <span class="cn">NULL</span>,
-  viewtype <span class="op">=</span> <span class="st">"detail"</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">shinyFilesButton</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  <span class="va">multiple</span>,</span>
+<span>  buttonType <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  viewtype <span class="op">=</span> <span class="st">"detail"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinyFilesLink</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  <span class="va">multiple</span>,</span>
+<span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  viewtype <span class="op">=</span> <span class="st">"detail"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinyDirButton</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  buttonType <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinyDirLink</span><span class="op">(</span><span class="va">id</span>, <span class="va">label</span>, <span class="va">title</span>, class <span class="op">=</span> <span class="cn">NULL</span>, icon <span class="op">=</span> <span class="cn">NULL</span>, style <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinySaveButton</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  filename <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  <span class="va">filetype</span>,</span>
+<span>  buttonType <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  viewtype <span class="op">=</span> <span class="st">"detail"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinySaveLink</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  filename <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  <span class="va">filetype</span>,</span>
+<span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  icon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  viewtype <span class="op">=</span> <span class="st">"detail"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>id</dt>
 <dd><p>The id matching the <code><a href="shinyFiles-observers.html">shinyFileChoose()</a></code></p></dd>
+
+
 <dt>label</dt>
 <dd><p>The text that should appear on the button</p></dd>
+
+
 <dt>title</dt>
 <dd><p>The heading of the dialog box that appears when the button is
 pressed</p></dd>
+
+
 <dt>multiple</dt>
 <dd><p>A logical indicating whether or not it should be possible to
 select multiple files</p></dd>
+
+
 <dt>buttonType</dt>
 <dd><p>The Bootstrap button markup used to colour the button.
 Defaults to 'default' for a neutral appearance but can be changed for another
 look. The value will be pasted with 'btn-' and added as class.</p></dd>
+
+
 <dt>class</dt>
 <dd><p>Additional classes added to the button</p></dd>
+
+
 <dt>icon</dt>
 <dd><p>An optional <a href="https://shiny.rstudio.com/reference/shiny/latest/icon.html" class="external-link">icon</a> to appear on the button.</p></dd>
+
+
 <dt>style</dt>
 <dd><p>Additional styling added to the button (e.g., "margin-top: 25px;")</p></dd>
+
+
 <dt>viewtype</dt>
 <dd><p>View type to use in the file browser. One of "detail" (default), "list", or "icon"</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Named attributes to be applied to the button or link (e.g., 'onclick')</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>A predefined filename to be filed in. Can be modified by the
 user during saving.</p></dd>
+
+
 <dt>filetype</dt>
 <dd><p>A named list of file extensions. The name of each element
 gives the name of the filetype and the content of the element the possible
 extensions e.g. <code>list(picture=c('jpg', 'jpeg'))</code>. The first extension
 will be used as default if it is not supplied by the user.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function is called for its side effects</p>
+    
+
+<p>This function is called for its side effects</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -299,7 +324,7 @@ FatCows Farm-Fresh Web Icons (<a href="https://www.fatcow.com/free-icons" class=
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

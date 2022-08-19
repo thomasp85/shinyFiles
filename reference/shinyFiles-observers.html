@@ -59,37 +59,37 @@ or adding it manually. See <code><a href="shinyFiles-buttons.html">shinyFiles-bu
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">shinyFileChoose</span><span class="op">(</span>
-  <span class="va">input</span>,
-  <span class="va">id</span>,
-  updateFreq <span class="op">=</span> <span class="fl">0</span>,
-  session <span class="op">=</span> <span class="fu">getSession</span><span class="op">(</span><span class="op">)</span>,
-  defaultRoot <span class="op">=</span> <span class="cn">NULL</span>,
-  defaultPath <span class="op">=</span> <span class="st">""</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">shinyDirChoose</span><span class="op">(</span>
-  <span class="va">input</span>,
-  <span class="va">id</span>,
-  updateFreq <span class="op">=</span> <span class="fl">0</span>,
-  session <span class="op">=</span> <span class="fu">getSession</span><span class="op">(</span><span class="op">)</span>,
-  defaultPath <span class="op">=</span> <span class="st">""</span>,
-  defaultRoot <span class="op">=</span> <span class="cn">NULL</span>,
-  allowDirCreate <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">shinyFileSave</span><span class="op">(</span>
-  <span class="va">input</span>,
-  <span class="va">id</span>,
-  updateFreq <span class="op">=</span> <span class="fl">0</span>,
-  session <span class="op">=</span> <span class="fu">getSession</span><span class="op">(</span><span class="op">)</span>,
-  defaultPath <span class="op">=</span> <span class="st">""</span>,
-  defaultRoot <span class="op">=</span> <span class="cn">NULL</span>,
-  allowDirCreate <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">shinyFileChoose</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">id</span>,</span>
+<span>  updateFreq <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  session <span class="op">=</span> <span class="fu">getSession</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  defaultRoot <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  defaultPath <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinyDirChoose</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">id</span>,</span>
+<span>  updateFreq <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  session <span class="op">=</span> <span class="fu">getSession</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  defaultPath <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  defaultRoot <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  allowDirCreate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinyFileSave</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">id</span>,</span>
+<span>  updateFreq <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  session <span class="op">=</span> <span class="fu">getSession</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  defaultPath <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  defaultRoot <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  allowDirCreate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -97,33 +97,50 @@ or adding it manually. See <code><a href="shinyFiles-buttons.html">shinyFiles-bu
     <dl><dt>input</dt>
 <dd><p>The input object of the <code>shinyServer()</code> call (usually
 <code>input</code>)</p></dd>
+
+
 <dt>id</dt>
 <dd><p>The same ID as used in the matching call to
 <code>shinyFilesButton</code> or as the id attribute of the button, in case of a
 manually defined html. This id will also define the id of the file choice in
 the input variable</p></dd>
+
+
 <dt>updateFreq</dt>
 <dd><p>The time in milliseconds between file system lookups. This
 determines the responsiveness to changes in the filesystem (e.g. addition of
 files or drives). For the default value (0) changes in the filesystem are
 shown only when a shinyFiles button is clicked again</p></dd>
+
+
 <dt>session</dt>
 <dd><p>The session object of the shinyServer call (usually
 <code>session</code>).</p></dd>
+
+
 <dt>defaultRoot</dt>
 <dd><p>The default root to use. For instance if
 <code>roots = c('wd' = '.', 'home', '/home')</code> then <code>defaultRoot</code>
 can be either <code>'wd'</code> or <code>'home'</code>.</p></dd>
+
+
 <dt>defaultPath</dt>
 <dd><p>The default relative path specified given the <code>defaultRoot</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments to be passed on to <code><a href="fileGetter.html">fileGetter()</a></code> or <code><a href="dirGetter.html">dirGetter()</a></code>.</p></dd>
+
+
 <dt>allowDirCreate</dt>
 <dd><p>Logical that indicates if creating new directories by the user is allowed.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A reactive observer that takes care of the server side logic of the
+    
+
+<p>A reactive observer that takes care of the server side logic of the
 filesystem connection.</p>
     </div>
     <div id="details">
@@ -161,52 +178,52 @@ interactions with it later on.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># File selections</span></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="shinyFiles-buttons.html">shinyFilesButton</a></span><span class="op">(</span><span class="st">'files'</span>, <span class="st">'File select'</span>, <span class="st">'Please select a file'</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">shinyFileChoose</span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, roots<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span>,</span>
-<span class="r-in">                  defaultPath<span class="op">=</span><span class="st">''</span>, defaultRoot<span class="op">=</span><span class="st">'wd'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  ui<span class="op">=</span><span class="va">ui</span>,</span>
-<span class="r-in">  server<span class="op">=</span><span class="va">server</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Folder selections</span></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="shinyFiles-buttons.html">shinyDirButton</a></span><span class="op">(</span><span class="st">'folder'</span>, <span class="st">'Folder select'</span>, <span class="st">'Please select a folder'</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">shinyDirChoose</span><span class="op">(</span><span class="va">input</span>, <span class="st">'folder'</span>, roots<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  ui<span class="op">=</span><span class="va">ui</span>,</span>
-<span class="r-in">  server<span class="op">=</span><span class="va">server</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># File selections</span></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="shinyFiles-buttons.html">shinySaveButton</a></span><span class="op">(</span><span class="st">'save'</span>, <span class="st">'Save'</span>, <span class="st">'Save as...'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">shinyFileSave</span><span class="op">(</span><span class="va">input</span>, <span class="st">'save'</span>, roots<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  ui<span class="op">=</span><span class="va">ui</span>,</span>
-<span class="r-in">  server<span class="op">=</span><span class="va">server</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># File selections</span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="shinyFiles-buttons.html">shinyFilesButton</a></span><span class="op">(</span><span class="st">'files'</span>, <span class="st">'File select'</span>, <span class="st">'Please select a file'</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">shinyFileChoose</span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, roots<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  defaultPath<span class="op">=</span><span class="st">''</span>, defaultRoot<span class="op">=</span><span class="st">'wd'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ui<span class="op">=</span><span class="va">ui</span>,</span></span>
+<span class="r-in"><span>  server<span class="op">=</span><span class="va">server</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Folder selections</span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="shinyFiles-buttons.html">shinyDirButton</a></span><span class="op">(</span><span class="st">'folder'</span>, <span class="st">'Folder select'</span>, <span class="st">'Please select a folder'</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">shinyDirChoose</span><span class="op">(</span><span class="va">input</span>, <span class="st">'folder'</span>, roots<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ui<span class="op">=</span><span class="va">ui</span>,</span></span>
+<span class="r-in"><span>  server<span class="op">=</span><span class="va">server</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># File selections</span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="shinyFiles-buttons.html">shinySaveButton</a></span><span class="op">(</span><span class="st">'save'</span>, <span class="st">'Save'</span>, <span class="st">'Save as...'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">shinyFileSave</span><span class="op">(</span><span class="va">input</span>, <span class="st">'save'</span>, roots<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ui<span class="op">=</span><span class="va">ui</span>,</span></span>
+<span class="r-in"><span>  server<span class="op">=</span><span class="va">server</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -221,7 +238,7 @@ interactions with it later on.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

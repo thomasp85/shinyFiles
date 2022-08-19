@@ -59,7 +59,7 @@ expanded element is set to TRUE, no matter if children are currently present.</p
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">traverseDirs</span><span class="op">(</span><span class="va">tree</span>, <span class="va">root</span>, <span class="va">restrictions</span>, <span class="va">hidden</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">traverseDirs</span><span class="op">(</span><span class="va">tree</span>, <span class="va">root</span>, <span class="va">restrictions</span>, <span class="va">hidden</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -69,18 +69,27 @@ expanded element is set to TRUE, no matter if children are currently present.</p
 traverse. Each element should at least contain the elements 'name' and
 'expanded'. The elements 'empty' and 'children' will be created or updates if
 they exist.</p></dd>
+
+
 <dt>root</dt>
 <dd><p>A string with the location of the root folder for the tree</p></dd>
+
+
 <dt>restrictions</dt>
 <dd><p>A vector of directories within the root that should be
 filtered out of the results</p></dd>
+
+
 <dt>hidden</dt>
 <dd><p>A logical value specifying whether hidden folders should be
 returned or not</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of the same format as 'tree', but with updated values to
+    
+
+<p>A list of the same format as 'tree', but with updated values to
 reflect the current file system state.</p>
     </div>
 
@@ -96,7 +105,7 @@ reflect the current file system state.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

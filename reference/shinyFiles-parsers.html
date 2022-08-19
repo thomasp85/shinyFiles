@@ -71,11 +71,11 @@ to the selected folder.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parseFilePaths</span><span class="op">(</span><span class="va">roots</span>, <span class="va">selection</span><span class="op">)</span>
-
-<span class="fu">parseDirPath</span><span class="op">(</span><span class="va">roots</span>, <span class="va">selection</span><span class="op">)</span>
-
-<span class="fu">parseSavePath</span><span class="op">(</span><span class="va">roots</span>, <span class="va">selection</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parseFilePaths</span><span class="op">(</span><span class="va">roots</span>, <span class="va">selection</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">parseDirPath</span><span class="op">(</span><span class="va">roots</span>, <span class="va">selection</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">parseSavePath</span><span class="op">(</span><span class="va">roots</span>, <span class="va">selection</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,12 +83,19 @@ to the selected folder.</p>
     <dl><dt>roots</dt>
 <dd><p>The path to the root as specified in the <code><a href="shinyFiles-observers.html">shinyFileChoose()</a></code>
 call in <code>shinyServer()</code></p></dd>
+
+
 <dt>selection</dt>
 <dd><p>The corresponding input variable to be parsed</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame matching the format of <code><a href="https://rdrr.io/pkg/shiny/man/fileInput.html" class="external-link">shiny::fileInput()</a></code></p>
+    
+
+<p>A data frame matching the format of <code><a href="https://rdrr.io/pkg/shiny/man/fileInput.html" class="external-link">shiny::fileInput()</a></code></p>
+
+
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -106,25 +113,25 @@ doesn't have to change.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="shinyFiles-buttons.html">shinyFilesButton</a></span><span class="op">(</span><span class="st">'files'</span>, <span class="st">'File select'</span>, <span class="st">'Please select a file'</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">verbatimTextOutput</span><span class="op">(</span><span class="st">'rawInputValue'</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">verbatimTextOutput</span><span class="op">(</span><span class="st">'filepaths'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">roots</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="shinyFiles-observers.html">shinyFileChoose</a></span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, roots<span class="op">=</span><span class="va">roots</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">rawInputValue</span> <span class="op">&lt;-</span> <span class="fu">renderPrint</span><span class="op">(</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">files</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">filepaths</span> <span class="op">&lt;-</span> <span class="fu">renderPrint</span><span class="op">(</span><span class="op">{</span><span class="fu">parseFilePaths</span><span class="op">(</span><span class="va">roots</span>, <span class="va">input</span><span class="op">$</span><span class="va">files</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  ui<span class="op">=</span><span class="va">ui</span>,</span>
-<span class="r-in">  server<span class="op">=</span><span class="va">server</span></span>
-<span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="shinyFiles-buttons.html">shinyFilesButton</a></span><span class="op">(</span><span class="st">'files'</span>, <span class="st">'File select'</span>, <span class="st">'Please select a file'</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">verbatimTextOutput</span><span class="op">(</span><span class="st">'rawInputValue'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">verbatimTextOutput</span><span class="op">(</span><span class="st">'filepaths'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">roots</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>wd<span class="op">=</span><span class="st">'.'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="shinyFiles-observers.html">shinyFileChoose</a></span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, roots<span class="op">=</span><span class="va">roots</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">rawInputValue</span> <span class="op">&lt;-</span> <span class="fu">renderPrint</span><span class="op">(</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">files</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">filepaths</span> <span class="op">&lt;-</span> <span class="fu">renderPrint</span><span class="op">(</span><span class="op">{</span><span class="fu">parseFilePaths</span><span class="op">(</span><span class="va">roots</span>, <span class="va">input</span><span class="op">$</span><span class="va">files</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">runApp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  ui<span class="op">=</span><span class="va">ui</span>,</span></span>
+<span class="r-in"><span>  server<span class="op">=</span><span class="va">server</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -139,7 +146,7 @@ doesn't have to change.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

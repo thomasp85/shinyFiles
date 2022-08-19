@@ -88,14 +88,14 @@
 <p>The package is designed to make it extremely easy to implement file system access. An example of implementing a file chooser would be:</p>
 <p>In the ui.R file</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span>
-    <span class="fu"><a href="reference/shinyFiles-buttons.html">shinyFilesButton</a></span><span class="op">(</span><span class="st">'files'</span>, label<span class="op">=</span><span class="st">'File select'</span>, title<span class="op">=</span><span class="st">'Please select a file'</span>, multiple<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-<span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">shinyUI</span><span class="op">(</span><span class="fu">bootstrapPage</span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="reference/shinyFiles-buttons.html">shinyFilesButton</a></span><span class="op">(</span><span class="st">'files'</span>, label<span class="op">=</span><span class="st">'File select'</span>, title<span class="op">=</span><span class="st">'Please select a file'</span>, multiple<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>In the server.R file</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="reference/shinyFiles-observers.html">shinyFileChoose</a></span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, root<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>root<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">shinyServer</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="reference/shinyFiles-observers.html">shinyFileChoose</a></span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, root<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>root<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>It is equally simple to implement directly in your custom html file as it only requires a single <code>&lt;button&gt;</code> element. The equivalent of the above in raw html would be:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">"files"</span><span class="ot"> type=</span><span class="st">"button"</span><span class="ot"> class=</span><span class="st">"shinyFiles btn"</span><span class="ot"> data-title=</span><span class="st">"Please select a file"</span><span class="ot"> data-selecttype=</span><span class="st">"single"</span><span class="kw">&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>    File select</span>
@@ -168,7 +168,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

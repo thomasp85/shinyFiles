@@ -65,7 +65,7 @@ with the hidden parameter.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fileGetter</span><span class="op">(</span><span class="va">roots</span>, <span class="va">restrictions</span>, <span class="va">filetypes</span>, <span class="va">pattern</span>, hidden <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fileGetter</span><span class="op">(</span><span class="va">roots</span>, <span class="va">restrictions</span>, <span class="va">filetypes</span>, <span class="va">pattern</span>, hidden <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,24 +74,35 @@ with the hidden parameter.</p>
 <dd><p>A named vector of absolute filepaths or a function returning a
 named vector of absolute filepaths (the latter is useful if the volumes
 should adapt to changes in the filesystem).</p></dd>
+
+
 <dt>restrictions</dt>
 <dd><p>A vector of directories within the root that should be
 filtered out of the results</p></dd>
+
+
 <dt>filetypes</dt>
 <dd><p>A character vector of file extensions (without dot in front
 i.e. 'txt' not '.txt') to include in the output. Use the empty string to
 include files with no extension. If not set all file types will be included</p></dd>
+
+
 <dt>pattern</dt>
 <dd><p>A regular expression used to select files to show. See
 <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">base::grepl()</a></code> for additional discussion on how to
 construct a regular expression (e.g., "log.*\\.txt")</p></dd>
+
+
 <dt>hidden</dt>
 <dd><p>A logical value specifying whether hidden files should be
 returned or not</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A function taking a single path relative to the specified root, and
+    
+
+<p>A function taking a single path relative to the specified root, and
 returns a list of files to be passed on to shiny</p>
     </div>
 
@@ -107,7 +118,7 @@ returns a list of files to be passed on to shiny</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
