@@ -1,4 +1,4 @@
-# shinyFiles (development version)
+# shinyFiles 0.9.3
 
 * Standard upkeep
 
