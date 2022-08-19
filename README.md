@@ -1,7 +1,7 @@
 # shinyFiles <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/thomasp85/shinyFiles/workflows/R-CMD-check/badge.svg)](https://github.com/thomasp85/shinyFiles/actions)
+[![R-CMD-check](https://github.com/thomasp85/shinyFiles/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/thomasp85/shinyFiles/actions/workflows/R-CMD-check.yaml)
 [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles)
 <!-- badges: end -->
 
