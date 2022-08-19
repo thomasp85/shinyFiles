@@ -38,7 +38,7 @@ Collate:
     'dirchoose.R'
     'filesave.R'
     'shinyFiles-package.R'
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 URL: https://github.com/thomasp85/shinyFiles
 BugReports: https://github.com/thomasp85/shinyFiles/issues
 Roxygen: list(markdown = TRUE)

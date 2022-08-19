@@ -134,15 +134,15 @@ runApp(list(
 \dontrun{
 # File selections
 ui <- shinyUI(bootstrapPage(
-  shinySaveButton('save', 'Save', 'Save as...')
+  shinySaveButton("save", "Save", "Save as...")
 ))
 server <- shinyServer(function(input, output) {
-  shinyFileSave(input, 'save', roots=c(wd='.'))
+  shinyFileSave(input, "save", roots = c(wd = "."))
 })
 
 runApp(list(
-  ui=ui,
-  server=server
+  ui = ui,
+  server = server
 ))
 }
 
