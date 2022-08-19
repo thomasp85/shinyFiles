@@ -97,9 +97,9 @@
 <span>    <span class="fu"><a href="reference/shinyFiles-observers.html">shinyFileChoose</a></span><span class="op">(</span><span class="va">input</span>, <span class="st">'files'</span>, root<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>root<span class="op">=</span><span class="st">'.'</span><span class="op">)</span>, filetypes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'txt'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>It is equally simple to implement directly in your custom html file as it only requires a single <code>&lt;button&gt;</code> element. The equivalent of the above in raw html would be:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">"files"</span><span class="ot"> type=</span><span class="st">"button"</span><span class="ot"> class=</span><span class="st">"shinyFiles btn"</span><span class="ot"> data-title=</span><span class="st">"Please select a file"</span><span class="ot"> data-selecttype=</span><span class="st">"single"</span><span class="kw">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>    File select</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">&lt;/button&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;button</span> <span class="er">id</span><span class="ot">=</span><span class="st">"files"</span> <span class="er">type</span><span class="ot">=</span><span class="st">"button"</span> <span class="er">class</span><span class="ot">=</span><span class="st">"shinyFiles btn"</span> <span class="er">data-title</span><span class="ot">=</span><span class="st">"Please select a file"</span> <span class="er">data-selecttype</span><span class="ot">=</span><span class="st">"single"</span><span class="kw">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    File select</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/button&gt;</span></span></code></pre></div>
 <p>For an overview of all the different modules try the <code><a href="reference/shinyFilesExample.html">shinyFilesExample()</a></code> function in the package. It gives an overview of all the necessary code, along with descriptions and working examples.</p>
 </div>
 <div class="section level2">
@@ -151,7 +151,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/thomasp85/shinyFiles/actions" class="external-link"><img src="https://github.com/thomasp85/shinyFiles/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/thomasp85/shinyFiles/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/thomasp85/shinyFiles/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://CRAN.R-project.org/package=shinyFiles" class="external-link"><img src="http://www.r-pkg.org/badges/version-ago/shinyFiles" alt="CRAN_Release_Badge"></a></li>
 <li><a href="https://CRAN.R-project.org/package=shinyFiles" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/shinyFiles" alt="CRAN_Download_Badge"></a></li>
 </ul>
