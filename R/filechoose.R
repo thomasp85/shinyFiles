@@ -173,7 +173,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
 #' `session`).
 #'
 #' @param defaultRoot The default root to use. For instance if
-#' `roots = c('wd' = '.', 'home', '/home')` then `defaultRoot`
+#' `roots = c('wd' = '.', 'home' = '/home')` then `defaultRoot`
 #' can be either `'wd'` or `'home'`.
 #'
 #' @param defaultPath The default relative path specified given the `defaultRoot`.
