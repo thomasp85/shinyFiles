@@ -57,7 +57,7 @@ shown only when a shinyFiles button is clicked again}
 \code{session}).}
 
 \item{defaultRoot}{The default root to use. For instance if
-\code{roots = c('wd' = '.', 'home', '/home')} then \code{defaultRoot}
+\code{roots = c('wd' = '.', 'home' = '/home')} then \code{defaultRoot}
 can be either \code{'wd'} or \code{'home'}.}
 
 \item{defaultPath}{The default relative path specified given the \code{defaultRoot}.}
