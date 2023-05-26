@@ -31,9 +31,9 @@ NULL
 traverseDirs <- function(tree, root, restrictions, hidden) {
   location <- path(root, tree$name)
   if (!dir.exists(location)) return(NULL)
-
+  
   files <- suppressWarnings(dir_ls(location, all = hidden, fail = FALSE))
-
+  
   if (!is.null(restrictions) && length(files) != 0) {
     if (length(files) == 1) {
       keep <- !any(sapply(restrictions, function(x) {
@@ -46,9 +46,9 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
     }
     files <- files[keep]
   }
-
+  
   folders <- path_file(files[dir.exists(files)])
-
+  
   if (length(folders) == 0) {
     tree$empty <- TRUE
     tree$children <- list()
@@ -119,13 +119,13 @@ updateChildren <- function(oldChildren, currentChildren) {
 dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
   if (missing(filetypes)) filetypes <- NULL
   if (missing(restrictions)) restrictions <- NULL
-
+  
   function(tree, root) {
     currentRoots <- if (inherits(roots, "function")) roots() else roots
-
+    
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
     if (is.null(root)) root <- names(currentRoots)[1]
-
+    
     tree <- traverseDirs(tree, currentRoots[root], restrictions, hidden)
     
     list(
@@ -187,8 +187,8 @@ dirCreator <- function(roots, ...) {
 #' @export
 #'
 shinyDirChoose <- function(
-  input, id, updateFreq = 0, session = getSession(),
-  defaultPath = "", defaultRoot = NULL, allowDirCreate = TRUE, ...
+    input, id, updateFreq = 0, session = getSession(),
+    defaultPath = "", defaultRoot = NULL, allowDirCreate = TRUE, ...
 ) {
   dirGet <- do.call(dirGetter, list(...))
   fileGet <- do.call(fileGetter, list(...))
@@ -222,8 +222,10 @@ shinyDirChoose <- function(
     } else {
       dir <- list(tree = tree$tree, root = tree$selectedRoot)
       files <- list(dir = unlist(tree$contentPath), root = tree$selectedRoot)
-      passedPath <- list(list(...)$roots[tree$selectedRoot])
-      exist = dir.exists(do.call(path,c(passedPath,files$dir[-1])))
+      passedRoots <- list(...)$roots
+      passedPathRoots <- if (inherits(passedRoots, "function")) passedRoots() else passedRoots
+      passedPath <- list(passedPathRoots[tree$selectedRoot])
+      exist = dir.exists(do.call(path, c(passedPath, files$dir[-1])))
     }
     newDir <- do.call(dirGet, dir)
     if (.is_not(files$dir)) {
@@ -243,11 +245,11 @@ shinyDirChoose <- function(
     session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     if (updateFreq > 0) invalidateLater(updateFreq, session)
   }
-
+  
   observe({
     sendDirectoryData("shinyDirectories")
   })
-
+  
   observeEvent(input[[paste0(id, "-refresh")]], {
     if (!is.null(input[[paste0(id, "-refresh")]])) {
       sendDirectoryData("shinyDirectories-refresh")
@@ -262,8 +264,8 @@ shinyDirChoose <- function(
 #' @export
 #'
 shinyDirButton <- function(
-  id, label, title, buttonType="default", 
-  class=NULL, icon=NULL, style=NULL, ...
+    id, label, title, buttonType="default", 
+    class=NULL, icon=NULL, style=NULL, ...
 ) {
   value <- restoreInput(id = id, default = NULL)
   tagList(
@@ -336,9 +338,9 @@ shinyDirLink <- function(id, label, title, class=NULL, icon=NULL, style=NULL, ..
 #'
 parseDirPath <- function(roots, selection) {
   currentRoots <- if (inherits(roots, "function")) roots() else roots
-
+  
   if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
-
+  
   if (is.integer(selection)) {
     character(0)
   } else {
