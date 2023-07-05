@@ -1,5 +1,10 @@
 # shinyFiles (development version)
 
+# shinyFiles 0.9.4
+
+* Fixed #185 (@pietrodita)
+* Accepted pull request from @lanceupton to address #181
+
 # shinyFiles 0.9.3
 
 * Standard upkeep
