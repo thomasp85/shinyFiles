@@ -222,7 +222,9 @@ shinyDirChoose <- function(
     } else {
       dir <- list(tree = tree$tree, root = tree$selectedRoot)
       files <- list(dir = unlist(tree$contentPath), root = tree$selectedRoot)
-      passedPath <- list(list(...)$roots[tree$selectedRoot])
+      passedRoots <- list(...)$roots
+      passedPathRoots <- if (inherits(passedRoots, "function")) passedRoots() else passedRoots
+      passedPath <- list(passedPathRoots[tree$selectedRoot])
       exist = dir.exists(do.call(path,c(passedPath,files$dir[-1])))
     }
     newDir <- do.call(dirGet, dir)
