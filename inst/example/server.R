@@ -2,7 +2,7 @@ library(shiny)
 library(shinyFiles)
 library(fs)
 
-shinyServer(function(input, output, session) {
+function(input, output, session) {
   volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
   shinyFileChoose(input, "file", roots = volumes, session = session)
   # by setting `allowDirCreate = FALSE` a user will not be able to create a new directory
@@ -50,4 +50,4 @@ shinyServer(function(input, output, session) {
       parseSavePath(volumes, input$save)
     }
   })
-})
+}
