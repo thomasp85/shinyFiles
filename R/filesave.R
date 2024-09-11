@@ -28,8 +28,6 @@ NULL
 #'
 shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
                           defaultPath = "", defaultRoot = NULL, allowDirCreate = TRUE, ...) {
-  fileGet <- do.call(fileGetter, list(...))
-  dirCreate <- do.call(dirCreator, list(...))
   currentDir <- list()
   lastDirCreate <- NULL
   clientId <- session$ns(id)
@@ -39,6 +37,10 @@ shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
     dir <- input[[paste0(id, "-modal")]]
     createDir <- input[[paste0(id, "-newDir")]]
 
+    ## allows reactive links (e.g., for filetypes)
+    fileGet <- do.call(fileGetter, list(...))
+    dirCreate <- do.call(dirCreator, list(...))
+    
     # Show a notification if a user is trying to create a
     # new directory when that option has been disabled
     if (!identical(createDir, lastDirCreate)) {

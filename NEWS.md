@@ -1,5 +1,7 @@
 # shinyFiles (development version)
 
+* Accepted pull request from @WilDoane to address #195
+
 # shinyFiles 0.9.4
 
 * Fixed #185 (@pietrodita)
