@@ -16,7 +16,10 @@ Authors@R:
              role = "aut"),
       person(given = "Eric",
              family = "Nantz",
-             role = "aut"))
+             role = "aut"),
+      person(given = "Kamil",
+             family = "Foltynski",
+             role = "ctb"))
 Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
 Description: Provides functionality for client-side navigation of
     the server side file system in shiny apps. In case the app is running
