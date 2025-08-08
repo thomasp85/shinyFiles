@@ -792,6 +792,12 @@ var shinyFiles = (function () {
 
   // File chooser
   var createFileChooser = function (button, title) {
+    // Clean up any existing modals for this button
+    var existingModal = $(button).data('modal');
+    if (existingModal) {
+      removeFileChooser(button, existingModal);
+    }
+
     // Preparations
 
     $(button).prop('disabled', true);
@@ -1351,6 +1357,12 @@ var shinyFiles = (function () {
 
   // File saver
   var createFileSaver = function (button, title) {
+    // Clean up any existing modals for this button
+    var existingModal = $(button).data('modal');
+    if (existingModal) {
+      removeFileChooser(button, existingModal);
+    }
+
     // Preparations
 
     $(button).prop('disabled', true);
@@ -1826,6 +1838,12 @@ var shinyFiles = (function () {
 
   // Directory chooser
   var createDirChooser = function (button, title) {
+
+    // Clean up any existing modals for this button
+    var existingModal = $(button).data('modal');
+    if (existingModal) {
+      removeFileChooser(button, existingModal);
+    }
 
     // Preparations
     $(button).prop('disabled', true);
@@ -2598,8 +2616,9 @@ var shinyFiles = (function () {
       switch (event.keyCode) {
         case 27:
           // Escape
-          if ($("#sF-cancelButton").is(":visible") && !$("div.sF-newDir").hasClass("open")) {
-            $("#sF-cancelButton").click();
+          var visibleModal = $(".sF-modalContainer:visible").first();
+          if (visibleModal.length > 0 && visibleModal.find("#sF-cancelButton").is(":visible") && !visibleModal.find("div.sF-newDir").hasClass("open")) {
+            visibleModal.find("#sF-cancelButton").click();
           };
 
           break;
@@ -2622,38 +2641,39 @@ var shinyFiles = (function () {
         case 13:
 
           // Enter
-          if ($(".sF-modalContainer").is(":visible")) {
-            var modalButton = $($(".sF-modalContainer").data('button'));
-            var lastElement = $(".sF-fileList").data('lastElement');
+          var visibleModal = $(".sF-modalContainer:visible").first();
+          if (visibleModal.length > 0) {
+            var modalButton = visibleModal.data('button');
+            var lastElement = visibleModal.find(".sF-fileList").data('lastElement');
 
             if (modalButton.hasClass("shinyFiles")) {
-              if (!$($(".sF-fileList").data('lastElement')).hasClass('selected')) { return; }
+              if (!lastElement || !$(lastElement).hasClass('selected')) { return; }
 
               // Select File
-              if ($($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
-                selectFiles(modalButton, $(".sF-modalContainer"));
-              } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
-                openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+              if ($(lastElement).hasClass('sF-file')) {
+                selectFiles(modalButton, visibleModal);
+              } else if ($(lastElement).hasClass('sF-directory')) {
+                openDir(modalButton, visibleModal, $(lastElement));
               }
             } else if (modalButton.hasClass("shinySave")) {
               // Assume the button is properly disabled/enabled
-              if ($('.sF-filename').is(":focus") || $($(".sF-fileList").data('lastElement')).hasClass('sF-file')) {
-                var filename = $(".sF-filename").val();
+              if (visibleModal.find('.sF-filename').is(":focus") || (lastElement && $(lastElement).hasClass('sF-file'))) {
+                var filename = visibleModal.find(".sF-filename").val();
                 var parts = filename.split(".");
 
-                if ($("#sF-selectButton").prop('disabled')) { return; }
+                if (visibleModal.find("#sF-selectButton").prop('disabled')) { return; }
 
                 // Do not use enter to submit an empty filename (just a file extension)
-                if (($(".sF-filetype").length > 0 && filename.length > 0) || parts.slice(0, parts.length - 1).join(".").length > 0) {
-                  saveFile($('.sF-modalContainer'), modalButton);
+                if ((visibleModal.find(".sF-filetype").length > 0 && filename.length > 0) || parts.slice(0, parts.length - 1).join(".").length > 0) {
+                  saveFile(visibleModal, modalButton);
                 }
-              } else if ($($(".sF-fileList").data('lastElement')).hasClass('sF-directory')) {
-                openDir(modalButton, $(".sF-modalContainer"), $($(".sF-fileList").data('lastElement')));
+              } else if (lastElement && $(lastElement).hasClass('sF-directory')) {
+                openDir(modalButton, visibleModal, $(lastElement));
               }
             } else if (modalButton.hasClass("shinyDirectories")) {
-              // Save File
-              if ($($(".sF-dirList").find(".selected")).length === 1) {
-                selectFiles(modalButton, $(".sF-modalContainer"));
+              // Directory selection
+              if (visibleModal.find(".sF-dirList .selected").length === 1) {
+                selectFiles(modalButton, visibleModal);
               }
             }
           }
@@ -2662,8 +2682,8 @@ var shinyFiles = (function () {
 
     // Close modal when clicking on backdrop
     $(document).on('click', '.sF-modalContainer', function (e) {
-      if (!$(e.target).closest('.modal-content').length > 0 && $("#sF-cancelButton").is(":visible")) {
-        $("#sF-cancelButton").click();
+      if (!$(e.target).closest('.modal-content').length > 0 && $(this).find("#sF-cancelButton").is(":visible")) {
+        $(this).find("#sF-cancelButton").click();
       }
     });
   };
