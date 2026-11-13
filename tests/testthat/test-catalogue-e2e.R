@@ -18,7 +18,6 @@ catalogue <- readCatalogue()
 # a bug. Each is skipped with its reason until the fix lands, and the fix
 # commit deletes its entry, so the test then has to pass.
 KNOWN_BUGS <- c(
-  "esc-closes-dialog" = "Esc in the path box also closes the whole dialog",
   "no-write-warning" = "the read-only folder warning is removed by setExists() before it shows"
 )
 knownBug <- function(id) skip(paste("known bug:", KNOWN_BUGS[[id]]))
@@ -287,7 +286,6 @@ checks <- list(
   },
 
   pathBoxClosedDialogOpen = function(app, row, dialog) {
-    knownBug("esc-closes-dialog")
     run(app, "m.find('.sF-textChoice').trigger('click');")
     expect_equal(app$get_js("document.activeElement.placeholder || ''"), "Enter Path")
     pressKey(app, "Escape")

@@ -2728,7 +2728,8 @@ var shinyFiles = (function () {
         case 27:
           // Escape
           var visibleModal = $(".sF-modalContainer:visible").last();
-          if (visibleModal.length > 0 && visibleModal.find("#sF-cancelButton").is(":visible") && !visibleModal.find("div.sF-newDir").hasClass("open")) {
+          // An open path or new-folder box takes Esc to close itself, not the dialog.
+          if (visibleModal.length > 0 && visibleModal.find("#sF-cancelButton").is(":visible") && !visibleModal.find("div.sF-newDir, div.sF-textChoice").hasClass("open")) {
             visibleModal.find("#sF-cancelButton").click();
           };
 

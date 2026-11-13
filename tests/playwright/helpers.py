@@ -14,7 +14,6 @@ CATALOGUE = Path(__file__).resolve().parent.parent / "testthat" / "inputs-catalo
 # expected to fail (xfail, strict), so fixing the bug makes it pass and the
 # suite then insists the entry is removed.
 KNOWN_BUGS = {
-    "esc-closes-dialog": "Esc in the path box also closes the whole dialog",
     "no-write-warning": "the read-only folder warning is removed by setExists() before it shows",
     "icon-right-stops": "in icon view the right arrow stops at the end of the first row",
     "arrows-two-dialogs": "with two dialogs open, arrow keys move neither (moveSelection uses every modal)",

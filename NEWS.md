@@ -15,6 +15,8 @@
   opened.
 * `shinySaveButton(filetype = NULL)` (or an empty list) no longer stops the
   save dialog from opening; it behaves like leaving `filetype` out.
+* Pressing Esc in the path box ("pencil") closes the path box instead of the
+  whole dialog, as it already did for the new-folder box.
 
 # shinyFiles 0.9.4
 
