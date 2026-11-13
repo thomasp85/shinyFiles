@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/shinyFiles/shinyFiles/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shinyFiles/shinyFiles/actions/workflows/R-CMD-check.yaml)
+[![playwright](https://github.com/shinyFiles/shinyFiles/actions/workflows/playwright.yaml/badge.svg)](https://github.com/shinyFiles/shinyFiles/actions/workflows/playwright.yaml)
 [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles) [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/shinyFiles)](https://CRAN.R-project.org/package=shinyFiles)
 <!-- badges: end -->
 
