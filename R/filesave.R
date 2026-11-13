@@ -72,6 +72,7 @@ shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
     dir$dir <- paste0(dir$dir, collapse = "/")
     newDir <- do.call(fileGet, dir)
     newDir$recentLimit <- recent
+    newDir$allowDirCreate <- isTRUE(allowDirCreate)
     if (isTRUE(newDir$exist)) {
       currentDir <<- newDir
       session$sendCustomMessage(message, list(id = clientId, dir = newDir))
@@ -83,6 +84,7 @@ shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
       dir$dir <- sub("(.*/).*$", "\\1", dir$dir)
       newDir <- do.call(fileGet, dir)
       newDir$recentLimit <- recent
+      newDir$allowDirCreate <- isTRUE(allowDirCreate)
       if (isTRUE(newDir$exist)) { # backing up once, we find a valid directory
         newDir$selectedFile <- selectedFile
         currentDir <<- newDir
@@ -207,6 +209,9 @@ shinySaveLink <- function(id, label, title, filename = "", filetype,
 #' @importFrom jsonlite toJSON
 #'
 formatFiletype <- function(filetype) {
+  # No file types at all is sent like NA: the dialog iterates over the array,
+  # and an empty list would encode as `{}`.
+  if (length(filetype) == 0) filetype <- NA
   if (!.is_not(filetype)) {
     filetype <- lapply(1:length(filetype), function(i) {
       list(name = names(filetype)[i], ext = I(filetype[[i]]))
@@ -225,7 +230,7 @@ parseSavePath <- function(roots, selection) {
   if (all(is.null(selection))) {
     return(tibble(
       name = character(), type = character(),
-      datapath = character(), stringsAsFactors = FALSE
+      datapath = character()
     ))
   }
 
@@ -233,12 +238,12 @@ parseSavePath <- function(roots, selection) {
   if (all(is.null(names(currentRoots)))) stop("Roots must be a named vector or a function returning one")
 
   if (all(is.integer(selection))) {
-    tibble(name = character(0), type = character(0), datapath = character(0), stringsAsFactors = FALSE)
+    tibble(name = character(0), type = character(0), datapath = character(0))
   } else {
     root <- currentRoots[selection$root]
     savefile <- path(root, paste0(c(selection$path, selection$name), collapse = "/"))
     type <- selection$type
     type <- if (length(type) == 0) "" else unlist(type)
-    tibble(name = path_file(savefile), type = type, datapath = savefile, stringsAsFactors = FALSE)
+    tibble(name = path_file(savefile), type = type, datapath = savefile)
   }
 }

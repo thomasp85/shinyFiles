@@ -31,8 +31,6 @@ NOT_OPENED = {"file-open", "dir-open", "save-open"}
 # Checks that pin a known bug. The row is marked xfail(strict=True), so it must
 # fail now and must pass (forcing the entry's removal) once the bug is fixed.
 KNOWN_BUG_CHECKS = {
-    "pathBoxClosedDialogOpen": "esc-closes-dialog",
-    "permissionWarned": "no-write-warning",
 }
 
 
@@ -291,11 +289,13 @@ def folderCreatedAndEntered(page, d, row, fx):
 
 def folderNotCreated(page, d, row, fx):
     d.highlight_root()
-    d.find("#sF-btn-newDir").click()
-    box = d.find(".sF-newDir input")
-    box.fill("refused")
-    box.press("End")
-    box.press("Enter")
+    expect(d.find("#sF-btn-newDir")).to_be_disabled()
+    # A disabled button takes no clicks, so the name box never opens.
+    d.find("#sF-btn-newDir").click(force=True)
+    expect(d.find(".sF-newDir")).not_to_have_class(re.compile("open"))
+    # The server still refuses a request that gets through anyway.
+    page.evaluate(f"() => Shiny.setInputValue('{d.button_id}-newDir', "
+                  "{name: 'refused', path: [''], root: 'data', id: Date.now()})")
     expect(page.locator(".shiny-notification-error")).to_contain_text("disabled")
     assert not (fx / "data" / "refused").exists()
 

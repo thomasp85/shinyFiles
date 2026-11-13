@@ -22,8 +22,9 @@ test_that("a pattern may be given as a function", {
 
 test_that("an invalid pattern is ignored rather than failing the listing", {
   get <- fileGetter(roots = c(r = edgeRoot), pattern = "[")
-  # grepl() still warns about the bad regex; only the listing is under test here.
-  l <- suppressWarnings(get("", "r"))
+  # Quietly: the regex is the app author's, and a warning per listing would
+  # fill the app's log without telling the user anything.
+  expect_no_warning(l <- get("", "r"))
   expect_setequal(l$files$filename, c("log-1.txt", "log-2.txt", "other.txt", "sub"))
 })
 
@@ -101,4 +102,24 @@ test_that("a typed path outside every root reports a missing folder in the save 
     d$type("/no/such/place/at/all")
     expect_false(d$last()$exist)
   })
+})
+
+test_that("shinyDirChoose accepts the same file filters as the other dialogs", {
+  # `...` goes to every helper, so a pattern (which only filters the file
+  # pane) must not be rejected by the folder helpers.
+  base <- tempfile("sf-dir-pattern")
+  fs::dir_create(fs::path(base, "sub"))
+  fs::file_create(fs::path(base, "sub", c("keep.log", "drop.txt")))
+  sent <- NULL
+  server <- function(input, output, session) {
+    session$sendCustomMessage <- function(type, message) if (type == "shinyDirectories") sent <<- message
+    shinyDirChoose(input, "d", roots = c(r = base), pattern = "\\.log$", session = session)
+  }
+  expect_no_error(testServer(server, {
+    session$setInputs(d = 1)
+    session$setInputs(`d-modal` = list(
+      tree = list(name = "", expanded = TRUE), selectedRoot = "r", contentPath = list("", "sub")
+    ))
+  }))
+  expect_equal(sort(unlist(roundTrip(sent$dir)$content$filename)), "keep.log")
 })

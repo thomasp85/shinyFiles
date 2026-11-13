@@ -15,8 +15,10 @@ NULL
 #' named vector of absolute filepaths (the latter is useful if the volumes
 #' should adapt to changes in the filesystem).
 #'
-#' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
+#' @param restrictions A vector of absolute paths to directories within the
+#' root that should be filtered out of the results, together with everything
+#' inside them. A path only matches whole folders, so restricting `/data` hides
+#' `/data` but not `/data2`.
 #'
 #' @param filetypes A character vector of file extensions (without dot in front
 #' i.e. 'txt' not '.txt') to include in the output. Use the empty string to
@@ -108,7 +110,8 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     }
     
     if (nchar(pattern) > 0) {
-      matchedFiles <- try(grepl(pattern, fileInfo$filename), silent = TRUE)
+      # An invalid regex is ignored; grepl() would also warn on every listing.
+      matchedFiles <- try(suppressWarnings(grepl(pattern, fileInfo$filename)), silent = TRUE)
       if (!inherits(matchedFiles, "try-error")) {
         fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
       }
@@ -128,22 +131,21 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
   }
 }
 
-#' Drop paths that match any of the restrictions
+#' Drop paths that are, or are inside, any of the restricted folders
+#'
+#' A restriction names a folder, so `/data` hides `/data` and `/data/x` but
+#' not `/data2` or `/database`.
 #'
 #' @noRd
 #'
 dropRestricted <- function(files, restrictions) {
   if (is.null(restrictions) || length(files) == 0) return(files)
-  if (length(files) == 1) {
-    keep <- !any(sapply(restrictions, function(x) {
-      grepl(x, files, fixed = T)
-    }))
-  } else {
-    keep <- !apply(sapply(restrictions, function(x) {
-      grepl(x, files, fixed = T)
-    }), 1, any)
-  }
-  files[keep]
+  restrictions <- sub("[/\\\\]+$", "", as.character(restrictions))
+  paths <- as.character(files)
+  hidden <- vapply(paths, function(f) {
+    any(f == restrictions | startsWith(f, paste0(restrictions, "/")))
+  }, logical(1), USE.NAMES = FALSE)
+  files[!hidden]
 }
 
 #' Resolve text typed into the path box to a root and path
@@ -720,7 +722,7 @@ parseFilePaths <- function(roots, selection) {
   if (all(is.null(selection)) || all(is.na(selection)) || all(is.integer(selection)) || length(selection$files) == 0) {
     tibble(
       name = character(0), size = numeric(0), type = character(0),
-      datapath = character(0), stringsAsFactors = FALSE
+      datapath = character(0)
     )
   } else {
     files <- sapply(selection$files, function(x) path(roots[selection$root], paste0(x, collapse = "/")))

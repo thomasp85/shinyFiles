@@ -18,7 +18,6 @@ emptyFiles <- tibble::tibble(
 emptySave <- tibble::tibble(name = character(0), type = character(0), datapath = character(0))
 
 test_that("the parsers return exactly the fileInput() columns", {
-  skip("Known bug: tibble() turns stringsAsFactors = FALSE into a column; fixed in the bug-fix PR")
   expect_named(parseFilePaths(roots, NULL), c("name", "size", "type", "datapath"))
   expect_named(parseSavePath(roots, NULL), c("name", "type", "datapath"))
   expect_named(parseSavePath(roots, 1L), c("name", "type", "datapath"))
@@ -26,14 +25,11 @@ test_that("the parsers return exactly the fileInput() columns", {
                c("name", "type", "datapath"))
 })
 
-# The column-shape bug above is tested on its own; the rest compares content.
-dropSAF <- function(x) x[setdiff(names(x), "stringsAsFactors")]
-
 test_that("parseFilePaths returns an empty table until a file is chosen", {
-  expect_equal(dropSAF(parseFilePaths(roots, NULL)), emptyFiles, ignore_attr = TRUE)
-  expect_equal(dropSAF(parseFilePaths(roots, NA)), emptyFiles, ignore_attr = TRUE)
-  expect_equal(dropSAF(parseFilePaths(roots, 1L)), emptyFiles, ignore_attr = TRUE)
-  expect_equal(dropSAF(parseFilePaths(roots, list(files = list(), root = "first"))), emptyFiles,
+  expect_equal((parseFilePaths(roots, NULL)), emptyFiles, ignore_attr = TRUE)
+  expect_equal((parseFilePaths(roots, NA)), emptyFiles, ignore_attr = TRUE)
+  expect_equal((parseFilePaths(roots, 1L)), emptyFiles, ignore_attr = TRUE)
+  expect_equal((parseFilePaths(roots, list(files = list(), root = "first"))), emptyFiles,
                ignore_attr = TRUE)
 })
 
@@ -79,8 +75,8 @@ test_that("parseDirPath and parseSavePath reject unnamed roots", {
 })
 
 test_that("parseSavePath returns an empty table until a file is saved", {
-  expect_equal(dropSAF(parseSavePath(roots, NULL)), emptySave, ignore_attr = TRUE)
-  expect_equal(dropSAF(parseSavePath(roots, 2L)), emptySave, ignore_attr = TRUE)
+  expect_equal((parseSavePath(roots, NULL)), emptySave, ignore_attr = TRUE)
+  expect_equal((parseSavePath(roots, 2L)), emptySave, ignore_attr = TRUE)
 })
 
 test_that("parseSavePath builds the path from root, folder and name", {

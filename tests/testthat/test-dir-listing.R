@@ -69,8 +69,9 @@ lockedIsLocked <- function() {
 oracleFolders <- function(dir, hidden = FALSE, restrictions = NULL) {
   entries <- list.files(dir, all.files = hidden, full.names = TRUE, no.. = TRUE)
   if (!is.null(restrictions)) {
+    # A restriction names a folder: it hides that folder and what's inside it.
     entries <- entries[!vapply(entries, function(e) {
-      any(vapply(restrictions, grepl, logical(1), x = e, fixed = TRUE))
+      any(e == restrictions | startsWith(e, paste0(restrictions, "/")))
     }, logical(1))]
   }
   sort(basename(entries[dir.exists(entries)]))
@@ -121,7 +122,7 @@ test_that("hidden folders follow the hidden flag", {
 })
 
 test_that("restrictions hide folders at the top and at nested levels", {
-  restrictions <- c(fs::path(fixture, "secret"), "secret_nested")
+  restrictions <- as.character(c(fs::path(fixture, "secret"), fs::path(fixture, "full", "secret_nested")))
   dg <- dirGetter(roots = roots, restrictions = restrictions)
   tree <- dg(
     tree = list(name = "", expanded = TRUE, children = list(

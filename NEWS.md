@@ -1,3 +1,37 @@
+# shinyFiles (development version)
+
+* `parseFilePaths()` and `parseSavePath()` no longer return an extra
+  `stringsAsFactors` column. `tibble()` treats that argument as data, so every
+  result has had a stray logical column since 2017.
+* An invalid `pattern` regular expression is still ignored, but no longer
+  logs a warning every time a folder is listed.
+* **Behaviour change:** `restrictions` now matches whole folders. Restricting
+  `/data` hides `/data` and everything inside it, but no longer also hides
+  `/data2`, `/database` or any other path that merely contains the text.
+  Restrictions should be absolute paths; a bare name such as `"secret"` no
+  longer hides every path containing it.
+* `shinyDirChoose()` accepts `pattern`, which filters the files shown beside the
+  folder tree. It used to fail with "unused argument" as soon as the dialog
+  opened.
+* `shinySaveButton(filetype = NULL)` (or an empty list) no longer stops the
+  save dialog from opening; it behaves like leaving `filetype` out.
+* Pressing Esc in the path box ("pencil") closes the path box instead of the
+  whole dialog, as it already did for the new-folder box.
+* The save dialog shows "No write permission for folder" in a read-only folder
+  again, and keeps Save disabled there. The warning was removed by the
+  missing-folder check straight after it was added, so Save stayed enabled.
+* With two shinyFiles dialogs open at once, the arrow keys move the selection in
+  the one on top. They used to look at every open dialog and move neither.
+  Arrow keys also no longer rely on the browser's global `event` object.
+* The sort order chosen in a dialog is kept when you open another folder,
+  reopen the dialog, or highlight a different folder in the folder chooser.
+  Every new listing used to be drawn in name order while the sort menu still
+  showed the old choice. Sorting in descending order also keeps the column
+  header at the top instead of moving it to the bottom.
+* With `allowDirCreate = FALSE`, the "Create new folder" button in the folder
+  and save dialogs is grayed out. It used to be clickable and only fail with an
+  error notification. The server still refuses such a request.
+
 # shinyFiles 0.9.4
 
 This release passes maintenance of the package to Michael Bell

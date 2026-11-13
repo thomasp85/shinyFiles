@@ -17,10 +17,7 @@ catalogue <- readCatalogue()
 # Rows whose correct behaviour is pinned here but which fail on main because of
 # a bug. Each is skipped with its reason until the fix lands, and the fix
 # commit deletes its entry, so the test then has to pass.
-KNOWN_BUGS <- c(
-  "esc-closes-dialog" = "Esc in the path box also closes the whole dialog",
-  "no-write-warning" = "the read-only folder warning is removed by setExists() before it shows"
-)
+KNOWN_BUGS <- c()
 knownBug <- function(id) skip(paste("known bug:", KNOWN_BUGS[[id]]))
 
 # --- page helpers -----------------------------------------------------------
@@ -287,7 +284,6 @@ checks <- list(
   },
 
   pathBoxClosedDialogOpen = function(app, row, dialog) {
-    knownBug("esc-closes-dialog")
     run(app, "m.find('.sF-textChoice').trigger('click');")
     expect_equal(app$get_js("document.activeElement.placeholder || ''"), "Enter Path")
     pressKey(app, "Escape")
@@ -388,9 +384,15 @@ checks <- list(
 
   folderNotCreated = function(app, row, dialog) {
     highlightFirstFolder(app)
+    # Grayed out, so clicking it doesn't open the name box.
+    expect_true(js(app, "return m.find('#sF-btn-newDir').prop('disabled');"))
     run(app, "m.find('.sF-newDir').trigger('click');")
-    run(app, "m.find('.sF-newDir input').val('refused');")
-    run(app, keyEvent("m.find('.sF-newDir input')", "keyup", "Enter"))
+    expect_false(js(app, "return m.find('.sF-newDir').hasClass('open');"))
+    # And the server still refuses a request that gets through anyway.
+    app$run_js(sprintf(
+      "Shiny.setInputValue('%s-newDir', {name: 'refused', path: [''], root: 'data', id: Date.now()});",
+      dialog
+    ))
     app$wait_for_idle()
     expect_false(dir.exists(file.path(catBase, "data", "refused")))
     expect_true(app$get_js("$('.shiny-notification-error').text().indexOf('disabled') !== -1"))
@@ -517,7 +519,6 @@ checks <- list(
 
   permissionWarned = function(app, row, dialog) {
     skip_if(Sys.info()[["effective_user"]] == "root", "root can write anywhere")
-    knownBug("no-write-warning")
     markListing(app)
     run(app, "var el = m.find('.sF-fileList .sF-directory').filter(function(){ return $(this).text().indexOf('locked') !== -1; }); var e = $.Event('dblclick'); e.button = 0; el.trigger(e);")
     waitListing(app)

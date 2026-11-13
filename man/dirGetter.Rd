@@ -4,17 +4,21 @@
 \alias{dirGetter}
 \title{Create a function that updates a folder tree based on the given restrictions}
 \usage{
-dirGetter(roots, restrictions, filetypes, hidden = FALSE)
+dirGetter(roots, restrictions, filetypes, pattern, hidden = FALSE)
 }
 \arguments{
 \item{roots}{A named vector of absolute filepaths or a function returning a
 named vector of absolute filepaths (the latter is useful if the volumes
 should adapt to changes in the filesystem).}
 
-\item{restrictions}{A vector of directories within the root that should be
-filtered out of the results}
+\item{restrictions}{A vector of absolute paths to directories within the
+root that should be filtered out of the results, together with everything
+inside them. A path only matches whole folders, so restricting \verb{/data} hides
+\verb{/data} but not \verb{/data2}.}
 
-\item{filetypes}{Currently unused}
+\item{filetypes, pattern}{Currently unused. Accepted so that
+\code{\link[=shinyDirChoose]{shinyDirChoose()}} can pass the same arguments to every helper; they only
+filter the file pane, which \code{\link[=fileGetter]{fileGetter()}} builds.}
 
 \item{hidden}{A logical value specifying whether hidden files should be
 returned or not}

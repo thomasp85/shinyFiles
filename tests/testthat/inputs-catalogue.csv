@@ -60,7 +60,7 @@ dir-newdir-open,dir,New folder toggle,#sF-btn-newDir,click,menuOpen:.sF-newDir,N
 dir-newdir-enter,dir,New folder Enter,.sF-newDir input,key:Enter,folderCreated,
 dir-newdir-ok,dir,New folder OK button,.sF-newDir ul button,click,folderCreated,
 dir-newdir-esc,dir,New folder Esc,.sF-newDir input,key:Escape,newDirClosedDialogOpen,
-dir-newdir-disabled,dir,New folder with allowDirCreate = FALSE,#sF-btn-newDir,click,folderNotCreated,Server refuses and shows a notification
+dir-newdir-disabled,dir,New folder with allowDirCreate = FALSE,#sF-btn-newDir,state,folderNotCreated,Grayed out; the server also refuses
 dir-tree-expand,dir,Tree expand arrow,.sF-dirList .sF-expander>span,click,treeExpanded,
 dir-tree-collapse,dir,Tree collapse arrow,.sF-dirList .sF-expander>span,click,treeCollapsed,
 dir-tree-select,dir,Tree node click,.sF-dirList .sF-file-name,click,folderHighlighted,Shows its contents

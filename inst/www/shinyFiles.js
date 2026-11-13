@@ -8,7 +8,7 @@ var shinyFiles = (function () {
     function toggleSelection(element) {
       $(element).toggleClass('selected');
       parent.data('lastElement', element);
-      toggleSelectButton($('.sF-modalContainer'));
+      toggleSelectButton($(element).closest('.sF-modalContainer'));
     }
 
     function selectElementsBetweenIndexes(indexes) {
@@ -31,10 +31,11 @@ var shinyFiles = (function () {
     function scrollToSelected() {
       // Adjust for any overall offsets
       // Adjustments depend on what kind of modal/display is present
-      var modal = $('.sF-modalContainer');
+      var modal = $(element).closest('.sF-modalContainer');
       var button = $(modal.data('button'));
       var fileFlag = button.hasClass('shinyFiles');
       var saveFlag = button.hasClass('shinySave');
+      var fileWindow = modal.find('.sF-fileWindow');
 
       if (fileFlag || saveFlag) {
         // Different display modes handled differently for file/save modal
@@ -43,32 +44,32 @@ var shinyFiles = (function () {
         if (viewType === "sF-btn-icon") {
           // Vertical scroll
           var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
-          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+          var scrollPosition = fileWindow[0].scrollTop;
 
           if (topOffset < scrollPosition) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset;
-          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
+            fileWindow[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + fileWindow.height()) {
+            fileWindow[0].scrollTop = topOffset - fileWindow.height() + $(element).outerHeight(true);
           }
         } else if (viewType === "sF-btn-list") {
           // Lists scroll horizontally, but otherwise the logic is very similar to icons
           var leftOffset = $(element)[0].offsetLeft - parent.children()[1].offsetLeft;
-          var scrollPosition = $('.sF-fileWindow')[0].scrollLeft;
+          var scrollPosition = fileWindow[0].scrollLeft;
 
           if (leftOffset < scrollPosition) {
-            $('.sF-fileWindow')[0].scrollLeft = leftOffset;
-          } else if (leftOffset + $(element).outerWidth(true) > scrollPosition + $('.sF-fileWindow').width()) {
-            $('.sF-fileWindow')[0].scrollLeft = leftOffset - $('.sF-fileWindow').width() + $(element).outerWidth(true);
+            fileWindow[0].scrollLeft = leftOffset;
+          } else if (leftOffset + $(element).outerWidth(true) > scrollPosition + fileWindow.width()) {
+            fileWindow[0].scrollLeft = leftOffset - fileWindow.width() + $(element).outerWidth(true);
           }
         } else if (viewType === "sF-btn-detail") {
           // Essentially the same as icons, but header is visible
           var topOffset = $(element)[0].offsetTop - parent.children()[0].offsetTop;
-          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+          var scrollPosition = fileWindow[0].scrollTop;
 
           if (topOffset < scrollPosition) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset;
-          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true)
+            fileWindow[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + fileWindow.height()) {
+            fileWindow[0].scrollTop = topOffset - fileWindow.height() + $(element).outerHeight(true)
           }
         }
       } // NOTE: Selection in dirchooser is handled by selectFolder. Submission is handled by selectFiles
@@ -94,15 +95,14 @@ var shinyFiles = (function () {
     }
   };
 
-  var moveSelection = function (event, single, direction) {
-    var modal = $('.sF-modalContainer');
+  var moveSelection = function (event, modal, single, direction) {
     var button = $(modal.data('button'));
     var fileFlag = button.hasClass('shinyFiles');
     var saveFlag = button.hasClass('shinySave');
     var dirFlag = button.hasClass('shinyDirectories');
 
     if (fileFlag || saveFlag) {
-      var parent = $(".sF-fileList");
+      var parent = modal.find(".sF-fileList");
       var currentElement = parent.data('lastElement');
       var selectionEnd;
       if ('selectionEnd' in parent.data() && parent.data('selectionEnd') !== null) {
@@ -130,8 +130,8 @@ var shinyFiles = (function () {
       var ends = [originIndex, endIndex].sort();
 
       // Number of icons that fit with the file list, left to right
-      var boundingWidth = $(".sF-fileWindow").width();
-      var boundingHeight = $(".sF-fileWindow").height();
+      var boundingWidth = modal.find(".sF-fileWindow").width();
+      var boundingHeight = modal.find(".sF-fileWindow").height();
       var itemWidth = $(parent.children()[1]).outerWidth(true);
       var itemHeight = $(parent.children()[1]).outerHeight(true);
       var numHorizontal = Math.floor(boundingWidth / itemWidth);
@@ -341,7 +341,7 @@ var shinyFiles = (function () {
         }
       }
     } else if (dirFlag) {
-      var list = $('.sF-dirList');
+      var list = modal.find('.sF-dirList');
       var currentElement = list.find('.selected');
 
       function nextSibling(elem) {
@@ -670,12 +670,15 @@ var shinyFiles = (function () {
       fileList = $(modal).find('.sF-dirContent');
     }
 
+    // Only the entries are sorted; the column header (which has no file data)
+    // stays the first row in both directions.
+    var header = fileList.children('.sF-file-header').detach();
 
     fileList.sortChildren(function (elem) {
       return $(elem).data('sF-file') ? $(elem).data('sF-file').name : '';
     }, direction == 'descending');
 
-    if (attribute == 'Name') return;
+    if (attribute == 'Name') return fileList.prepend(header);
 
     switch (attribute) {
       case 'Type':
@@ -699,6 +702,7 @@ var shinyFiles = (function () {
         }, direction == 'descending');
         break;
     }
+    fileList.prepend(header);
   }
 
   var removeFileChooser = function (button, modal, data) {
@@ -756,40 +760,34 @@ var shinyFiles = (function () {
     removeFileChooser(button, modal, data);
   };
 
-  var setPermission = function (modal, writable) {
-    var currentState = $(modal).find('.sF-warning').length == 0;
+  // Shows at most one warning for the folder on screen, and disables the
+  // new-folder button where a folder can't be created. A missing folder takes
+  // precedence; the permission warning is for the save dialog only, since the
+  // file and folder choosers just read what is already there.
+  var setFolderState = function (modal, writable, exists, allowDirCreate) {
     var footer = $(modal).find('.modal-footer');
-    var overwrite = $($(modal).data('button')).hasClass('shinySave') ? true : filesSelected(modal);
-
-    $(modal).find('#sF-btn-newDir').prop('disabled', !(overwrite && writable));
-
-    if (writable || !overwrite) {
-      footer.find('.sF-warning').remove();
-    } else if (currentState != writable) {
-      footer.prepend(
-        $('<div>').addClass('sF-warning text-warning').append(
-          $('<span>').addClass('glyphicon glyphicon-warning-sign')
-        ).append(
-          $('<span>').text('No write permission for folder')
-        )
-      )
+    var save = $($(modal).data('button')).hasClass('shinySave');
+    var message = null;
+    if (!exists) {
+      message = 'Folder does not exist';
+    } else if (save && !writable) {
+      message = 'No write permission for folder';
     }
-  }
 
-  var setExists = function (modal, exists) {
-    var currentState = $(modal).find('.sF-warning').length == 0;
-    var footer = $(modal).find('.modal-footer');
-
-    $(modal).find('#sF-btn-newDir').prop('disabled', !(exists));
-
+    // The folder chooser creates inside the highlighted folder, so needs one.
+    var target = save || filesSelected(modal);
+    // allowDirCreate = FALSE on the server: gray the button out rather than
+    // let the user try and be refused.
+    var allowed = allowDirCreate !== false;
+    $(modal).find('#sF-btn-newDir').prop('disabled', !(allowed && exists && writable && target));
 
     footer.find('.sF-warning').remove();
-    if (!exists) {
+    if (message) {
       footer.prepend(
         $('<div>').addClass('sF-warning text-warning').append(
           $('<span>').addClass('glyphicon glyphicon-warning-sign')
         ).append(
-          $('<span>').text('Folder does not exist')
+          $('<span>').text(message)
         )
       )
     }
@@ -1294,14 +1292,13 @@ var shinyFiles = (function () {
       };
     };
 
-    if ($(element).hasClass('shinySave')) {
-      setPermission(modal, data.writable);
-      if (data.selectedFile != "") {
-        setFilename(modal, data.selectedFile)
-      }
+    if ($(element).hasClass('shinySave') && data.selectedFile != "") {
+      setFilename(modal, data.selectedFile)
     }
-    setExists(modal, data.exist);
+    setFolderState(modal, data.writable, data.exist, data.allowDirCreate);
     toggleSelectButton(modal);
+    // A new listing is drawn in name order; keep the order the user chose.
+    sortFiles(modal, $(element).data('sort'), $(element).data('sortDir'));
 
     modal.data('currentData', data);
     $(modal).trigger('change');
@@ -2334,8 +2331,8 @@ var shinyFiles = (function () {
     dirContent.removeClass('measuring');
 
     toggleSelectButton(modal);
-    setPermission(modal, data.writable);
-    setExists(modal, data.exist);
+    setFolderState(modal, data.writable, data.exist, data.allowDirCreate);
+    sortFiles(modal, $(element).data('sort'), $(element).data('sortDir'));
 
     modal.data('currentData', data);
     $(modal).trigger('change');
@@ -2427,14 +2424,12 @@ var shinyFiles = (function () {
     list.find('.selected').toggleClass('selected');
 
     function scrollToSelected() {
-      var modal = $('.sF-modalContainer');
-      var button = $(modal.data('button'));
-      var dirFlag = button.hasClass('shinyDirectories');
+      var dirFlag = $(modal.data('button')).hasClass('shinyDirectories');
 
       if (dirFlag) {
         var buffer = list.children()[0].offsetTop;
         var itemOffset = $(element)[0].offsetTop - buffer;
-        var scrollElement = $('.sF-dirInfo>div');
+        var scrollElement = list.closest('.sF-dirInfo>div');
         var scrollPosition = scrollElement[0].scrollTop;
         var elementHeight = $(element).find('sF-file-icon').outerHeight(true);
 
@@ -2656,11 +2651,13 @@ var shinyFiles = (function () {
   };
   // Directory chooser ends
 
-  var handleArrowKey = function (direction) {
-    var modal = $('.sF-modalContainer');
-    if (modal.is(":visible") && !($(modal.data('button')).hasClass("shinySave") && $('.sF-filename').is(":focus"))) {
-      var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
-      moveSelection(event, single, direction);
+  // Arrow keys act on the topmost open dialog only, and take the event the
+  // keydown handler was given rather than the browser's global `event`.
+  var handleArrowKey = function (event, direction) {
+    var modal = $('.sF-modalContainer:visible').last();
+    if (modal.length > 0 && !($(modal.data('button')).hasClass("shinySave") && modal.find('.sF-filename').is(":focus"))) {
+      var single = $(modal.data('button')).data('selecttype') === "single";
+      moveSelection(event, modal, single, direction);
       event.preventDefault();
       event.stopPropagation();
     }
@@ -2728,26 +2725,27 @@ var shinyFiles = (function () {
         case 27:
           // Escape
           var visibleModal = $(".sF-modalContainer:visible").last();
-          if (visibleModal.length > 0 && visibleModal.find("#sF-cancelButton").is(":visible") && !visibleModal.find("div.sF-newDir").hasClass("open")) {
+          // An open path or new-folder box takes Esc to close itself, not the dialog.
+          if (visibleModal.length > 0 && visibleModal.find("#sF-cancelButton").is(":visible") && !visibleModal.find("div.sF-newDir, div.sF-textChoice").hasClass("open")) {
             visibleModal.find("#sF-cancelButton").click();
           };
 
           break;
         case 37:
           // Left Arrow
-          handleArrowKey("left");
+          handleArrowKey(event, "left");
           break;
         case 39:
           // Right Arrow
-          handleArrowKey("right");
+          handleArrowKey(event, "right");
           break;
         case 38:
           // Up arrow
-          handleArrowKey("up");
+          handleArrowKey(event, "up");
           break;
         case 40:
           // Down arrow
-          handleArrowKey("down");
+          handleArrowKey(event, "down");
           break;
         case 13:
 

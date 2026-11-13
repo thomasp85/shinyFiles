@@ -19,8 +19,10 @@ NULL
 #'
 #' @param root A string with the location of the root folder for the tree
 #'
-#' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
+#' @param restrictions A vector of absolute paths to directories within the
+#' root that should be filtered out of the results, together with everything
+#' inside them. A path only matches whole folders, so restricting `/data` hides
+#' `/data` but not `/data2`.
 #'
 #' @param hidden A logical value specifying whether hidden folders should be
 #' returned or not
@@ -194,10 +196,14 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' named vector of absolute filepaths (the latter is useful if the volumes
 #' should adapt to changes in the filesystem).
 #'
-#' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
+#' @param restrictions A vector of absolute paths to directories within the
+#' root that should be filtered out of the results, together with everything
+#' inside them. A path only matches whole folders, so restricting `/data` hides
+#' `/data` but not `/data2`.
 #'
-#' @param filetypes Currently unused
+#' @param filetypes,pattern Currently unused. Accepted so that
+#' [shinyDirChoose()] can pass the same arguments to every helper; they only
+#' filter the file pane, which [fileGetter()] builds.
 #'
 #' @param hidden A logical value specifying whether hidden files should be
 #' returned or not
@@ -207,7 +213,7 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' See [traverseDirs()] for a description of the format for the list
 #' representation.
 #'
-dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
+dirGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
   if (missing(filetypes)) filetypes <- NULL
   if (missing(restrictions)) restrictions <- NULL
 
@@ -245,7 +251,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'
 #' @noRd
 #'
-dirProber <- function(roots, restrictions, filetypes, hidden = FALSE) {
+dirProber <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
   if (missing(restrictions)) restrictions <- NULL
 
   list(
@@ -485,6 +491,7 @@ shinyDirChoose <- function(
     newDir$exist <- exist
     newDir$root <- files$root
     newDir$recentLimit <- recent
+    newDir$allowDirCreate <- isTRUE(allowDirCreate)
     currentDir <<- newDir
     session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     probeEmptyFolders(newDir$tree, newDir$selectedRoot, rootPath)
