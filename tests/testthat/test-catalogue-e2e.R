@@ -17,9 +17,7 @@ catalogue <- readCatalogue()
 # Rows whose correct behaviour is pinned here but which fail on main because of
 # a bug. Each is skipped with its reason until the fix lands, and the fix
 # commit deletes its entry, so the test then has to pass.
-KNOWN_BUGS <- c(
-  "no-write-warning" = "the read-only folder warning is removed by setExists() before it shows"
-)
+KNOWN_BUGS <- c()
 knownBug <- function(id) skip(paste("known bug:", KNOWN_BUGS[[id]]))
 
 # --- page helpers -----------------------------------------------------------
@@ -515,7 +513,6 @@ checks <- list(
 
   permissionWarned = function(app, row, dialog) {
     skip_if(Sys.info()[["effective_user"]] == "root", "root can write anywhere")
-    knownBug("no-write-warning")
     markListing(app)
     run(app, "var el = m.find('.sF-fileList .sF-directory').filter(function(){ return $(this).text().indexOf('locked') !== -1; }); var e = $.Event('dblclick'); e.button = 0; el.trigger(e);")
     waitListing(app)

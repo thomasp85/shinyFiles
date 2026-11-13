@@ -17,6 +17,9 @@
   save dialog from opening; it behaves like leaving `filetype` out.
 * Pressing Esc in the path box ("pencil") closes the path box instead of the
   whole dialog, as it already did for the new-folder box.
+* The save dialog shows "No write permission for folder" in a read-only folder
+  again, and keeps Save disabled there. The warning was removed by the
+  missing-folder check straight after it was added, so Save stayed enabled.
 
 # shinyFiles 0.9.4
 

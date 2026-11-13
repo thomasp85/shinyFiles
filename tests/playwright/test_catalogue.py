@@ -31,7 +31,6 @@ NOT_OPENED = {"file-open", "dir-open", "save-open"}
 # Checks that pin a known bug. The row is marked xfail(strict=True), so it must
 # fail now and must pass (forcing the entry's removal) once the bug is fixed.
 KNOWN_BUG_CHECKS = {
-    "permissionWarned": "no-write-warning",
 }
 
 

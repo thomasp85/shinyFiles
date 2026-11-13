@@ -756,40 +756,31 @@ var shinyFiles = (function () {
     removeFileChooser(button, modal, data);
   };
 
-  var setPermission = function (modal, writable) {
-    var currentState = $(modal).find('.sF-warning').length == 0;
+  // Shows at most one warning for the folder on screen, and disables the
+  // new-folder button where a folder can't be created. A missing folder takes
+  // precedence; the permission warning is for the save dialog only, since the
+  // file and folder choosers just read what is already there.
+  var setFolderState = function (modal, writable, exists) {
     var footer = $(modal).find('.modal-footer');
-    var overwrite = $($(modal).data('button')).hasClass('shinySave') ? true : filesSelected(modal);
-
-    $(modal).find('#sF-btn-newDir').prop('disabled', !(overwrite && writable));
-
-    if (writable || !overwrite) {
-      footer.find('.sF-warning').remove();
-    } else if (currentState != writable) {
-      footer.prepend(
-        $('<div>').addClass('sF-warning text-warning').append(
-          $('<span>').addClass('glyphicon glyphicon-warning-sign')
-        ).append(
-          $('<span>').text('No write permission for folder')
-        )
-      )
+    var save = $($(modal).data('button')).hasClass('shinySave');
+    var message = null;
+    if (!exists) {
+      message = 'Folder does not exist';
+    } else if (save && !writable) {
+      message = 'No write permission for folder';
     }
-  }
 
-  var setExists = function (modal, exists) {
-    var currentState = $(modal).find('.sF-warning').length == 0;
-    var footer = $(modal).find('.modal-footer');
-
-    $(modal).find('#sF-btn-newDir').prop('disabled', !(exists));
-
+    // The folder chooser creates inside the highlighted folder, so needs one.
+    var target = save || filesSelected(modal);
+    $(modal).find('#sF-btn-newDir').prop('disabled', !(exists && writable && target));
 
     footer.find('.sF-warning').remove();
-    if (!exists) {
+    if (message) {
       footer.prepend(
         $('<div>').addClass('sF-warning text-warning').append(
           $('<span>').addClass('glyphicon glyphicon-warning-sign')
         ).append(
-          $('<span>').text('Folder does not exist')
+          $('<span>').text(message)
         )
       )
     }
@@ -1294,13 +1285,10 @@ var shinyFiles = (function () {
       };
     };
 
-    if ($(element).hasClass('shinySave')) {
-      setPermission(modal, data.writable);
-      if (data.selectedFile != "") {
-        setFilename(modal, data.selectedFile)
-      }
+    if ($(element).hasClass('shinySave') && data.selectedFile != "") {
+      setFilename(modal, data.selectedFile)
     }
-    setExists(modal, data.exist);
+    setFolderState(modal, data.writable, data.exist);
     toggleSelectButton(modal);
 
     modal.data('currentData', data);
@@ -2334,8 +2322,7 @@ var shinyFiles = (function () {
     dirContent.removeClass('measuring');
 
     toggleSelectButton(modal);
-    setPermission(modal, data.writable);
-    setExists(modal, data.exist);
+    setFolderState(modal, data.writable, data.exist);
 
     modal.data('currentData', data);
     $(modal).trigger('change');

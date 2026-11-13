@@ -120,3 +120,26 @@ def test_every_file_row_carries_its_metadata(app: Page):
     assert by_name["a.txt"]["ext"] == "txt"
     assert by_name["c.R"]["ext"] == "r"
     assert all(x["hasTimes"] and not x["isDir"] for x in info)
+
+
+def test_only_the_save_dialog_warns_about_a_read_only_folder(app: Page):
+    d = Dialog(app, "file").open()
+    d.after_listing(lambda: d.dblclick_row("locked"))
+    expect(d.find(".sF-warning")).to_have_count(0)
+    d.find("#sF-cancelButton").click()
+    d.expect_closed()
+    t = Dialog(app, "dir").open()
+    t.highlight("locked")
+    expect(t.find(".sF-warning")).to_have_count(0)
+    expect(t.find("#sF-btn-newDir")).to_be_disabled()
+    expect(t.find("#sF-selectButton")).to_be_enabled()
+
+
+def test_a_missing_folder_wins_over_the_permission_warning(app: Page):
+    d = Dialog(app, "save").open()
+    d.find("#sF-btn-textChoice").click()
+    box = d.find(".sF-textChoice input")
+    box.fill("/no/such/place")
+    d.after_listing(lambda: box.press("Enter"))
+    expect(d.find(".sF-warning")).to_have_count(1)
+    expect(d.find(".sF-warning")).to_contain_text("does not exist")
