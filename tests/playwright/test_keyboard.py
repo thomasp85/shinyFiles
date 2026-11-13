@@ -13,7 +13,7 @@ import re
 import pytest
 from playwright.sync_api import Page, expect
 
-from helpers import KNOWN_BUGS, Dialog
+from helpers import Dialog
 
 FILES = [f"f{i:02d}.txt" for i in range(1, 13)]
 
@@ -30,29 +30,45 @@ def files_in_order(d: Dialog) -> list[str]:
     return d.row_names(".sF-fileList > .sF-file")
 
 
-def known_bug(bug: str):
-    return pytest.mark.xfail(reason=f"known bug: {KNOWN_BUGS[bug]}", strict=True)
-
-
-@pytest.mark.parametrize("view", [
-    "detail", "list",
-    pytest.param("icon", marks=known_bug("icon-right-stops")),
-])
+@pytest.mark.parametrize("view", ["detail", "list"])
 def test_arrows_walk_every_file_and_stop_at_the_ends(app: Page, view):
     d = open_folder(app, view=view)
     order = d.row_names()
     d.click_row(order[0])
-    forward = "ArrowRight" if view == "icon" else "ArrowDown"
-    back = "ArrowLeft" if view == "icon" else "ArrowUp"
     seen = [d.selected_rows()[0]]
     for _ in range(len(order) + 2):
-        app.keyboard.press(forward)
+        app.keyboard.press("ArrowDown")
         seen.append(d.selected_rows()[0])
     # Every entry, in display order, then it stays on the last one.
     assert seen[: len(order)] == order
     assert seen[-1] == order[-1]
     for _ in range(len(order) + 2):
-        app.keyboard.press(back)
+        app.keyboard.press("ArrowUp")
+    assert d.selected_rows() == [order[0]]
+
+
+def icons_per_row(d: Dialog) -> int:
+    return d.js(
+        "var items = m.find('.sF-fileList').children().slice(1);"
+        "var top = $(items[0]).position().top;"
+        "return items.filter(function(){ return $(this).position().top === top; }).length;"
+    )
+
+
+def test_icon_view_left_and_right_stay_within_a_row(app: Page):
+    # By design (#79): Left/Right move along a row of icons and stop at its
+    # ends; Up/Down move between rows.
+    d = open_folder(app, view="icon")
+    order = d.row_names()
+    per_row = icons_per_row(d)
+    if per_row >= len(order):
+        pytest.skip("every icon fits on one row at this window size")
+    d.click_row(order[0])
+    for _ in range(per_row + 2):
+        app.keyboard.press("ArrowRight")
+    assert d.selected_rows() == [order[per_row - 1]]
+    for _ in range(per_row + 2):
+        app.keyboard.press("ArrowLeft")
     assert d.selected_rows() == [order[0]]
 
 
@@ -72,11 +88,7 @@ def test_left_and_right_do_nothing_in_detail_view(app: Page):
 
 def test_icon_view_up_and_down_move_by_a_whole_row(app: Page):
     d = open_folder(app, view="icon")
-    per_row = d.js(
-        "var items = m.find('.sF-fileList').children().slice(1);"
-        "var top = $(items[0]).position().top;"
-        "return items.filter(function(){ return $(this).position().top === top; }).length;"
-    )
+    per_row = icons_per_row(d)
     order = d.row_names()
     if per_row >= len(order):
         pytest.skip("every icon fits on one row at this window size")

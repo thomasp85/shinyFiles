@@ -14,7 +14,6 @@ CATALOGUE = Path(__file__).resolve().parent.parent / "testthat" / "inputs-catalo
 # expected to fail (xfail, strict), so fixing the bug makes it pass and the
 # suite then insists the entry is removed.
 KNOWN_BUGS = {
-    "icon-right-stops": "in icon view the right arrow stops at the end of the first row",
 }
 
 
