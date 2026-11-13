@@ -11,3 +11,4 @@ shinyFiles.code-workspace
 ^\.github$
 ^CRAN-SUBMISSION$
 ^bench$
+^tests/playwright$
