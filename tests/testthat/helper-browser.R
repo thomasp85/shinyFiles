@@ -57,6 +57,18 @@ newApp <- function(appDir, name, ready = "button.action-button", ...) {
   app
 }
 
+# Clicks a dialog's opening button and waits until the dialog has painted and
+# its first listing has arrived -- not just until Shiny is idle.
+openDialogFor <- function(app, id, timeout = 20000) {
+  app$click(id)
+  app$wait_for_idle(timeout = timeout)
+  app$wait_for_js(sprintf(
+    "(function(){ var m = $('#%s').data('modal'); return !!m && m.hasClass('in') && m.data('currentData') !== undefined; })()",
+    id
+  ), timeout = timeout)
+  invisible(app)
+}
+
 # Errors raised in an observer are logged and swallowed, so a test can pass
 # while the dialog is quietly broken. shinytest2 files R output under "shiny".
 expectNoAppErrors <- function(app, label = NULL) {

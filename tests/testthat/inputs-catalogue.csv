@@ -1,0 +1,114 @@
+id,dialog,control,selector,action,check,notes
+file-open,file,Open button,#file,click,dialogOpen,Shiny's action-button binding sends the click count; the dialog appears
+file-close,file,Close (x),.modal-header button.close,click,closedNoValue,Fires the button's cancel event; no value sent
+file-cancel,file,Cancel,#sF-cancelButton,click,closedNoValue,
+file-select,file,Select,#sF-selectButton,click,valueIsSelection,Enabled once a file is selected
+file-select-disabled,file,Select (nothing chosen),#sF-selectButton,state,selectDisabled,Disabled until a file is selected
+file-back,file,Back,#sF-btn-back,click,wentBack,Disabled until there is history
+file-up,file,Up,#sF-btn-up,click,wentUp,Disabled at the root
+file-forward,file,Forward,#sF-btn-forward,click,wentForward,Disabled until Back has been used
+file-nav-disabled,file,Back/Up/Forward at the root,#sF-btn-back,state,navDisabledAtRoot,
+file-view-icon,file,Icon view,#sF-btn-icon,click,viewIs:sF-icons,
+file-view-list,file,List view,#sF-btn-list,click,viewIs:sF-list,
+file-view-detail,file,Detail view,#sF-btn-detail,click,viewIs:sF-detail,
+file-view-default,file,viewtype argument,button[data-view],state,viewFromArgument,data-view chooses the starting view
+file-sort-open,file,Sort menu,#sF-btn-sort,click,menuOpen:.sF-sort,
+file-sort-name,file,Sort by Name,.sF-sort li.sortAttr:contains(Name),click,sortedBy:Name,
+file-sort-type,file,Sort by Type,.sF-sort li.sortAttr:contains(Type),click,sortedBy:Type,
+file-sort-size,file,Sort by Size,.sF-sort li.sortAttr:contains(Size),click,sortedBy:Size,
+file-sort-created,file,Sort by Created,.sF-sort li.sortAttr:contains(Created),click,sortedBy:Created,
+file-sort-modified,file,Sort by Modified,.sF-sort li.sortAttr:contains(Modified),click,sortedBy:Modified,
+file-sort-desc,file,Sort direction,.sF-sort li.sortDir a,click,sortDirection,Toggles ascending/descending
+file-path-open,file,Path box toggle (pencil),#sF-btn-textChoice,click,pathBoxPrefilled,Pre-fills the current location
+file-path-enter,file,Path box Enter,.sF-textChoice input,key:Enter,typedPathNavigates,
+file-path-ok,file,Path box OK button,.sF-textChoice ul button,click,typedPathNavigates,
+file-path-esc,file,Path box Esc,.sF-textChoice input,key:Escape,pathBoxClosedDialogOpen,
+file-refresh,file,Refresh,#sF-btn-refresh,click,refreshSent,Sends <id>-refresh and shows new files
+file-breadcrumb,file,Breadcrumb/volume dropdown (parent folder),select.sF-breadcrumps,select:parent,wentUp,
+file-volume,file,Breadcrumb/volume dropdown (other volume),select.sF-breadcrumps,select:volume,volumeChanged,
+file-recent,file,Recent folders,select.sF-breadcrumps optgroup.sF-recent,select:recent,recentNavigates,
+file-row-click,file,File row click,.sF-file,click,rowSelected,
+file-row-ctrl,file,File row ctrl-click,.sF-file,click+ctrl,rowsToggled,Only with multiple = TRUE
+file-row-shift,file,File row shift-click,.sF-file,click+shift,rangeSelected,Only with multiple = TRUE
+file-row-dblclick,file,File row double-click,.sF-file,dblclick,valueIsSelection,Selects and closes
+file-dir-dblclick,file,Folder row double-click,.sF-directory,dblclick,openedFolder,
+file-empty-click,file,Empty area of file list,.sF-fileWindow,click,selectionCleared,
+file-key-esc,file,Esc,document,key:Escape,closedNoValue,
+file-key-enter,file,Enter,document,key:Enter,valueIsSelection,With a file selected
+file-key-arrows,file,Arrow keys,document,key:ArrowDown,selectionMoved,
+file-backdrop,file,Backdrop click,.sF-modalContainer,click,closedNoValue,Clicks outside .modal-content
+dir-open,dir,Open button,#dir,click,dialogOpen,
+dir-close,dir,Close (x),.modal-header button.close,click,closedNoValue,
+dir-cancel,dir,Cancel,#sF-cancelButton,click,closedNoValue,
+dir-select,dir,Select,#sF-selectButton,click,valueIsFolder,
+dir-select-disabled,dir,Select (nothing chosen),#sF-selectButton,state,selectDisabled,
+dir-sort-open,dir,Sort menu,#sF-btn-sort,click,menuOpen:.sF-sort,
+dir-sort-name,dir,Sort by Name,.sF-sort li.sortAttr:contains(Name),click,sortedBy:Name,
+dir-sort-type,dir,Sort by Type,.sF-sort li.sortAttr:contains(Type),click,sortedBy:Type,
+dir-sort-size,dir,Sort by Size,.sF-sort li.sortAttr:contains(Size),click,sortedBy:Size,
+dir-sort-created,dir,Sort by Created,.sF-sort li.sortAttr:contains(Created),click,sortedBy:Created,
+dir-sort-modified,dir,Sort by Modified,.sF-sort li.sortAttr:contains(Modified),click,sortedBy:Modified,
+dir-sort-desc,dir,Sort direction,.sF-sort li.sortDir a,click,sortDirection,
+dir-path-open,dir,Path box toggle (pencil),#sF-btn-textChoice,click,pathBoxPrefilled,
+dir-path-enter,dir,Path box Enter,.sF-textChoice input,key:Enter,typedPathNavigates,
+dir-path-ok,dir,Path box OK button,.sF-textChoice ul button,click,typedPathNavigates,
+dir-path-esc,dir,Path box Esc,.sF-textChoice input,key:Escape,pathBoxClosedDialogOpen,
+dir-refresh,dir,Refresh,#sF-btn-refresh,click,refreshSent,
+dir-volume,dir,Volume dropdown,select.sF-breadcrumps,select:volume,volumeChanged,
+dir-recent,dir,Recent folders,select.sF-breadcrumps optgroup.sF-recent,select:recent,recentNavigates,
+dir-newdir-open,dir,New folder toggle,#sF-btn-newDir,click,menuOpen:.sF-newDir,Needs a folder selected
+dir-newdir-enter,dir,New folder Enter,.sF-newDir input,key:Enter,folderCreated,
+dir-newdir-ok,dir,New folder OK button,.sF-newDir ul button,click,folderCreated,
+dir-newdir-esc,dir,New folder Esc,.sF-newDir input,key:Escape,newDirClosedDialogOpen,
+dir-newdir-disabled,dir,New folder with allowDirCreate = FALSE,#sF-btn-newDir,click,folderNotCreated,Server refuses and shows a notification
+dir-tree-expand,dir,Tree expand arrow,.sF-dirList .sF-expander>span,click,treeExpanded,
+dir-tree-collapse,dir,Tree collapse arrow,.sF-dirList .sF-expander>span,click,treeCollapsed,
+dir-tree-select,dir,Tree node click,.sF-dirList .sF-file-name,click,folderHighlighted,Shows its contents
+dir-tree-deselect,dir,Tree node click again,.sF-dirList .sF-file-name,click,folderUnhighlighted,
+dir-key-esc,dir,Esc,document,key:Escape,closedNoValue,
+dir-key-enter,dir,Enter,document,key:Enter,valueIsFolder,With a folder selected
+dir-key-arrows,dir,Arrow keys,document,key:ArrowDown,treeSelectionMoved,
+dir-backdrop,dir,Backdrop click,.sF-modalContainer,click,closedNoValue,
+save-open,save,Open button,#save,click,dialogOpen,
+save-close,save,Close (x),.modal-header button.close,click,closedNoValue,
+save-cancel,save,Cancel,#sF-cancelButton,click,closedNoValue,
+save-save,save,Save,#sF-selectButton,click,valueIsSave,
+save-save-disabled,save,Save (no filename),#sF-selectButton,state,selectDisabled,Disabled while the filename is empty
+save-overwrite,save,Overwrite warning,input.sF-filename,type:existing,overwriteWarned,Typing an existing name turns Save into Overwrite
+save-filename,save,Filename box,input.sF-filename,type:new,saveEnabled,
+save-filename-default,save,filename argument,input.sF-filename,state,filenameFromArgument,
+save-filetype-one,save,File type (one type),.sF-filetype,state,singleFiletypeShown,Shown as a label
+save-filetype-many,save,File type dropdown,.input-group-btn.sF-filetype li a,click,filetypeChosen,Extension added to the saved name
+save-back,save,Back,#sF-btn-back,click,wentBack,
+save-up,save,Up,#sF-btn-up,click,wentUp,
+save-forward,save,Forward,#sF-btn-forward,click,wentForward,
+save-view-icon,save,Icon view,#sF-btn-icon,click,viewIs:sF-icons,
+save-view-list,save,List view,#sF-btn-list,click,viewIs:sF-list,
+save-view-detail,save,Detail view,#sF-btn-detail,click,viewIs:sF-detail,
+save-sort-open,save,Sort menu,#sF-btn-sort,click,menuOpen:.sF-sort,
+save-sort-name,save,Sort by Name,.sF-sort li.sortAttr:contains(Name),click,sortedBy:Name,
+save-sort-type,save,Sort by Type,.sF-sort li.sortAttr:contains(Type),click,sortedBy:Type,
+save-sort-size,save,Sort by Size,.sF-sort li.sortAttr:contains(Size),click,sortedBy:Size,
+save-sort-created,save,Sort by Created,.sF-sort li.sortAttr:contains(Created),click,sortedBy:Created,
+save-sort-modified,save,Sort by Modified,.sF-sort li.sortAttr:contains(Modified),click,sortedBy:Modified,
+save-sort-desc,save,Sort direction,.sF-sort li.sortDir a,click,sortDirection,
+save-path-open,save,Path box toggle (pencil),#sF-btn-textChoice,click,pathBoxPrefilled,
+save-path-enter,save,Path box Enter,.sF-textChoice input,key:Enter,typedPathNavigates,
+save-path-ok,save,Path box OK button,.sF-textChoice ul button,click,typedPathNavigates,
+save-path-esc,save,Path box Esc,.sF-textChoice input,key:Escape,pathBoxClosedDialogOpen,
+save-refresh,save,Refresh,#sF-btn-refresh,click,refreshSent,
+save-breadcrumb,save,Breadcrumb/volume dropdown (parent folder),select.sF-breadcrumps,select:parent,wentUp,
+save-volume,save,Breadcrumb/volume dropdown (other volume),select.sF-breadcrumps,select:volume,volumeChanged,
+save-recent,save,Recent folders,select.sF-breadcrumps optgroup.sF-recent,select:recent,recentNavigates,
+save-newdir-open,save,New folder toggle,#sF-btn-newDir,click,menuOpen:.sF-newDir,
+save-newdir-enter,save,New folder Enter,.sF-newDir input,key:Enter,folderCreatedAndEntered,Save dialog also moves into it
+save-newdir-ok,save,New folder OK button,.sF-newDir ul button,click,folderCreatedAndEntered,
+save-newdir-esc,save,New folder Esc,.sF-newDir input,key:Escape,newDirClosedDialogOpen,
+save-row-click,save,File row click,.sF-file,click,filenameFromRow,Copies the name into the filename box
+save-dir-dblclick,save,Folder row double-click,.sF-directory,dblclick,openedFolder,
+save-key-esc,save,Esc,document,key:Escape,closedNoValue,
+save-key-enter,save,Enter,document,key:Enter,valueIsSave,With a valid filename
+save-backdrop,save,Backdrop click,.sF-modalContainer,click,closedNoValue,
+save-no-write,save,Read-only folder warning,.sF-warning,state,permissionWarned,Save disabled in a folder without write access
+save-not-exist,save,Missing folder warning,.sF-warning,state,missingWarned,
+any-overlay,file,Loading overlay,.sF-loading,state,overlayDuringSlowListing,Covered by test-typed-path-e2e.R

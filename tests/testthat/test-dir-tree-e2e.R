@@ -60,8 +60,7 @@ newApp <- function(name) {
 }
 
 openDialog <- function(app, id) {
-  app$click(id)
-  app$wait_for_idle()
+  openDialogFor(app, id)
 }
 
 topModal <- "$('.sF-modalContainer:visible').last()"
