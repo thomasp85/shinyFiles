@@ -54,6 +54,7 @@ toggle <- function(tree, path) {
 #   listed()       folders read from disk since the last reset_listed()
 withDialog <- function(roots, body, id = "dir", ...) {
   args <- list(...)
+  dialogEnv <- environment()
   server <- function(input, output, session) {
     do.call(shinyDirChoose, c(list(input, id, roots = roots, session = session), args))
   }
@@ -73,6 +74,13 @@ withDialog <- function(roots, body, id = "dir", ...) {
         realDirLs(path, ...)
       },
       .package = "shinyFiles"
+    )
+    # These tests count folder reads, so keep the background empty-folder check
+    # (tested on its own with withProbe() below) from running mid-test: on a
+    # slow machine its later() timer can fire and pre-cache a folder.
+    local_mocked_bindings(
+      later = function(func, delay = 0, ...) invisible(function() FALSE),
+      .package = "later", .env = dialogEnv
     )
 
     send <- function(data) do.call(session$setInputs, setNames(list(data), paste0(id, "-modal")))
@@ -236,6 +244,36 @@ test_that("a folder created inside an empty one makes it expandable", {
     expect_true(findChild(d$last()$tree, "three")$empty)
     d$newDir("inner", "three")
     expect_false(findChild(d$last()$tree, "three")$empty)
+  })
+})
+
+test_that("the new-folder button is refused when allowDirCreate is FALSE", {
+  base <- makeTree()
+  notes <- list()
+  local_mocked_bindings(
+    showNotification = function(ui, ..., type = "default") {
+      notes[[length(notes) + 1]] <<- list(text = as.character(ui), type = type)
+    },
+    .package = "shiny"
+  )
+  withDialog(c(r = base), allowDirCreate = FALSE, function(d) {
+    d$newDir("blocked", "one")
+    expect_false(fs::dir_exists(fs::path(base, "one", "blocked")))
+    # The same request isn't reported again on the next click.
+    d$expand("one")
+  })
+  expect_length(notes, 1)
+  expect_match(notes[[1]]$text, "disabled")
+  expect_equal(notes[[1]]$type, "error")
+})
+
+test_that("a typed path outside every root reports a missing folder", {
+  base <- makeTree()
+  withDialog(c(r = base), function(d) {
+    d$expand("one")
+    d$click("typed", "/no/such/place/anywhere")
+    expect_false(d$last()$exist)
+    expect_true(findChild(d$last()$tree, "one")$expanded)
   })
 })
 

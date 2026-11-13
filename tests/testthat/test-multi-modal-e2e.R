@@ -22,12 +22,6 @@
 
 library(shinytest2)
 
-skipUnlessBrowser <- function() {
-  skip_if_not_installed("shinytest2")
-  skip_if_not_installed("chromote")
-  skip_on_cran()
-}
-
 appDir <- local({
   dir <- fs::path(tempfile("sf-mm-e2e"))
   fs::dir_create(fs::path(dir, "data"))
@@ -37,7 +31,7 @@ appDir <- local({
   writeLines(
     c(
       'library(shiny)',
-      'library(shinyFiles)',
+      shinyFilesLoadLine(),
       'base <- Sys.getenv("SF_MM_E2E_BASE")',
       'roots <- c(data = file.path(base, "data"))',
       'ui <- fluidPage(',

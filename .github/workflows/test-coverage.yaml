@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # Run the browser tests too; they are skipped on CRAN.
+      NOT_CRAN: true
 
     steps:
       - uses: actions/checkout@v5
@@ -26,6 +28,11 @@ jobs:
           extra-packages: any::covr
           needs: coverage
 
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+
       - name: Test coverage
-        run: covr::codecov(quiet = FALSE)
+        env:
+          CHROMOTE_CHROME: ${{ steps.chrome.outputs.chrome-path }}
+        run: covr::codecov(quiet = FALSE, flags = "r")
         shell: Rscript {0}
