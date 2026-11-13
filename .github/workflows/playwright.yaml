@@ -1,0 +1,58 @@
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+name: playwright
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.browser }}
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        working-directory: tests/playwright
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgload
+          needs: check
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install Python dependencies and ${{ matrix.browser }}
+        run: |
+          uv sync
+          uv run playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run Playwright tests
+        run: uv run pytest --browser ${{ matrix.browser }} --tracing retain-on-failure
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-traces-${{ matrix.browser }}
+          path: tests/playwright/test-results/
+
+      # JS coverage is collected on Chromium only (through the DevTools protocol).
+      - uses: codecov/codecov-action@v5
+        if: matrix.browser == 'chromium'
+        with:
+          files: tests/playwright/coverage/lcov.info
+          flags: js
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
