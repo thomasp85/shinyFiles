@@ -28,6 +28,9 @@
   Every new listing used to be drawn in name order while the sort menu still
   showed the old choice. Sorting in descending order also keeps the column
   header at the top instead of moving it to the bottom.
+* With `allowDirCreate = FALSE`, the "Create new folder" button in the folder
+  and save dialogs is grayed out. It used to be clickable and only fail with an
+  error notification. The server still refuses such a request.
 
 # shinyFiles 0.9.4
 

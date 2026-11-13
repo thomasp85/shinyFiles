@@ -72,6 +72,7 @@ shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
     dir$dir <- paste0(dir$dir, collapse = "/")
     newDir <- do.call(fileGet, dir)
     newDir$recentLimit <- recent
+    newDir$allowDirCreate <- isTRUE(allowDirCreate)
     if (isTRUE(newDir$exist)) {
       currentDir <<- newDir
       session$sendCustomMessage(message, list(id = clientId, dir = newDir))
@@ -83,6 +84,7 @@ shinyFileSave <- function(input, id, updateFreq = 0, session = getSession(),
       dir$dir <- sub("(.*/).*$", "\\1", dir$dir)
       newDir <- do.call(fileGet, dir)
       newDir$recentLimit <- recent
+      newDir$allowDirCreate <- isTRUE(allowDirCreate)
       if (isTRUE(newDir$exist)) { # backing up once, we find a valid directory
         newDir$selectedFile <- selectedFile
         currentDir <<- newDir

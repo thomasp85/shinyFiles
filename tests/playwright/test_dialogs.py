@@ -195,3 +195,23 @@ def test_the_column_header_stays_on_top_in_every_sort_order(app: Page, attr):
             d.find(".sF-sort li.sortDir a").click()
         first = d.js("return m.find('.sF-fileList').children().first().attr('class');")
         assert first == "sF-file-header", f"{attr} {direction}: header is not the first row"
+
+
+def test_new_folder_is_grayed_out_when_creating_folders_is_disabled(app: Page):
+    d = Dialog(app, "dirNoCreate").open()
+    d.highlight_root()
+    expect(d.find("#sF-btn-newDir")).to_be_disabled()
+    # It stays disabled after the next listing, too.
+    d.highlight("folder")
+    expect(d.find("#sF-btn-newDir")).to_be_disabled()
+
+
+def test_new_folder_is_available_by_default(app: Page):
+    d = Dialog(app, "dir").open()
+    d.highlight_root()
+    expect(d.find("#sF-btn-newDir")).to_be_enabled()
+    s = Dialog(app, "save")
+    d.find("#sF-cancelButton").click()
+    d.expect_closed()
+    s.open()
+    expect(s.find("#sF-btn-newDir")).to_be_enabled()

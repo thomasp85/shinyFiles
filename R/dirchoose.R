@@ -491,6 +491,7 @@ shinyDirChoose <- function(
     newDir$exist <- exist
     newDir$root <- files$root
     newDir$recentLimit <- recent
+    newDir$allowDirCreate <- isTRUE(allowDirCreate)
     currentDir <<- newDir
     session$sendCustomMessage(message, list(id = clientId, dir = newDir))
     probeEmptyFolders(newDir$tree, newDir$selectedRoot, rootPath)

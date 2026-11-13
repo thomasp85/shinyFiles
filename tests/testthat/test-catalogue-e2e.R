@@ -384,9 +384,15 @@ checks <- list(
 
   folderNotCreated = function(app, row, dialog) {
     highlightFirstFolder(app)
+    # Grayed out, so clicking it doesn't open the name box.
+    expect_true(js(app, "return m.find('#sF-btn-newDir').prop('disabled');"))
     run(app, "m.find('.sF-newDir').trigger('click');")
-    run(app, "m.find('.sF-newDir input').val('refused');")
-    run(app, keyEvent("m.find('.sF-newDir input')", "keyup", "Enter"))
+    expect_false(js(app, "return m.find('.sF-newDir').hasClass('open');"))
+    # And the server still refuses a request that gets through anyway.
+    app$run_js(sprintf(
+      "Shiny.setInputValue('%s-newDir', {name: 'refused', path: [''], root: 'data', id: Date.now()});",
+      dialog
+    ))
     app$wait_for_idle()
     expect_false(dir.exists(file.path(catBase, "data", "refused")))
     expect_true(app$get_js("$('.shiny-notification-error').text().indexOf('disabled') !== -1"))

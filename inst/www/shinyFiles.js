@@ -764,7 +764,7 @@ var shinyFiles = (function () {
   // new-folder button where a folder can't be created. A missing folder takes
   // precedence; the permission warning is for the save dialog only, since the
   // file and folder choosers just read what is already there.
-  var setFolderState = function (modal, writable, exists) {
+  var setFolderState = function (modal, writable, exists, allowDirCreate) {
     var footer = $(modal).find('.modal-footer');
     var save = $($(modal).data('button')).hasClass('shinySave');
     var message = null;
@@ -776,7 +776,10 @@ var shinyFiles = (function () {
 
     // The folder chooser creates inside the highlighted folder, so needs one.
     var target = save || filesSelected(modal);
-    $(modal).find('#sF-btn-newDir').prop('disabled', !(exists && writable && target));
+    // allowDirCreate = FALSE on the server: gray the button out rather than
+    // let the user try and be refused.
+    var allowed = allowDirCreate !== false;
+    $(modal).find('#sF-btn-newDir').prop('disabled', !(allowed && exists && writable && target));
 
     footer.find('.sF-warning').remove();
     if (message) {
@@ -1292,7 +1295,7 @@ var shinyFiles = (function () {
     if ($(element).hasClass('shinySave') && data.selectedFile != "") {
       setFilename(modal, data.selectedFile)
     }
-    setFolderState(modal, data.writable, data.exist);
+    setFolderState(modal, data.writable, data.exist, data.allowDirCreate);
     toggleSelectButton(modal);
     // A new listing is drawn in name order; keep the order the user chose.
     sortFiles(modal, $(element).data('sort'), $(element).data('sortDir'));
@@ -2328,7 +2331,7 @@ var shinyFiles = (function () {
     dirContent.removeClass('measuring');
 
     toggleSelectButton(modal);
-    setFolderState(modal, data.writable, data.exist);
+    setFolderState(modal, data.writable, data.exist, data.allowDirCreate);
     sortFiles(modal, $(element).data('sort'), $(element).data('sortDir'));
 
     modal.data('currentData', data);
