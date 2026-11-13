@@ -11,6 +11,14 @@ test_that("formatFiletype encodes a named list of extensions", {
   expect_equal(as.character(formatFiletype(list(R = "R"))), '[{"name":["R"],"ext":["R"]}]')
 })
 
+test_that("no file types is encoded as an array, like NA", {
+  # The dialog calls filetypes.forEach(); an empty list encodes as {}, which
+  # stopped the save dialog from opening.
+  expect_equal(as.character(formatFiletype(NULL)), "[null]")
+  expect_equal(as.character(formatFiletype(list())), "[null]")
+  expect_equal(as.character(shinySaveButton("s", "L", "T", filetype = NULL)[[2]]$attribs[["data-filetype"]]), "[null]")
+})
+
 test_that("getSession errors outside a Shiny session", {
   expect_error(shiny::withReactiveDomain(NULL, getSession()), "could not find the Shiny session")
   session <- shiny::MockShinySession$new()

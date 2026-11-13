@@ -13,6 +13,8 @@
 * `shinyDirChoose()` accepts `pattern`, which filters the files shown beside the
   folder tree. It used to fail with "unused argument" as soon as the dialog
   opened.
+* `shinySaveButton(filetype = NULL)` (or an empty list) no longer stops the
+  save dialog from opening; it behaves like leaving `filetype` out.
 
 # shinyFiles 0.9.4
 

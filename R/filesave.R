@@ -207,6 +207,9 @@ shinySaveLink <- function(id, label, title, filename = "", filetype,
 #' @importFrom jsonlite toJSON
 #'
 formatFiletype <- function(filetype) {
+  # No file types at all is sent like NA: the dialog iterates over the array,
+  # and an empty list would encode as `{}`.
+  if (length(filetype) == 0) filetype <- NA
   if (!.is_not(filetype)) {
     filetype <- lapply(1:length(filetype), function(i) {
       list(name = names(filetype)[i], ext = I(filetype[[i]]))
