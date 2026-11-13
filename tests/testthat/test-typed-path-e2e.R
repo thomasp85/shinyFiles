@@ -12,13 +12,6 @@
 
 library(shinytest2)
 
-# Browser-driven, so skipped where no browser or shinytest2 is available.
-skipUnlessBrowser <- function() {
-  skip_if_not_installed("shinytest2")
-  skip_if_not_installed("chromote")
-  skip_on_cran()
-}
-
 # Mirrors the root layout that exposed the bug: the default root
 # does not contain the tree an absolute path points into, so typing one used to
 # resolve under <root>/abs/path and report "Folder does not exist".
@@ -33,7 +26,7 @@ appDir <- local({
   writeLines(
     c(
       'library(shiny)',
-      'library(shinyFiles)',
+      shinyFilesLoadLine(),
       'base <- Sys.getenv("SF_E2E_BASE")',
       'roots <- c(',
       '  docs = file.path(base, "data", "documents"),',
@@ -276,7 +269,7 @@ slowAppDir <- local({
   writeLines(
     c(
       'library(shiny)',
-      'library(shinyFiles)',
+      shinyFilesLoadLine(),
       'base <- Sys.getenv("SF_SLOW_BASE")',
       '# Long enough to outlast the client-side overlay delay with margin.',
       '# Two roots so a volume switch issues a real client request -- the',

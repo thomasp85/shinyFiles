@@ -12,3 +12,15 @@ coverage:
         target: auto
         threshold: 1%
         informational: true
+
+# R coverage comes from covr; JavaScript coverage of inst/www/shinyFiles.js
+# comes from the Playwright suite. They are reported separately.
+flags:
+  r:
+    paths:
+      - R/
+    carryforward: true
+  js:
+    paths:
+      - inst/www/
+    carryforward: true
