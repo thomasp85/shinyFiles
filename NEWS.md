@@ -1,3 +1,9 @@
+# shinyFiles (development version)
+
+* `parseFilePaths()` and `parseSavePath()` no longer return an extra
+  `stringsAsFactors` column. `tibble()` treats that argument as data, so every
+  result has had a stray logical column since 2017.
+
 # shinyFiles 0.9.4
 
 This release passes maintenance of the package to Michael Bell

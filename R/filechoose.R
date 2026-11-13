@@ -720,7 +720,7 @@ parseFilePaths <- function(roots, selection) {
   if (all(is.null(selection)) || all(is.na(selection)) || all(is.integer(selection)) || length(selection$files) == 0) {
     tibble(
       name = character(0), size = numeric(0), type = character(0),
-      datapath = character(0), stringsAsFactors = FALSE
+      datapath = character(0)
     )
   } else {
     files <- sapply(selection$files, function(x) path(roots[selection$root], paste0(x, collapse = "/")))
