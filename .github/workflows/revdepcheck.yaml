@@ -1,14 +1,45 @@
+# Reverse-dependency check: one job per CRAN revdep, each running R CMD check
+# on the revdep's source tarball against CRAN shinyFiles and then against this
+# branch. Dependencies are installed as RSPM binaries via pak (which also
+# installs Ubuntu system requirements), so failures reflect the revdep, not a
+# from-source build of its dependency tree.
 on:
   workflow_dispatch:
 
 name: revdepcheck
 
 jobs:
-  revdepcheck:
+  list:
     runs-on: ubuntu-latest
+    outputs:
+      revdeps: ${{ steps.list.outputs.revdeps }}
+    steps:
+      - uses: r-lib/actions/setup-r@v2
+      - id: list
+        run: |
+          db <- available.packages(repos = "https://cloud.r-project.org")
+          rd <- tools::package_dependencies("shinyFiles", db = db, reverse = TRUE,
+                                            which = c("Depends", "Imports", "LinkingTo", "Suggests"))[[1]]
+          cat("Found", length(rd), "CRAN revdeps\n")
+          stopifnot(length(rd) > 0)
+          json <- paste0("[", paste0('"', sort(rd), '"', collapse = ","), "]")
+          cat("revdeps=", json, "\n", sep = "", file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
+        shell: Rscript {0}
+
+  check:
+    needs: list
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    name: ${{ matrix.revdep }}
+    strategy:
+      fail-fast: false
+      matrix:
+        revdep: ${{ fromJSON(needs.list.outputs.revdeps) }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
+      REVDEP: ${{ matrix.revdep }}
+      _R_CHECK_FORCE_SUGGESTS_: false
+      _R_CHECK_CRAN_INCOMING_: false
     steps:
       - uses: actions/checkout@v5
 
@@ -20,24 +51,78 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: r-lib/revdepcheck
+          extra-packages: any::rcmdcheck, any::pak
           needs: check
 
-      - name: Run revdepcheck
+      - name: Check revdep against CRAN shinyFiles and this branch
         run: |
-          revdepcheck::revdep_check(num_workers = 4, quiet = FALSE)
+          p <- Sys.getenv("REVDEP")
+          dir.create("revdep-out")
+          res <- data.frame(package = p, which = c("old", "new"), shinyFiles = NA,
+                            errors = NA, warnings = NA, notes = NA, detail = "")
+
+          ok <- tryCatch({
+            pak::pkg_install(c(p, "shinyFiles"), dependencies = TRUE, upgrade = FALSE)
+            TRUE
+          }, error = function(e) { res$detail <<- paste("install failed:", conditionMessage(e)); FALSE })
+
+          if (ok) {
+            src <- download.packages(p, destdir = tempdir(), type = "source",
+                                     repos = "https://cloud.r-project.org")[1, 2]
+            run <- function(i) {
+              res$shinyFiles[i] <<- as.character(packageVersion("shinyFiles"))
+              chk <- rcmdcheck::rcmdcheck(src, args = c("--no-manual", "--no-build-vignettes"),
+                                          build_args = "--no-build-vignettes",
+                                          error_on = "never", quiet = TRUE,
+                                          check_dir = file.path("revdep-out", res$which[i]))
+              res$errors[i]   <<- length(chk$errors)
+              res$warnings[i] <<- length(chk$warnings)
+              res$notes[i]    <<- length(chk$notes)
+              writeLines(c(chk$errors, chk$warnings), file.path("revdep-out", paste0(res$which[i], "-problems.txt")))
+            }
+            run(1)
+            pak::pkg_install("local::.", upgrade = FALSE)
+            stopifnot(packageVersion("shinyFiles") == read.dcf("DESCRIPTION")[, "Version"])
+            run(2)
+          }
+          print(res[, 1:6])
+          write.csv(res, file.path("revdep-out", "result.csv"), row.names = FALSE)
         shell: Rscript {0}
 
-      - name: Show revdep report
+      - uses: actions/upload-artifact@v4
         if: always()
-        run: |
-          cat revdep/README.md || true
-          cat revdep/problems.md || true
-        shell: bash
-
-      - name: Upload revdep report
-        if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: revdep-results
-          path: revdep/
+          name: revdep-${{ matrix.revdep }}
+          path: revdep-out/
+
+  summary:
+    needs: check
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: r-lib/actions/setup-r@v2
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: revdep-*
+          path: results
+      - name: Summarise
+        run: |
+          f <- list.files("results", "result.csv", recursive = TRUE, full.names = TRUE)
+          if (length(f) == 0) stop("no per-revdep results were produced; see the check jobs")
+          r <- do.call(rbind, lapply(f, read.csv))
+          old <- r[r$which == "old", ]; new <- r[r$which == "new", ]
+          m <- merge(old, new, by = "package", suffixes = c(".old", ".new"), all = TRUE)
+          m$status <- ifelse(is.na(m$errors.new), "failed to check",
+                      ifelse(m$errors.new > m$errors.old | m$warnings.new > m$warnings.old,
+                             "NEW PROBLEMS", "no change"))
+          print(m[, c("package", "shinyFiles.old", "errors.old", "warnings.old",
+                      "shinyFiles.new", "errors.new", "warnings.new", "status")], row.names = FALSE)
+          cat("\nchecked:", sum(m$status != "failed to check"), "of", nrow(m),
+              "| new problems:", sum(m$status == "NEW PROBLEMS"),
+              "| failed to check:", sum(m$status == "failed to check"), "\n")
+          write.csv(m, "revdep-summary.csv", row.names = FALSE)
+        shell: Rscript {0}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: revdep-summary
+          path: revdep-summary.csv

@@ -243,8 +243,10 @@ $(button).data('file')
 }
 }
 \references{
-The file icons used in the file system navigator is taken from
-FatCows Farm-Fresh Web Icons (\url{https://www.fatcow.com/free-icons})
+The file icons used in the file system navigator are taken from
+FatCow's Farm-Fresh Web Icons; their licence is in
+\code{www/icons/readme-fatcow.txt} in the installed package (the original FatCow
+website is no longer online).
 }
 \seealso{
 Other shinyFiles: 

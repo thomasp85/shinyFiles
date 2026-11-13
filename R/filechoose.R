@@ -572,8 +572,10 @@ shinyFileChoose <- function(input, id, updateFreq = 0, session = getSession(),
 #'
 #' @family shinyFiles
 #'
-#' @references The file icons used in the file system navigator is taken from
-#' FatCows Farm-Fresh Web Icons (<https://www.fatcow.com/free-icons>)
+#' @references The file icons used in the file system navigator are taken from
+#' FatCow's Farm-Fresh Web Icons; their licence is in
+#' `www/icons/readme-fatcow.txt` in the installed package (the original FatCow
+#' website is no longer online).
 #'
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny restoreInput

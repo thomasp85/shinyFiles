@@ -1,5 +1,12 @@
-# shinyFiles (development version)
+# shinyFiles 0.9.4
 
+This release passes maintenance of the package to Michael Bell
+(<bell_michael_a@lilly.com>), with Thomas Lin Pedersen remaining as an author.
+Thomas has agreed to the change. The release also ships accumulated work
+(see below) since the 0.9.3 CRAN release.
+
+* Fixed #185 (@pietrodita)
+* Accepted pull request from @lanceupton to address #181
 * Typed paths in the path box ("pencil") are now resolved against the
   configured roots on the server, so an absolute path is navigated to rather
   than appended under the currently selected volume. Previously an absolute
@@ -9,12 +16,12 @@
   listings on networked filesystems no longer look like a hang.
 * `shinyFileSave()` now defers building its `fileGetter`/`dirCreator` until a
   request comes in, matching `shinyFileChoose()`, so `...` arguments (e.g.
-  `filetypes`) may be reactive expressions (thomasp85/shinyFiles#196,
+  `filetypes`) may be reactive expressions (shinyFiles/shinyFiles#196,
   #195, @WilDoane).
 * Fixed the keydown (Enter/Escape) and backdrop-click handlers losing track
   of which modal is on top when more than one shinyFiles dialog is open at
   once, so keyboard shortcuts and backdrop dismissal could act on the wrong
-  dialog (thomasp85/shinyFiles#201, @Tazovsky).
+  dialog (shinyFiles/shinyFiles#201, @Tazovsky).
 * The volume dropdown now has a "Recent" group listing folders where a
   selection or save was recently confirmed, so a user can jump straight back to
   them. The list is kept in the browser's local storage (per user and browser,
@@ -41,11 +48,6 @@
   slices between requests, so it doesn't hold up the dialog or later clicks,
   and it stops when a newer response or the end of the session replaces it.
   This adds `later` to Imports.
-
-# shinyFiles 0.9.4
-
-* Fixed #185 (@pietrodita)
-* Accepted pull request from @lanceupton to address #181
 
 # shinyFiles 0.9.3
 

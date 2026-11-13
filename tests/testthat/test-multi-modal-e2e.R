@@ -1,6 +1,6 @@
 # End-to-end tests for keeping multiple shinyFiles modals independent.
 #
-# Reported upstream as thomasp85/shinyFiles#201 (via @Tazovsky): with two
+# Reported upstream as shinyFiles/shinyFiles#201 (via @Tazovsky): with two
 # shinyFilesButton/shinyDirChoose/shinySaveButton instances open at once, the
 # global keydown (Enter/Escape) and backdrop-click handlers queried
 # `.sF-modalContainer` without `:visible`, so they always acted on the first

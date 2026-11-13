@@ -1,4 +1,4 @@
-# Pins the bug reported in thomasp85/shinyFiles#195: shinyFileChoose() defers
+# Pins the bug reported in shinyFiles/shinyFiles#195: shinyFileChoose() defers
 # building its fileGetter/dirCreator until sendDirectoryData() runs (inside an
 # observer, so a reactive context is active), but shinyFileSave() built them
 # once at setup time, outside any reactive consumer. A real app calls
