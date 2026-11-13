@@ -54,6 +54,7 @@ toggle <- function(tree, path) {
 #   listed()       folders read from disk since the last reset_listed()
 withDialog <- function(roots, body, id = "dir", ...) {
   args <- list(...)
+  dialogEnv <- environment()
   server <- function(input, output, session) {
     do.call(shinyDirChoose, c(list(input, id, roots = roots, session = session), args))
   }
@@ -73,6 +74,13 @@ withDialog <- function(roots, body, id = "dir", ...) {
         realDirLs(path, ...)
       },
       .package = "shinyFiles"
+    )
+    # These tests count folder reads, so keep the background empty-folder check
+    # (tested on its own with withProbe() below) from running mid-test: on a
+    # slow machine its later() timer can fire and pre-cache a folder.
+    local_mocked_bindings(
+      later = function(func, delay = 0, ...) invisible(function() FALSE),
+      .package = "later", .env = dialogEnv
     )
 
     send <- function(data) do.call(session$setInputs, setNames(list(data), paste0(id, "-modal")))
