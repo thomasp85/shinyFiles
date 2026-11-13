@@ -34,5 +34,6 @@ jobs:
       - name: Test coverage
         env:
           CHROMOTE_CHROME: ${{ steps.chrome.outputs.chrome-path }}
-        run: covr::codecov(quiet = FALSE, flags = "r")
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: covr::codecov(quiet = FALSE, flags = "r", token = Sys.getenv("CODECOV_TOKEN"))
         shell: Rscript {0}
