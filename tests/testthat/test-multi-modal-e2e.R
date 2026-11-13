@@ -66,10 +66,8 @@ base <- appDir
 withr::local_envvar(c(SF_MM_E2E_BASE = base), .local_envir = teardown_env())
 
 openTwoModals <- function(app) {
-  app$click("fileA")
-  app$wait_for_idle()
-  app$click("fileB")
-  app$wait_for_idle()
+  openDialogFor(app, "fileA")
+  openDialogFor(app, "fileB")
 }
 
 selectFileIn <- function(app, modalId, filename) {
@@ -127,8 +125,7 @@ test_that("Enter still commits a selection made while a modal is the only one op
   app <- AppDriver$new(appDir, name = "mm-enter-first", load_timeout = 30000)
   on.exit(app$stop(), add = TRUE)
 
-  app$click("fileA")
-  app$wait_for_idle()
+  openDialogFor(app, "fileA")
   selectFileIn(app, "fileA-modal", "fileA.txt")
   pressEnterGlobally(app)
 
@@ -144,12 +141,10 @@ test_that("Enter acts on the topmost modal, not a stale selection in a buried on
   app <- AppDriver$new(appDir, name = "mm-enter-buried", load_timeout = 30000)
   on.exit(app$stop(), add = TRUE)
 
-  app$click("fileA")
-  app$wait_for_idle()
+  openDialogFor(app, "fileA")
   selectFileIn(app, "fileA-modal", "fileA.txt")
 
-  app$click("fileB")
-  app$wait_for_idle()
+  openDialogFor(app, "fileB")
   pressEnterGlobally(app)
 
   expect_equal(outputPath(app, "pathA"), "")

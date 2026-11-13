@@ -81,8 +81,7 @@ typeIntoPathBox <- function(app, text) {
 }
 
 openChooser <- function(app, id) {
-  app$click(id)
-  app$wait_for_idle()
+  openDialogFor(app, id)
 }
 
 visibleDirNames <- function(app) {
@@ -371,8 +370,7 @@ test_that("the overlay does not survive closing and reopening the dialog", {
   app$run_js("$('.sF-modalContainer:visible').last().find('.modal-header button.close').trigger('click')")
   Sys.sleep(1.5)
 
-  app$click("dir")
-  app$wait_for_idle()
+  openDialogFor(app, "dir")
   expect_false(overlayShown(app))
   expect_true(app$get_js("$('.sF-modalContainer:visible').last().find('.sF-dirList .sF-file-name').length > 0"))
 })
