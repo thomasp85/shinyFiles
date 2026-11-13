@@ -5,6 +5,11 @@
   result has had a stray logical column since 2017.
 * An invalid `pattern` regular expression is still ignored, but no longer
   logs a warning every time a folder is listed.
+* **Behaviour change:** `restrictions` now matches whole folders. Restricting
+  `/data` hides `/data` and everything inside it, but no longer also hides
+  `/data2`, `/database` or any other path that merely contains the text.
+  Restrictions should be absolute paths; a bare name such as `"secret"` no
+  longer hides every path containing it.
 
 # shinyFiles 0.9.4
 

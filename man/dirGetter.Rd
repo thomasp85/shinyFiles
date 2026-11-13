@@ -11,8 +11,10 @@ dirGetter(roots, restrictions, filetypes, hidden = FALSE)
 named vector of absolute filepaths (the latter is useful if the volumes
 should adapt to changes in the filesystem).}
 
-\item{restrictions}{A vector of directories within the root that should be
-filtered out of the results}
+\item{restrictions}{A vector of absolute paths to directories within the
+root that should be filtered out of the results, together with everything
+inside them. A path only matches whole folders, so restricting \verb{/data} hides
+\verb{/data} but not \verb{/data2}.}
 
 \item{filetypes}{Currently unused}
 

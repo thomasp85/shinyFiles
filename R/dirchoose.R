@@ -19,8 +19,10 @@ NULL
 #'
 #' @param root A string with the location of the root folder for the tree
 #'
-#' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
+#' @param restrictions A vector of absolute paths to directories within the
+#' root that should be filtered out of the results, together with everything
+#' inside them. A path only matches whole folders, so restricting `/data` hides
+#' `/data` but not `/data2`.
 #'
 #' @param hidden A logical value specifying whether hidden folders should be
 #' returned or not
@@ -194,8 +196,10 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' named vector of absolute filepaths (the latter is useful if the volumes
 #' should adapt to changes in the filesystem).
 #'
-#' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
+#' @param restrictions A vector of absolute paths to directories within the
+#' root that should be filtered out of the results, together with everything
+#' inside them. A path only matches whole folders, so restricting `/data` hides
+#' `/data` but not `/data2`.
 #'
 #' @param filetypes Currently unused
 #'
