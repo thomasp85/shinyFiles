@@ -10,6 +10,9 @@
   `/data2`, `/database` or any other path that merely contains the text.
   Restrictions should be absolute paths; a bare name such as `"secret"` no
   longer hides every path containing it.
+* `shinyDirChoose()` accepts `pattern`, which filters the files shown beside the
+  folder tree. It used to fail with "unused argument" as soon as the dialog
+  opened.
 
 # shinyFiles 0.9.4
 

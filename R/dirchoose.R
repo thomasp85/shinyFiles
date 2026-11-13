@@ -201,7 +201,9 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' inside them. A path only matches whole folders, so restricting `/data` hides
 #' `/data` but not `/data2`.
 #'
-#' @param filetypes Currently unused
+#' @param filetypes,pattern Currently unused. Accepted so that
+#' [shinyDirChoose()] can pass the same arguments to every helper; they only
+#' filter the file pane, which [fileGetter()] builds.
 #'
 #' @param hidden A logical value specifying whether hidden files should be
 #' returned or not
@@ -211,7 +213,7 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' See [traverseDirs()] for a description of the format for the list
 #' representation.
 #'
-dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
+dirGetter <- function(roots, restrictions, filetypes, pattern, hidden=FALSE) {
   if (missing(filetypes)) filetypes <- NULL
   if (missing(restrictions)) restrictions <- NULL
 
@@ -249,7 +251,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #'
 #' @noRd
 #'
-dirProber <- function(roots, restrictions, filetypes, hidden = FALSE) {
+dirProber <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
   if (missing(restrictions)) restrictions <- NULL
 
   list(
