@@ -23,6 +23,11 @@
 * With two shinyFiles dialogs open at once, the arrow keys move the selection in
   the one on top. They used to look at every open dialog and move neither.
   Arrow keys also no longer rely on the browser's global `event` object.
+* The sort order chosen in a dialog is kept when you open another folder,
+  reopen the dialog, or highlight a different folder in the folder chooser.
+  Every new listing used to be drawn in name order while the sort menu still
+  showed the old choice. Sorting in descending order also keeps the column
+  header at the top instead of moving it to the bottom.
 
 # shinyFiles 0.9.4
 

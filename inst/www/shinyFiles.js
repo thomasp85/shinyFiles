@@ -670,12 +670,15 @@ var shinyFiles = (function () {
       fileList = $(modal).find('.sF-dirContent');
     }
 
+    // Only the entries are sorted; the column header (which has no file data)
+    // stays the first row in both directions.
+    var header = fileList.children('.sF-file-header').detach();
 
     fileList.sortChildren(function (elem) {
       return $(elem).data('sF-file') ? $(elem).data('sF-file').name : '';
     }, direction == 'descending');
 
-    if (attribute == 'Name') return;
+    if (attribute == 'Name') return fileList.prepend(header);
 
     switch (attribute) {
       case 'Type':
@@ -699,6 +702,7 @@ var shinyFiles = (function () {
         }, direction == 'descending');
         break;
     }
+    fileList.prepend(header);
   }
 
   var removeFileChooser = function (button, modal, data) {
@@ -1290,6 +1294,8 @@ var shinyFiles = (function () {
     }
     setFolderState(modal, data.writable, data.exist);
     toggleSelectButton(modal);
+    // A new listing is drawn in name order; keep the order the user chose.
+    sortFiles(modal, $(element).data('sort'), $(element).data('sortDir'));
 
     modal.data('currentData', data);
     $(modal).trigger('change');
@@ -2323,6 +2329,7 @@ var shinyFiles = (function () {
 
     toggleSelectButton(modal);
     setFolderState(modal, data.writable, data.exist);
+    sortFiles(modal, $(element).data('sort'), $(element).data('sortDir'));
 
     modal.data('currentData', data);
     $(modal).trigger('change');

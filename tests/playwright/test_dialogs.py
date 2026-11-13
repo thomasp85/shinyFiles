@@ -7,6 +7,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+import pytest
+
 from playwright.sync_api import Page, expect
 
 from helpers import Dialog
@@ -143,3 +145,53 @@ def test_a_missing_folder_wins_over_the_permission_warning(app: Page):
     d.after_listing(lambda: box.press("Enter"))
     expect(d.find(".sF-warning")).to_have_count(1)
     expect(d.find(".sF-warning")).to_contain_text("does not exist")
+
+
+def test_the_chosen_sort_order_is_kept_when_navigating(app: Page):
+    d = Dialog(app, "file").open()
+    d.find("#sF-btn-sort").click()
+    d.find(".sF-sort li.sortAttr").filter(has_text="Size").click()
+    by_size = d.row_names(".sF-fileList > .sF-file")
+    assert by_size == ["b.csv", "c.R", "a.txt"]
+    d.after_listing(lambda: d.dblclick_row("folder"))
+    d.after_listing(lambda: d.find("#sF-btn-up").click())
+    expect(d.find(".sF-sort li.sortAttr.selected")).to_have_text("Size")
+    assert d.row_names(".sF-fileList > .sF-file") == by_size
+
+
+def test_the_chosen_sort_order_is_kept_when_reopening(app: Page):
+    d = Dialog(app, "save").open()
+    d.find("#sF-btn-sort").click()
+    d.find(".sF-sort li.sortDir a").click()
+    assert d.row_names(".sF-fileList > .sF-file") == ["c.R", "b.csv", "a.txt"]
+    d.find("#sF-cancelButton").click()
+    d.expect_closed()
+    d.open()
+    expect(d.find(".sF-sort li.sortDir a")).to_have_class(re.compile("descending"))
+    assert d.row_names(".sF-fileList > .sF-file") == ["c.R", "b.csv", "a.txt"]
+
+
+def test_the_folder_dialog_keeps_its_sort_order_when_highlighting(app: Page):
+    d = Dialog(app, "dir").open()
+    d.highlight_root()
+    d.find("#sF-btn-sort").click()
+    d.find(".sF-sort li.sortDir a").click()
+    names = lambda: d.js("return m.find('.sF-dirContent > div').map(function(){ return $(this).find('.sF-file-name').text().trim(); }).toArray();")
+    first = names()
+    d.highlight("folder")
+    d.highlight_root()
+    assert names() == first
+
+
+@pytest.mark.parametrize("attr", ["Name", "Type", "Size", "Created", "Modified"])
+def test_the_column_header_stays_on_top_in_every_sort_order(app: Page, attr):
+    d = Dialog(app, "file").open()
+    for direction in ("ascending", "descending"):
+        d.find("#sF-btn-sort").click()
+        d.find(".sF-sort li.sortAttr").filter(has_text=attr).click()
+        current = d.js("return m.find('.sF-sort li.sortDir a').attr('class');")
+        if current != direction:
+            d.find("#sF-btn-sort").click()
+            d.find(".sF-sort li.sortDir a").click()
+        first = d.js("return m.find('.sF-fileList').children().first().attr('class');")
+        assert first == "sF-file-header", f"{attr} {direction}: header is not the first row"
