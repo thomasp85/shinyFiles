@@ -108,7 +108,8 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     }
     
     if (nchar(pattern) > 0) {
-      matchedFiles <- try(grepl(pattern, fileInfo$filename), silent = TRUE)
+      # An invalid regex is ignored; grepl() would also warn on every listing.
+      matchedFiles <- try(suppressWarnings(grepl(pattern, fileInfo$filename)), silent = TRUE)
       if (!inherits(matchedFiles, "try-error")) {
         fileInfo <- fileInfo[matchedFiles | fileInfo$isdir, ]
       }

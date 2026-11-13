@@ -3,6 +3,8 @@
 * `parseFilePaths()` and `parseSavePath()` no longer return an extra
   `stringsAsFactors` column. `tibble()` treats that argument as data, so every
   result has had a stray logical column since 2017.
+* An invalid `pattern` regular expression is still ignored, but no longer
+  logs a warning every time a folder is listed.
 
 # shinyFiles 0.9.4
 

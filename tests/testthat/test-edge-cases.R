@@ -22,8 +22,9 @@ test_that("a pattern may be given as a function", {
 
 test_that("an invalid pattern is ignored rather than failing the listing", {
   get <- fileGetter(roots = c(r = edgeRoot), pattern = "[")
-  # grepl() still warns about the bad regex; only the listing is under test here.
-  l <- suppressWarnings(get("", "r"))
+  # Quietly: the regex is the app author's, and a warning per listing would
+  # fill the app's log without telling the user anything.
+  expect_no_warning(l <- get("", "r"))
   expect_setequal(l$files$filename, c("log-1.txt", "log-2.txt", "other.txt", "sub"))
 })
 
