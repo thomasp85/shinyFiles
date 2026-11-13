@@ -51,7 +51,10 @@ test_that("parseFilePaths resolves one and several files with their sizes", {
   expect_equal(two$name, c("one.txt", "two.csv"))
   expect_equal(as.character(two$datapath),
                file.path(roots[["first"]], c("one.txt", "sub/two.csv")))
-  expect_equal(two$size[2], 101)
+  # Compared against the file, not a fixed number: writeLines() ends lines with
+  # \r\n on Windows.
+  expect_equal(two$size[2], file.size(file.path(roots[["first"]], "sub", "two.csv")))
+  expect_gt(two$size[2], two$size[1])
 })
 
 test_that("parseFilePaths accepts roots as a function", {
