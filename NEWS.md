@@ -20,6 +20,9 @@
 * The save dialog shows "No write permission for folder" in a read-only folder
   again, and keeps Save disabled there. The warning was removed by the
   missing-folder check straight after it was added, so Save stayed enabled.
+* With two shinyFiles dialogs open at once, the arrow keys move the selection in
+  the one on top. They used to look at every open dialog and move neither.
+  Arrow keys also no longer rely on the browser's global `event` object.
 
 # shinyFiles 0.9.4
 

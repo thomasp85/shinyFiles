@@ -15,7 +15,6 @@ CATALOGUE = Path(__file__).resolve().parent.parent / "testthat" / "inputs-catalo
 # suite then insists the entry is removed.
 KNOWN_BUGS = {
     "icon-right-stops": "in icon view the right arrow stops at the end of the first row",
-    "arrows-two-dialogs": "with two dialogs open, arrow keys move neither (moveSelection uses every modal)",
 }
 
 

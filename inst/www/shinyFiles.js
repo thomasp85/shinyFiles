@@ -8,7 +8,7 @@ var shinyFiles = (function () {
     function toggleSelection(element) {
       $(element).toggleClass('selected');
       parent.data('lastElement', element);
-      toggleSelectButton($('.sF-modalContainer'));
+      toggleSelectButton($(element).closest('.sF-modalContainer'));
     }
 
     function selectElementsBetweenIndexes(indexes) {
@@ -31,10 +31,11 @@ var shinyFiles = (function () {
     function scrollToSelected() {
       // Adjust for any overall offsets
       // Adjustments depend on what kind of modal/display is present
-      var modal = $('.sF-modalContainer');
+      var modal = $(element).closest('.sF-modalContainer');
       var button = $(modal.data('button'));
       var fileFlag = button.hasClass('shinyFiles');
       var saveFlag = button.hasClass('shinySave');
+      var fileWindow = modal.find('.sF-fileWindow');
 
       if (fileFlag || saveFlag) {
         // Different display modes handled differently for file/save modal
@@ -43,32 +44,32 @@ var shinyFiles = (function () {
         if (viewType === "sF-btn-icon") {
           // Vertical scroll
           var topOffset = $(element)[0].offsetTop - parent.children()[1].offsetTop;
-          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+          var scrollPosition = fileWindow[0].scrollTop;
 
           if (topOffset < scrollPosition) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset;
-          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true);
+            fileWindow[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + fileWindow.height()) {
+            fileWindow[0].scrollTop = topOffset - fileWindow.height() + $(element).outerHeight(true);
           }
         } else if (viewType === "sF-btn-list") {
           // Lists scroll horizontally, but otherwise the logic is very similar to icons
           var leftOffset = $(element)[0].offsetLeft - parent.children()[1].offsetLeft;
-          var scrollPosition = $('.sF-fileWindow')[0].scrollLeft;
+          var scrollPosition = fileWindow[0].scrollLeft;
 
           if (leftOffset < scrollPosition) {
-            $('.sF-fileWindow')[0].scrollLeft = leftOffset;
-          } else if (leftOffset + $(element).outerWidth(true) > scrollPosition + $('.sF-fileWindow').width()) {
-            $('.sF-fileWindow')[0].scrollLeft = leftOffset - $('.sF-fileWindow').width() + $(element).outerWidth(true);
+            fileWindow[0].scrollLeft = leftOffset;
+          } else if (leftOffset + $(element).outerWidth(true) > scrollPosition + fileWindow.width()) {
+            fileWindow[0].scrollLeft = leftOffset - fileWindow.width() + $(element).outerWidth(true);
           }
         } else if (viewType === "sF-btn-detail") {
           // Essentially the same as icons, but header is visible
           var topOffset = $(element)[0].offsetTop - parent.children()[0].offsetTop;
-          var scrollPosition = $('.sF-fileWindow')[0].scrollTop;
+          var scrollPosition = fileWindow[0].scrollTop;
 
           if (topOffset < scrollPosition) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset;
-          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + $('.sF-fileWindow').height()) {
-            $('.sF-fileWindow')[0].scrollTop = topOffset - $('.sF-fileWindow').height() + $(element).outerHeight(true)
+            fileWindow[0].scrollTop = topOffset;
+          } else if (topOffset + $(element).outerHeight(true) > scrollPosition + fileWindow.height()) {
+            fileWindow[0].scrollTop = topOffset - fileWindow.height() + $(element).outerHeight(true)
           }
         }
       } // NOTE: Selection in dirchooser is handled by selectFolder. Submission is handled by selectFiles
@@ -94,15 +95,14 @@ var shinyFiles = (function () {
     }
   };
 
-  var moveSelection = function (event, single, direction) {
-    var modal = $('.sF-modalContainer');
+  var moveSelection = function (event, modal, single, direction) {
     var button = $(modal.data('button'));
     var fileFlag = button.hasClass('shinyFiles');
     var saveFlag = button.hasClass('shinySave');
     var dirFlag = button.hasClass('shinyDirectories');
 
     if (fileFlag || saveFlag) {
-      var parent = $(".sF-fileList");
+      var parent = modal.find(".sF-fileList");
       var currentElement = parent.data('lastElement');
       var selectionEnd;
       if ('selectionEnd' in parent.data() && parent.data('selectionEnd') !== null) {
@@ -130,8 +130,8 @@ var shinyFiles = (function () {
       var ends = [originIndex, endIndex].sort();
 
       // Number of icons that fit with the file list, left to right
-      var boundingWidth = $(".sF-fileWindow").width();
-      var boundingHeight = $(".sF-fileWindow").height();
+      var boundingWidth = modal.find(".sF-fileWindow").width();
+      var boundingHeight = modal.find(".sF-fileWindow").height();
       var itemWidth = $(parent.children()[1]).outerWidth(true);
       var itemHeight = $(parent.children()[1]).outerHeight(true);
       var numHorizontal = Math.floor(boundingWidth / itemWidth);
@@ -341,7 +341,7 @@ var shinyFiles = (function () {
         }
       }
     } else if (dirFlag) {
-      var list = $('.sF-dirList');
+      var list = modal.find('.sF-dirList');
       var currentElement = list.find('.selected');
 
       function nextSibling(elem) {
@@ -2414,14 +2414,12 @@ var shinyFiles = (function () {
     list.find('.selected').toggleClass('selected');
 
     function scrollToSelected() {
-      var modal = $('.sF-modalContainer');
-      var button = $(modal.data('button'));
-      var dirFlag = button.hasClass('shinyDirectories');
+      var dirFlag = $(modal.data('button')).hasClass('shinyDirectories');
 
       if (dirFlag) {
         var buffer = list.children()[0].offsetTop;
         var itemOffset = $(element)[0].offsetTop - buffer;
-        var scrollElement = $('.sF-dirInfo>div');
+        var scrollElement = list.closest('.sF-dirInfo>div');
         var scrollPosition = scrollElement[0].scrollTop;
         var elementHeight = $(element).find('sF-file-icon').outerHeight(true);
 
@@ -2643,11 +2641,13 @@ var shinyFiles = (function () {
   };
   // Directory chooser ends
 
-  var handleArrowKey = function (direction) {
-    var modal = $('.sF-modalContainer');
-    if (modal.is(":visible") && !($(modal.data('button')).hasClass("shinySave") && $('.sF-filename').is(":focus"))) {
-      var single = $($(".sF-modalContainer").data('button')).data('selecttype') === "single";
-      moveSelection(event, single, direction);
+  // Arrow keys act on the topmost open dialog only, and take the event the
+  // keydown handler was given rather than the browser's global `event`.
+  var handleArrowKey = function (event, direction) {
+    var modal = $('.sF-modalContainer:visible').last();
+    if (modal.length > 0 && !($(modal.data('button')).hasClass("shinySave") && modal.find('.sF-filename').is(":focus"))) {
+      var single = $(modal.data('button')).data('selecttype') === "single";
+      moveSelection(event, modal, single, direction);
       event.preventDefault();
       event.stopPropagation();
     }
@@ -2723,19 +2723,19 @@ var shinyFiles = (function () {
           break;
         case 37:
           // Left Arrow
-          handleArrowKey("left");
+          handleArrowKey(event, "left");
           break;
         case 39:
           // Right Arrow
-          handleArrowKey("right");
+          handleArrowKey(event, "right");
           break;
         case 38:
           // Up arrow
-          handleArrowKey("up");
+          handleArrowKey(event, "up");
           break;
         case 40:
           // Down arrow
-          handleArrowKey("down");
+          handleArrowKey(event, "down");
           break;
         case 13:
 

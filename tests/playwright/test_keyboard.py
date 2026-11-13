@@ -216,7 +216,6 @@ def test_tree_left_on_an_expanded_folder_collapses_it(app: Page):
 # --- two dialogs open at once --------------------------------------------------------
 
 
-@known_bug("arrows-two-dialogs")
 def test_arrows_move_the_selection_in_the_topmost_dialog_only(app: Page):
     bottom = Dialog(app, "file").open()
     bottom.click_row("a.txt")
